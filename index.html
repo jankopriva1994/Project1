@@ -1,0 +1,239 @@
+<!DOCTYPE html>
+<html lang="cs">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Chaties – AI Workspace</title>
+  <style>
+    *, *::before, *::after {
+      box-sizing: border-box;
+      margin: 0;
+      padding: 0;
+    }
+
+    body {
+      font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
+      background: #fff;
+      color: #111;
+    }
+
+    /* ── Announcement bar ── */
+    .announcement-bar {
+      background: #f2f2f2;
+      text-align: center;
+      padding: 12px 48px;
+      font-size: 14px;
+      position: relative;
+    }
+
+    .announcement-bar a {
+      color: #111;
+      text-decoration: underline;
+    }
+
+    .announcement-bar strong {
+      font-weight: 700;
+    }
+
+    .announcement-bar .star {
+      margin-right: 6px;
+    }
+
+    .announcement-bar .close {
+      position: absolute;
+      right: 20px;
+      top: 50%;
+      transform: translateY(-50%);
+      background: none;
+      border: none;
+      font-size: 18px;
+      cursor: pointer;
+      color: #555;
+      line-height: 1;
+    }
+
+    .announcement-bar .close:hover {
+      color: #111;
+    }
+
+    /* ── Navigation ── */
+    nav {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      padding: 20px 60px;
+      border-bottom: 1px solid #eee;
+    }
+
+    .nav-logo {
+      display: flex;
+      align-items: center;
+      gap: 14px;
+      text-decoration: none;
+      color: #111;
+    }
+
+    .nav-logo-wordmark {
+      font-size: 26px;
+      font-weight: 700;
+      letter-spacing: -0.5px;
+    }
+
+    .nav-logo-divider {
+      width: 1px;
+      height: 36px;
+      background: #ccc;
+    }
+
+    .nav-logo-tagline {
+      display: flex;
+      flex-direction: column;
+      font-size: 11px;
+      color: #888;
+      line-height: 1.4;
+    }
+
+    .nav-links {
+      display: flex;
+      gap: 36px;
+      list-style: none;
+    }
+
+    .nav-links a {
+      text-decoration: none;
+      color: #111;
+      font-size: 15px;
+      font-weight: 500;
+    }
+
+    .nav-links a:hover {
+      opacity: 0.7;
+    }
+
+    .btn-register {
+      display: inline-flex;
+      align-items: center;
+      gap: 10px;
+      background: #efefef;
+      border: none;
+      border-radius: 999px;
+      padding: 13px 26px;
+      font-size: 15px;
+      font-weight: 600;
+      cursor: pointer;
+      text-decoration: none;
+      color: #111;
+      transition: background 0.2s;
+    }
+
+    .btn-register:hover {
+      background: #e0e0e0;
+    }
+
+    .btn-register .arrow {
+      font-size: 18px;
+      line-height: 1;
+    }
+
+    /* ── Hero ── */
+    .hero {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      text-align: center;
+      padding: 90px 24px 60px;
+    }
+
+    .hero h1 {
+      font-size: clamp(42px, 6vw, 72px);
+      font-weight: 800;
+      line-height: 1.1;
+      letter-spacing: -2px;
+      max-width: 760px;
+    }
+
+    .hero h1 .highlight {
+      background: #f5c518;
+      border-radius: 8px;
+      padding: 0 6px;
+      display: inline-block;
+    }
+
+    .hero p {
+      margin-top: 28px;
+      font-size: 18px;
+      color: #444;
+      max-width: 480px;
+      line-height: 1.65;
+    }
+
+    .hero p a {
+      color: #111;
+      text-decoration: underline;
+      text-underline-offset: 3px;
+    }
+
+    /* ── Preview card placeholder ── */
+    .hero-preview {
+      margin-top: 52px;
+      width: 100%;
+      max-width: 780px;
+      height: 340px;
+      background: #f7f7f7;
+      border: 1px solid #e5e5e5;
+      border-radius: 16px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      color: #bbb;
+      font-size: 14px;
+    }
+  </style>
+</head>
+<body>
+
+  <!-- Announcement bar -->
+  <div class="announcement-bar" id="announcementBar">
+    <span class="star">⭐</span>
+    Napište <a href="#">recenzi na googlu</a> a získejte <strong>100 tokenů zdarma!</strong> <a href="#"><strong>ZDE.</strong></a>
+    <button class="close" onclick="document.getElementById('announcementBar').style.display='none'">✕</button>
+  </div>
+
+  <!-- Navigation -->
+  <nav>
+    <a href="#" class="nav-logo">
+      <span class="nav-logo-wordmark">Chaties</span>
+      <span class="nav-logo-divider"></span>
+      <span class="nav-logo-tagline">
+        <span>AI Workspace</span>
+        <span>Víc nepotřebujete</span>
+      </span>
+    </a>
+
+    <ul class="nav-links">
+      <li><a href="#">Ceník</a></li>
+      <li><a href="#">Recenze</a></li>
+    </ul>
+
+    <a href="#" class="btn-register">
+      Registrovat se <span class="arrow">→</span>
+    </a>
+  </nav>
+
+  <!-- Hero section -->
+  <section class="hero">
+    <h1>
+      Váš AI <span class="highlight">workspace</span><br />
+      pro práci bez chaosu.
+    </h1>
+    <p>
+      Plánujte projekty, spravujte úkoly a ukládejte nápady<br />
+      — <a href="#">vše na jednom místě</a> s pomocí AI.
+    </p>
+    <div class="hero-preview">
+      [ náhled aplikace ]
+    </div>
+  </section>
+
+</body>
+</html>
