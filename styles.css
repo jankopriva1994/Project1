@@ -1,5 +1,19 @@
 @import url('https://fonts.googleapis.com/css2?family=Geist:wght@400;500;600;700&display=swap');
 
+@font-face {
+  font-family: 'Supreme';
+  src: url('assets/fonts/Supreme-Regular.woff') format('woff');
+  font-weight: 400;
+  font-style: normal;
+}
+
+@font-face {
+  font-family: 'Supreme';
+  src: url('assets/fonts/Supreme-Bold.woff') format('woff');
+  font-weight: 700;
+  font-style: normal;
+}
+
 * {
   margin: 0;
   padding: 0;
@@ -14,7 +28,7 @@ html {
 
 body {
   background: transparent;
-  font-family: 'Geist', sans-serif;
+  font-family: 'Supreme', sans-serif;
   min-height: 100vh;
 }
 
@@ -41,6 +55,7 @@ body {
   font-weight: 500;
   letter-spacing: -1.1px;
   line-height: 1;
+  font-family: 'Geist', sans-serif;
 }
 
 .nav-logo-dot {
@@ -61,6 +76,7 @@ body {
   color: #d0ee52;
   font-weight: 700;
   text-decoration: none;
+  font-family: 'Geist', sans-serif;
 }
 
 .nav-caret {
@@ -78,6 +94,7 @@ body {
   font-size: 16px;
   color: #ffffff;
   text-decoration: none;
+  font-family: 'Geist', sans-serif;
 }
 
 .nav-link-onas {
@@ -87,6 +104,7 @@ body {
   font-size: 16px;
   color: #ffffff;
   text-decoration: none;
+  font-family: 'Geist', sans-serif;
 }
 
 .nav-link-recenze {
@@ -96,6 +114,7 @@ body {
   font-size: 16px;
   color: #ffffff;
   text-decoration: none;
+  font-family: 'Geist', sans-serif;
 }
 
 .nav-link-vseai {
@@ -105,6 +124,7 @@ body {
   font-size: 16px;
   color: #ffffff;
   text-decoration: none;
+  font-family: 'Geist', sans-serif;
 }
 
 .nav-link-kontakt {
@@ -114,6 +134,7 @@ body {
   font-size: 16px;
   color: #ffffff;
   text-decoration: none;
+  font-family: 'Geist', sans-serif;
 }
 
 .nav-cta {
@@ -128,7 +149,7 @@ body {
   display: flex;
   align-items: center;
   justify-content: center;
-  font-family: 'Geist', sans-serif;
+  font-family: 'Supreme', sans-serif;
   font-size: 16px;
   color: #ffffff;
   cursor: pointer;
@@ -167,6 +188,7 @@ body {
   line-height: 65px;
   text-align: center;
   color: #ffffff;
+  font-family: 'Geist', sans-serif;
 }
 
 .hero-subtitle {
@@ -192,7 +214,7 @@ body {
   display: flex;
   align-items: center;
   justify-content: center;
-  font-family: 'Geist', sans-serif;
+  font-family: 'Supreme', sans-serif;
   font-size: 20px;
   font-weight: 600;
   color: #ffffff;
@@ -211,6 +233,7 @@ body {
   line-height: 65px;
   text-align: center;
   color: #ffffff;
+  font-family: 'Geist', sans-serif;
 }
 
 .features-subtext {
@@ -329,6 +352,7 @@ body {
   font-weight: 600;
   line-height: 47px;
   color: #ffffff;
+  font-family: 'Geist', sans-serif;
 }
 
 .benefits-desc {
@@ -353,7 +377,7 @@ body {
   display: flex;
   align-items: center;
   justify-content: center;
-  font-family: 'Geist', sans-serif;
+  font-family: 'Supreme', sans-serif;
   font-size: 20px;
   font-weight: 600;
   color: #ffffff;
@@ -387,6 +411,7 @@ body {
   font-size: 18px;
   font-weight: 600;
   color: #d0ee52;
+  font-family: 'Geist', sans-serif;
 }
 
 .benefit-c1-r1-text {
@@ -406,6 +431,7 @@ body {
   font-size: 18px;
   font-weight: 600;
   color: #d0ee52;
+  font-family: 'Geist', sans-serif;
 }
 
 .benefit-c1-r2-text {
@@ -425,6 +451,7 @@ body {
   font-size: 18px;
   font-weight: 600;
   color: #d0ee52;
+  font-family: 'Geist', sans-serif;
 }
 
 .benefit-c1-r3-text {
@@ -445,6 +472,7 @@ body {
   font-size: 18px;
   font-weight: 600;
   color: #d0ee52;
+  font-family: 'Geist', sans-serif;
 }
 
 .benefit-c2-r1-text {
@@ -464,6 +492,7 @@ body {
   font-size: 18px;
   font-weight: 600;
   color: #d0ee52;
+  font-family: 'Geist', sans-serif;
 }
 
 .benefit-c2-r2-text {
@@ -483,6 +512,7 @@ body {
   font-size: 18px;
   font-weight: 600;
   color: #d0ee52;
+  font-family: 'Geist', sans-serif;
 }
 
 .benefit-c2-r3-text {
@@ -531,6 +561,7 @@ body {
   line-height: 65px;
   text-align: center;
   color: #ffffff;
+  font-family: 'Geist', sans-serif;
 }
 
 .ai-services-subtext {
@@ -624,6 +655,7 @@ body {
   font-weight: 600;
   line-height: 65px;
   color: #ffffff;
+  font-family: 'Geist', sans-serif;
 }
 
 .ai-chat-desc {
@@ -681,6 +713,7 @@ body {
   font-weight: 600;
   line-height: 65px;
   color: #ffffff;
+  font-family: 'Geist', sans-serif;
 }
 
 /* Review card 1 */
@@ -838,6 +871,7 @@ body {
   font-weight: 600;
   line-height: 65px;
   color: #ffffff;
+  font-family: 'Geist', sans-serif;
 }
 
 .blog-subtext {
