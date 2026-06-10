@@ -1,0 +1,14 @@
+<svg width="160" height="44" viewBox="0 0 160 44" fill="none" xmlns="http://www.w3.org/2000/svg">
+  <!-- Two dots above bubble -->
+  <circle cx="14" cy="5" r="4" fill="#d0ee52"/>
+  <circle cx="26" cy="5" r="4" fill="#d0ee52"/>
+  <!-- Speech bubble -->
+  <rect x="4" y="12" width="36" height="24" rx="8" fill="#d0ee52"/>
+  <polygon points="4,32 4,40 12,36" fill="#d0ee52"/>
+  <!-- Three dots inside bubble -->
+  <circle cx="14" cy="24" r="3" fill="white"/>
+  <circle cx="22" cy="24" r="3" fill="white"/>
+  <circle cx="30" cy="24" r="3" fill="white"/>
+  <!-- chaties text -->
+  <text x="52" y="32" font-family="Supreme, sans-serif" font-size="28" font-weight="500" fill="white" letter-spacing="-0.7">chaties</text>
+</svg>

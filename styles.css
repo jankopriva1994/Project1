@@ -46,14 +46,11 @@ body {
 /* ===================== NAVBAR ===================== */
 .nav-logo {
   position: absolute;
-  left: 267px;
+  left: 230px;
   top: 53px;
-  font-size: 43px;
-  color: #ffffff;
-  font-weight: 500;
-  letter-spacing: -1.1px;
-  line-height: 1;
-  font-family: 'Supreme', sans-serif;
+  height: 44px;
+  width: auto;
+  display: block;
 }
 
 .nav-logo-dot {
@@ -1009,13 +1006,11 @@ body {
 
 .footer-logo {
   position: absolute;
-  left: 316px;
+  left: 281px;
   top: 5527px;
-  font-size: 43px;
-  color: #ffffff;
-  font-weight: 500;
-  letter-spacing: -1.1px;
-  line-height: 1;
+  height: 44px;
+  width: auto;
+  display: block;
 }
 
 .footer-desc {
