@@ -2121,3 +2121,291 @@ body {
 .blog-detail-page .footer-line               { top: 898px;  left: 228px; width: 1224px; }
 .blog-detail-page .footer-copyright          { top: 929px;  left: 228px; }
 .blog-detail-page .footer-privacy            { top: 929px;  left: 1109px; }
+
+/* ==================== AUTH PAGES – SHARED ==================== */
+
+.page.registrace-page,
+.page.prihlaseni-page,
+.page.zapomenuteheslo-page {
+  min-height: 1164px;
+}
+
+.auth-img {
+  position: absolute;
+  left: 257px;
+  top: 251px;
+  width: 696px;
+  height: 764px;
+  object-fit: cover;
+  border-radius: 12px;
+}
+
+.auth-heading {
+  position: absolute;
+  left: 1039px;
+  font-size: 38px;
+  font-weight: 700;
+  font-family: 'Supreme', sans-serif;
+  line-height: 42px;
+  color: #ffffff;
+}
+
+.auth-subtext {
+  position: absolute;
+  left: 1039px;
+  font-size: 14px;
+  font-weight: 400;
+  font-family: 'Supreme', sans-serif;
+  color: #ffffff;
+  line-height: 20px;
+}
+
+.auth-link {
+  color: #d0ee52;
+  text-decoration: underline;
+  font-family: inherit;
+}
+
+.auth-link:hover {
+  opacity: 0.85;
+}
+
+.auth-input {
+  position: absolute;
+  height: 44px;
+  background: #2b2d31;
+  border: none;
+  border-radius: 8px;
+  color: #ffffff;
+  font-size: 15px;
+  font-family: 'Supreme', sans-serif;
+  padding: 0 16px;
+  box-sizing: border-box;
+  outline: none;
+}
+
+.auth-input::placeholder {
+  color: #8b8b8b;
+}
+
+.auth-input-lock {
+  padding-left: 40px;
+  background-image: url("data:image/svg+xml,%3Csvg width='12' height='16' viewBox='0 0 12 16' fill='none' xmlns='http://www.w3.org/2000/svg'%3E%3Crect x='1' y='7' width='10' height='9' rx='2' stroke='%238b8b8b' stroke-width='1.5'/%3E%3Cpath d='M3 7V5a3 3 0 0 1 6 0v2' stroke='%238b8b8b' stroke-width='1.5' stroke-linecap='round'/%3E%3C/svg%3E");
+  background-repeat: no-repeat;
+  background-position: 14px center;
+}
+
+.auth-select {
+  position: absolute;
+  height: 44px;
+  background: #2b2d31;
+  border: none;
+  border-radius: 8px;
+  color: #ffffff;
+  font-size: 14px;
+  font-family: 'Supreme', sans-serif;
+  padding: 0 26px 0 10px;
+  box-sizing: border-box;
+  outline: none;
+  cursor: pointer;
+  appearance: none;
+  -webkit-appearance: none;
+  background-image: url("data:image/svg+xml,%3Csvg width='10' height='6' viewBox='0 0 10 6' fill='none' xmlns='http://www.w3.org/2000/svg'%3E%3Cpath d='M1 1l4 4 4-4' stroke='%238b8b8b' stroke-width='1.5' stroke-linecap='round' stroke-linejoin='round'/%3E%3C/svg%3E");
+  background-repeat: no-repeat;
+  background-position: right 8px center;
+}
+
+.auth-select option {
+  background: #2b2d31;
+  color: #ffffff;
+}
+
+.auth-checkbox-row {
+  position: absolute;
+  display: flex;
+  align-items: center;
+  gap: 10px;
+}
+
+.auth-checkbox {
+  width: 16px;
+  height: 16px;
+  flex-shrink: 0;
+  cursor: pointer;
+  accent-color: #d0ee52;
+}
+
+.auth-checkbox-label {
+  font-size: 14px;
+  color: #ffffff;
+  font-family: 'Supreme', sans-serif;
+  line-height: 20px;
+  cursor: pointer;
+}
+
+.auth-btn {
+  position: absolute;
+  width: 384px;
+  height: 52px;
+  background: #d0ee52;
+  border: none;
+  border-radius: 8px;
+  color: #0d0e11;
+  font-size: 16px;
+  font-weight: 700;
+  font-family: 'Supreme', sans-serif;
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  text-decoration: none;
+  box-sizing: border-box;
+}
+
+.auth-btn:hover {
+  background: #c4e140;
+}
+
+.auth-divider-wrap {
+  position: absolute;
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  width: 384px;
+}
+
+.auth-divider-line {
+  flex: 1;
+  height: 1px;
+  background: #505050;
+}
+
+.auth-divider-text {
+  font-size: 12px;
+  color: #8b8b8b;
+  white-space: nowrap;
+  font-family: 'Supreme', sans-serif;
+}
+
+.auth-social-btn {
+  position: absolute;
+  width: 186px;
+  height: 44px;
+  background: transparent;
+  border: 1px solid #505050;
+  border-radius: 8px;
+  color: #ffffff;
+  font-size: 14px;
+  font-family: 'Supreme', sans-serif;
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 9px;
+  text-decoration: none;
+  box-sizing: border-box;
+}
+
+.auth-social-btn:hover {
+  background: #2b2d31;
+}
+
+.auth-forgot {
+  position: absolute;
+  font-size: 13px;
+  color: #8b8b8b;
+  font-family: 'Supreme', sans-serif;
+  text-decoration: none;
+}
+
+.auth-forgot:hover {
+  color: #ffffff;
+}
+
+/* Cloudflare captcha mock */
+.auth-captcha {
+  position: absolute;
+  width: 284px;
+  height: 58px;
+  background: #1e1e1e;
+  border: 1px solid #3a3a3a;
+  border-radius: 4px;
+  display: flex;
+  align-items: center;
+  padding: 0 14px;
+  gap: 10px;
+  box-sizing: border-box;
+}
+
+.auth-captcha-check {
+  width: 22px;
+  height: 22px;
+  border: 1px solid #8b8b8b;
+  border-radius: 3px;
+  flex-shrink: 0;
+}
+
+.auth-captcha-label {
+  font-size: 12px;
+  color: #ffffff;
+  font-family: 'Supreme', sans-serif;
+  flex: 1;
+  white-space: nowrap;
+}
+
+.auth-captcha-brand {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 1px;
+  flex-shrink: 0;
+}
+
+.auth-captcha-cf-name {
+  font-size: 9px;
+  color: #f4811f;
+  font-family: sans-serif;
+  font-weight: 700;
+  letter-spacing: 0.5px;
+}
+
+.auth-captcha-cf-links {
+  font-size: 8px;
+  color: #666;
+  font-family: sans-serif;
+  white-space: nowrap;
+}
+
+/* ==================== REGISTRACE PAGE ==================== */
+.reg-heading  { top: 317px; }
+.reg-subtext  { top: 409px; }
+.reg-input-fname   { left: 1039px; top: 471px; width: 187px; }
+.reg-input-lname   { left: 1236px; top: 471px; width: 187px; }
+.reg-input-email   { left: 1039px; top: 525px; width: 384px; }
+.reg-select-phone  { left: 1039px; top: 579px; width:  91px; }
+.reg-input-phone   { left: 1139px; top: 579px; width: 284px; }
+.reg-input-pass    { left: 1039px; top: 633px; width: 384px; }
+.reg-input-pass2   { left: 1039px; top: 687px; width: 384px; }
+.reg-checkbox      { left: 1039px; top: 753px; }
+.reg-btn           { left: 1039px; top: 815px; }
+.reg-divider       { left: 1039px; top: 882px; }
+.reg-social-google { left: 1039px; top: 920px; }
+.reg-social-apple  { left: 1237px; top: 920px; }
+
+/* ==================== PRIHLASENI PAGE ==================== */
+.pri-heading  { top: 343px; }
+.pri-subtext  { top: 477px; }
+.pri-input-email   { left: 1039px; top: 540px; width: 384px; }
+.pri-input-pass    { left: 1039px; top: 597px; width: 384px; }
+.pri-forgot        { left: 1039px; top: 654px; }
+.pri-captcha       { left: 1039px; top: 678px; }
+.pri-btn           { left: 1039px; top: 783px; }
+.pri-divider       { left: 1039px; top: 851px; }
+.pri-social-google { left: 1039px; top: 890px; }
+.pri-social-apple  { left: 1237px; top: 890px; }
+
+/* ==================== ZAPOMENUTEHESLO PAGE ==================== */
+.zap-heading  { top: 438px; }
+.zap-subtext  { top: 532px; width: 300px; line-height: 22px; }
+.zap-input-email { left: 1039px; top: 629px; width: 384px; }
+.zap-btn         { left: 1039px; top: 693px; }
