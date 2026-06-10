@@ -1591,8 +1591,10 @@ body {
 
 .ceny-toggle-monthly {
   position: absolute;
-  left: 44px;
+  left: 5px;
   top: 12px;
+  width: 140px;
+  text-align: center;
   font-size: 16px;
   font-weight: 700;
   color: #0d0e11;
@@ -1602,8 +1604,10 @@ body {
 
 .ceny-toggle-annual {
   position: absolute;
-  left: 169px;
+  left: 136px;
   top: 12px;
+  width: 140px;
+  text-align: center;
   font-size: 16px;
   font-weight: 700;
   color: #ffffff;
