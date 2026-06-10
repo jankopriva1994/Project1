@@ -535,12 +535,13 @@ body {
 
 .ai-services-subtext {
   position: absolute;
-  left: 478px;
+  left: 228px;
   top: 3368px;
-  width: 720px;
+  width: 1224px;
   font-size: 20px;
   line-height: 40px;
   text-align: center;
+  white-space: nowrap;
   color: #ffffff;
 }
 
@@ -572,7 +573,7 @@ body {
   width: 144px;
   text-align: center;
   font-size: 16px;
-  font-weight: 700;
+  font-weight: 600;
   color: #ffffff;
   font-family: 'Geist', sans-serif;
 }
@@ -618,7 +619,7 @@ body {
   position: absolute;
   left: 277px;
   top: 3674px;
-  width: 417px;
+  width: 520px;
   font-size: 50px;
   font-weight: 600;
   line-height: 65px;
@@ -628,7 +629,7 @@ body {
 .ai-chat-desc {
   position: absolute;
   left: 277px;
-  top: 3814px;
+  top: 3819px;
   width: 512px;
   font-size: 16px;
   line-height: 25px;
