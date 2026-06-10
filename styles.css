@@ -6,9 +6,16 @@
   box-sizing: border-box;
 }
 
-html, body {
-  background: #0d0e11;
+html {
+  background: radial-gradient(ellipse 840px 3394px at 0 0, #202020 0%, #0d0e11 100%);
+  background-attachment: fixed;
+  min-height: 100%;
+}
+
+body {
+  background: transparent;
   font-family: 'Geist', sans-serif;
+  min-height: 100vh;
 }
 
 .page {
@@ -16,7 +23,7 @@ html, body {
   width: 1680px;
   min-height: 6800px;
   overflow: hidden;
-  background: radial-gradient(ellipse 840px 3394px at 0 0, #202020 0%, #0d0e11 100%);
+  background: transparent;
   margin: 0 auto;
 }
 
