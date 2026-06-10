@@ -335,21 +335,13 @@ body {
 
 /* ===================== BENEFITS SECTION ===================== */
 .benefits-chip {
-  position: absolute;
-  left: 228px;
-  top: 2447px;
-  background: #2b2d31;
-  border-radius: 7px;
-  padding: 4px 12px;
-  font-size: 10px;
-  color: #505050;
-  font-family: 'Supreme', sans-serif;
+  display: none;
 }
 
 .benefits-heading {
   position: absolute;
   left: 228px;
-  top: 2547px;
+  top: 2437px;
   width: 322px;
   font-size: 40px;
   font-weight: 700;
@@ -361,11 +353,11 @@ body {
 .benefits-desc {
   position: absolute;
   left: 228px;
-  top: 2656px;
+  top: 2546px;
   width: 420px;
-  font-size: 20px;
+  font-size: 16px;
   color: #ffffff;
-  line-height: 30px;
+  line-height: 24px;
   font-family: 'Supreme', sans-serif;
   font-weight: 400;
 }
@@ -373,7 +365,7 @@ body {
 .benefits-cta {
   position: absolute;
   left: 228px;
-  top: 2812px;
+  top: 2686px;
   width: 300px;
   height: 66px;
   border: 1px solid #d0ee52;
