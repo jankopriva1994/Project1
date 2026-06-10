@@ -17,6 +17,7 @@ html, body {
   min-height: 6800px;
   overflow: hidden;
   background: radial-gradient(ellipse 840px 3394px at 0 0, #202020 0%, #0d0e11 100%);
+  margin: 0 auto;
 }
 
 .accent {
