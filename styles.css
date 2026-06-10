@@ -155,6 +155,7 @@ body {
   cursor: pointer;
   text-decoration: none;
   gap: 0;
+  font-weight: 700;
 }
 
 .nav-separator {
@@ -196,10 +197,12 @@ body {
   left: 436px;
   top: 444px;
   width: 767px;
-  font-size: 20px;
-  line-height: 40px;
+  font-size: 16px;
+  line-height: 24px;
   text-align: center;
   color: #ffffff;
+  font-family: 'Supreme', sans-serif;
+  font-weight: 400;
 }
 
 .hero-cta {
@@ -216,7 +219,7 @@ body {
   justify-content: center;
   font-family: 'Supreme', sans-serif;
   font-size: 20px;
-  font-weight: 600;
+  font-weight: 700;
   color: #ffffff;
   cursor: pointer;
   text-decoration: none;
@@ -245,6 +248,8 @@ body {
   line-height: 40px;
   text-align: center;
   color: #ffffff;
+  font-family: 'Supreme', sans-serif;
+  font-weight: 400;
 }
 
 .features-img-large {
@@ -363,6 +368,8 @@ body {
   font-size: 16px;
   color: #ffffff;
   line-height: 24px;
+  font-family: 'Supreme', sans-serif;
+  font-weight: 400;
 }
 
 .benefits-cta {
@@ -379,7 +386,7 @@ body {
   justify-content: center;
   font-family: 'Supreme', sans-serif;
   font-size: 20px;
-  font-weight: 600;
+  font-weight: 700;
   color: #ffffff;
   cursor: pointer;
   text-decoration: none;
@@ -574,6 +581,8 @@ body {
   text-align: center;
   white-space: nowrap;
   color: #ffffff;
+  font-family: 'Supreme', sans-serif;
+  font-weight: 400;
 }
 
 /* Tabs bar */
@@ -664,8 +673,10 @@ body {
   top: 3819px;
   width: 512px;
   font-size: 16px;
-  line-height: 25px;
+  line-height: 24px;
   color: #ffffff;
+  font-family: 'Supreme', sans-serif;
+  font-weight: 400;
 }
 
 .ai-chat-img {
@@ -733,8 +744,10 @@ body {
   top: 4351px;
   width: 298px;
   font-size: 16px;
-  line-height: 25px;
+  line-height: 24px;
   color: #ffffff;
+  font-family: 'Supreme', sans-serif;
+  font-weight: 400;
 }
 
 .review-c1-name {
@@ -744,6 +757,7 @@ body {
   font-size: 20px;
   font-weight: 700;
   color: #d0ee52;
+  font-family: 'Supreme', sans-serif;
 }
 
 /* Review card 2 */
@@ -763,8 +777,10 @@ body {
   top: 4351px;
   width: 298px;
   font-size: 16px;
-  line-height: 25px;
+  line-height: 24px;
   color: #ffffff;
+  font-family: 'Supreme', sans-serif;
+  font-weight: 400;
 }
 
 .review-c2-name {
@@ -774,6 +790,7 @@ body {
   font-size: 20px;
   font-weight: 700;
   color: #d0ee52;
+  font-family: 'Supreme', sans-serif;
 }
 
 /* Review card 3 */
@@ -793,8 +810,10 @@ body {
   top: 4648px;
   width: 298px;
   font-size: 16px;
-  line-height: 25px;
+  line-height: 24px;
   color: #ffffff;
+  font-family: 'Supreme', sans-serif;
+  font-weight: 400;
 }
 
 .review-c3-name {
@@ -804,6 +823,7 @@ body {
   font-size: 20px;
   font-weight: 700;
   color: #d0ee52;
+  font-family: 'Supreme', sans-serif;
 }
 
 /* Review card 4 */
@@ -823,8 +843,10 @@ body {
   top: 4573px;
   width: 298px;
   font-size: 16px;
-  line-height: 25px;
+  line-height: 24px;
   color: #ffffff;
+  font-family: 'Supreme', sans-serif;
+  font-weight: 400;
 }
 
 .review-c4-name {
@@ -834,6 +856,7 @@ body {
   font-size: 20px;
   font-weight: 700;
   color: #d0ee52;
+  font-family: 'Supreme', sans-serif;
 }
 
 .reviews-separator {
@@ -1078,10 +1101,11 @@ body {
   border-radius: 7px;
   border: none;
   padding: 0 16px;
-  font-family: 'Geist', sans-serif;
+  font-family: 'Supreme', sans-serif;
   font-size: 16px;
   color: #505050;
   outline: none;
+  font-weight: 400;
 }
 
 .newsletter-input::placeholder {
@@ -1097,7 +1121,7 @@ body {
   background: #d0ee52;
   border-radius: 7px;
   border: none;
-  font-family: 'Geist', sans-serif;
+  font-family: 'Supreme', sans-serif;
   font-size: 16px;
   font-weight: 700;
   color: #0d0e11;
@@ -1133,6 +1157,8 @@ body {
   font-size: 16px;
   line-height: 22px;
   color: #ffffff;
+  font-family: 'Supreme', sans-serif;
+  font-weight: 400;
 }
 
 /* Footer columns */
@@ -1316,6 +1342,8 @@ body {
   top: 6736px;
   font-size: 16px;
   color: #ffffff;
+  font-family: 'Supreme', sans-serif;
+  font-weight: 400;
 }
 
 .footer-privacy {
@@ -1325,4 +1353,6 @@ body {
   font-size: 16px;
   color: #ffffff;
   text-decoration: none;
+  font-family: 'Supreme', sans-serif;
+  font-weight: 400;
 }
