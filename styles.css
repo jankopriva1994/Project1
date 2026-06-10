@@ -334,17 +334,17 @@ body {
 .benefits-desc {
   position: absolute;
   left: 228px;
-  top: 2652px;
+  top: 2651px;
   width: 457px;
   font-size: 16px;
   color: #ffffff;
-  line-height: 22px;
+  line-height: 24px;
 }
 
 .benefits-cta {
   position: absolute;
   left: 228px;
-  top: 2735px;
+  top: 2733px;
   width: 300px;
   height: 66px;
   border: 1px solid #d0ee52;
@@ -384,8 +384,8 @@ body {
   position: absolute;
   left: 910px;
   top: 2448px;
-  font-size: 20px;
-  font-weight: 700;
+  font-size: 18px;
+  font-weight: 600;
   color: #d0ee52;
 }
 
@@ -393,16 +393,18 @@ body {
   position: absolute;
   left: 910px;
   top: 2483px;
-  font-size: 16px;
+  font-size: 14px;
+  width: 253px;
   color: #ffffff;
+  line-height: 20px;
 }
 
 .benefit-c1-r2-title {
   position: absolute;
   left: 910px;
   top: 2608px;
-  font-size: 20px;
-  font-weight: 700;
+  font-size: 18px;
+  font-weight: 600;
   color: #d0ee52;
 }
 
@@ -410,16 +412,18 @@ body {
   position: absolute;
   left: 910px;
   top: 2643px;
-  font-size: 16px;
+  font-size: 14px;
+  width: 253px;
   color: #ffffff;
+  line-height: 20px;
 }
 
 .benefit-c1-r3-title {
   position: absolute;
   left: 910px;
   top: 2782px;
-  font-size: 20px;
-  font-weight: 700;
+  font-size: 18px;
+  font-weight: 600;
   color: #d0ee52;
 }
 
@@ -427,8 +431,10 @@ body {
   position: absolute;
   left: 910px;
   top: 2817px;
-  font-size: 16px;
+  font-size: 14px;
+  width: 253px;
   color: #ffffff;
+  line-height: 20px;
 }
 
 /* Benefits grid col 2 */
@@ -437,7 +443,7 @@ body {
   left: 1221px;
   top: 2437px;
   font-size: 18px;
-  font-weight: 700;
+  font-weight: 600;
   color: #d0ee52;
 }
 
@@ -455,8 +461,8 @@ body {
   position: absolute;
   left: 1221px;
   top: 2597px;
-  font-size: 20px;
-  font-weight: 700;
+  font-size: 18px;
+  font-weight: 600;
   color: #d0ee52;
 }
 
@@ -465,17 +471,17 @@ body {
   left: 1221px;
   top: 2632px;
   width: 210px;
-  font-size: 16px;
+  font-size: 14px;
   color: #ffffff;
-  line-height: 22px;
+  line-height: 20px;
 }
 
 .benefit-c2-r3-title {
   position: absolute;
   left: 1221px;
   top: 2782px;
-  font-size: 20px;
-  font-weight: 700;
+  font-size: 18px;
+  font-weight: 600;
   color: #d0ee52;
 }
 
@@ -483,8 +489,10 @@ body {
   position: absolute;
   left: 1221px;
   top: 2817px;
-  font-size: 16px;
+  font-size: 14px;
+  width: 210px;
   color: #ffffff;
+  line-height: 20px;
 }
 
 .benefits-separator {
