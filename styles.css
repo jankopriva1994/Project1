@@ -68,10 +68,19 @@ body {
   border-radius: 50%;
 }
 
-.nav-link-active {
+.nav-ai-wrap {
   position: absolute;
   left: 538px;
-  top: 69px;
+  top: 60px;
+  display: flex;
+  align-items: center;
+  gap: 4px;
+  cursor: pointer;
+  z-index: 100;
+}
+
+.nav-link-active {
+  position: static;
   font-size: 16px;
   color: #d0ee52;
   font-weight: 700;
@@ -80,11 +89,41 @@ body {
 }
 
 .nav-caret {
-  position: absolute;
-  left: 610px;
-  top: 72px;
+  position: static;
   font-size: 10px;
   color: #ffffff;
+  line-height: 1;
+  margin-top: 3px;
+}
+
+.nav-dropdown {
+  display: none;
+  position: absolute;
+  top: calc(100% + 8px);
+  left: 0;
+  background: #272727;
+  border-radius: 7px;
+  padding: 8px 0;
+  min-width: 150px;
+  box-shadow: 0 8px 24px rgba(0,0,0,0.4);
+}
+
+.nav-ai-wrap:hover .nav-dropdown {
+  display: block;
+}
+
+.nav-dropdown-item {
+  display: block;
+  padding: 10px 20px;
+  font-size: 16px;
+  color: #ffffff;
+  text-decoration: none;
+  font-family: 'Supreme', sans-serif;
+  white-space: nowrap;
+}
+
+.nav-dropdown-item:hover {
+  color: #d0ee52;
 }
 
 .nav-link-ceny {
