@@ -900,8 +900,10 @@ body {
   left: 228px;
   top: 5371px;
   font-size: 25px;
+  font-weight: 400;
   line-height: 40px;
   color: #ffffff;
+  font-family: 'Supreme', sans-serif;
 }
 
 .blog-all-link {
@@ -918,9 +920,9 @@ body {
 .blog-arrow-link {
   position: absolute;
   left: 1432px;
-  top: 5388px;
-  width: 23px;
-  height: 23px;
+  top: 5376px;
+  width: 16px;
+  height: 16px;
   transform: rotate(-45deg);
   display: block;
   object-fit: contain;
@@ -994,6 +996,8 @@ body {
   left: 228px;
   top: 5762px;
   font-size: 20px;
+  font-weight: 400;
+  font-family: 'Supreme', sans-serif;
   color: #ffffff;
   line-height: 27px;
 }
@@ -1003,6 +1007,8 @@ body {
   left: 654px;
   top: 5762px;
   font-size: 20px;
+  font-weight: 400;
+  font-family: 'Supreme', sans-serif;
   color: #ffffff;
   line-height: 27px;
 }
@@ -1012,6 +1018,8 @@ body {
   left: 1079px;
   top: 5762px;
   font-size: 20px;
+  font-weight: 400;
+  font-family: 'Supreme', sans-serif;
   color: #ffffff;
   line-height: 27px;
 }
