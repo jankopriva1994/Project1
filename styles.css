@@ -1405,6 +1405,419 @@ body {
 .blog-list-page .footer-copyright          { top: 2624px;  left: 228px; }
 .blog-list-page .footer-privacy            { top: 2624px;  left: 1109px; }
 
+/* ===================== CENY PAGE ===================== */
+.ceny-page {
+  min-height: 2703px;
+}
+
+/* Nav overrides */
+.ceny-page .nav-link-active { color: #ffffff; font-weight: 400; }
+.ceny-page .nav-link-ceny   { color: #d0ee52; font-weight: 700; text-decoration: underline; }
+
+/* Wave */
+.ceny-wave {
+  position: absolute;
+  left: 0;
+  top: 1540px;
+  width: 1680px;
+  height: 946px;
+  mix-blend-mode: screen;
+  object-fit: cover;
+  display: block;
+  pointer-events: none;
+}
+
+/* Hero */
+.ceny-title {
+  position: absolute;
+  left: 374px;
+  top: 299px;
+  width: 932px;
+  font-size: 50px;
+  font-weight: 700;
+  line-height: 65px;
+  text-align: center;
+  color: #ffffff;
+  font-family: 'Supreme', sans-serif;
+}
+
+.ceny-subtitle {
+  position: absolute;
+  left: 375px;
+  top: 380px;
+  width: 931px;
+  font-size: 25px;
+  font-weight: 400;
+  line-height: 40px;
+  text-align: center;
+  color: #ffffff;
+  font-family: 'Supreme', sans-serif;
+}
+
+/* Banner */
+.ceny-banner {
+  position: absolute;
+  left: 545px;
+  top: 475px;
+  width: 589px;
+  height: 41px;
+  background: #272727;
+}
+
+.ceny-banner-text {
+  position: absolute;
+  left: 545px;
+  top: 476px;
+  width: 589px;
+  text-align: center;
+  font-size: 16px;
+  font-weight: 400;
+  line-height: 40px;
+  color: #ffffff;
+  font-family: 'Supreme', sans-serif;
+  white-space: nowrap;
+}
+
+.ceny-banner-text strong { font-weight: 700; color: #d0ee52; }
+
+.ceny-banner-link {
+  color: #d0ee52;
+  text-decoration: underline;
+}
+
+/* Avatars */
+.ceny-avatar {
+  position: absolute;
+  top: 552px;
+  width: 36px;
+  height: 36px;
+  border-radius: 50%;
+  display: block;
+}
+.ceny-avatar-1 { left: 700px; }
+.ceny-avatar-2 { left: 720px; }
+.ceny-avatar-3 { left: 738px; }
+.ceny-avatar-4 { left: 756px; }
+.ceny-avatar-5 { left: 774px; }
+
+.ceny-stars {
+  position: absolute;
+  left: 825px;
+  top: 550px;
+  width: 115px;
+  height: 18px;
+  display: block;
+}
+
+.ceny-score {
+  position: absolute;
+  left: 951px;
+  top: 539px;
+  font-size: 16px;
+  font-weight: 700;
+  color: #d0ee52;
+  font-family: 'Supreme', sans-serif;
+  line-height: 40px;
+}
+
+.ceny-customers {
+  position: absolute;
+  left: 826px;
+  top: 561px;
+  font-size: 16px;
+  color: #8b8b8b;
+  font-family: 'Supreme', sans-serif;
+  line-height: 40px;
+}
+
+/* Billing toggle */
+.ceny-toggle {
+  position: absolute;
+  left: 699px;
+  top: 618px;
+  width: 281px;
+  height: 66px;
+  background: #2b2d31;
+  border-radius: 12px;
+}
+
+.ceny-toggle-pill {
+  position: absolute;
+  left: 5px;
+  top: 4px;
+  width: 140px;
+  height: 58px;
+  background: #d0ee52;
+  border-radius: 12px;
+}
+
+.ceny-toggle-monthly {
+  position: absolute;
+  left: 44px;
+  top: 12px;
+  font-size: 16px;
+  font-weight: 700;
+  color: #0d0e11;
+  font-family: 'Supreme', sans-serif;
+  line-height: 42px;
+}
+
+.ceny-toggle-annual {
+  position: absolute;
+  left: 169px;
+  top: 12px;
+  font-size: 16px;
+  font-weight: 700;
+  color: #ffffff;
+  font-family: 'Supreme', sans-serif;
+  line-height: 42px;
+}
+
+/* Save badge + decoration */
+.ceny-save-badge {
+  position: absolute;
+  left: 1077px;
+  top: 692px;
+  width: 110px;
+  height: 30px;
+  background: #2b2d31;
+  border-radius: 7px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 14px;
+  font-weight: 700;
+  color: #d0ee52;
+  font-family: 'Supreme', sans-serif;
+}
+
+.ceny-dot {
+  position: absolute;
+  left: 995px;
+  top: 678px;
+  width: 9px;
+  height: 9px;
+  background: #d0ee52;
+}
+
+.ceny-arrow {
+  position: absolute;
+  left: 1001px;
+  top: 684px;
+  width: 65px;
+  height: 23px;
+  display: block;
+}
+
+/* ---- Pricing plans ---- */
+
+/* Token labels */
+.ceny-plan-label {
+  position: absolute;
+  top: 847px;
+  width: 285px;
+  text-align: center;
+  font-size: 16px;
+  font-weight: 700;
+  color: #d0ee52;
+  font-family: 'Supreme', sans-serif;
+  line-height: 24px;
+}
+.ceny-plan-label-p1 { left: 228px; }
+.ceny-plan-label-p2 { left: 541px; }
+.ceny-plan-label-p3 { left: 854px; }
+.ceny-plan-label-p4 { left: 1167px; }
+
+/* Popular label */
+.ceny-popular {
+  position: absolute;
+  left: 572px;
+  top: 825px;
+  font-size: 14px;
+  color: #8b8b8b;
+  font-family: 'Supreme', sans-serif;
+  line-height: 20px;
+}
+
+/* Price boxes */
+.ceny-plan-box {
+  position: absolute;
+  top: 886px;
+  width: 285px;
+  height: 141px;
+  background: #272727;
+  border-radius: 10px;
+}
+.ceny-plan-box-p1 { left: 228px; }
+.ceny-plan-box-p2 { left: 541px; }
+.ceny-plan-box-p3 { left: 854px; }
+.ceny-plan-box-p4 { left: 1167px; }
+
+/* Price text */
+.ceny-plan-price {
+  position: absolute;
+  top: 905px;
+  white-space: nowrap;
+  line-height: 32px;
+}
+.ceny-plan-price-p1 { left: 264px; }
+.ceny-plan-price-p2 { left: 577px; }
+.ceny-plan-price-p3 { left: 890px; }
+.ceny-plan-price-p4 { left: 1203px; }
+
+.ceny-price-amount {
+  font-size: 30px;
+  font-weight: 700;
+  color: #d0ee52;
+  font-family: 'Supreme', sans-serif;
+  line-height: 32px;
+}
+.ceny-price-slash {
+  font-size: 20px;
+  color: #d0ee52;
+  font-family: 'Supreme', sans-serif;
+  line-height: 32px;
+}
+.ceny-price-unit {
+  font-size: 20px;
+  color: #8b8b8b;
+  font-family: 'Supreme', sans-serif;
+  line-height: 32px;
+}
+
+/* Price notes */
+.ceny-plan-note {
+  position: absolute;
+  top: 938px;
+  font-size: 14px;
+  color: #8b8b8b;
+  font-family: 'Supreme', sans-serif;
+  line-height: 20px;
+  white-space: nowrap;
+}
+.ceny-plan-note-p1 { left: 264px; }
+.ceny-plan-note-p2 { left: 577px; }
+.ceny-plan-note-p3 { left: 890px; }
+.ceny-plan-note-p4 { left: 1203px; }
+
+/* CTA buttons */
+.ceny-plan-cta {
+  position: absolute;
+  top: 977px;
+  width: 285px;
+  height: 50px;
+  background: #d0ee52;
+  border-radius: 7px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 20px;
+  font-weight: 700;
+  color: #0d0e11;
+  font-family: 'Supreme', sans-serif;
+  text-decoration: none;
+  cursor: pointer;
+}
+.ceny-plan-cta-p1 { left: 228px; }
+.ceny-plan-cta-p2 { left: 541px; }
+.ceny-plan-cta-p3 { left: 854px; }
+.ceny-plan-cta-p4 { left: 1167px; }
+
+/* ---- Feature list items ---- */
+.ceny-fi {
+  position: absolute;
+  width: 11px;
+  height: 9px;
+  display: block;
+  background: url('https://www.figma.com/api/mcp/asset/f178ea39-2478-40bc-b561-759ad541594e') no-repeat center/contain;
+}
+
+.ceny-ft {
+  position: absolute;
+  font-size: 16px;
+  color: #ffffff;
+  font-family: 'Supreme', sans-serif;
+  line-height: 32px;
+  white-space: nowrap;
+}
+
+/* Plan column left positions – icons */
+.ceny-fip1 { left: 277px; }
+.ceny-fip2 { left: 582px; }
+.ceny-fip3 { left: 896px; }
+.ceny-fip4 { left: 1209px; }
+
+/* Plan column left positions – text */
+.ceny-ftp1 { left: 297px; }
+.ceny-ftp2 { left: 602px; }
+.ceny-ftp3 { left: 916px; }
+.ceny-ftp4 { left: 1229px; }
+
+/* Feature row top positions – text */
+.ceny-fr1  { top: 1069px; }
+.ceny-fr2  { top: 1099px; }
+.ceny-fr3  { top: 1129px; }
+.ceny-fr4  { top: 1159px; }
+.ceny-fr5  { top: 1188px; }
+.ceny-fr6  { top: 1218px; }
+.ceny-fr7  { top: 1248px; }
+.ceny-fr8  { top: 1278px; }
+.ceny-fr9  { top: 1308px; }
+.ceny-fr10 { top: 1338px; }
+.ceny-fr11 { top: 1367px; }
+.ceny-fr12 { top: 1397px; }
+.ceny-fr13 { top: 1427px; }
+.ceny-fr14 { top: 1457px; }
+
+/* Feature row top positions – icons (text top + 12px) */
+.ceny-ir1  { top: 1081px; }
+.ceny-ir2  { top: 1111px; }
+.ceny-ir3  { top: 1141px; }
+.ceny-ir4  { top: 1171px; }
+.ceny-ir5  { top: 1200px; }
+.ceny-ir6  { top: 1230px; }
+.ceny-ir7  { top: 1260px; }
+.ceny-ir8  { top: 1290px; }
+.ceny-ir9  { top: 1320px; }
+.ceny-ir10 { top: 1350px; }
+.ceny-ir11 { top: 1379px; }
+.ceny-ir12 { top: 1409px; }
+.ceny-ir13 { top: 1439px; }
+.ceny-ir14 { top: 1469px; }
+
+/* Support column 3rd link */
+.footer-col-support-link3 {
+  position: absolute;
+  left: 1215px;
+  top: 5639px;
+  font-size: 16px;
+  color: #ffffff;
+  text-decoration: none;
+}
+
+/* Footer overrides – ceny page */
+.ceny-page .footer-logo               { top: 2342px; left: 228px; }
+.ceny-page .footer-desc               { top: 2406px; left: 228px; }
+.ceny-page .footer-col-services-header { top: 2342px; left: 744px; }
+.ceny-page .footer-col-services-link1  { top: 2379px; left: 744px; }
+.ceny-page .footer-col-services-link2  { top: 2415px; left: 744px; }
+.ceny-page .footer-col-services-link3  { top: 2451px; left: 744px; }
+.ceny-page .footer-col-services-link4  { top: 2487px; left: 744px; }
+.ceny-page .footer-col-info-header    { top: 2342px; left: 951px; }
+.ceny-page .footer-col-info-link1     { top: 2379px; left: 951px; }
+.ceny-page .footer-col-info-link2     { top: 2415px; left: 951px; }
+.ceny-page .footer-col-info-link3     { top: 2451px; left: 951px; }
+.ceny-page .footer-col-info-link4     { top: 2487px; left: 951px; }
+.ceny-page .footer-col-support-header { top: 2342px; left: 1191px; }
+.ceny-page .footer-col-support-link1  { top: 2379px; left: 1191px; }
+.ceny-page .footer-col-support-link2  { top: 2415px; left: 1191px; }
+.ceny-page .footer-col-support-link3  { top: 2451px; left: 1191px; }
+.ceny-page .social-link-insta         { top: 2534px; left: 228px; }
+.ceny-page .social-link-fb            { top: 2534px; left: 337px; }
+.ceny-page .footer-line               { top: 2598px; left: 228px; width: 1224px; }
+.ceny-page .footer-copyright          { top: 2629px; left: 228px; }
+.ceny-page .footer-privacy            { top: 2629px; left: 1138px; }
+
 /* ===================== BLOG DETAIL PAGE ===================== */
 .blog-detail-page {
   min-height: 980px;
