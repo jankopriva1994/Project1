@@ -71,13 +71,13 @@ body {
 .nav-ai-wrap {
   position: absolute;
   left: 538px;
-  top: 60px;
+  top: 69px;
   display: flex;
-  align-items: center;
+  align-items: baseline;
   gap: 4px;
   cursor: pointer;
   z-index: 100;
-  padding-bottom: 16px;
+  padding-bottom: 20px;
 }
 
 .nav-link-active {
@@ -93,8 +93,6 @@ body {
   position: static;
   font-size: 10px;
   color: #ffffff;
-  line-height: 1;
-  margin-top: 3px;
 }
 
 .nav-dropdown {
