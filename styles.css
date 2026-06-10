@@ -1611,6 +1611,24 @@ body {
   line-height: 42px;
 }
 
+/* Toggle annual-active state */
+.ceny-toggle.annual-active .ceny-toggle-pill {
+  left: 136px;
+}
+.ceny-toggle.annual-active .ceny-toggle-monthly {
+  color: #ffffff;
+}
+.ceny-toggle.annual-active .ceny-toggle-annual {
+  color: #0d0e11;
+}
+.ceny-toggle-monthly,
+.ceny-toggle-annual {
+  cursor: pointer;
+}
+.ceny-toggle-pill {
+  transition: left 0.2s ease;
+}
+
 /* Save badge + decoration */
 .ceny-save-badge {
   position: absolute;

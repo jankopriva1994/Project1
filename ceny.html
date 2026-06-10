@@ -4,7 +4,7 @@
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <title>Ceny – Chaties AI</title>
-  <link rel="stylesheet" href="styles.css?v=30" />
+  <link rel="stylesheet" href="styles.css?v=31" />
 </head>
 <body>
   <div class="page ceny-page">
@@ -90,16 +90,16 @@
     <div class="ceny-plan-box ceny-plan-box-p4"></div>
 
     <!-- Prices -->
-    <p class="ceny-plan-price ceny-plan-price-p1"><span class="ceny-price-amount">125 Kč </span><span class="ceny-price-slash">/</span><span class="ceny-price-unit">měsíc</span></p>
-    <p class="ceny-plan-price ceny-plan-price-p2"><span class="ceny-price-amount">670 Kč </span><span class="ceny-price-slash">/</span><span class="ceny-price-unit">měsíc</span></p>
-    <p class="ceny-plan-price ceny-plan-price-p3"><span class="ceny-price-amount">1 199 Kč </span><span class="ceny-price-slash">/</span><span class="ceny-price-unit">měsíc</span></p>
-    <p class="ceny-plan-price ceny-plan-price-p4"><span class="ceny-price-amount">1 690 Kč </span><span class="ceny-price-slash">/</span><span class="ceny-price-unit">měsíc</span></p>
+    <p class="ceny-plan-price ceny-plan-price-p1"><span class="ceny-price-amount" data-monthly="125 Kč " data-annual="106 Kč ">125 Kč </span><span class="ceny-price-slash">/</span><span class="ceny-price-unit">měsíc</span></p>
+    <p class="ceny-plan-price ceny-plan-price-p2"><span class="ceny-price-amount" data-monthly="670 Kč " data-annual="570 Kč ">670 Kč </span><span class="ceny-price-slash">/</span><span class="ceny-price-unit">měsíc</span></p>
+    <p class="ceny-plan-price ceny-plan-price-p3"><span class="ceny-price-amount" data-monthly="1 199 Kč " data-annual="1 020 Kč ">1 199 Kč </span><span class="ceny-price-slash">/</span><span class="ceny-price-unit">měsíc</span></p>
+    <p class="ceny-plan-price ceny-plan-price-p4"><span class="ceny-price-amount" data-monthly="1 690 Kč " data-annual="1 430 Kč ">1 690 Kč </span><span class="ceny-price-slash">/</span><span class="ceny-price-unit">měsíc</span></p>
 
     <!-- Price notes -->
-    <p class="ceny-plan-note ceny-plan-note-p1">Maximálně 1x měsíčně</p>
-    <p class="ceny-plan-note ceny-plan-note-p2">570 Kč měsíčně, při roční platbě.</p>
-    <p class="ceny-plan-note ceny-plan-note-p3">1.020 Kč měsíčně, při roční platbě.</p>
-    <p class="ceny-plan-note ceny-plan-note-p4">1.430 Kč měsíčně, při roční platbě.</p>
+    <p class="ceny-plan-note ceny-plan-note-p1" data-monthly="Maximálně 1x měsíčně" data-annual="106 Kč měsíčně, při roční platbě.">Maximálně 1x měsíčně</p>
+    <p class="ceny-plan-note ceny-plan-note-p2" data-monthly="570 Kč měsíčně, při roční platbě." data-annual="570 Kč měsíčně, při roční platbě.">570 Kč měsíčně, při roční platbě.</p>
+    <p class="ceny-plan-note ceny-plan-note-p3" data-monthly="1.020 Kč měsíčně, při roční platbě." data-annual="1.020 Kč měsíčně, při roční platbě.">1.020 Kč měsíčně, při roční platbě.</p>
+    <p class="ceny-plan-note ceny-plan-note-p4" data-monthly="1.430 Kč měsíčně, při roční platbě." data-annual="1.430 Kč měsíčně, při roční platbě.">1.430 Kč měsíčně, při roční platbě.</p>
 
     <!-- CTA buttons -->
     <a href="#" class="ceny-plan-cta ceny-plan-cta-p1">Chci to zkusit!</a>
@@ -223,5 +223,17 @@
     <a href="#" class="footer-privacy">Zásady ochrany osobních údajů</a>
 
   </div><!-- /.page -->
+  <script>
+    var toggle = document.querySelector('.ceny-toggle');
+    var amounts = document.querySelectorAll('.ceny-price-amount');
+    var notes = document.querySelectorAll('[data-monthly][data-annual].ceny-plan-note');
+
+    toggle.addEventListener('click', function () {
+      var annual = toggle.classList.toggle('annual-active');
+      var key = annual ? 'annual' : 'monthly';
+      amounts.forEach(function (el) { el.textContent = el.dataset[key]; });
+      notes.forEach(function (el) { el.textContent = el.dataset[key]; });
+    });
+  </script>
 </body>
 </html>
