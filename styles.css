@@ -392,9 +392,9 @@ body {
 .benefit-c1-r1-text {
   position: absolute;
   left: 910px;
-  top: 2483px;
+  top: 2490px;
   font-size: 14px;
-  width: 253px;
+  width: 168px;
   color: #ffffff;
   line-height: 20px;
 }
@@ -411,9 +411,9 @@ body {
 .benefit-c1-r2-text {
   position: absolute;
   left: 910px;
-  top: 2643px;
+  top: 2650px;
   font-size: 14px;
-  width: 253px;
+  width: 204px;
   color: #ffffff;
   line-height: 20px;
 }
@@ -430,9 +430,9 @@ body {
 .benefit-c1-r3-text {
   position: absolute;
   left: 910px;
-  top: 2817px;
+  top: 2824px;
   font-size: 14px;
-  width: 253px;
+  width: 181px;
   color: #ffffff;
   line-height: 20px;
 }
@@ -450,8 +450,8 @@ body {
 .benefit-c2-r1-text {
   position: absolute;
   left: 1221px;
-  top: 2472px;
-  width: 210px;
+  top: 2479px;
+  width: 211px;
   font-size: 14px;
   color: #ffffff;
   line-height: 20px;
@@ -469,8 +469,8 @@ body {
 .benefit-c2-r2-text {
   position: absolute;
   left: 1221px;
-  top: 2632px;
-  width: 210px;
+  top: 2639px;
+  width: 173px;
   font-size: 14px;
   color: #ffffff;
   line-height: 20px;
@@ -488,9 +488,9 @@ body {
 .benefit-c2-r3-text {
   position: absolute;
   left: 1221px;
-  top: 2817px;
+  top: 2824px;
+  width: 151px;
   font-size: 14px;
-  width: 210px;
   color: #ffffff;
   line-height: 20px;
 }
