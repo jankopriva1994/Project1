@@ -33,7 +33,7 @@ body {
 .page {
   position: relative;
   width: 1680px;
-  min-height: 6800px;
+  min-height: 5880px;
   overflow: hidden;
   background: transparent;
   margin: 0 auto;
@@ -739,7 +739,7 @@ body {
 .blog-chip {
   position: absolute;
   left: 228px;
-  top: 5197px;
+  top: 4277px;
   width: 62px;
   height: 25px;
   background: #2b2d31;
@@ -755,7 +755,7 @@ body {
 .blog-heading {
   position: absolute;
   left: 228px;
-  top: 5231px;
+  top: 4311px;
   width: 513px;
   font-size: 50px;
   font-weight: 700;
@@ -767,7 +767,7 @@ body {
 .blog-subtext {
   position: absolute;
   left: 228px;
-  top: 5371px;
+  top: 4451px;
   font-size: 20px;
   font-weight: 400;
   line-height: 30px;
@@ -778,7 +778,7 @@ body {
 .blog-all-link {
   position: absolute;
   left: 1310px;
-  top: 5373px;
+  top: 4453px;
   font-size: 16px;
   font-weight: 700;
   color: #d0ee52;
@@ -789,7 +789,7 @@ body {
 .blog-arrow-link {
   position: absolute;
   left: 1432px;
-  top: 5376px;
+  top: 4456px;
   width: 16px;
   height: 16px;
   transform: rotate(-45deg);
@@ -801,7 +801,7 @@ body {
 .blog-img-1 {
   position: absolute;
   left: 228px;
-  top: 5497px;
+  top: 4577px;
   width: 373px;
   height: 226px;
   object-fit: cover;
@@ -811,7 +811,7 @@ body {
 .blog-img-2 {
   position: absolute;
   left: 654px;
-  top: 5497px;
+  top: 4577px;
   width: 373px;
   height: 226px;
   object-fit: cover;
@@ -821,7 +821,7 @@ body {
 .blog-img-3 {
   position: absolute;
   left: 1079px;
-  top: 5497px;
+  top: 4577px;
   width: 373px;
   height: 226px;
   object-fit: cover;
@@ -832,7 +832,7 @@ body {
 .blog-cat-1 {
   position: absolute;
   left: 228px;
-  top: 5722px;
+  top: 4802px;
   font-size: 16px;
   font-weight: 700;
   color: #d0ee52;
@@ -842,7 +842,7 @@ body {
 .blog-cat-2 {
   position: absolute;
   left: 654px;
-  top: 5722px;
+  top: 4802px;
   font-size: 16px;
   font-weight: 700;
   color: #d0ee52;
@@ -852,7 +852,7 @@ body {
 .blog-cat-3 {
   position: absolute;
   left: 1079px;
-  top: 5722px;
+  top: 4802px;
   font-size: 16px;
   font-weight: 700;
   color: #d0ee52;
@@ -863,7 +863,7 @@ body {
 .blog-title-1 {
   position: absolute;
   left: 228px;
-  top: 5762px;
+  top: 4842px;
   font-size: 20px;
   font-weight: 400;
   font-family: 'Supreme', sans-serif;
@@ -874,7 +874,7 @@ body {
 .blog-title-2 {
   position: absolute;
   left: 654px;
-  top: 5762px;
+  top: 4842px;
   font-size: 20px;
   font-weight: 400;
   font-family: 'Supreme', sans-serif;
@@ -885,7 +885,7 @@ body {
 .blog-title-3 {
   position: absolute;
   left: 1079px;
-  top: 5762px;
+  top: 4842px;
   font-size: 20px;
   font-weight: 400;
   font-family: 'Supreme', sans-serif;
@@ -896,7 +896,7 @@ body {
 .blog-arrow-1 {
   position: absolute;
   left: 581px;
-  top: 5783px;
+  top: 4863px;
   width: 23px;
   height: 23px;
   transform: rotate(-45deg);
@@ -907,7 +907,7 @@ body {
 .blog-arrow-2 {
   position: absolute;
   left: 1007px;
-  top: 5783px;
+  top: 4863px;
   width: 23px;
   height: 23px;
   transform: rotate(-45deg);
@@ -918,7 +918,7 @@ body {
 .blog-arrow-3 {
   position: absolute;
   left: 1432px;
-  top: 5783px;
+  top: 4863px;
   width: 23px;
   height: 23px;
   transform: rotate(-45deg);
@@ -930,7 +930,7 @@ body {
 .newsletter-chip {
   position: absolute;
   left: 766px;
-  top: 5972px;
+  top: 5052px;
   width: 148px;
   height: 25px;
   background: #2b2d31;
@@ -946,7 +946,7 @@ body {
 .newsletter-heading {
   position: absolute;
   left: 467px;
-  top: 6018px;
+  top: 5098px;
   width: 744px;
   font-size: 50px;
   font-weight: 700;
@@ -958,7 +958,7 @@ body {
 .newsletter-subtext {
   position: absolute;
   left: 407px;
-  top: 6167px;
+  top: 5247px;
   width: 865px;
   font-size: 20px;
   line-height: 30px;
@@ -971,7 +971,7 @@ body {
 .newsletter-input {
   position: absolute;
   left: 594px;
-  top: 6238px;
+  top: 5318px;
   width: 328px;
   height: 56px;
   background: #2b2d31;
@@ -992,7 +992,7 @@ body {
 .newsletter-btn {
   position: absolute;
   left: 932px;
-  top: 6238px;
+  top: 5318px;
   width: 155px;
   height: 56px;
   background: #d0ee52;
@@ -1010,7 +1010,7 @@ body {
 .footer-logo {
   position: absolute;
   left: 316px;
-  top: 6447px;
+  top: 5527px;
   font-size: 43px;
   color: #ffffff;
   font-weight: 500;
@@ -1021,7 +1021,7 @@ body {
 .footer-desc {
   position: absolute;
   left: 281px;
-  top: 6514px;
+  top: 5594px;
   width: 341px;
   font-size: 16px;
   line-height: 22px;
@@ -1034,7 +1034,7 @@ body {
 .footer-col-services-header {
   position: absolute;
   left: 768px;
-  top: 6450px;
+  top: 5530px;
   font-size: 18px;
   color: #d0ee52;
   font-weight: 700;
@@ -1043,7 +1043,7 @@ body {
 .footer-col-services-link1 {
   position: absolute;
   left: 768px;
-  top: 6487px;
+  top: 5567px;
   font-size: 16px;
   color: #ffffff;
   text-decoration: none;
@@ -1052,7 +1052,7 @@ body {
 .footer-col-services-link2 {
   position: absolute;
   left: 768px;
-  top: 6523px;
+  top: 5603px;
   font-size: 16px;
   color: #ffffff;
   text-decoration: none;
@@ -1061,7 +1061,7 @@ body {
 .footer-col-services-link3 {
   position: absolute;
   left: 768px;
-  top: 6559px;
+  top: 5639px;
   font-size: 16px;
   color: #ffffff;
   text-decoration: none;
@@ -1070,7 +1070,7 @@ body {
 .footer-col-services-link4 {
   position: absolute;
   left: 768px;
-  top: 6595px;
+  top: 5675px;
   font-size: 16px;
   color: #ffffff;
   text-decoration: none;
@@ -1079,7 +1079,7 @@ body {
 .footer-col-info-header {
   position: absolute;
   left: 975px;
-  top: 6450px;
+  top: 5530px;
   font-size: 18px;
   color: #d0ee52;
   font-weight: 700;
@@ -1088,7 +1088,7 @@ body {
 .footer-col-info-link1 {
   position: absolute;
   left: 975px;
-  top: 6487px;
+  top: 5567px;
   font-size: 16px;
   color: #ffffff;
   text-decoration: none;
@@ -1097,7 +1097,7 @@ body {
 .footer-col-info-link2 {
   position: absolute;
   left: 975px;
-  top: 6523px;
+  top: 5603px;
   font-size: 16px;
   color: #ffffff;
   text-decoration: none;
@@ -1106,7 +1106,7 @@ body {
 .footer-col-info-link3 {
   position: absolute;
   left: 975px;
-  top: 6559px;
+  top: 5639px;
   font-size: 16px;
   color: #ffffff;
   text-decoration: none;
@@ -1115,7 +1115,7 @@ body {
 .footer-col-info-link4 {
   position: absolute;
   left: 975px;
-  top: 6595px;
+  top: 5675px;
   font-size: 16px;
   color: #ffffff;
   text-decoration: none;
@@ -1124,7 +1124,7 @@ body {
 .footer-col-support-header {
   position: absolute;
   left: 1215px;
-  top: 6450px;
+  top: 5530px;
   font-size: 18px;
   color: #d0ee52;
   font-weight: 700;
@@ -1133,7 +1133,7 @@ body {
 .footer-col-support-link1 {
   position: absolute;
   left: 1215px;
-  top: 6487px;
+  top: 5567px;
   font-size: 16px;
   color: #ffffff;
   text-decoration: none;
@@ -1142,18 +1142,17 @@ body {
 .footer-col-support-link2 {
   position: absolute;
   left: 1215px;
-  top: 6523px;
+  top: 5603px;
   font-size: 16px;
   color: #ffffff;
   text-decoration: none;
 }
 
-
 /* Social icons */
 .social-link-insta {
   position: absolute;
   left: 281px;
-  top: 6642px;
+  top: 5722px;
   display: flex;
   align-items: center;
   gap: 8px;
@@ -1163,7 +1162,7 @@ body {
 .social-link-fb {
   position: absolute;
   left: 390px;
-  top: 6642px;
+  top: 5722px;
   display: flex;
   align-items: center;
   gap: 8px;
@@ -1185,7 +1184,7 @@ body {
 .footer-line {
   position: absolute;
   left: 281px;
-  top: 6705px;
+  top: 5785px;
   width: 1171px;
   height: 1px;
   background: #333333;
@@ -1194,7 +1193,7 @@ body {
 .footer-copyright {
   position: absolute;
   left: 277px;
-  top: 6736px;
+  top: 5816px;
   font-size: 16px;
   color: #ffffff;
   font-family: 'Supreme', sans-serif;
@@ -1204,7 +1203,7 @@ body {
 .footer-privacy {
   position: absolute;
   left: 1162px;
-  top: 6736px;
+  top: 5816px;
   font-size: 16px;
   color: #ffffff;
   text-decoration: none;
