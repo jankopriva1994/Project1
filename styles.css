@@ -1407,17 +1407,15 @@ body {
 
 /* ===================== BLOG DETAIL PAGE ===================== */
 .blog-detail-page {
-  min-height: 1440px;
+  min-height: 980px;
 }
 
 .bdetail-back {
-  position: absolute;
-  left: 228px;
-  top: 185px;
-  display: flex;
+  display: inline-flex;
   align-items: center;
   gap: 10px;
   text-decoration: none;
+  margin-top: 28px;
 }
 
 .bdetail-back-arrow {
@@ -1438,7 +1436,7 @@ body {
 .bdetail-title {
   position: absolute;
   left: 228px;
-  top: 225px;
+  top: 185px;
   width: 1000px;
   font-size: 50px;
   font-weight: 700;
@@ -1447,21 +1445,10 @@ body {
   font-family: 'Supreme', sans-serif;
 }
 
-.bdetail-hero {
-  position: absolute;
-  left: 0;
-  top: 370px;
-  width: 1680px;
-  height: 660px;
-  mix-blend-mode: screen;
-  object-fit: cover;
-  display: block;
-}
-
 .bdetail-article {
   position: absolute;
   left: 228px;
-  top: 450px;
+  top: 340px;
   width: 900px;
 }
 
@@ -1470,59 +1457,28 @@ body {
   font-weight: 400;
   color: #ffffff;
   font-family: 'Supreme', sans-serif;
-  line-height: 40px;
-  margin-bottom: 8px;
-}
-
-.bdetail-article h2 {
-  font-size: 30px;
-  font-weight: 700;
-  color: #d0ee52;
-  font-family: 'Supreme', sans-serif;
-  line-height: 40px;
-  margin: 36px 0 8px;
-}
-
-.bdetail-article h3 {
-  font-size: 24px;
-  font-weight: 700;
-  color: #ffffff;
-  font-family: 'Supreme', sans-serif;
-  line-height: 32px;
-  margin: 28px 0 8px;
-}
-
-.bdetail-article blockquote {
-  border-left: 3px solid #d0ee52;
-  padding-left: 24px;
-  margin: 24px 0;
-}
-
-.bdetail-article blockquote p {
-  font-size: 20px;
-  font-style: italic;
-  color: #d0ee52;
-  line-height: 32px;
+  line-height: 35px;
+  margin-bottom: 12px;
 }
 
 /* Footer overrides – blog detail page */
-.blog-detail-page .footer-logo               { top: 1095px; }
-.blog-detail-page .footer-desc               { top: 1162px; }
-.blog-detail-page .footer-col-services-header { top: 1098px; }
-.blog-detail-page .footer-col-services-link1  { top: 1135px; }
-.blog-detail-page .footer-col-services-link2  { top: 1171px; }
-.blog-detail-page .footer-col-services-link3  { top: 1207px; }
-.blog-detail-page .footer-col-services-link4  { top: 1243px; }
-.blog-detail-page .footer-col-info-header    { top: 1098px; }
-.blog-detail-page .footer-col-info-link1     { top: 1135px; }
-.blog-detail-page .footer-col-info-link2     { top: 1171px; }
-.blog-detail-page .footer-col-info-link3     { top: 1207px; }
-.blog-detail-page .footer-col-info-link4     { top: 1243px; }
-.blog-detail-page .footer-col-support-header { top: 1098px; }
-.blog-detail-page .footer-col-support-link1  { top: 1135px; }
-.blog-detail-page .footer-col-support-link2  { top: 1171px; }
-.blog-detail-page .social-link-insta         { top: 1290px; }
-.blog-detail-page .social-link-fb            { top: 1290px; }
-.blog-detail-page .footer-line               { top: 1353px; }
-.blog-detail-page .footer-copyright          { top: 1384px; }
-.blog-detail-page .footer-privacy            { top: 1384px; }
+.blog-detail-page .footer-logo               { top: 640px; }
+.blog-detail-page .footer-desc               { top: 707px; }
+.blog-detail-page .footer-col-services-header { top: 643px; }
+.blog-detail-page .footer-col-services-link1  { top: 680px; }
+.blog-detail-page .footer-col-services-link2  { top: 716px; }
+.blog-detail-page .footer-col-services-link3  { top: 752px; }
+.blog-detail-page .footer-col-services-link4  { top: 788px; }
+.blog-detail-page .footer-col-info-header    { top: 643px; }
+.blog-detail-page .footer-col-info-link1     { top: 680px; }
+.blog-detail-page .footer-col-info-link2     { top: 716px; }
+.blog-detail-page .footer-col-info-link3     { top: 752px; }
+.blog-detail-page .footer-col-info-link4     { top: 788px; }
+.blog-detail-page .footer-col-support-header { top: 643px; }
+.blog-detail-page .footer-col-support-link1  { top: 680px; }
+.blog-detail-page .footer-col-support-link2  { top: 716px; }
+.blog-detail-page .social-link-insta         { top: 835px; }
+.blog-detail-page .social-link-fb            { top: 835px; }
+.blog-detail-page .footer-line               { top: 898px; }
+.blog-detail-page .footer-copyright          { top: 929px; }
+.blog-detail-page .footer-privacy            { top: 929px; }
