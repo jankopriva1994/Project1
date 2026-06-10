@@ -383,21 +383,67 @@ body {
 }
 
 .benefits-divider-left {
-  position: absolute;
-  left: 865px;
-  top: 2437px;
-  width: 1px;
-  height: 421px;
-  background: rgba(255, 255, 255, 0.12);
+  display: none;
 }
 
 .benefits-divider-right {
+  display: none;
+}
+
+/* Per-row dividers col 1 */
+.benefits-div-c1-r1 {
+  position: absolute;
+  left: 865px;
+  top: 2448px;
+  width: 1px;
+  height: 58px;
+  background: rgba(255, 255, 255, 0.20);
+}
+
+.benefits-div-c1-r2 {
+  position: absolute;
+  left: 865px;
+  top: 2608px;
+  width: 1px;
+  height: 58px;
+  background: rgba(255, 255, 255, 0.20);
+}
+
+.benefits-div-c1-r3 {
+  position: absolute;
+  left: 865px;
+  top: 2782px;
+  width: 1px;
+  height: 58px;
+  background: rgba(255, 255, 255, 0.20);
+}
+
+/* Per-row dividers col 2 */
+.benefits-div-c2-r1 {
   position: absolute;
   left: 1183px;
   top: 2437px;
   width: 1px;
-  height: 421px;
-  background: rgba(255, 255, 255, 0.12);
+  height: 58px;
+  background: rgba(255, 255, 255, 0.20);
+}
+
+.benefits-div-c2-r2 {
+  position: absolute;
+  left: 1183px;
+  top: 2597px;
+  width: 1px;
+  height: 58px;
+  background: rgba(255, 255, 255, 0.20);
+}
+
+.benefits-div-c2-r3 {
+  position: absolute;
+  left: 1183px;
+  top: 2782px;
+  width: 1px;
+  height: 58px;
+  background: rgba(255, 255, 255, 0.20);
 }
 
 /* Benefits grid col 1 */
@@ -414,7 +460,7 @@ body {
 .benefit-c1-r1-text {
   position: absolute;
   left: 910px;
-  top: 2476px;
+  top: 2482px;
   font-size: 16px;
   width: 168px;
   color: #ffffff;
@@ -434,7 +480,7 @@ body {
 .benefit-c1-r2-text {
   position: absolute;
   left: 910px;
-  top: 2636px;
+  top: 2642px;
   font-size: 16px;
   width: 204px;
   color: #ffffff;
@@ -454,7 +500,7 @@ body {
 .benefit-c1-r3-text {
   position: absolute;
   left: 910px;
-  top: 2810px;
+  top: 2816px;
   font-size: 16px;
   width: 181px;
   color: #ffffff;
@@ -475,7 +521,7 @@ body {
 .benefit-c2-r1-text {
   position: absolute;
   left: 1221px;
-  top: 2465px;
+  top: 2471px;
   width: 211px;
   font-size: 16px;
   color: #ffffff;
@@ -495,7 +541,7 @@ body {
 .benefit-c2-r2-text {
   position: absolute;
   left: 1221px;
-  top: 2625px;
+  top: 2631px;
   width: 173px;
   font-size: 16px;
   color: #ffffff;
@@ -515,7 +561,7 @@ body {
 .benefit-c2-r3-text {
   position: absolute;
   left: 1221px;
-  top: 2810px;
+  top: 2816px;
   width: 151px;
   font-size: 16px;
   color: #ffffff;
