@@ -385,18 +385,18 @@ body {
 .benefits-divider-left {
   position: absolute;
   left: 865px;
-  top: 2440px;
+  top: 2437px;
   width: 1px;
-  height: 437px;
+  height: 421px;
   background: rgba(255, 255, 255, 0.12);
 }
 
 .benefits-divider-right {
   position: absolute;
   left: 1183px;
-  top: 2440px;
+  top: 2437px;
   width: 1px;
-  height: 437px;
+  height: 421px;
   background: rgba(255, 255, 255, 0.12);
 }
 
@@ -405,7 +405,7 @@ body {
   position: absolute;
   left: 910px;
   top: 2448px;
-  font-size: 18px;
+  font-size: 20px;
   font-weight: 700;
   color: #d0ee52;
   font-family: 'Supreme', sans-serif;
@@ -414,18 +414,18 @@ body {
 .benefit-c1-r1-text {
   position: absolute;
   left: 910px;
-  top: 2490px;
-  font-size: 14px;
+  top: 2476px;
+  font-size: 16px;
   width: 168px;
   color: #ffffff;
-  line-height: 20px;
+  line-height: 24px;
 }
 
 .benefit-c1-r2-title {
   position: absolute;
   left: 910px;
   top: 2608px;
-  font-size: 18px;
+  font-size: 20px;
   font-weight: 700;
   color: #d0ee52;
   font-family: 'Supreme', sans-serif;
@@ -434,18 +434,18 @@ body {
 .benefit-c1-r2-text {
   position: absolute;
   left: 910px;
-  top: 2650px;
-  font-size: 14px;
+  top: 2636px;
+  font-size: 16px;
   width: 204px;
   color: #ffffff;
-  line-height: 20px;
+  line-height: 24px;
 }
 
 .benefit-c1-r3-title {
   position: absolute;
   left: 910px;
   top: 2782px;
-  font-size: 18px;
+  font-size: 20px;
   font-weight: 700;
   color: #d0ee52;
   font-family: 'Supreme', sans-serif;
@@ -454,11 +454,11 @@ body {
 .benefit-c1-r3-text {
   position: absolute;
   left: 910px;
-  top: 2824px;
-  font-size: 14px;
+  top: 2810px;
+  font-size: 16px;
   width: 181px;
   color: #ffffff;
-  line-height: 20px;
+  line-height: 24px;
 }
 
 /* Benefits grid col 2 */
@@ -466,7 +466,7 @@ body {
   position: absolute;
   left: 1221px;
   top: 2437px;
-  font-size: 18px;
+  font-size: 20px;
   font-weight: 700;
   color: #d0ee52;
   font-family: 'Supreme', sans-serif;
@@ -475,18 +475,18 @@ body {
 .benefit-c2-r1-text {
   position: absolute;
   left: 1221px;
-  top: 2479px;
+  top: 2465px;
   width: 211px;
-  font-size: 14px;
+  font-size: 16px;
   color: #ffffff;
-  line-height: 20px;
+  line-height: 24px;
 }
 
 .benefit-c2-r2-title {
   position: absolute;
   left: 1221px;
   top: 2597px;
-  font-size: 18px;
+  font-size: 20px;
   font-weight: 700;
   color: #d0ee52;
   font-family: 'Supreme', sans-serif;
@@ -495,18 +495,18 @@ body {
 .benefit-c2-r2-text {
   position: absolute;
   left: 1221px;
-  top: 2639px;
+  top: 2625px;
   width: 173px;
-  font-size: 14px;
+  font-size: 16px;
   color: #ffffff;
-  line-height: 20px;
+  line-height: 24px;
 }
 
 .benefit-c2-r3-title {
   position: absolute;
   left: 1221px;
   top: 2782px;
-  font-size: 18px;
+  font-size: 20px;
   font-weight: 700;
   color: #d0ee52;
   font-family: 'Supreme', sans-serif;
@@ -515,11 +515,11 @@ body {
 .benefit-c2-r3-text {
   position: absolute;
   left: 1221px;
-  top: 2824px;
+  top: 2810px;
   width: 151px;
-  font-size: 14px;
+  font-size: 16px;
   color: #ffffff;
-  line-height: 20px;
+  line-height: 24px;
 }
 
 .benefits-separator {
