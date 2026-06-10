@@ -1175,14 +1175,6 @@ body {
 }
 
 /* ===================== FOOTER ===================== */
-.footer-bg {
-  position: absolute;
-  left: 0;
-  top: 6400px;
-  width: 1680px;
-  height: 387px;
-  background: #0d0e11;
-}
 
 .footer-logo {
   position: absolute;
@@ -1325,52 +1317,38 @@ body {
   text-decoration: none;
 }
 
-.footer-col-support-link3 {
-  position: absolute;
-  left: 1215px;
-  top: 6559px;
-  font-size: 16px;
-  color: #ffffff;
-  text-decoration: none;
-}
 
 /* Social icons */
-.social-icon-insta {
+.social-link-insta {
   position: absolute;
   left: 281px;
   top: 6642px;
-  width: 20px;
-  height: 20px;
-  border: 1.5px solid #ffffff;
-  border-radius: 50%;
-}
-
-.social-text-insta {
-  position: absolute;
-  left: 305px;
-  top: 6642px;
-  font-size: 16px;
-  color: #ffffff;
+  display: flex;
+  align-items: center;
+  gap: 8px;
   text-decoration: none;
 }
 
+.social-link-fb {
+  position: absolute;
+  left: 390px;
+  top: 6642px;
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  text-decoration: none;
+}
+
+.social-icon-insta,
 .social-icon-fb {
-  position: absolute;
-  left: 407px;
-  top: 6642px;
-  width: 20px;
-  height: 20px;
-  border: 1.5px solid #ffffff;
-  border-radius: 50%;
+  flex-shrink: 0;
 }
 
+.social-text-insta,
 .social-text-fb {
-  position: absolute;
-  left: 431px;
-  top: 6642px;
   font-size: 16px;
   color: #ffffff;
-  text-decoration: none;
+  font-family: 'Supreme', sans-serif;
 }
 
 .footer-line {
