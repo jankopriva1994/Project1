@@ -1,14 +1,15 @@
-<svg width="160" height="44" viewBox="0 0 160 44" fill="none" xmlns="http://www.w3.org/2000/svg">
+<svg width="180" height="48" viewBox="0 0 180 48" fill="none" xmlns="http://www.w3.org/2000/svg">
   <!-- Two dots above bubble -->
-  <circle cx="14" cy="5" r="4" fill="#d0ee52"/>
-  <circle cx="26" cy="5" r="4" fill="#d0ee52"/>
-  <!-- Speech bubble -->
-  <rect x="4" y="12" width="36" height="24" rx="8" fill="#d0ee52"/>
-  <polygon points="4,32 4,40 12,36" fill="#d0ee52"/>
-  <!-- Three dots inside bubble -->
-  <circle cx="14" cy="24" r="3" fill="white"/>
-  <circle cx="22" cy="24" r="3" fill="white"/>
-  <circle cx="30" cy="24" r="3" fill="white"/>
+  <circle cx="18" cy="6" r="5" fill="#c8e641"/>
+  <circle cx="33" cy="5" r="6" fill="#c8e641"/>
+  <!-- Speech bubble body -->
+  <rect x="4" y="14" width="52" height="26" rx="13" fill="#c8e641"/>
+  <!-- Tail bottom-left -->
+  <polygon points="4,36 4,46 14,40" fill="#c8e641"/>
+  <!-- Three white dots inside bubble -->
+  <circle cx="16" cy="27" r="5" fill="white"/>
+  <circle cx="30" cy="27" r="5" fill="white"/>
+  <circle cx="44" cy="27" r="5" fill="white"/>
   <!-- chaties text -->
-  <text x="52" y="32" font-family="Supreme, sans-serif" font-size="28" font-weight="500" fill="white" letter-spacing="-0.7">chaties</text>
+  <text x="68" y="35" font-family="Supreme, Arial, sans-serif" font-size="30" font-weight="500" fill="white" letter-spacing="-0.8">chaties</text>
 </svg>
