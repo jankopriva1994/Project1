@@ -1,15 +1,14 @@
 @import url('https://fonts.googleapis.com/css2?family=Geist:wght@400;500;600;700&display=swap');
 
-*, *::before, *::after {
-  box-sizing: border-box;
+* {
   margin: 0;
   padding: 0;
+  box-sizing: border-box;
 }
 
 html, body {
   background: #0d0e11;
   font-family: 'Geist', sans-serif;
-  min-width: 1680px;
 }
 
 .page {
@@ -36,7 +35,7 @@ html, body {
   line-height: 1;
 }
 
-.nav-dot {
+.nav-logo-dot {
   position: absolute;
   left: 230px;
   top: 67px;
@@ -70,7 +69,6 @@ html, body {
   top: 69px;
   font-size: 16px;
   color: #ffffff;
-  font-weight: 400;
   text-decoration: none;
 }
 
@@ -80,7 +78,6 @@ html, body {
   top: 69px;
   font-size: 16px;
   color: #ffffff;
-  font-weight: 400;
   text-decoration: none;
 }
 
@@ -90,17 +87,15 @@ html, body {
   top: 69px;
   font-size: 16px;
   color: #ffffff;
-  font-weight: 400;
   text-decoration: none;
 }
 
-.nav-link-ai {
+.nav-link-vseai {
   position: absolute;
   left: 897px;
   top: 69px;
   font-size: 16px;
   color: #ffffff;
-  font-weight: 400;
   text-decoration: none;
 }
 
@@ -110,7 +105,6 @@ html, body {
   top: 69px;
   font-size: 16px;
   color: #ffffff;
-  font-weight: 400;
   text-decoration: none;
 }
 
@@ -131,6 +125,7 @@ html, body {
   color: #ffffff;
   cursor: pointer;
   text-decoration: none;
+  gap: 0;
 }
 
 .nav-separator {
@@ -168,7 +163,7 @@ html, body {
 
 .hero-subtitle {
   position: absolute;
-  left: 457px;
+  left: 436px;
   top: 444px;
   width: 767px;
   font-size: 20px;
@@ -212,9 +207,9 @@ html, body {
 
 .features-subtext {
   position: absolute;
-  left: 457px;
+  left: 450px;
   top: 1325px;
-  width: 766px;
+  width: 780px;
   font-size: 25px;
   line-height: 40px;
   text-align: center;
@@ -376,7 +371,7 @@ html, body {
 }
 
 /* Benefits grid col 1 */
-.benefit-col1-title1 {
+.benefit-c1-r1-title {
   position: absolute;
   left: 910px;
   top: 2448px;
@@ -385,7 +380,7 @@ html, body {
   color: #d0ee52;
 }
 
-.benefit-col1-text1 {
+.benefit-c1-r1-text {
   position: absolute;
   left: 910px;
   top: 2483px;
@@ -393,7 +388,7 @@ html, body {
   color: #ffffff;
 }
 
-.benefit-col1-title2 {
+.benefit-c1-r2-title {
   position: absolute;
   left: 910px;
   top: 2608px;
@@ -402,7 +397,7 @@ html, body {
   color: #d0ee52;
 }
 
-.benefit-col1-text2 {
+.benefit-c1-r2-text {
   position: absolute;
   left: 910px;
   top: 2643px;
@@ -410,7 +405,7 @@ html, body {
   color: #ffffff;
 }
 
-.benefit-col1-title3 {
+.benefit-c1-r3-title {
   position: absolute;
   left: 910px;
   top: 2782px;
@@ -419,7 +414,7 @@ html, body {
   color: #d0ee52;
 }
 
-.benefit-col1-text3 {
+.benefit-c1-r3-text {
   position: absolute;
   left: 910px;
   top: 2817px;
@@ -428,7 +423,7 @@ html, body {
 }
 
 /* Benefits grid col 2 */
-.benefit-col2-title1 {
+.benefit-c2-r1-title {
   position: absolute;
   left: 1221px;
   top: 2437px;
@@ -437,7 +432,7 @@ html, body {
   color: #d0ee52;
 }
 
-.benefit-col2-text1 {
+.benefit-c2-r1-text {
   position: absolute;
   left: 1221px;
   top: 2472px;
@@ -447,7 +442,7 @@ html, body {
   line-height: 20px;
 }
 
-.benefit-col2-title2 {
+.benefit-c2-r2-title {
   position: absolute;
   left: 1221px;
   top: 2597px;
@@ -456,7 +451,7 @@ html, body {
   color: #d0ee52;
 }
 
-.benefit-col2-text2 {
+.benefit-c2-r2-text {
   position: absolute;
   left: 1221px;
   top: 2632px;
@@ -466,7 +461,7 @@ html, body {
   line-height: 22px;
 }
 
-.benefit-col2-title3 {
+.benefit-c2-r3-title {
   position: absolute;
   left: 1221px;
   top: 2782px;
@@ -475,7 +470,7 @@ html, body {
   color: #d0ee52;
 }
 
-.benefit-col2-text3 {
+.benefit-c2-r3-text {
   position: absolute;
   left: 1221px;
   top: 2817px;
@@ -556,45 +551,49 @@ html, body {
 .tab-ai-chat {
   position: absolute;
   left: 303px;
-  top: 3490px;
+  top: 3497px;
   width: 144px;
   text-align: center;
   font-size: 16px;
   font-weight: 700;
   color: #ffffff;
+  font-family: 'Geist', sans-serif;
 }
 
 .tab-translator {
   position: absolute;
-  left: 507px;
-  top: 3490px;
-  width: 240px;
+  left: 490px;
+  top: 3497px;
+  width: 274px;
   text-align: center;
   font-size: 16px;
   font-weight: 600;
   color: #d0ee52;
+  font-family: 'Geist', sans-serif;
 }
 
 .tab-images {
   position: absolute;
-  left: 758px;
-  top: 3495px;
-  width: 374px;
+  left: 720px;
+  top: 3497px;
+  width: 450px;
   text-align: center;
   font-size: 16px;
   font-weight: 600;
   color: #d0ee52;
+  font-family: 'Geist', sans-serif;
 }
 
 .tab-documents {
   position: absolute;
-  left: 1143px;
-  top: 3490px;
-  width: 245px;
+  left: 1150px;
+  top: 3497px;
+  width: 230px;
   text-align: center;
   font-size: 16px;
   font-weight: 600;
   color: #d0ee52;
+  font-family: 'Geist', sans-serif;
 }
 
 /* ===================== AI CHAT SECTION ===================== */
@@ -619,7 +618,7 @@ html, body {
   color: #ffffff;
 }
 
-.ai-chat-image {
+.ai-chat-img {
   position: absolute;
   left: 859px;
   top: 3620px;
@@ -627,7 +626,6 @@ html, body {
   height: 345px;
   object-fit: cover;
   display: block;
-  border-radius: 12px;
 }
 
 .ai-chat-separator {
@@ -667,8 +665,8 @@ html, body {
   color: #ffffff;
 }
 
-/* Review Card 1 */
-.review-stars-1 {
+/* Review card 1 */
+.review-c1-stars {
   position: absolute;
   left: 741px;
   top: 4312px;
@@ -678,7 +676,7 @@ html, body {
   display: block;
 }
 
-.review-text-1 {
+.review-c1-text {
   position: absolute;
   left: 741px;
   top: 4351px;
@@ -688,7 +686,7 @@ html, body {
   color: #ffffff;
 }
 
-.review-name-1 {
+.review-c1-name {
   position: absolute;
   left: 741px;
   top: 4512px;
@@ -697,8 +695,8 @@ html, body {
   color: #d0ee52;
 }
 
-/* Review Card 2 */
-.review-stars-2 {
+/* Review card 2 */
+.review-c2-stars {
   position: absolute;
   left: 1146px;
   top: 4312px;
@@ -708,7 +706,7 @@ html, body {
   display: block;
 }
 
-.review-text-2 {
+.review-c2-text {
   position: absolute;
   left: 1146px;
   top: 4351px;
@@ -718,7 +716,7 @@ html, body {
   color: #ffffff;
 }
 
-.review-name-2 {
+.review-c2-name {
   position: absolute;
   left: 1146px;
   top: 4437px;
@@ -727,8 +725,8 @@ html, body {
   color: #d0ee52;
 }
 
-/* Review Card 3 */
-.review-stars-3 {
+/* Review card 3 */
+.review-c3-stars {
   position: absolute;
   left: 741px;
   top: 4608px;
@@ -738,7 +736,7 @@ html, body {
   display: block;
 }
 
-.review-text-3 {
+.review-c3-text {
   position: absolute;
   left: 741px;
   top: 4648px;
@@ -748,7 +746,7 @@ html, body {
   color: #ffffff;
 }
 
-.review-name-3 {
+.review-c3-name {
   position: absolute;
   left: 741px;
   top: 4734px;
@@ -757,8 +755,8 @@ html, body {
   color: #d0ee52;
 }
 
-/* Review Card 4 */
-.review-stars-4 {
+/* Review card 4 */
+.review-c4-stars {
   position: absolute;
   left: 1146px;
   top: 4534px;
@@ -768,7 +766,7 @@ html, body {
   display: block;
 }
 
-.review-text-4 {
+.review-c4-text {
   position: absolute;
   left: 1146px;
   top: 4573px;
@@ -778,7 +776,7 @@ html, body {
   color: #ffffff;
 }
 
-.review-name-4 {
+.review-c4-name {
   position: absolute;
   left: 1146px;
   top: 4840px;
@@ -833,7 +831,7 @@ html, body {
   color: #ffffff;
 }
 
-.blog-all-articles {
+.blog-all-link {
   position: absolute;
   left: 1310px;
   top: 5373px;
@@ -864,7 +862,6 @@ html, body {
   height: 226px;
   object-fit: cover;
   display: block;
-  border-radius: 8px;
 }
 
 .blog-img-2 {
@@ -875,7 +872,6 @@ html, body {
   height: 226px;
   object-fit: cover;
   display: block;
-  border-radius: 8px;
 }
 
 .blog-img-3 {
@@ -886,7 +882,6 @@ html, body {
   height: 226px;
   object-fit: cover;
   display: block;
-  border-radius: 8px;
 }
 
 /* Blog categories */
@@ -948,35 +943,34 @@ html, body {
   line-height: 27px;
 }
 
-/* Blog title arrows */
-.blog-title-arrow-1 {
+.blog-arrow-1 {
   position: absolute;
   left: 581px;
   top: 5783px;
-  width: 18px;
-  height: 18px;
+  width: 23px;
+  height: 23px;
   transform: rotate(-45deg);
   display: block;
   object-fit: contain;
 }
 
-.blog-title-arrow-2 {
+.blog-arrow-2 {
   position: absolute;
   left: 1007px;
   top: 5783px;
-  width: 18px;
-  height: 18px;
+  width: 23px;
+  height: 23px;
   transform: rotate(-45deg);
   display: block;
   object-fit: contain;
 }
 
-.blog-title-arrow-3 {
+.blog-arrow-3 {
   position: absolute;
   left: 1432px;
   top: 5783px;
-  width: 18px;
-  height: 18px;
+  width: 23px;
+  height: 23px;
   transform: rotate(-45deg);
   display: block;
   object-fit: contain;
@@ -1031,11 +1025,11 @@ html, body {
   background: #2b2d31;
   border-radius: 7px;
   border: none;
-  outline: none;
+  padding: 0 16px;
   font-family: 'Geist', sans-serif;
   font-size: 16px;
-  color: #ffffff;
-  padding: 0 16px;
+  color: #505050;
+  outline: none;
 }
 
 .newsletter-input::placeholder {
@@ -1056,9 +1050,6 @@ html, body {
   font-weight: 700;
   color: #0d0e11;
   cursor: pointer;
-  display: flex;
-  align-items: center;
-  justify-content: center;
 }
 
 /* ===================== FOOTER ===================== */
@@ -1220,18 +1211,17 @@ html, body {
 }
 
 /* Social icons */
-.social-instagram-icon {
+.social-icon-insta {
   position: absolute;
   left: 281px;
   top: 6642px;
   width: 20px;
   height: 20px;
   border: 1.5px solid #ffffff;
-  border-radius: 5px;
-  display: block;
+  border-radius: 50%;
 }
 
-.social-instagram-text {
+.social-text-insta {
   position: absolute;
   left: 305px;
   top: 6642px;
@@ -1240,7 +1230,7 @@ html, body {
   text-decoration: none;
 }
 
-.social-facebook-icon {
+.social-icon-fb {
   position: absolute;
   left: 407px;
   top: 6642px;
@@ -1248,10 +1238,9 @@ html, body {
   height: 20px;
   border: 1.5px solid #ffffff;
   border-radius: 50%;
-  display: block;
 }
 
-.social-facebook-text {
+.social-text-fb {
   position: absolute;
   left: 431px;
   top: 6642px;

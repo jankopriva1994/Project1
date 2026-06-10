@@ -3,237 +3,339 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>Chaties – AI Workspace</title>
-  <style>
-    *, *::before, *::after {
-      box-sizing: border-box;
-      margin: 0;
-      padding: 0;
-    }
-
-    body {
-      font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
-      background: #fff;
-      color: #111;
-    }
-
-    /* ── Announcement bar ── */
-    .announcement-bar {
-      background: #f2f2f2;
-      text-align: center;
-      padding: 12px 48px;
-      font-size: 14px;
-      position: relative;
-    }
-
-    .announcement-bar a {
-      color: #111;
-      text-decoration: underline;
-    }
-
-    .announcement-bar strong {
-      font-weight: 700;
-    }
-
-    .announcement-bar .star {
-      margin-right: 6px;
-    }
-
-    .announcement-bar .close {
-      position: absolute;
-      right: 20px;
-      top: 50%;
-      transform: translateY(-50%);
-      background: none;
-      border: none;
-      font-size: 18px;
-      cursor: pointer;
-      color: #555;
-      line-height: 1;
-    }
-
-    .announcement-bar .close:hover {
-      color: #111;
-    }
-
-    /* ── Navigation ── */
-    nav {
-      display: flex;
-      align-items: center;
-      justify-content: space-between;
-      padding: 20px 60px;
-      border-bottom: 1px solid #eee;
-    }
-
-    .nav-logo {
-      display: flex;
-      align-items: center;
-      gap: 14px;
-      text-decoration: none;
-      color: #111;
-    }
-
-    .nav-logo-wordmark {
-      font-size: 26px;
-      font-weight: 700;
-      letter-spacing: -0.5px;
-    }
-
-    .nav-logo-divider {
-      width: 1px;
-      height: 36px;
-      background: #ccc;
-    }
-
-    .nav-logo-tagline {
-      display: flex;
-      flex-direction: column;
-      font-size: 11px;
-      color: #888;
-      line-height: 1.4;
-    }
-
-    .nav-links {
-      display: flex;
-      gap: 36px;
-      list-style: none;
-    }
-
-    .nav-links a {
-      text-decoration: none;
-      color: #111;
-      font-size: 15px;
-      font-weight: 500;
-    }
-
-    .nav-links a:hover {
-      opacity: 0.7;
-    }
-
-    .btn-register {
-      display: inline-flex;
-      align-items: center;
-      gap: 10px;
-      background: #efefef;
-      border: none;
-      border-radius: 999px;
-      padding: 13px 26px;
-      font-size: 15px;
-      font-weight: 600;
-      cursor: pointer;
-      text-decoration: none;
-      color: #111;
-      transition: background 0.2s;
-    }
-
-    .btn-register:hover {
-      background: #e0e0e0;
-    }
-
-    .btn-register .arrow {
-      font-size: 18px;
-      line-height: 1;
-    }
-
-    /* ── Hero ── */
-    .hero {
-      display: flex;
-      flex-direction: column;
-      align-items: center;
-      text-align: center;
-      padding: 90px 24px 60px;
-    }
-
-    .hero h1 {
-      font-size: clamp(42px, 6vw, 72px);
-      font-weight: 800;
-      line-height: 1.1;
-      letter-spacing: -2px;
-      max-width: 760px;
-    }
-
-    .hero h1 .highlight {
-      background: #f5c518;
-      border-radius: 8px;
-      padding: 0 6px;
-      display: inline-block;
-    }
-
-    .hero p {
-      margin-top: 28px;
-      font-size: 18px;
-      color: #444;
-      max-width: 480px;
-      line-height: 1.65;
-    }
-
-    .hero p a {
-      color: #111;
-      text-decoration: underline;
-      text-underline-offset: 3px;
-    }
-
-    /* ── Preview card placeholder ── */
-    .hero-preview {
-      margin-top: 52px;
-      width: 100%;
-      max-width: 780px;
-      height: 340px;
-      background: #f7f7f7;
-      border: 1px solid #e5e5e5;
-      border-radius: 16px;
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      color: #bbb;
-      font-size: 14px;
-    }
-  </style>
+  <title>Chaties – AI služby</title>
+  <link rel="stylesheet" href="styles.css" />
 </head>
 <body>
+  <div class="page">
 
-  <!-- Announcement bar -->
-  <div class="announcement-bar" id="announcementBar">
-    <span class="star">⭐</span>
-    Napište <a href="#">recenzi na googlu</a> a získejte <strong>100 tokenů zdarma!</strong> <a href="#"><strong>ZDE.</strong></a>
-    <button class="close" onclick="document.getElementById('announcementBar').style.display='none'">✕</button>
-  </div>
+    <!-- ==================== NAVBAR ==================== -->
+    <div class="nav-logo-dot"></div>
+    <span class="nav-logo">chaties</span>
 
-  <!-- Navigation -->
-  <nav>
-    <a href="#" class="nav-logo">
-      <span class="nav-logo-wordmark">Chaties</span>
-      <span class="nav-logo-divider"></span>
-      <span class="nav-logo-tagline">
-        <span>AI Workspace</span>
-        <span>Víc nepotřebujete</span>
-      </span>
-    </a>
+    <a href="#" class="nav-link-active">AI služby</a>
+    <span class="nav-caret">▾</span>
+    <a href="#" class="nav-link-ceny">Ceny</a>
+    <a href="#" class="nav-link-onas">O nás</a>
+    <a href="#" class="nav-link-recenze">Recenze</a>
+    <a href="#" class="nav-link-vseai">Vše o AI</a>
+    <a href="#" class="nav-link-kontakt">Kontakt</a>
 
-    <ul class="nav-links">
-      <li><a href="#">Ceník</a></li>
-      <li><a href="#">Recenze</a></li>
-    </ul>
+    <a href="#" class="nav-cta">Vyzkoušej <span class="accent" style="margin-left:4px;">Chaties</span>&nbsp;zdarma</a>
 
-    <a href="#" class="btn-register">
-      Registrovat se <span class="arrow">→</span>
-    </a>
-  </nav>
+    <div class="nav-separator"></div>
 
-  <!-- Hero section -->
-  <section class="hero">
-    <h1>
-      Váš AI <span class="highlight">workspace</span><br />
-      pro práci bez chaosu.
+    <!-- ==================== HERO ==================== -->
+    <img
+      class="hero-wave"
+      src="https://www.figma.com/api/mcp/asset/b9ea9e29-5542-4379-8d24-49d9283530c0"
+      alt="Wave background"
+    />
+
+    <h1 class="hero-headline">
+      Tvořte obsah <span class="accent">s nejrychlejší</span><br>
+      <span class="accent">umělou inteligencí</span> na pár kliknutí
     </h1>
-    <p>
-      Plánujte projekty, spravujte úkoly a ukládejte nápady<br />
-      — <a href="#">vše na jednom místě</a> s pomocí AI.
-    </p>
-    <div class="hero-preview">
-      [ náhled aplikace ]
-    </div>
-  </section>
 
+    <p class="hero-subtitle">
+      <strong><span class="accent">Chaties.cz</span></strong> je vaše všestranná AI platforma. Pište texty, generujte obrázky,
+      překládejte dokumenty a mnohem více – vše na jednom místě.
+    </p>
+
+    <a href="#" class="hero-cta">Vyzkoušej <span class="accent" style="margin-left:4px;">Chaties</span>&nbsp;zdarma</a>
+
+    <!-- ==================== FEATURES SECTION ==================== -->
+    <h2 class="features-heading">
+      <span class="accent">Unikátní nástroj,</span> pro správu<br>
+      vaší kampaní, psaní článků a chytlavých popisků
+    </h2>
+
+    <p class="features-subtext">
+      <strong><span class="accent">Chaties.cz</span></strong><span> je nejrychlejší kompletní platforma</span>
+    </p>
+
+    <img
+      class="features-img-large"
+      src="https://www.figma.com/api/mcp/asset/b1215607-035f-4e7a-9b2d-aa768d45e5cc"
+      alt="Feature screenshot"
+    />
+
+    <img
+      class="features-img-small"
+      src="https://www.figma.com/api/mcp/asset/b1215607-035f-4e7a-9b2d-aa768d45e5cc"
+      alt="Feature screenshot small"
+    />
+
+    <!-- ==================== MEDIA LOGOS ==================== -->
+    <img class="logo-zive-left"
+      src="https://www.figma.com/api/mcp/asset/8b680703-189f-44a8-bfe6-190c0f47b920"
+      alt="Živě logo"
+    />
+    <img class="logo-podnikatel-left"
+      src="https://www.figma.com/api/mcp/asset/02c4ac4f-d6e4-4a2b-ae12-0723d94a9068"
+      alt="Podnikatel logo"
+    />
+    <img class="logo-e15"
+      src="https://www.figma.com/api/mcp/asset/319c265c-0174-4827-85aa-b8b2c5c0d6f8"
+      alt="e15 logo"
+    />
+    <img class="logo-aktualne"
+      src="https://www.figma.com/api/mcp/asset/70d0fe57-8154-4283-90d0-7e5a13f73873"
+      alt="Aktuálně logo"
+    />
+    <img class="logo-zive-right"
+      src="https://www.figma.com/api/mcp/asset/8b680703-189f-44a8-bfe6-190c0f47b920"
+      alt="Živě logo"
+    />
+    <img class="logo-podnikatel-right"
+      src="https://www.figma.com/api/mcp/asset/02c4ac4f-d6e4-4a2b-ae12-0723d94a9068"
+      alt="Podnikatel logo"
+    />
+
+    <!-- ==================== BENEFITS SECTION ==================== -->
+    <span class="benefits-chip">Chci rozjet</span>
+
+    <h2 class="benefits-heading">
+      Chci rozjet <span class="accent">svůj</span><br>
+      <span class="accent">business naplno!</span>
+    </h2>
+
+    <p class="benefits-desc">
+      Naše AI služby ti pomohou nejen ušetřit čas, ale především zefektivnit tvé podnikání. Ať už jsi freelancer, firma nebo start-up, AI dokáže přinést výsledky, které by jinak zabraly hodiny práce.
+    </p>
+
+    <a href="#" class="benefits-cta">Vyzkoušej <span class="accent" style="margin-left:4px;">Chaties</span>&nbsp;zdarma</a>
+
+    <!-- Vertical dividers -->
+    <div class="benefits-divider-left"></div>
+    <div class="benefits-divider-right"></div>
+
+    <!-- Benefits grid col 1 -->
+    <span class="benefit-c1-r1-title">Obsah, který konvertuje</span>
+    <span class="benefit-c1-r1-text">Tvořte obsah, který Vám vydělá peníze</span>
+
+    <span class="benefit-c1-r2-title">Ušetřete čas i peníze</span>
+    <span class="benefit-c1-r2-text">Bez grafika, bez překladatele, prostě hned</span>
+
+    <span class="benefit-c1-r3-title">Vše na jednom místě</span>
+    <span class="benefit-c1-r3-text">AI chat, obrázky, překlady, dokumenty</span>
+
+    <!-- Benefits grid col 2 -->
+    <span class="benefit-c2-r1-title">Stále nové funkce</span>
+    <span class="benefit-c2-r1-text">Chaties se neustále vyvíjí, abyste měli vždy přístup k nejnovějším AI technologiím</span>
+
+    <span class="benefit-c2-r2-title">AI podnikání</span>
+    <span class="benefit-c2-r2-text">AI nástroje, které zrychlí, zjednoduší a zefektivní vaše podnikání</span>
+
+    <span class="benefit-c2-r3-title">Pro práci i zábavu</span>
+    <span class="benefit-c2-r3-text">Univerzální pomocník pro každého</span>
+
+    <!-- Horizontal separator -->
+    <div class="benefits-separator"></div>
+
+    <!-- ==================== AI SERVICES SECTION ==================== -->
+    <div class="ai-services-chip">AI služby</div>
+
+    <h2 class="ai-services-heading">
+      <span class="accent">Chceš být první,</span> kdo se<br>
+      dozví o chystaných novinkách?
+    </h2>
+
+    <p class="ai-services-subtext">
+      <span class="accent">Přihlaš svůj odběr</span> a buď mezi prvními, kdo bude vědět o chystaných novinkách.
+    </p>
+
+    <!-- Tabs bar -->
+    <div class="tabs-bar"></div>
+    <div class="tab-active-bg"></div>
+    <span class="tab-ai-chat">AI CHAT</span>
+    <span class="tab-translator">AI PŘEKLADAČ</span>
+    <span class="tab-images">AI GENEROVÁNÍ OBRÁZKŮ</span>
+    <span class="tab-documents">AI DOKUMENTY</span>
+
+    <!-- ==================== AI CHAT SECTION ==================== -->
+    <h2 class="ai-chat-heading">
+      <span class="accent">Chytrý společník,</span><br>
+      který nikdy nespí
+    </h2>
+
+    <p class="ai-chat-desc">
+      Objevte kouzlo chytré konverzace! Naše AI Chaties jsou připraveni kdykoli pomoci, pobavit, poradit nebo inspirovat. Osobní asistenti, kreativní společníci i odborní poradci – vše v jednom chatu, 24/7. Přidejte se k revoluci komunikace ještě dnes!
+    </p>
+
+    <img
+      class="ai-chat-img"
+      src="https://www.figma.com/api/mcp/asset/2525ed98-b432-4705-b13b-2a92f5a4da56"
+      alt="Chat AI"
+    />
+
+    <div class="ai-chat-separator"></div>
+
+    <!-- ==================== REVIEWS SECTION ==================== -->
+    <div class="reviews-chip">Recenze</div>
+
+    <h2 class="reviews-heading">
+      <span>Ověřené </span><span class="accent">recenze</span><br>
+      <span class="accent">našich uživatelů</span>
+    </h2>
+
+    <!-- Review card 1 -->
+    <img class="review-c1-stars"
+      src="https://www.figma.com/api/mcp/asset/e7f3cab1-7275-4771-96b0-07e034a5cb14"
+      alt="Stars rating"
+    />
+    <p class="review-c1-text">
+      Objevte kouzlo chytré konverzace! Naše AI Chaties jsou připraveni kdykoli pomoci, pobavit, poradit nebo inspirovat.
+    </p>
+    <span class="review-c1-name">Tomáš N.</span>
+
+    <!-- Review card 2 -->
+    <img class="review-c2-stars"
+      src="https://www.figma.com/api/mcp/asset/e7f3cab1-7275-4771-96b0-07e034a5cb14"
+      alt="Stars rating"
+    />
+    <p class="review-c2-text">
+      Objevte kouzlo chytré konverzace! Naše AI Chaties jsou připraveni kdykoli pomoci.
+    </p>
+    <span class="review-c2-name">Tomáš N.</span>
+
+    <!-- Review card 3 -->
+    <img class="review-c3-stars"
+      src="https://www.figma.com/api/mcp/asset/e7f3cab1-7275-4771-96b0-07e034a5cb14"
+      alt="Stars rating"
+    />
+    <p class="review-c3-text">
+      Objevte kouzlo chytré konverzace! Naše AI Chaties jsou připraveni kdykoli pomoci.
+    </p>
+    <span class="review-c3-name">Tomáš N.</span>
+
+    <!-- Review card 4 -->
+    <img class="review-c4-stars"
+      src="https://www.figma.com/api/mcp/asset/e7f3cab1-7275-4771-96b0-07e034a5cb14"
+      alt="Stars rating"
+    />
+    <p class="review-c4-text">
+      Objevte kouzlo chytré konverzace! Naše AI Chaties jsou připraveni kdykoli pomoci, pobavit, poradit nebo inspirovat.
+    </p>
+    <span class="review-c4-name">Tomáš N.</span>
+
+    <div class="reviews-separator"></div>
+
+    <!-- ==================== BLOG SECTION ==================== -->
+    <div class="blog-chip">Blog</div>
+
+    <h2 class="blog-heading">
+      <span class="accent">Aktuální informace,</span><br>
+      Blog, features a další.
+    </h2>
+
+    <p class="blog-subtext">Zde najdete nejaktuálnější informace ze světa AI a chaties.cz</p>
+
+    <a href="#" class="blog-all-link">Všechny články</a>
+    <img class="blog-arrow-link"
+      src="https://www.figma.com/api/mcp/asset/52c8e77c-f53c-4652-bdc2-003a621da093"
+      alt="Arrow right"
+    />
+
+    <!-- Blog images -->
+    <img class="blog-img-1"
+      src="https://www.figma.com/api/mcp/asset/b3e3d85a-d8f8-4637-abf7-bfca8bd364e6"
+      alt="Blog image 1"
+    />
+    <img class="blog-img-2"
+      src="https://www.figma.com/api/mcp/asset/3f75d4ec-d383-45a1-a76c-bb55cac34dca"
+      alt="Blog image 2"
+    />
+    <img class="blog-img-3"
+      src="https://www.figma.com/api/mcp/asset/0e14d8d7-6c83-40e4-a35b-081ec32122dd"
+      alt="Blog image 3"
+    />
+
+    <!-- Blog categories -->
+    <span class="blog-cat-1">Blog</span>
+    <span class="blog-cat-2">Features</span>
+    <span class="blog-cat-3">Update</span>
+
+    <!-- Blog titles -->
+    <span class="blog-title-1">Máme nový vzhled webových stránek<br>a administrace</span>
+    <img class="blog-arrow-1"
+      src="https://www.figma.com/api/mcp/asset/52c8e77c-f53c-4652-bdc2-003a621da093"
+      alt="Arrow"
+    />
+
+    <span class="blog-title-2">Přidaná nová funkce – převádění<br>obrázků do textů</span>
+    <img class="blog-arrow-2"
+      src="https://www.figma.com/api/mcp/asset/52c8e77c-f53c-4652-bdc2-003a621da093"
+      alt="Arrow"
+    />
+
+    <span class="blog-title-3">Vyšla nová verze zákaznické<br>administrace – Ver. 2.0</span>
+    <img class="blog-arrow-3"
+      src="https://www.figma.com/api/mcp/asset/52c8e77c-f53c-4652-bdc2-003a621da093"
+      alt="Arrow"
+    />
+
+    <!-- ==================== NEWSLETTER CTA SECTION ==================== -->
+    <div class="newsletter-chip">CHATIES NEWSLETTER</div>
+
+    <h2 class="newsletter-heading">
+      <span class="accent">Chceš být první,</span> kdo se<br>
+      dozví o chystaných novinkách?
+    </h2>
+
+    <p class="newsletter-subtext">
+      <span class="accent">Přihlaš svůj odběr</span> a buď mezi prvními, kdo bude vědět o chystaných novinkách.
+    </p>
+
+    <input
+      class="newsletter-input"
+      type="email"
+      placeholder="Emailová adresa"
+    />
+
+    <button class="newsletter-btn">Odebírat</button>
+
+    <!-- ==================== FOOTER ==================== -->
+    <div class="footer-bg"></div>
+
+    <span class="footer-logo">chaties</span>
+
+    <p class="footer-desc">
+      <span class="accent">Chaties.cz</span> patří mezi špičku v AI službách v Česku. <span class="accent">Pomáháme firmám růst díky chytrým technologiím,</span> které šetří čas, zvyšují efektivitu a otevírají nové možnosti.
+    </p>
+
+    <!-- Footer: Služby -->
+    <span class="footer-col-services-header">Služby</span>
+    <a href="#" class="footer-col-services-link1">Generování obrázků</a>
+    <a href="#" class="footer-col-services-link2">AI Překladač</a>
+    <a href="#" class="footer-col-services-link3">Překlady dokumentů</a>
+    <a href="#" class="footer-col-services-link4">AI Chat</a>
+
+    <!-- Footer: Důležité informace -->
+    <span class="footer-col-info-header">Důležité informace</span>
+    <a href="#" class="footer-col-info-link1">O nás</a>
+    <a href="#" class="footer-col-info-link2">Kontakt</a>
+    <a href="#" class="footer-col-info-link3">Obchodní podmínky</a>
+    <a href="#" class="footer-col-info-link4">Blog</a>
+
+    <!-- Footer: Podpora -->
+    <span class="footer-col-support-header">Podpora</span>
+    <a href="mailto:marketing@chaties.cz" class="footer-col-support-link1">marketing@chaties.cz</a>
+    <a href="mailto:podpora@chaties.cz" class="footer-col-support-link2">podpora@chaties.cz</a>
+    <a href="tel:+420734832919" class="footer-col-support-link3">+420 734 832 919</a>
+
+    <!-- Social icons -->
+    <div class="social-icon-insta"></div>
+    <a href="#" class="social-text-insta">Instagram</a>
+
+    <div class="social-icon-fb"></div>
+    <a href="#" class="social-text-fb">Facebook</a>
+
+    <!-- Footer line + copyright -->
+    <div class="footer-line"></div>
+    <span class="footer-copyright">© 2025 Chaties AI software. All rights reserved</span>
+    <a href="#" class="footer-privacy">Zásady ochrany osobních údajů</a>
+
+  </div><!-- /.page -->
 </body>
 </html>
