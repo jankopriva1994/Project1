@@ -4,7 +4,7 @@
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <title>Chaties – AI služby</title>
-  <link rel="stylesheet" href="styles.css?v=34" />
+  <link rel="stylesheet" href="styles.css?v=35" />
 </head>
 <body>
   <div class="page">
@@ -387,19 +387,12 @@
       var el    = document.querySelector('.hero-anim-word');
 
       function next() {
-        el.style.opacity   = '0';
-        el.style.transform = 'translateY(-12px)';
+        el.classList.add('anim-out');
         setTimeout(function () {
           idx = (idx + 1) % words.length;
-          el.textContent     = words[idx];
-          el.style.transform = 'translateY(12px)';
-          requestAnimationFrame(function () {
-            requestAnimationFrame(function () {
-              el.style.opacity   = '1';
-              el.style.transform = 'translateY(0)';
-            });
-          });
-        }, 300);
+          el.textContent = words[idx];
+          el.classList.remove('anim-out');
+        }, 220);
       }
 
       setInterval(next, 2400);
