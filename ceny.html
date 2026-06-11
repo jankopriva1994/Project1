@@ -4,7 +4,7 @@
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <title>Ceny – Chaties AI</title>
-  <link rel="stylesheet" href="styles.css?v=34" />
+  <link rel="stylesheet" href="styles.css?v=36" />
 </head>
 <body>
   <div class="page ceny-page">
@@ -42,9 +42,9 @@
     <img class="ceny-wave" src="https://www.figma.com/api/mcp/asset/753c26d8-a873-4110-8ec8-7bcbfbe3a9c0" alt="" />
 
     <!-- ==================== HERO ==================== -->
-    <h1 class="ceny-title"><span class="accent">Chaties.cz </span>zdarma na 5 dní!</h1>
+    <h1 class="ceny-title" style="opacity:0;transform:translateY(70px)"><span class="accent">Chaties.cz </span>zdarma na 5 dní!</h1>
 
-    <p class="ceny-subtitle"><strong class="accent">Chaties.cz</strong> je nejrychlejší kompletní platforma s umělou inteligencí, generujte obsah na své sociální sítě,<br>marketingové kampaně, pracovní e-maily nebo školní práce.</p>
+    <p class="ceny-subtitle" style="opacity:0;transform:translateY(70px)"><strong class="accent">Chaties.cz</strong> je nejrychlejší kompletní platforma s umělou inteligencí, generujte obsah na své sociální sítě,<br>marketingové kampaně, pracovní e-maily nebo školní práce.</p>
 
     <!-- Banner -->
     <div class="ceny-banner"></div>
@@ -234,6 +234,22 @@
       amounts.forEach(function (el) { el.textContent = el.dataset[key]; });
       notes.forEach(function (el) { el.textContent = el.dataset[key]; });
     });
+  </script>
+  <script>
+    (function () {
+      var items = [
+        { el: document.querySelector('.ceny-title'),    delay: 0   },
+        { el: document.querySelector('.ceny-subtitle'), delay: 160 }
+      ];
+      var ease = 'cubic-bezier(0.16, 1, 0.3, 1)';
+      items.forEach(function (item) {
+        setTimeout(function () {
+          item.el.style.transition = 'opacity 1s ' + ease + ', transform 1s ' + ease;
+          item.el.style.opacity    = '1';
+          item.el.style.transform  = 'translateY(0)';
+        }, item.delay);
+      });
+    })();
   </script>
 </body>
 </html>

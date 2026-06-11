@@ -4,7 +4,7 @@
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <title>Šablony – Chaties AI</title>
-  <link rel="stylesheet" href="styles.css?v=32" />
+  <link rel="stylesheet" href="styles.css?v=36" />
 </head>
 <body>
   <div class="page sablony-page">
@@ -42,12 +42,12 @@
     <img class="sabl-wave" src="https://www.figma.com/api/mcp/asset/cc789f71-0b45-49a5-91a9-356e24d5b0ea" alt="" />
 
     <!-- ==================== HERO ==================== -->
-    <h1 class="sabl-heading">
+    <h1 class="sabl-heading" style="opacity:0;transform:translateY(70px)">
       <span class="accent">Šablony, které Vám pomohou</span><br>
       <span class="accent">vytvořit </span>nejrelevantnější content.
     </h1>
 
-    <p class="sabl-subtitle">
+    <p class="sabl-subtitle" style="opacity:0;transform:translateY(70px)">
       Vyberte si ze stovek připravených AI šablon pro marketing, reklamy a sociální sítě.<br>
       Každá šablona je navržena pro maximální výsledky – stačí zadat kontext a Chaties AI<br>
       vytvoří profesionální obsah za pár sekund.
@@ -171,5 +171,21 @@
     <a href="#" class="footer-privacy">Zásady ochrany osobních údajů</a>
 
   </div><!-- /.page -->
+  <script>
+    (function () {
+      var items = [
+        { el: document.querySelector('.sabl-heading'),  delay: 0   },
+        { el: document.querySelector('.sabl-subtitle'), delay: 160 }
+      ];
+      var ease = 'cubic-bezier(0.16, 1, 0.3, 1)';
+      items.forEach(function (item) {
+        setTimeout(function () {
+          item.el.style.transition = 'opacity 1s ' + ease + ', transform 1s ' + ease;
+          item.el.style.opacity    = '1';
+          item.el.style.transform  = 'translateY(0)';
+        }, item.delay);
+      });
+    })();
+  </script>
 </body>
 </html>
