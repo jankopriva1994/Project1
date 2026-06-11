@@ -263,6 +263,12 @@ body {
   text-decoration: none;
 }
 
+/* Hero animated word */
+.hero-anim-word {
+  display: inline-block;
+  transition: opacity 0.3s ease, transform 0.3s ease;
+}
+
 /* ===================== FEATURES SECTION ===================== */
 .features-heading {
   position: absolute;
