@@ -4,7 +4,7 @@
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <title>Chaties – AI služby</title>
-  <link rel="stylesheet" href="styles.css?v=35" />
+  <link rel="stylesheet" href="styles.css?v=36" />
 </head>
 <body>
   <div class="page">
@@ -45,17 +45,17 @@
       alt="Wave background"
     />
 
-    <h1 class="hero-headline">
+    <h1 class="hero-headline" style="opacity:0;transform:translateY(70px)">
       Tvořte <span class="hero-anim-word accent">obsah</span> <span class="accent">s nejrychlejší</span><br>
       <span class="accent">umělou inteligencí</span> na pár kliknutí
     </h1>
 
-    <p class="hero-subtitle">
+    <p class="hero-subtitle" style="opacity:0;transform:translateY(70px)">
       <strong><span class="accent">Chaties.cz</span></strong> je vaše všestranná AI platforma. Pište texty, generujte obrázky,
       překládejte dokumenty a mnohem více – vše na jednom místě.
     </p>
 
-    <a href="#" class="hero-cta">Vyzkoušej <span class="accent" style="margin-left:4px;">Chaties</span>&nbsp;zdarma</a>
+    <a href="#" class="hero-cta" style="opacity:0;transform:translateY(70px)">Vyzkoušej <span class="accent" style="margin-left:4px;">Chaties</span>&nbsp;zdarma</a>
 
     <!-- ==================== FEATURES SECTION ==================== -->
     <h2 class="features-heading">
@@ -378,6 +378,23 @@
 
       tabs.forEach(function (tab) {
         tab.el.addEventListener('click', function () { activateTab(tab); });
+      });
+    })();
+
+    /* ---- Hero entrance ---- */
+    (function () {
+      var items = [
+        { el: document.querySelector('.hero-headline'), delay: 0   },
+        { el: document.querySelector('.hero-subtitle'), delay: 160 },
+        { el: document.querySelector('.hero-cta'),      delay: 310 }
+      ];
+      var ease = 'cubic-bezier(0.16, 1, 0.3, 1)';
+      items.forEach(function (item) {
+        setTimeout(function () {
+          item.el.style.transition = 'opacity 1s ' + ease + ', transform 1s ' + ease;
+          item.el.style.opacity    = '1';
+          item.el.style.transform  = 'translateY(0)';
+        }, item.delay);
       });
     })();
 

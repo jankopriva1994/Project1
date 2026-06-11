@@ -263,22 +263,6 @@ body {
   text-decoration: none;
 }
 
-/* Hero entrance animation */
-@keyframes heroFadeUp {
-  from { opacity: 0; transform: translateY(28px); }
-  to   { opacity: 1; transform: translateY(0); }
-}
-
-.hero-headline {
-  animation: heroFadeUp 0.7s ease both;
-}
-.hero-subtitle {
-  animation: heroFadeUp 0.7s ease 0.15s both;
-}
-.hero-cta {
-  animation: heroFadeUp 0.7s ease 0.3s both;
-}
-
 /* Hero animated word cycling */
 .hero-anim-word {
   display: inline-block;
