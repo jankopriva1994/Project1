@@ -680,6 +680,7 @@ body {
   height: 49px;
   background: #202020;
   border-radius: 6px;
+  transition: left 0.25s ease, width 0.25s ease;
 }
 
 .tab-ai-chat {
@@ -692,6 +693,8 @@ body {
   font-weight: 700;
   color: #ffffff;
   font-family: 'Supreme', sans-serif;
+  cursor: pointer;
+  z-index: 1;
 }
 
 .tab-translator {
@@ -704,6 +707,8 @@ body {
   font-weight: 700;
   color: #d0ee52;
   font-family: 'Supreme', sans-serif;
+  cursor: pointer;
+  z-index: 1;
 }
 
 .tab-images {
@@ -716,6 +721,8 @@ body {
   font-weight: 700;
   color: #d0ee52;
   font-family: 'Supreme', sans-serif;
+  cursor: pointer;
+  z-index: 1;
 }
 
 .tab-documents {
@@ -728,6 +735,8 @@ body {
   font-weight: 700;
   color: #d0ee52;
   font-family: 'Supreme', sans-serif;
+  cursor: pointer;
+  z-index: 1;
 }
 
 /* ===================== AI CHAT SECTION ===================== */
