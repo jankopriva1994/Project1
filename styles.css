@@ -2570,7 +2570,7 @@ body {
 .adm-trans-tip { font-size: 12px; color: #d0ee52; font-family: 'Supreme', sans-serif; }
 
 /* Documents */
-.adm-docs-sub { font-size: 16px; color: #ffffff; font-family: 'Supreme', sans-serif; margin: 0 0 20px; line-height: 22px; }
+.adm-docs-sub { font-size: 16px; color: #ffffff; font-family: 'Supreme', sans-serif; margin: 0 0 45px; line-height: 22px; }
 .adm-docs-cta-row { display: flex; align-items: center; gap: 12px; margin-bottom: 16px; }
 .adm-docs-sep { width: 1px; height: 40px; background: #444; margin: 0 4px; }
 .adm-docs-upload-btn { display: flex; align-items: center; gap: 10px; cursor: pointer; padding: 0 8px; }
