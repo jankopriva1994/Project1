@@ -4,7 +4,7 @@
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <title>Administrace – Chaties AI</title>
-  <link rel="stylesheet" href="styles.css?v=66" />
+  <link rel="stylesheet" href="styles.css?v=67" />
   <script src="https://cdnjs.cloudflare.com/ajax/libs/mammoth/1.6.0/mammoth.browser.min.js"></script>
 </head>
 <body>
@@ -390,130 +390,116 @@
     <!-- PANEL 5b: PŘELOŽIT DOKUMENT -->
     <div class="adm-panel adm-panel-docs-translate" data-panel-id="docs-translate">
 
-      <h2 class="adm-trans-heading">Vítejte v Chaties AI Překladači</h2>
-      <p class="adm-docs-sub">Chaties překladač dokumentů podporuje tyto formáty (<span class="accent">docx, pptx, pdf, html, htm, txt, xlf a xliff</span>).<br>Minimální cena překladu je 500 slov a zahrnuje až 25 normostran. Nad 27 normostran jsou slova účtována stejně jako u klasického překladu.</p>
+      <h2 class="adm-trans-heading">Přeložit dokument</h2>
+      <p class="adm-trans-sub">Nahrajte soubor a přeložte ho do více než 16 jazyků. Podporované formáty: docx, html, htm, txt, xlf, xliff.</p>
 
-      <!-- CTA row -->
-      <div class="adm-docs-cta-row">
+      <!-- CTA nav -->
+      <div class="adm-docs-cta-row" style="margin-bottom:32px">
         <button class="adm-trans-btn adm-trans-btn-inactive" data-goto-panel="docs-create">+ Vytvořit nový dokument</button>
         <button class="adm-trans-btn adm-trans-btn-active">Přeložit dokument</button>
-        <div class="adm-docs-sep"></div>
-        <label class="adm-docs-upload-btn">
-          <svg width="20" height="20" viewBox="0 0 24 24" fill="none"><path d="M12 15V3m0 0l-4 4m4-4l4 4" stroke="#d0ee52" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"/><path d="M3 15v2a4 4 0 0 0 4 4h10a4 4 0 0 0 4-4v-2" stroke="#d0ee52" stroke-width="1.8" stroke-linecap="round"/></svg>
-          <div class="adm-docs-upload-text">
-            <span class="adm-docs-upload-label">Vybrat soubor</span>
-            <span class="adm-docs-upload-hint">max. 10mb</span>
-          </div>
-          <input type="file" id="docsFileInput" style="display:none" accept=".docx,.html,.htm,.txt,.xlf,.xliff">
-        </label>
-        <div class="adm-docs-filename" id="docsFilename"><span class="adm-docs-file-x" id="docsFileClear" style="display:none">×</span></div>
-        <button class="adm-docs-translate-btn" id="docsTranslateBtn">Přeložit</button>
       </div>
 
-      <!-- Info row -->
-      <div class="adm-docs-info-row">
-        <span class="adm-docs-info-item">1 slovo = 0,3 slov
-          <svg width="14" height="14" viewBox="0 0 24 24" fill="none"><rect x="2" y="2" width="20" height="20" rx="5" stroke="#8b8b8b" stroke-width="1.5"/><path d="M12 7h.01M12 11v6" stroke="#8b8b8b" stroke-width="1.5" stroke-linecap="round"/></svg>
-        </span>
-        <span class="adm-docs-info-item">500 slov
-          <svg width="14" height="14" viewBox="0 0 24 24" fill="none"><rect x="2" y="2" width="20" height="20" rx="5" stroke="#8b8b8b" stroke-width="1.5"/><path d="M12 7h.01M12 11v6" stroke="#8b8b8b" stroke-width="1.5" stroke-linecap="round"/></svg>
-        </span>
-      </div>
-
-      <!-- Language selectors -->
-      <div class="adm-lang-row">
-        <div class="adm-lang-dropdown" data-lang="cs">
-          <svg width="18" height="18" viewBox="0 0 24 24" fill="none"><path d="M3 5h12M7 3v2M12 5c-.5 2.5-2.5 5-5 6.5M9.5 10.5c1 1.5 2.5 2.5 4 3.5" stroke="#8b8b8b" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/><path d="M14.5 12l3-3 3 3M17.5 9v9" stroke="#8b8b8b" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg>
-          <span class="adm-lang-name">Čeština</span>
-          <svg class="adm-lang-chevron" width="12" height="12" viewBox="0 0 24 24" fill="none"><path d="M6 9l6 6 6-6" stroke="#8b8b8b" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg>
-          <div class="adm-lang-menu">
-            <div class="adm-lang-option adm-lang-active" data-code="cs"><span class="adm-lang-flag">🇨🇿</span><span>Čeština</span></div>
-            <div class="adm-lang-option" data-code="sk"><span class="adm-lang-flag">🇸🇰</span><span>Slovenština</span></div>
-            <div class="adm-lang-option" data-code="en"><span class="adm-lang-flag">🇬🇧</span><span>Angličtina</span></div>
-            <div class="adm-lang-option" data-code="de"><span class="adm-lang-flag">🇩🇪</span><span>Němčina</span></div>
-            <div class="adm-lang-option" data-code="fr"><span class="adm-lang-flag">🇫🇷</span><span>Francouzština</span></div>
-            <div class="adm-lang-option" data-code="es"><span class="adm-lang-flag">🇪🇸</span><span>Španělština</span></div>
-            <div class="adm-lang-option" data-code="it"><span class="adm-lang-flag">🇮🇹</span><span>Italština</span></div>
-            <div class="adm-lang-option" data-code="pt"><span class="adm-lang-flag">🇵🇹</span><span>Portugalština</span></div>
-            <div class="adm-lang-option" data-code="pl"><span class="adm-lang-flag">🇵🇱</span><span>Polština</span></div>
-            <div class="adm-lang-option" data-code="hu"><span class="adm-lang-flag">🇭🇺</span><span>Maďarština</span></div>
-            <div class="adm-lang-option" data-code="ro"><span class="adm-lang-flag">🇷🇴</span><span>Rumunština</span></div>
-            <div class="adm-lang-option" data-code="nl"><span class="adm-lang-flag">🇳🇱</span><span>Nizozemština</span></div>
-            <div class="adm-lang-option" data-code="ru"><span class="adm-lang-flag">🇷🇺</span><span>Ruština</span></div>
-            <div class="adm-lang-option" data-code="ua"><span class="adm-lang-flag">🇺🇦</span><span>Ukrajinština</span></div>
-            <div class="adm-lang-option" data-code="ja"><span class="adm-lang-flag">🇯🇵</span><span>Japonština</span></div>
-            <div class="adm-lang-option" data-code="zh"><span class="adm-lang-flag">🇨🇳</span><span>Čínština</span></div>
-          </div>
-        </div>
-        <span class="adm-lang-arrow-green">→</span>
-        <div class="adm-lang-dropdown" data-lang="de">
-          <svg width="18" height="18" viewBox="0 0 24 24" fill="none"><path d="M3 5h12M7 3v2M12 5c-.5 2.5-2.5 5-5 6.5M9.5 10.5c1 1.5 2.5 2.5 4 3.5" stroke="#8b8b8b" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/><path d="M14.5 12l3-3 3 3M17.5 9v9" stroke="#8b8b8b" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg>
-          <span class="adm-lang-name">Němčina</span>
-          <svg class="adm-lang-chevron" width="12" height="12" viewBox="0 0 24 24" fill="none"><path d="M6 9l6 6 6-6" stroke="#8b8b8b" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg>
-          <div class="adm-lang-menu">
-            <div class="adm-lang-option" data-code="cs"><span class="adm-lang-flag">🇨🇿</span><span>Čeština</span></div>
-            <div class="adm-lang-option" data-code="sk"><span class="adm-lang-flag">🇸🇰</span><span>Slovenština</span></div>
-            <div class="adm-lang-option" data-code="en"><span class="adm-lang-flag">🇬🇧</span><span>Angličtina</span></div>
-            <div class="adm-lang-option adm-lang-active" data-code="de"><span class="adm-lang-flag">🇩🇪</span><span>Němčina</span></div>
-            <div class="adm-lang-option" data-code="fr"><span class="adm-lang-flag">🇫🇷</span><span>Francouzština</span></div>
-            <div class="adm-lang-option" data-code="es"><span class="adm-lang-flag">🇪🇸</span><span>Španělština</span></div>
-            <div class="adm-lang-option" data-code="it"><span class="adm-lang-flag">🇮🇹</span><span>Italština</span></div>
-            <div class="adm-lang-option" data-code="pt"><span class="adm-lang-flag">🇵🇹</span><span>Portugalština</span></div>
-            <div class="adm-lang-option" data-code="pl"><span class="adm-lang-flag">🇵🇱</span><span>Polština</span></div>
-            <div class="adm-lang-option" data-code="hu"><span class="adm-lang-flag">🇭🇺</span><span>Maďarština</span></div>
-            <div class="adm-lang-option" data-code="ro"><span class="adm-lang-flag">🇷🇴</span><span>Rumunština</span></div>
-            <div class="adm-lang-option" data-code="nl"><span class="adm-lang-flag">🇳🇱</span><span>Nizozemština</span></div>
-            <div class="adm-lang-option" data-code="ru"><span class="adm-lang-flag">🇷🇺</span><span>Ruština</span></div>
-            <div class="adm-lang-option" data-code="ua"><span class="adm-lang-flag">🇺🇦</span><span>Ukrajinština</span></div>
-            <div class="adm-lang-option" data-code="ja"><span class="adm-lang-flag">🇯🇵</span><span>Japonština</span></div>
-            <div class="adm-lang-option" data-code="zh"><span class="adm-lang-flag">🇨🇳</span><span>Čínština</span></div>
-          </div>
-        </div>
-      </div>
-      <!-- Content panels (before translation) -->
-      <div class="adm-trans-panels" id="docsTranslatePanels">
-        <div class="adm-trans-panel adm-lang-panel-left">
-          <textarea class="adm-trans-textarea adm-docs-textarea" id="docsSourceText" placeholder="Nahrajte soubor nebo sem vložte text k přeložení…"></textarea>
-        </div>
-        <div class="adm-trans-panel adm-lang-panel-right">
-          <div class="adm-docs-history" id="docsHistoryPanel">
-            <p class="adm-docs-history-title">Historie přeložených souborů</p>
-            <p class="adm-docs-history-item">Prispev_naceneni.pdf</p>
-            <p class="adm-docs-history-item">Prispev_naceneni.pdf</p>
-            <p class="adm-docs-history-item">Prispev_naceneni.pdf</p>
-            <p class="adm-docs-history-item">Prispev_naceneni.pdf</p>
-            <p class="adm-docs-history-item">Prispev_naceneni.pdf</p>
-            <p class="adm-docs-history-item">Prispev_naceneni.pdf</p>
-            <p class="adm-docs-history-item">Prispev_naceneni.pdf</p>
-            <p class="adm-docs-history-item">Prispev_naceneni.pdf</p>
-          </div>
+      <!-- STEP 1: Dropzone -->
+      <div id="docsUploadState">
+        <div class="adm-dropzone" id="docsDropzone">
+          <svg width="40" height="40" viewBox="0 0 24 24" fill="none"><path d="M12 15V3m0 0l-4 4m4-4l4 4" stroke="#d0ee52" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"/><path d="M3 15v2a4 4 0 0 0 4 4h10a4 4 0 0 0 4-4v-2" stroke="#555" stroke-width="1.8" stroke-linecap="round"/></svg>
+          <p class="adm-dropzone-title">Přetáhněte soubor sem</p>
+          <p class="adm-dropzone-or">nebo</p>
+          <label class="adm-dropzone-pick">
+            <svg width="16" height="16" viewBox="0 0 24 24" fill="none"><path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4M17 8l-5-5-5 5M12 3v12" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"/></svg>
+            Vybrat soubor z počítače
+            <input type="file" id="docsFileInput" style="display:none" accept=".docx,.html,.htm,.txt,.xlf,.xliff">
+          </label>
+          <p class="adm-dropzone-hint">docx · html · txt · xlf · xliff &nbsp;·&nbsp; max. 10 MB</p>
         </div>
       </div>
 
-      <!-- Full-width result (shown after translation) -->
-      <div class="adm-docs-result" id="docsTranslateResult" style="display:none">
-        <div class="adm-docs-result-preview" id="docsPreviewText" contenteditable="true"></div>
-        <div class="adm-docs-result-ai-row">
-          <textarea class="adm-docs-result-ai-input" id="docsEditInput" placeholder="Napiš instrukci pro úpravu textu pomocí AI… např. „Zformálni první odstavec" nebo „Zkrať text na polovinu""></textarea>
-          <button class="adm-docs-result-ai-btn" id="docsEditSubmit">
-            <svg width="16" height="16" viewBox="0 0 24 24" fill="none"><path d="M8 1L9.6 6.4L15 8L9.6 9.6L8 15L6.4 9.6L1 8L6.4 6.4Z" fill="#0d0e11"/><path d="M18.5 9L19.5 12.5L23 13.5L19.5 14.5L18.5 18L17.5 14.5L14 13.5L17.5 12.5Z" fill="#0d0e11"/></svg>
-            Upravit pomocí AI
-          </button>
+      <!-- STEP 2: Language selection (after file loaded) -->
+      <div id="docsLangState" style="display:none">
+        <div class="adm-docs-file-ready">
+          <svg width="20" height="20" viewBox="0 0 24 24" fill="none"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z" stroke="#d0ee52" stroke-width="1.5"/><path d="M14 2v6h6M16 13H8M16 17H8M10 9H8" stroke="#d0ee52" stroke-width="1.5" stroke-linecap="round"/></svg>
+          <span id="docsSelectedFilename" class="adm-docs-file-ready-name"></span>
+          <button class="adm-docs-file-remove" id="docsRemoveFile">× Odebrat</button>
         </div>
-        <div class="adm-docs-result-bottom">
-          <button class="adm-docs-download-btn" id="docsDownloadBtn">
-            <svg width="16" height="16" viewBox="0 0 24 24" fill="none"><path d="M12 3v12m0 0l-4-4m4 4l4-4" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/><path d="M3 17v2a2 2 0 0 0 2 2h14a2 2 0 0 0 2-2v-2" stroke="currentColor" stroke-width="2" stroke-linecap="round"/></svg>
-            Stáhnout překlad
-          </button>
+        <p class="adm-docs-lang-label">Do jakého jazyka chcete přeložit?</p>
+        <div class="adm-lang-row" style="margin-bottom:28px">
+          <div class="adm-lang-dropdown" data-lang="cs">
+            <svg width="18" height="18" viewBox="0 0 24 24" fill="none"><path d="M3 5h12M7 3v2M12 5c-.5 2.5-2.5 5-5 6.5M9.5 10.5c1 1.5 2.5 2.5 4 3.5" stroke="#8b8b8b" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/><path d="M14.5 12l3-3 3 3M17.5 9v9" stroke="#8b8b8b" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg>
+            <span class="adm-lang-name">Čeština</span>
+            <svg class="adm-lang-chevron" width="12" height="12" viewBox="0 0 24 24" fill="none"><path d="M6 9l6 6 6-6" stroke="#8b8b8b" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg>
+            <div class="adm-lang-menu">
+              <div class="adm-lang-option adm-lang-active" data-code="cs"><span class="adm-lang-flag">🇨🇿</span><span>Čeština</span></div>
+              <div class="adm-lang-option" data-code="sk"><span class="adm-lang-flag">🇸🇰</span><span>Slovenština</span></div>
+              <div class="adm-lang-option" data-code="en"><span class="adm-lang-flag">🇬🇧</span><span>Angličtina</span></div>
+              <div class="adm-lang-option" data-code="de"><span class="adm-lang-flag">🇩🇪</span><span>Němčina</span></div>
+              <div class="adm-lang-option" data-code="fr"><span class="adm-lang-flag">🇫🇷</span><span>Francouzština</span></div>
+              <div class="adm-lang-option" data-code="es"><span class="adm-lang-flag">🇪🇸</span><span>Španělština</span></div>
+              <div class="adm-lang-option" data-code="it"><span class="adm-lang-flag">🇮🇹</span><span>Italština</span></div>
+              <div class="adm-lang-option" data-code="pt"><span class="adm-lang-flag">🇵🇹</span><span>Portugalština</span></div>
+              <div class="adm-lang-option" data-code="pl"><span class="adm-lang-flag">🇵🇱</span><span>Polština</span></div>
+              <div class="adm-lang-option" data-code="hu"><span class="adm-lang-flag">🇭🇺</span><span>Maďarština</span></div>
+              <div class="adm-lang-option" data-code="ro"><span class="adm-lang-flag">🇷🇴</span><span>Rumunština</span></div>
+              <div class="adm-lang-option" data-code="nl"><span class="adm-lang-flag">🇳🇱</span><span>Nizozemština</span></div>
+              <div class="adm-lang-option" data-code="ru"><span class="adm-lang-flag">🇷🇺</span><span>Ruština</span></div>
+              <div class="adm-lang-option" data-code="ua"><span class="adm-lang-flag">🇺🇦</span><span>Ukrajinština</span></div>
+              <div class="adm-lang-option" data-code="ja"><span class="adm-lang-flag">🇯🇵</span><span>Japonština</span></div>
+              <div class="adm-lang-option" data-code="zh"><span class="adm-lang-flag">🇨🇳</span><span>Čínština</span></div>
+            </div>
+          </div>
+          <span class="adm-lang-arrow-green">→</span>
+          <div class="adm-lang-dropdown" data-lang="en">
+            <svg width="18" height="18" viewBox="0 0 24 24" fill="none"><path d="M3 5h12M7 3v2M12 5c-.5 2.5-2.5 5-5 6.5M9.5 10.5c1 1.5 2.5 2.5 4 3.5" stroke="#8b8b8b" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/><path d="M14.5 12l3-3 3 3M17.5 9v9" stroke="#8b8b8b" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg>
+            <span class="adm-lang-name">Angličtina</span>
+            <svg class="adm-lang-chevron" width="12" height="12" viewBox="0 0 24 24" fill="none"><path d="M6 9l6 6 6-6" stroke="#8b8b8b" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg>
+            <div class="adm-lang-menu">
+              <div class="adm-lang-option" data-code="cs"><span class="adm-lang-flag">🇨🇿</span><span>Čeština</span></div>
+              <div class="adm-lang-option" data-code="sk"><span class="adm-lang-flag">🇸🇰</span><span>Slovenština</span></div>
+              <div class="adm-lang-option adm-lang-active" data-code="en"><span class="adm-lang-flag">🇬🇧</span><span>Angličtina</span></div>
+              <div class="adm-lang-option" data-code="de"><span class="adm-lang-flag">🇩🇪</span><span>Němčina</span></div>
+              <div class="adm-lang-option" data-code="fr"><span class="adm-lang-flag">🇫🇷</span><span>Francouzština</span></div>
+              <div class="adm-lang-option" data-code="es"><span class="adm-lang-flag">🇪🇸</span><span>Španělština</span></div>
+              <div class="adm-lang-option" data-code="it"><span class="adm-lang-flag">🇮🇹</span><span>Italština</span></div>
+              <div class="adm-lang-option" data-code="pt"><span class="adm-lang-flag">🇵🇹</span><span>Portugalština</span></div>
+              <div class="adm-lang-option" data-code="pl"><span class="adm-lang-flag">🇵🇱</span><span>Polština</span></div>
+              <div class="adm-lang-option" data-code="hu"><span class="adm-lang-flag">🇭🇺</span><span>Maďarština</span></div>
+              <div class="adm-lang-option" data-code="ro"><span class="adm-lang-flag">🇷🇴</span><span>Rumunština</span></div>
+              <div class="adm-lang-option" data-code="nl"><span class="adm-lang-flag">🇳🇱</span><span>Nizozemština</span></div>
+              <div class="adm-lang-option" data-code="ru"><span class="adm-lang-flag">🇷🇺</span><span>Ruština</span></div>
+              <div class="adm-lang-option" data-code="ua"><span class="adm-lang-flag">🇺🇦</span><span>Ukrajinština</span></div>
+              <div class="adm-lang-option" data-code="ja"><span class="adm-lang-flag">🇯🇵</span><span>Japonština</span></div>
+              <div class="adm-lang-option" data-code="zh"><span class="adm-lang-flag">🇨🇳</span><span>Čínština</span></div>
+            </div>
+          </div>
+        </div>
+        <button class="adm-docs-translate-big-btn" id="docsTranslateBtn">Přeložit dokument</button>
+      </div>
+
+      <!-- STEP 3: Translation result -->
+      <div id="docsTranslateResult" style="display:none">
+        <div class="adm-docs-result">
+          <div class="adm-docs-result-header">
+            <span class="adm-docs-result-title" id="docsResultFilename"></span>
+            <button class="adm-docs-result-back" id="docsStartOver">← Přeložit jiný soubor</button>
+          </div>
+          <div class="adm-docs-result-preview" id="docsPreviewText" contenteditable="true"></div>
+          <div class="adm-docs-result-ai-row">
+            <textarea class="adm-docs-result-ai-input" id="docsEditInput" placeholder="Napiš instrukci pro úpravu textu pomocí AI… např. „Zkrať text na polovinu" nebo „Zformálni text""></textarea>
+            <button class="adm-docs-result-ai-btn" id="docsEditSubmit">
+              <svg width="16" height="16" viewBox="0 0 24 24" fill="none"><path d="M8 1L9.6 6.4L15 8L9.6 9.6L8 15L6.4 9.6L1 8L6.4 6.4Z" fill="#0d0e11"/><path d="M18.5 9L19.5 12.5L23 13.5L19.5 14.5L18.5 18L17.5 14.5L14 13.5L17.5 12.5Z" fill="#0d0e11"/></svg>
+              Upravit pomocí AI
+            </button>
+          </div>
+          <div class="adm-docs-result-bottom">
+            <button class="adm-docs-download-btn" id="docsDownloadBtn">
+              <svg width="16" height="16" viewBox="0 0 24 24" fill="none"><path d="M12 3v12m0 0l-4-4m4 4l4-4" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/><path d="M3 17v2a2 2 0 0 0 2 2h14a2 2 0 0 0 2-2v-2" stroke="currentColor" stroke-width="2" stroke-linecap="round"/></svg>
+              Stáhnout překlad (PDF)
+            </button>
+          </div>
         </div>
       </div>
 
-      <!-- Bottom icons -->
-      <div class="adm-docs-bottom-row">
-        <svg width="20" height="20" viewBox="0 0 24 24" fill="none"><rect x="8" y="8" width="13" height="13" rx="2" stroke="#8b8b8b" stroke-width="1.5"/><path d="M3 16V5a2 2 0 0 1 2-2h11" stroke="#8b8b8b" stroke-width="1.5" stroke-linecap="round"/></svg>
-        <svg width="20" height="20" viewBox="0 0 24 24" fill="none"><circle cx="18" cy="5" r="3" stroke="#8b8b8b" stroke-width="1.5"/><circle cx="6" cy="12" r="3" stroke="#8b8b8b" stroke-width="1.5"/><circle cx="18" cy="19" r="3" stroke="#8b8b8b" stroke-width="1.5"/><path d="M8.59 13.51l6.83 3.98M15.41 6.51l-6.82 3.98" stroke="#8b8b8b" stroke-width="1.5"/></svg>
-        <span class="adm-tip"><span class="adm-tip-label">TIP!</span> Pokud nechcete plýtvat kreditem, doporučujeme si dokumenty, které mají do 5 normostran přeložit v klasickém překladači.</span>
-      </div>
+      <!-- Hidden source text holder -->
+      <textarea id="docsSourceText" style="display:none"></textarea>
 
     </div><!-- /adm-panel-docs-translate -->
 
@@ -922,75 +908,112 @@
   </div>
 
   <script>
-  // Docs translate panel — real file reading, Google Translate, PDF export
+  // Docs translate panel — 3-step flow: upload → language → result
   (function () {
+    var uploadState  = document.getElementById('docsUploadState');
+    var langState    = document.getElementById('docsLangState');
+    var resultState  = document.getElementById('docsTranslateResult');
+    var dropzone     = document.getElementById('docsDropzone');
     var fileInput    = document.getElementById('docsFileInput');
-    var filenameEl   = document.getElementById('docsFilename');
-    var sourceText   = document.getElementById('docsSourceText');
+    var selectedName = document.getElementById('docsSelectedFilename');
+    var removeBtn    = document.getElementById('docsRemoveFile');
     var translateBtn = document.getElementById('docsTranslateBtn');
-    var panels       = document.getElementById('docsTranslatePanels');
-    var resultDiv    = document.getElementById('docsTranslateResult');
+    var resultName   = document.getElementById('docsResultFilename');
+    var startOver    = document.getElementById('docsStartOver');
+    var sourceText   = document.getElementById('docsSourceText');
     var previewText  = document.getElementById('docsPreviewText');
     var editInput    = document.getElementById('docsEditInput');
     var editSubmit   = document.getElementById('docsEditSubmit');
     var downloadBtn  = document.getElementById('docsDownloadBtn');
 
-    var isHtmlMode = false; // true when .docx translated as HTML
+    var isHtmlMode = false;
+    var docxHtmlBuffer = null;
+    var currentFileName = '';
 
-    var docxHtmlBuffer = null; // stores original mammoth HTML for structure-preserving translation
+    function showStep(step) {
+      uploadState.style.display  = step === 1 ? '' : 'none';
+      langState.style.display    = step === 2 ? '' : 'none';
+      resultState.style.display  = step === 3 ? '' : 'none';
+    }
+
+    function resetUpload() {
+      fileInput.value = '';
+      sourceText.value = '';
+      docxHtmlBuffer = null;
+      isHtmlMode = false;
+      currentFileName = '';
+      previewText.innerHTML = '';
+      showStep(1);
+    }
 
     // ── File reading ────────────────────────────────────────
-    if (fileInput) {
-      fileInput.addEventListener('change', function () {
-        var file = fileInput.files[0];
-        if (!file) return;
-        docxHtmlBuffer = null;
-        isHtmlMode = false;
+    function handleFile(file) {
+      if (!file) return;
+      var maxMB = 10;
+      if (file.size > maxMB * 1024 * 1024) { alert('Soubor je příliš velký (max. ' + maxMB + ' MB).'); return; }
+      docxHtmlBuffer = null;
+      isHtmlMode = false;
+      currentFileName = file.name;
 
-        filenameEl.innerHTML = '';
-        var nameSpan = document.createTextNode(file.name + ' ');
-        filenameEl.appendChild(nameSpan);
-        var x = document.createElement('span');
-        x.className = 'adm-docs-file-x';
-        x.textContent = '×';
-        x.addEventListener('click', function () { fileInput.value = ''; filenameEl.textContent = ''; sourceText.value = ''; docxHtmlBuffer = null; });
-        filenameEl.appendChild(x);
+      var lower = file.name.toLowerCase();
+      if (lower.endsWith('.txt') || lower.endsWith('.xlf') || lower.endsWith('.xliff')) {
+        var r = new FileReader();
+        r.onload = function (e) {
+          sourceText.value = e.target.result;
+          selectedName.textContent = currentFileName;
+          showStep(2);
+        };
+        r.readAsText(file, 'UTF-8');
+      } else if (lower.endsWith('.html') || lower.endsWith('.htm')) {
+        var rh = new FileReader();
+        rh.onload = function (e) {
+          docxHtmlBuffer = e.target.result;
+          isHtmlMode = true;
+          var tmp = document.createElement('div');
+          tmp.innerHTML = e.target.result;
+          sourceText.value = tmp.textContent;
+          selectedName.textContent = currentFileName;
+          showStep(2);
+        };
+        rh.readAsText(file, 'UTF-8');
+      } else if (lower.endsWith('.docx')) {
+        if (typeof mammoth === 'undefined') { alert('mammoth.js se nenačetl – zkuste .txt'); return; }
+        var r2 = new FileReader();
+        r2.onload = function (e) {
+          mammoth.convertToHtml({ arrayBuffer: e.target.result })
+            .then(function (res) {
+              docxHtmlBuffer = res.value;
+              isHtmlMode = true;
+              var tmp = document.createElement('div');
+              tmp.innerHTML = res.value;
+              sourceText.value = tmp.textContent;
+              selectedName.textContent = currentFileName;
+              showStep(2);
+            })
+            .catch(function () { alert('Nepodařilo se přečíst .docx soubor.'); });
+        };
+        r2.readAsArrayBuffer(file);
+      } else {
+        alert('Formát ' + file.name.split('.').pop().toUpperCase() + ' není podporován. Zkuste .docx nebo .txt.');
+      }
+    }
 
-        var lower = file.name.toLowerCase();
-        if (lower.endsWith('.txt') || lower.endsWith('.xlf') || lower.endsWith('.xliff')) {
-          var r = new FileReader();
-          r.onload = function (e) { sourceText.value = e.target.result; };
-          r.readAsText(file, 'UTF-8');
-        } else if (lower.endsWith('.html') || lower.endsWith('.htm')) {
-          var rh = new FileReader();
-          rh.onload = function (e) {
-            var tmp = document.createElement('div');
-            tmp.innerHTML = e.target.result;
-            sourceText.value = tmp.textContent;
-            docxHtmlBuffer = e.target.result; // keep HTML structure
-            isHtmlMode = true;
-          };
-          rh.readAsText(file, 'UTF-8');
-        } else if (lower.endsWith('.docx')) {
-          var r2 = new FileReader();
-          r2.onload = function (e) {
-            if (typeof mammoth === 'undefined') { sourceText.value = '(mammoth.js se nenačetl – zkuste .txt)'; return; }
-            mammoth.convertToHtml({ arrayBuffer: e.target.result })
-              .then(function (res) {
-                docxHtmlBuffer = res.value;
-                isHtmlMode = true;
-                var tmp = document.createElement('div');
-                tmp.innerHTML = res.value;
-                sourceText.value = tmp.textContent;
-              })
-              .catch(function () { sourceText.value = '(Nepodařilo se přečíst .docx soubor)'; });
-          };
-          r2.readAsArrayBuffer(file);
-        } else {
-          sourceText.value = '(Formát ' + file.name.split('.').pop().toUpperCase() + ' není podporován pro náhled. Zkuste .docx nebo .txt)';
-        }
+    if (fileInput) fileInput.addEventListener('change', function () { handleFile(fileInput.files[0]); });
+
+    // ── Drag-and-drop ───────────────────────────────────────
+    if (dropzone) {
+      dropzone.addEventListener('dragover', function (e) { e.preventDefault(); dropzone.classList.add('adm-dropzone-over'); });
+      dropzone.addEventListener('dragleave', function () { dropzone.classList.remove('adm-dropzone-over'); });
+      dropzone.addEventListener('drop', function (e) {
+        e.preventDefault();
+        dropzone.classList.remove('adm-dropzone-over');
+        var file = e.dataTransfer.files[0];
+        if (file) handleFile(file);
       });
     }
+
+    if (removeBtn) removeBtn.addEventListener('click', function () { resetUpload(); });
+    if (startOver) startOver.addEventListener('click', function () { resetUpload(); });
 
     // ── Google Translate (unofficial, no key needed) ─────────
     var LANG_FIX = { 'ua': 'uk', 'zh': 'zh-CN' };
@@ -1011,7 +1034,6 @@
 
     function delay(ms) { return new Promise(function (r) { setTimeout(r, ms); }); }
 
-    // Translate plain text paragraph by paragraph
     async function translatePlainText(text, from, to) {
       var paras = text.split(/\n{2,}/).filter(function (p) { return p.trim(); });
       var out = [];
@@ -1022,14 +1044,11 @@
       return out.join('\n\n');
     }
 
-    // Translate HTML block-by-block — preserves tables, lists, headings
     async function translateHtmlContent(html, from, to) {
       var div = document.createElement('div');
       div.innerHTML = html;
-      // Collect all leaf block elements
       var blocks = div.querySelectorAll('p, li, td, th, h1, h2, h3, h4, h5, h6, caption');
       if (!blocks.length) {
-        // fallback: translate as plain text
         div.textContent = await gTranslate(div.textContent, from, to);
         return div.innerHTML;
       }
@@ -1048,12 +1067,13 @@
     if (translateBtn) {
       translateBtn.addEventListener('click', async function () {
         var text = sourceText ? sourceText.value.trim() : '';
-        if (!text) { alert('Nejprve nahrajte soubor nebo vložte text.'); return; }
+        if (!text) { alert('Nejprve nahrajte soubor.'); return; }
 
         var drops = document.querySelectorAll('.adm-panel-docs-translate .adm-lang-dropdown');
         var from = drops[0] ? drops[0].getAttribute('data-lang') : 'cs';
         var to   = drops[1] ? drops[1].getAttribute('data-lang') : 'en';
 
+        var origHTML = translateBtn.innerHTML;
         translateBtn.textContent = 'Překládám…';
         translateBtn.disabled = true;
 
@@ -1065,14 +1085,14 @@
             var translatedText = await translatePlainText(text, from, to);
             previewText.innerText = translatedText;
           }
-          panels.style.display = 'none';
-          resultDiv.style.display = 'block';
+          resultName.textContent = currentFileName;
+          showStep(3);
         } catch (err) {
           alert('Chyba při překladu. Zkontrolujte připojení k internetu a zkuste to znovu.');
           console.error(err);
         }
 
-        translateBtn.textContent = 'Přeložit';
+        translateBtn.innerHTML = origHTML;
         translateBtn.disabled = false;
       });
     }
@@ -1089,11 +1109,9 @@
         await delay(1200);
 
         var lower = instr.toLowerCase();
-        var result;
         if (lower.match(/zkrátit|kratší|shrnout|zkrát/)) {
           var sents = currentText.match(/[^.!?\n]+[.!?\n]+/g) || [currentText];
-          result = sents.slice(0, Math.ceil(sents.length * 0.55)).join(' ').trim();
-          previewText.innerText = result;
+          previewText.innerText = sents.slice(0, Math.ceil(sents.length * 0.55)).join(' ').trim();
         } else if (lower.match(/formáln|úředn|official/)) {
           previewText.innerText = currentText
             .replace(/\ba lot\b/gi,'significantly').replace(/\bbig\b/gi,'substantial')
@@ -1107,8 +1125,6 @@
         } else if (lower.match(/rozšířit|doplnit|delší/)) {
           previewText.innerText = currentText + '\n\nThis area has been experiencing dynamic development in recent years and it is expected that its importance will continue to grow significantly in the coming period.';
         } else {
-          // Re-translate with instruction as style hint (mock)
-          previewText.innerText = currentText;
           var note = document.createElement('div');
           note.style.cssText = 'color:#d0ee52;font-size:12px;margin-top:8px;font-style:italic';
           note.textContent = '✓ AI instrukce aplikována: „' + instr + '"';

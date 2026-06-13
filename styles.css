@@ -2693,3 +2693,25 @@ body {
 .adm-placeholder { display: flex; flex-direction: column; align-items: center; justify-content: center; height: 400px; }
 .adm-placeholder-title { font-size: 22px; font-weight: 700; color: #d0ee52; font-family: 'Supreme', sans-serif; margin-bottom: 12px; }
 .adm-placeholder-sub { font-size: 15px; color: #8b8b8b; font-family: 'Supreme', sans-serif; }
+
+/* Docs translate – 3-step flow */
+.adm-dropzone { display: flex; flex-direction: column; align-items: center; justify-content: center; gap: 10px; width: 700px; height: 280px; border: 2px dashed #444; border-radius: 8px; background: #1a1b1e; transition: border-color .2s; cursor: default; }
+.adm-dropzone.adm-dropzone-over { border-color: #d0ee52; background: #1e2010; }
+.adm-dropzone-title { font-size: 18px; font-weight: 700; color: #fff; font-family: 'Supreme', sans-serif; margin: 0; }
+.adm-dropzone-or { font-size: 14px; color: #8b8b8b; font-family: 'Supreme', sans-serif; margin: 0; }
+.adm-dropzone-pick { display: flex; align-items: center; gap: 8px; height: 44px; padding: 0 22px; background: #272727; border: 1px solid #505050; border-radius: 5px; color: #fff; font-size: 15px; font-family: 'Supreme', sans-serif; cursor: pointer; user-select: none; }
+.adm-dropzone-pick:hover { border-color: #d0ee52; }
+.adm-dropzone-hint { font-size: 13px; color: #555; font-family: 'Supreme', sans-serif; margin: 0; }
+.adm-docs-file-ready { display: flex; align-items: center; gap: 10px; margin-bottom: 24px; padding: 12px 18px; background: #1a1b1e; border: 1px solid #3a3a3a; border-radius: 6px; width: fit-content; }
+.adm-docs-file-ready-name { font-size: 15px; color: #fff; font-family: 'Supreme', sans-serif; }
+.adm-docs-file-remove { background: none; border: none; color: #8b8b8b; font-size: 15px; cursor: pointer; padding: 0 4px; font-family: 'Supreme', sans-serif; }
+.adm-docs-file-remove:hover { color: #ff5555; }
+.adm-docs-lang-label { font-size: 16px; color: #fff; font-family: 'Supreme', sans-serif; margin: 0 0 16px; }
+.adm-docs-translate-big-btn { height: 52px; padding: 0 36px; background: #d0ee52; border: none; border-radius: 5px; color: #0d0e11; font-size: 16px; font-weight: 700; font-family: 'Supreme', sans-serif; cursor: pointer; display: inline-flex; align-items: center; }
+.adm-docs-translate-big-btn:hover { background: #bedd3e; }
+.adm-docs-translate-big-btn:disabled { opacity: .5; cursor: wait; }
+.adm-docs-result-header { display: flex; align-items: center; justify-content: space-between; margin-bottom: 14px; }
+.adm-docs-result-title { font-size: 16px; font-weight: 700; color: #fff; font-family: 'Supreme', sans-serif; }
+.adm-docs-result-back { background: none; border: 1px solid #444; border-radius: 5px; color: #8b8b8b; font-size: 14px; font-family: 'Supreme', sans-serif; cursor: pointer; padding: 6px 16px; }
+.adm-docs-result-back:hover { color: #fff; border-color: #666; }
+.adm-docs-result-bottom { margin-top: 14px; }
