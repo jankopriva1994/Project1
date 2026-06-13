@@ -2472,21 +2472,21 @@ body {
 .adm-sidebar-other { top: 452px; }
 
 /* Nav items */
-.adm-nav-item { position: absolute; left: 56px; display: flex; align-items: center; gap: 12px; font-size: 15px; font-weight: 400; color: #ffffff; text-decoration: none; font-family: 'Supreme', sans-serif; white-space: nowrap; cursor: pointer; }
+.adm-nav-item { position: absolute; left: 56px; display: flex; align-items: center; gap: 12px; font-size: 16px; font-weight: 400; color: #8b8b8b; text-decoration: none; font-family: 'Supreme', sans-serif; white-space: nowrap; cursor: pointer; }
 .adm-nav-item:hover { color: #d0ee52; }
 .adm-nav-item.adm-nav-active { font-weight: 700; color: #d0ee52; }
 .adm-nav-images { top: 222px; }
-.adm-nav-chat { top: 262px; }
-.adm-nav-translator { top: 302px; }
-.adm-nav-docs { top: 342px; }
-.adm-nav-templates { top: 382px; }
-.adm-sidebar-divider { position: absolute; left: 56px; top: 422px; width: 152px; height: 1px; background: #333333; }
+.adm-nav-chat { top: 267px; }
+.adm-nav-translator { top: 312px; }
+.adm-nav-docs { top: 357px; }
+.adm-nav-templates { top: 402px; }
+.adm-sidebar-divider { position: absolute; left: 56px; top: 437px; width: 152px; height: 1px; background: #333333; }
 .adm-nav-history { top: 490px; }
-.adm-nav-support { top: 530px; }
-.adm-nav-tokens { top: 570px; }
+.adm-nav-support { top: 535px; }
+.adm-nav-tokens { top: 580px; }
 
 /* Words widget */
-.adm-words-widget { position: absolute; left: 14px; top: 715px; width: 200px; height: 75px; background: #272727; border-radius: 8px; display: flex; flex-direction: column; justify-content: center; padding: 0 16px; box-sizing: border-box; }
+.adm-words-widget { position: absolute; left: 14px; top: 740px; width: 200px; height: 75px; background: #272727; border-radius: 8px; display: flex; flex-direction: column; justify-content: center; padding: 0 16px; box-sizing: border-box; }
 .adm-words-label { font-size: 13px; font-weight: 700; color: #ffffff; font-family: 'Supreme', sans-serif; text-decoration: underline; cursor: pointer; }
 .adm-words-value { font-size: 13px; color: #ffffff; font-family: 'Supreme', sans-serif; margin-top: 4px; }
 
