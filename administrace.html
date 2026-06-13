@@ -4,7 +4,7 @@
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <title>Administrace – Chaties AI</title>
-  <link rel="stylesheet" href="styles.css?v=57" />
+  <link rel="stylesheet" href="styles.css?v=58" />
 </head>
 <body>
   <div class="page adm-page">
@@ -369,7 +369,7 @@
       <p class="adm-trans-sub">Vytvořte si přímo zde svůj PR článek, slohou práci nebo referát do školy.</p>
 
       <div class="adm-trans-action-btns">
-        <button class="adm-trans-btn adm-trans-btn-active adm-docs-create-btn">+ Vytvořit nový dokument</button>
+        <button class="adm-trans-btn adm-trans-btn-active adm-docs-create-btn" data-goto-panel="docs-create">+ Vytvořit nový dokument</button>
         <button class="adm-trans-btn adm-trans-btn-inactive" data-goto-panel="docs-translate">Přeložit dokument</button>
       </div>
 
@@ -497,6 +497,72 @@
       </div>
 
     </div><!-- /adm-panel-docs-translate -->
+
+
+    <!-- PANEL 5c: VYTVOŘIT DOKUMENT (editor) -->
+    <div class="adm-panel adm-panel-docs-create" data-panel-id="docs-create">
+
+      <h2 class="adm-trans-heading">Vítejte v Chaties AI dokumentu</h2>
+      <p class="adm-trans-sub">Vytvořte si přímo zde svůj PR článek, slohou práci nebo referát do školy.</p>
+
+      <!-- Top bar -->
+      <div class="adm-docs-create-topbar">
+        <div class="adm-trans-action-btns" style="margin-bottom:0">
+          <button class="adm-trans-btn adm-trans-btn-active adm-docs-create-btn">+ Vytvořit nový dokument</button>
+          <button class="adm-trans-btn adm-trans-btn-inactive" data-goto-panel="docs-translate">Přeložit dokument</button>
+        </div>
+        <div class="adm-docs-sep"></div>
+        <button class="adm-docs-ai-trigger" id="docsAiBtn">
+          <svg width="16" height="16" viewBox="0 0 24 24" fill="none"><path d="M12 2l2 6h6l-5 3.5 2 6L12 14l-5 3.5 2-6L4 8h6l2-6z" fill="#d0ee52"/></svg>
+          Zeptej se AI
+        </button>
+        <p class="adm-docs-ai-hint">Vytvoř si zde pomocí AI dokument, do školy,<br>do práce nebo třeba k chystanému článku.</p>
+      </div>
+
+      <!-- WYSIWYG Toolbar -->
+      <div class="adm-wysi-toolbar">
+        <button class="adm-wysi-btn adm-wysi-bold" onclick="document.execCommand('bold')" title="Tučně"><b>B</b></button>
+        <button class="adm-wysi-btn adm-wysi-ital" onclick="document.execCommand('italic')" title="Kurzíva"><i>i</i></button>
+        <button class="adm-wysi-btn adm-wysi-uline" onclick="document.execCommand('underline')" title="Podtržení"><u>U</u></button>
+        <div class="adm-wysi-sep"></div>
+        <select class="adm-wysi-fontsize" title="Velikost písma" onchange="document.execCommand('fontSize',false,this.value);this.value=''">
+          <option value="">A:</option>
+          <option value="1">10</option>
+          <option value="2">12</option>
+          <option value="3">14</option>
+          <option value="4">16</option>
+          <option value="5">20</option>
+          <option value="6">28</option>
+          <option value="7">36</option>
+        </select>
+        <div class="adm-wysi-sep"></div>
+        <button class="adm-wysi-btn" onclick="document.execCommand('justifyLeft')" title="Vlevo">
+          <svg width="16" height="16" viewBox="0 0 24 24" fill="none"><path d="M3 6h18M3 10h12M3 14h18M3 18h12" stroke="currentColor" stroke-width="1.8" stroke-linecap="round"/></svg>
+        </button>
+        <button class="adm-wysi-btn" onclick="document.execCommand('justifyCenter')" title="Na střed">
+          <svg width="16" height="16" viewBox="0 0 24 24" fill="none"><path d="M3 6h18M6 10h12M3 14h18M6 18h12" stroke="currentColor" stroke-width="1.8" stroke-linecap="round"/></svg>
+        </button>
+        <button class="adm-wysi-btn" onclick="document.execCommand('insertUnorderedList')" title="Seznam">
+          <svg width="16" height="16" viewBox="0 0 24 24" fill="none"><circle cx="5" cy="7" r="1.5" fill="currentColor"/><circle cx="5" cy="12" r="1.5" fill="currentColor"/><circle cx="5" cy="17" r="1.5" fill="currentColor"/><path d="M9 7h11M9 12h11M9 17h11" stroke="currentColor" stroke-width="1.8" stroke-linecap="round"/></svg>
+        </button>
+        <button class="adm-wysi-btn" onclick="document.execCommand('formatBlock',false,'p')" title="Odstavec">¶</button>
+        <div class="adm-wysi-sep"></div>
+        <button class="adm-wysi-btn" id="docsLinkBtn" title="Odkaz">
+          <svg width="16" height="16" viewBox="0 0 24 24" fill="none"><path d="M10 13a5 5 0 0 0 7.54.54l3-3a5 5 0 0 0-7.07-7.07l-1.72 1.71" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"/><path d="M14 11a5 5 0 0 0-7.54-.54l-3 3a5 5 0 0 0 7.07 7.07l1.71-1.71" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"/></svg>
+        </button>
+        <button class="adm-wysi-btn" id="docsImgBtn" title="Obrázek">
+          <svg width="16" height="16" viewBox="0 0 24 24" fill="none"><rect x="3" y="3" width="18" height="18" rx="2" stroke="currentColor" stroke-width="1.8"/><circle cx="8.5" cy="8.5" r="1.5" fill="currentColor"/><path d="M21 15l-6-6L3 21" stroke="currentColor" stroke-width="1.8" stroke-linecap="round"/></svg>
+        </button>
+        <button class="adm-wysi-btn" title="Emoji" id="docsEmojiBtn">☺</button>
+        <button class="adm-wysi-btn" title="Více">+</button>
+        <div class="adm-wysi-spacer"></div>
+        <button class="adm-docs-export-pdf-btn" id="docsExportBtn">Exportovat do PDF</button>
+      </div>
+
+      <!-- Editor -->
+      <div class="adm-wysi-editor" id="docsEditor" contenteditable="true"></div>
+
+    </div><!-- /adm-panel-docs-create -->
 
 
     <!-- PANEL 6: ŠABLONY -->
@@ -684,7 +750,7 @@
     });
 
     // Cross-panel CTA buttons (data-goto-panel)
-    var navAliases = { 'docs-translate': 'docs' };
+    var navAliases = { 'docs-translate': 'docs', 'docs-create': 'docs' };
     document.querySelectorAll('[data-goto-panel]').forEach(function (btn) {
       btn.addEventListener('click', function () {
         var panelId = btn.getAttribute('data-goto-panel');
@@ -816,6 +882,94 @@
     sendBtn.addEventListener('click', send);
     textarea.addEventListener('keydown', function (e) {
       if (e.key === 'Enter' && !e.shiftKey) { e.preventDefault(); send(); }
+    });
+  })();
+  </script>
+
+  <!-- AI Modal -->
+  <div class="adm-ai-modal" id="docsAiModal">
+    <div class="adm-ai-modal-box">
+      <div class="adm-ai-modal-header">
+        <span class="adm-ai-modal-title">
+          <svg width="18" height="18" viewBox="0 0 24 24" fill="none" style="vertical-align:middle;margin-right:8px"><path d="M12 2l2 6h6l-5 3.5 2 6L12 14l-5 3.5 2-6L4 8h6l2-6z" fill="#d0ee52"/></svg>
+          Zeptej se AI
+        </span>
+        <button class="adm-ai-modal-close" id="docsAiClose">×</button>
+      </div>
+      <p class="adm-ai-modal-desc">Napiš, co chceš, aby AI vygenerovalo do tvého dokumentu.</p>
+      <textarea class="adm-ai-modal-input" id="docsAiInput" placeholder="Napiš mi článek o elektromobilitě..."></textarea>
+      <button class="adm-ai-modal-submit" id="docsAiSubmit">Vygenerovat</button>
+    </div>
+  </div>
+
+  <script>
+  // Docs WYSIWYG + AI modal
+  (function () {
+    var modal = document.getElementById('docsAiModal');
+    var openBtn = document.getElementById('docsAiBtn');
+    var closeBtn = document.getElementById('docsAiClose');
+    var submitBtn = document.getElementById('docsAiSubmit');
+    var aiInput = document.getElementById('docsAiInput');
+    var editor = document.getElementById('docsEditor');
+    var exportBtn = document.getElementById('docsExportBtn');
+    var linkBtn = document.getElementById('docsLinkBtn');
+
+    // Open AI modal
+    if (openBtn) {
+      openBtn.addEventListener('click', function () {
+        modal.classList.add('adm-modal-open');
+        setTimeout(function () { aiInput.focus(); }, 100);
+      });
+    }
+    // Close modal
+    if (closeBtn) closeBtn.addEventListener('click', function () { modal.classList.remove('adm-modal-open'); });
+    if (modal) modal.addEventListener('click', function (e) { if (e.target === modal) modal.classList.remove('adm-modal-open'); });
+
+    // Submit AI prompt (mock)
+    if (submitBtn) {
+      submitBtn.addEventListener('click', function () {
+        var prompt = aiInput.value.trim();
+        if (!prompt) return;
+        var orig = submitBtn.textContent;
+        submitBtn.textContent = 'Generuji…';
+        submitBtn.disabled = true;
+        setTimeout(function () {
+          var mock = '<h2 style="font-size:20px;font-weight:700;margin:0 0 12px">' + prompt + '</h2>'
+            + '<p>Toto je ukázkový text vygenerovaný AI na základě vašeho zadání. V produkční verzi zde bude skutečná odpověď od jazykového modelu přizpůsobená vašim potřebám.</p>'
+            + '<p>Pokud chcete upravit délku nebo styl textu, jednoduše upřesněte svůj dotaz a AI vám připraví novou verzi.</p>';
+          if (editor) editor.innerHTML = mock;
+          modal.classList.remove('adm-modal-open');
+          aiInput.value = '';
+          submitBtn.textContent = orig;
+          submitBtn.disabled = false;
+        }, 1400);
+      });
+    }
+
+    // PDF export — open editor content in new window and print
+    if (exportBtn && editor) {
+      exportBtn.addEventListener('click', function () {
+        var win = window.open('', '_blank');
+        win.document.write('<!DOCTYPE html><html><head><meta charset="utf-8"><title>Dokument</title>'
+          + '<style>body{font-family:sans-serif;font-size:16px;line-height:1.6;padding:40px;max-width:800px;margin:0 auto;color:#000}h2{font-size:20px}</style>'
+          + '</head><body>' + editor.innerHTML + '</body></html>');
+        win.document.close();
+        win.focus();
+        win.print();
+      });
+    }
+
+    // Link button
+    if (linkBtn) {
+      linkBtn.addEventListener('click', function () {
+        var url = prompt('URL odkazu:');
+        if (url) document.execCommand('createLink', false, url);
+      });
+    }
+
+    // Keep toolbar buttons from stealing focus from editor
+    document.querySelectorAll('.adm-wysi-btn, .adm-wysi-fontsize').forEach(function (btn) {
+      btn.addEventListener('mousedown', function (e) { e.preventDefault(); });
     });
   })();
   </script>

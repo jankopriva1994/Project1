@@ -2611,6 +2611,39 @@ body {
 .adm-docs-doc-date { font-size: 13px; color: #8b8b8b; font-family: 'Supreme', sans-serif; margin: 0 0 14px; }
 .adm-docs-doc-edit { font-size: 14px; font-weight: 700; color: #d0ee52; font-family: 'Supreme', sans-serif; text-decoration: none; display: flex; align-items: center; gap: 6px; }
 
+/* Docs create (editor) panel */
+.adm-docs-create-topbar { display: flex; align-items: center; gap: 0; margin-bottom: 20px; }
+.adm-docs-create-topbar .adm-trans-action-btns { margin-bottom: 0; flex-shrink: 0; }
+.adm-docs-create-topbar .adm-docs-sep { flex-shrink: 0; }
+.adm-docs-ai-trigger { display: flex; align-items: center; gap: 8px; background: #272727; border: 1px solid #3a3a3a; border-radius: 5px; color: #ffffff; font-size: 14px; font-family: 'Supreme', sans-serif; padding: 0 18px; height: 52px; cursor: pointer; white-space: nowrap; flex-shrink: 0; }
+.adm-docs-ai-trigger:hover { border-color: #d0ee52; }
+.adm-docs-ai-hint { font-size: 13px; color: #8b8b8b; font-family: 'Supreme', sans-serif; margin: 0 0 0 16px; line-height: 1.5; }
+.adm-wysi-toolbar { display: flex; align-items: center; gap: 2px; background: #1e1e1e; border: 1px solid #333; border-bottom: none; border-radius: 5px 5px 0 0; padding: 8px 14px; }
+.adm-wysi-btn { background: transparent; border: none; color: #cccccc; font-size: 15px; font-family: 'Supreme', sans-serif; width: 32px; height: 32px; display: flex; align-items: center; justify-content: center; cursor: pointer; border-radius: 3px; flex-shrink: 0; }
+.adm-wysi-btn:hover { background: #2e2e2e; color: #ffffff; }
+.adm-wysi-sep { width: 1px; height: 18px; background: #3a3a3a; margin: 0 6px; flex-shrink: 0; }
+.adm-wysi-spacer { flex: 1; }
+.adm-wysi-fontsize { background: transparent; border: none; color: #cccccc; font-size: 14px; font-family: 'Supreme', sans-serif; cursor: pointer; padding: 0 6px; height: 32px; outline: none; }
+.adm-wysi-fontsize option { background: #1e1e1e; color: #ffffff; }
+.adm-docs-export-pdf-btn { height: 36px; padding: 0 18px; background: #272727; border: 1px solid #444; border-radius: 5px; color: #ffffff; font-size: 14px; font-family: 'Supreme', sans-serif; cursor: pointer; white-space: nowrap; flex-shrink: 0; }
+.adm-docs-export-pdf-btn:hover { border-color: #888; }
+.adm-wysi-editor { width: 100%; min-height: 380px; background: #272727; border: 1px solid #333; border-top: none; border-radius: 0 0 5px 5px; padding: 24px 28px; box-sizing: border-box; color: #ffffff; font-size: 16px; font-family: 'Supreme', sans-serif; line-height: 1.7; outline: none; }
+.adm-wysi-editor:empty:before { content: 'Začněte psát nebo použijte Zeptej se AI…'; color: #505050; pointer-events: none; }
+/* AI Modal */
+.adm-ai-modal { position: fixed; inset: 0; background: rgba(0,0,0,0.72); z-index: 1000; display: none; align-items: center; justify-content: center; }
+.adm-ai-modal.adm-modal-open { display: flex; }
+.adm-ai-modal-box { background: #1a1a1a; border: 1px solid #333; border-radius: 10px; padding: 30px 34px 28px; width: 520px; box-sizing: border-box; }
+.adm-ai-modal-header { display: flex; align-items: center; justify-content: space-between; margin-bottom: 10px; }
+.adm-ai-modal-title { font-size: 18px; font-weight: 700; color: #ffffff; font-family: 'Supreme', sans-serif; display: flex; align-items: center; }
+.adm-ai-modal-close { background: transparent; border: none; color: #8b8b8b; font-size: 26px; cursor: pointer; line-height: 1; padding: 0; }
+.adm-ai-modal-close:hover { color: #ffffff; }
+.adm-ai-modal-desc { font-size: 14px; color: #8b8b8b; font-family: 'Supreme', sans-serif; margin: 0 0 18px; }
+.adm-ai-modal-input { width: 100%; height: 120px; background: #272727; border: 1px solid #444; border-radius: 5px; color: #ffffff; font-size: 15px; font-family: 'Supreme', sans-serif; padding: 14px; resize: none; outline: none; box-sizing: border-box; }
+.adm-ai-modal-input::placeholder { color: #505050; }
+.adm-ai-modal-input:focus { border-color: #d0ee52; }
+.adm-ai-modal-submit { margin-top: 16px; width: 100%; height: 48px; background: #d0ee52; border: none; border-radius: 5px; color: #0d0e11; font-size: 16px; font-weight: 700; font-family: 'Supreme', sans-serif; cursor: pointer; }
+.adm-ai-modal-submit:disabled { opacity: 0.6; cursor: default; }
+
 /* Templates panel */
 .adm-tmpl-heading { font-size: 22px; font-weight: 700; color: #d0ee52; font-family: 'Supreme', sans-serif; margin: 0 0 8px; }
 .adm-tmpl-sub { font-size: 16px; color: #ffffff; font-family: 'Supreme', sans-serif; margin: 0 0 24px; line-height: 22px; max-width: 800px; }
