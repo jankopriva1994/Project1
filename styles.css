@@ -2503,14 +2503,6 @@ body {
 .adm-dash-heading { font-size: 22px; font-weight: 700; color: #d0ee52; font-family: 'Supreme', sans-serif; margin: 0 0 10px; }
 .adm-dash-sub { font-size: 16px; color: #ffffff; font-family: 'Supreme', sans-serif; margin: 0 0 28px; line-height: 22px; }
 
-/* Template cards */
-.adm-tmpl-cards { display: flex; gap: 15px; }
-.adm-tmpl-card { width: 243px; min-height: 155px; background: #272727; border-radius: 8px; padding: 18px; box-sizing: border-box; cursor: pointer; }
-.adm-tmpl-card:hover { background: #2b2d31; }
-.adm-tmpl-head { display: flex; justify-content: space-between; align-items: flex-start; margin-bottom: 10px; }
-.adm-tmpl-title { font-size: 15px; font-weight: 700; color: #d0ee52; font-family: 'Supreme', sans-serif; flex: 1; margin-right: 8px; line-height: 22px; }
-.adm-tmpl-star { color: #d0ee52; font-size: 16px; flex-shrink: 0; }
-.adm-tmpl-desc { font-size: 13px; color: #ffffff; font-family: 'Supreme', sans-serif; line-height: 20px; margin: 0; }
 
 /* Image generator */
 .adm-img-heading { font-size: 22px; font-weight: 700; color: #d0ee52; font-family: 'Supreme', sans-serif; margin: 0 0 8px; }
@@ -2592,10 +2584,10 @@ body {
 .adm-filter-pill:not(.adm-pill-active):hover { background: #2b2d31; }
 .adm-filter-row-2 { margin-bottom: 28px; }
 .adm-tmpl-cards { display: flex; flex-wrap: wrap; gap: 25px; }
-.adm-tmpl-card { width: 275px; height: 173px; min-height: unset; background: #202020; border-radius: 5px; padding: 21px 25px; box-sizing: border-box; position: relative; cursor: pointer; }
+.adm-tmpl-card { width: 275px; height: 173px; background: #202020; border-radius: 5px; padding: 21px 25px; box-sizing: border-box; position: relative; cursor: pointer; overflow: hidden; }
 .adm-tmpl-card:hover { background: #252525; }
 .adm-tmpl-title { font-size: 20px; font-weight: 400; color: #d0ee52; font-family: 'Supreme', sans-serif; line-height: normal; display: block; max-width: 195px; margin-bottom: 10px; }
-.adm-tmpl-star { position: absolute; top: 21px; right: 20px; }
+.adm-tmpl-star { position: absolute; top: 21px; right: 20px; color: #d0ee52; }
 .adm-tmpl-desc { font-size: 16px; color: #ffffff; font-family: 'Supreme', sans-serif; line-height: normal; margin: 0; }
 
 /* Settings */
