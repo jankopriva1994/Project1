@@ -2539,13 +2539,14 @@ body {
 .adm-chat-area { width: 100%; height: 460px; display: flex; align-items: center; justify-content: center; }
 .adm-chat-empty { font-size: 16px; color: #505050; font-family: 'Supreme', sans-serif; }
 .adm-chat-start { font-size: 18px; color: #ffffff; font-family: 'Supreme', sans-serif; text-align: center; margin-bottom: 16px; }
-.adm-model-chips { display: flex; flex-wrap: wrap; gap: 8px; justify-content: center; margin-bottom: 16px; }
-.adm-model-chip { height: 34px; padding: 0 14px; background: #272727; border-radius: 20px; color: #ffffff; font-size: 13px; font-family: 'Supreme', sans-serif; display: flex; align-items: center; gap: 6px; cursor: pointer; border: none; }
-.adm-model-chip:hover { background: #2b2d31; }
-.adm-chat-input-row { display: flex; gap: 10px; align-items: flex-end; }
-.adm-chat-textarea { flex: 1; height: 70px; background: #272727; border: 1px solid #505050; border-radius: 12px; color: #ffffff; font-size: 16px; font-family: 'Supreme', sans-serif; padding: 14px 16px; resize: none; outline: none; box-sizing: border-box; }
+.adm-model-chips { display: flex; flex-direction: column; align-items: center; gap: 12px; margin-bottom: 24px; }
+.adm-model-row { display: flex; gap: 20px; align-items: center; }
+.adm-model-chip { height: auto; padding: 0; background: transparent; border-radius: 0; color: #8b8b8b; font-size: 12px; font-family: 'Supreme', sans-serif; display: flex; align-items: center; gap: 6px; cursor: pointer; border: none; font-weight: 400; }
+.adm-model-chip:hover { color: #ffffff; }
+.adm-chat-input-wrap { position: relative; width: 826px; }
+.adm-chat-textarea { width: 826px; height: 90px; background: #272727; border: 1px solid #d0ee52; border-radius: 5px; color: #ffffff; font-size: 16px; font-family: 'Supreme', sans-serif; padding: 14px 70px 14px 16px; resize: none; outline: none; box-sizing: border-box; }
 .adm-chat-textarea::placeholder { color: #505050; }
-.adm-chat-send { width: 50px; height: 50px; background: #d0ee52; border-radius: 50%; display: flex; align-items: center; justify-content: center; border: none; cursor: pointer; flex-shrink: 0; }
+.adm-chat-send { position: absolute; right: 12px; top: 50%; transform: translateY(-50%); width: 46px; height: 46px; background: #0d0e11; border-radius: 5px; display: flex; align-items: center; justify-content: center; border: none; cursor: pointer; }
 
 /* Translator */
 .adm-trans-heading { font-size: 22px; font-weight: 700; color: #d0ee52; font-family: 'Supreme', sans-serif; margin: 0 0 8px; }
