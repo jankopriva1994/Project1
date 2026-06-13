@@ -2459,11 +2459,11 @@ body {
 .adm-promo-title { position: absolute; left: 420px; top: 43px; font-size: 18px; font-weight: 700; color: #d0ee52; font-family: 'Supreme', sans-serif; margin: 0; }
 .adm-promo-sub { position: absolute; left: 420px; top: 69px; font-size: 13px; color: #ffffff; font-family: 'Supreme', sans-serif; margin: 0; }
 .adm-promo-link { color: #d0ee52; font-weight: 700; text-decoration: underline; }
-.adm-account-wrap { position: absolute; left: 1037px; top: 52px; display: flex; align-items: center; gap: 14px; }
+.adm-account-wrap { position: absolute; left: 1231px; top: 52px; display: flex; align-items: center; gap: 14px; }
 .adm-account-link { font-size: 15px; color: #ffffff; font-family: 'Supreme', sans-serif; text-decoration: none; display: flex; align-items: center; gap: 6px; cursor: pointer; }
 .adm-topbar-vsep { width: 1px; height: 26px; background: #333333; }
 .adm-logout-link { font-size: 15px; color: #ffffff; font-family: 'Supreme', sans-serif; text-decoration: none; }
-.adm-invite-btn { position: absolute; left: 1285px; top: 40px; width: 145px; height: 50px; background: #d0ee52; border-radius: 7px; display: flex; align-items: center; justify-content: center; font-size: 15px; font-weight: 700; color: #0d0e11; font-family: 'Supreme', sans-serif; text-decoration: none; cursor: pointer; }
+.adm-invite-btn { position: absolute; left: 1479px; top: 40px; width: 145px; height: 50px; background: #d0ee52; border-radius: 7px; display: flex; align-items: center; justify-content: center; font-size: 15px; font-weight: 700; color: #0d0e11; font-family: 'Supreme', sans-serif; text-decoration: none; cursor: pointer; }
 .adm-topbar-line { position: absolute; left: 0; top: 130px; width: 1680px; height: 1px; background: #333333; }
 
 /* Sidebar labels */
