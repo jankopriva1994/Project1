@@ -2514,7 +2514,7 @@ body {
 
 /* Image generator */
 .adm-img-heading { font-size: 22px; font-weight: 700; color: #d0ee52; font-family: 'Supreme', sans-serif; margin: 0 0 8px; }
-.adm-img-sub { font-size: 16px; color: #ffffff; font-family: 'Supreme', sans-serif; margin: 0 0 24px; line-height: 22px; }
+.adm-img-sub { font-size: 16px; color: #ffffff; font-family: 'Supreme', sans-serif; margin: 0 0 44px; line-height: 22px; }
 .adm-style-cards { display: flex; gap: 14px; margin-bottom: 28px; }
 .adm-style-card { width: 165px; height: 80px; border-radius: 8px; position: relative; overflow: hidden; cursor: pointer; }
 .adm-style-card-vision { background: linear-gradient(135deg, #1a2a4a 0%, #2d4a8a 100%); }
@@ -2567,7 +2567,7 @@ body {
 
 /* Documents */
 .adm-docs-heading { font-size: 22px; font-weight: 700; color: #d0ee52; font-family: 'Supreme', sans-serif; margin: 0 0 8px; }
-.adm-docs-sub { font-size: 16px; color: #ffffff; font-family: 'Supreme', sans-serif; margin: 0 0 24px; line-height: 22px; }
+.adm-docs-sub { font-size: 16px; color: #ffffff; font-family: 'Supreme', sans-serif; margin: 0 0 44px; line-height: 22px; }
 .adm-docs-action-btns { display: flex; gap: 10px; margin-bottom: 30px; }
 .adm-docs-btn { height: 50px; padding: 0 24px; border-radius: 8px; font-size: 16px; font-family: 'Supreme', sans-serif; cursor: pointer; }
 .adm-docs-btn-primary { background: transparent; border: 1px solid #d0ee52; color: #ffffff; font-weight: 700; }
