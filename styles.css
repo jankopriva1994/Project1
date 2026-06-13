@@ -2694,9 +2694,10 @@ body {
 .adm-sub-info-box { width: 225px; background: #272727; border-radius: 8px; padding: 20px 24px; }
 .adm-sub-info-label { font-size: 14px; color: #8b8b8b; font-family: 'Supreme', sans-serif; margin: 0 0 10px; }
 .adm-sub-info-value { font-size: 20px; font-weight: 700; color: #ffffff; font-family: 'Supreme', sans-serif; margin: 0; line-height: 1.45; }
-.adm-sub-actions-row { display: flex; align-items: flex-start; }
-.adm-sub-action { flex: 1; }
+.adm-sub-actions-row { display: flex; align-items: stretch; }
+.adm-sub-action { flex: 1; display: flex; flex-direction: column; }
 .adm-sub-action:first-child { flex: 0 0 380px; }
+.adm-sub-action-link { margin-top: auto; }
 .adm-sub-vsep { width: 1px; background: #333; align-self: stretch; margin: 0 60px; flex-shrink: 0; }
 .adm-sub-action-title { font-size: 16px; font-weight: 700; color: #ffffff; font-family: 'Supreme', sans-serif; margin: 0 0 12px; }
 .adm-sub-action-desc { font-size: 14px; color: #8b8b8b; font-family: 'Supreme', sans-serif; margin: 0 0 20px; line-height: 1.55; max-width: 360px; }
