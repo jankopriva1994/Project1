@@ -4,7 +4,7 @@
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <title>Administrace – Chaties AI</title>
-  <link rel="stylesheet" href="styles.css?v=44" />
+  <link rel="stylesheet" href="styles.css?v=45" />
 </head>
 <body>
   <div class="page adm-page">
@@ -548,6 +548,81 @@
         var targetPanel = document.getElementById('adm-tab-' + tabId);
         if (targetPanel) targetPanel.style.display = 'block';
       });
+    });
+  })();
+  </script>
+
+  <script>
+  // ── Model chip selection ──────────────────────────────────────────
+  (function () {
+    var chips = document.querySelectorAll('.adm-panel-chat .adm-model-chip');
+    if (chips.length) chips[0].classList.add('adm-chip-selected');
+    chips.forEach(function (chip) {
+      chip.addEventListener('click', function () {
+        chips.forEach(function (c) { c.classList.remove('adm-chip-selected'); });
+        chip.classList.add('adm-chip-selected');
+      });
+    });
+  })();
+
+  // ── Chat mock ─────────────────────────────────────────────────────
+  (function () {
+    var textarea  = document.querySelector('.adm-chat-textarea');
+    var sendBtn   = document.querySelector('.adm-chat-send');
+    var chatArea  = document.querySelector('.adm-chat-area');
+    var emptyEl   = document.querySelector('.adm-chat-empty');
+    var startEl   = document.querySelector('.adm-chat-start');
+
+    var responses = [
+      'Samozřejmě! Zde je odpověď na váš dotaz. Chaties AI je připravena vám pomoci s jakýmkoli obsahem.',
+      'Výborně! Připravil jsem pro vás podrobnou odpověď. Pokud potřebujete cokoli upravit, jen napište.',
+      'To je skvělá otázka. Tady je co jsem pro vás připravil – dejte vědět, pokud chcete cokoliv upřesnit.',
+      'Rád vám s tím pomohu! Zde je první návrh. Můžeme ho dále rozvíjet nebo upravovat dle vašich potřeb.',
+      'Jasně! Chaties AI zpracovala váš požadavek. Výsledek najdete výše – v případě potřeby stačí napsat.',
+    ];
+
+    function getSelectedModel() {
+      var active = document.querySelector('.adm-panel-chat .adm-chip-selected');
+      return active ? active.textContent.trim() : 'GPT-5.5';
+    }
+
+    function send() {
+      var msg = textarea.value.trim();
+      if (!msg) return;
+
+      // Switch chat area to message mode
+      if (emptyEl) emptyEl.style.display = 'none';
+      chatArea.classList.add('adm-chat-has-messages');
+
+      // User bubble
+      var userDiv = document.createElement('div');
+      userDiv.className = 'adm-chat-msg adm-chat-msg-user';
+      userDiv.textContent = msg;
+      chatArea.appendChild(userDiv);
+      textarea.value = '';
+      chatArea.scrollTop = chatArea.scrollHeight;
+
+      // Typing indicator
+      var typingDiv = document.createElement('div');
+      typingDiv.className = 'adm-chat-msg adm-chat-msg-ai adm-chat-typing';
+      typingDiv.innerHTML = '<span></span><span></span><span></span>';
+      chatArea.appendChild(typingDiv);
+      chatArea.scrollTop = chatArea.scrollHeight;
+
+      var delay = 1200 + Math.random() * 800;
+      setTimeout(function () {
+        chatArea.removeChild(typingDiv);
+        var aiDiv = document.createElement('div');
+        aiDiv.className = 'adm-chat-msg adm-chat-msg-ai';
+        aiDiv.textContent = responses[Math.floor(Math.random() * responses.length)];
+        chatArea.appendChild(aiDiv);
+        chatArea.scrollTop = chatArea.scrollHeight;
+      }, delay);
+    }
+
+    sendBtn.addEventListener('click', send);
+    textarea.addEventListener('keydown', function (e) {
+      if (e.key === 'Enter' && !e.shiftKey) { e.preventDefault(); send(); }
     });
   })();
   </script>
