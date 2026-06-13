@@ -2684,13 +2684,13 @@ body {
 .adm-settings-tabs { display: flex; gap: 8px; }
 .adm-settings-tab { height: 52px; padding: 0 28px; border-radius: 5px; font-size: 16px; font-family: 'Supreme', sans-serif; cursor: pointer; background: #272727; color: #8b8b8b; border: 1px solid transparent; }
 .adm-settings-tab.adm-tab-active { border: 1px solid #d0ee52; color: #ffffff; }
-.adm-settings-divider { width: 100%; height: 1px; background: #333333; margin: 25px 0 25px; }
+.adm-settings-divider { width: 100%; height: 1px; background: #333333; margin: 30px 0 30px; }
 .adm-settings-input { width: 320px; height: 44px; background: #272727; border: 1px solid #505050; border-radius: 5px; color: #ffffff; font-size: 16px; font-family: 'Supreme', sans-serif; padding: 0 16px; outline: none; box-sizing: border-box; display: block; margin-bottom: 12px; }
 .adm-settings-input::placeholder { color: #505050; }
 .adm-settings-save { margin-top: 16px; height: 52px; padding: 0 28px; background: #272727; color: #ffffff; font-size: 16px; font-weight: 700; font-family: 'Supreme', sans-serif; border: 1px solid #d0ee52; border-radius: 5px; cursor: pointer; }
 
 /* Subscription tab */
-.adm-sub-info-row { display: flex; gap: 16px; margin-top: 8px; margin-bottom: 0; }
+.adm-sub-info-row { display: flex; gap: 16px; margin-top: 8px; margin-bottom: 40px; }
 .adm-sub-info-box { width: 225px; background: #272727; border-radius: 8px; padding: 20px 24px; }
 .adm-sub-info-label { font-size: 14px; color: #8b8b8b; font-family: 'Supreme', sans-serif; margin: 0 0 10px; }
 .adm-sub-info-value { font-size: 20px; font-weight: 700; color: #ffffff; font-family: 'Supreme', sans-serif; margin: 0; line-height: 1.45; }
@@ -2701,7 +2701,7 @@ body {
 .adm-sub-action-desc { font-size: 14px; color: #8b8b8b; font-family: 'Supreme', sans-serif; margin: 0 0 20px; line-height: 1.55; max-width: 360px; }
 .adm-sub-action-link { display: inline-flex; align-items: center; gap: 10px; color: #d0ee52; font-size: 15px; font-weight: 700; font-family: 'Supreme', sans-serif; text-decoration: none; }
 .adm-sub-action-link:hover { opacity: 0.8; }
-.adm-sub-arrow { display: inline-flex; align-items: center; justify-content: center; width: 26px; height: 26px; border: 2px solid #d0ee52; border-radius: 50%; flex-shrink: 0; }
+.adm-sub-arrow { display: inline-flex; align-items: center; justify-content: center; width: 22px; height: 22px; flex-shrink: 0; }
 
 /* Placeholder panels */
 .adm-placeholder { display: flex; flex-direction: column; align-items: center; justify-content: center; height: 400px; }
