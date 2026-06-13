@@ -2584,11 +2584,11 @@ body {
 .adm-filter-pill:not(.adm-pill-active):hover { background: #2b2d31; }
 .adm-filter-row-2 { margin-bottom: 28px; }
 .adm-tmpl-cards { display: flex; flex-wrap: wrap; gap: 25px; }
-.adm-tmpl-card { width: 275px; height: 173px; background: #202020; border-radius: 5px; padding: 21px 25px; box-sizing: border-box; position: relative; cursor: pointer; overflow: hidden; }
+.adm-tmpl-card { width: 275px; height: 173px; background: #202020; border-radius: 5px; padding: 0; box-sizing: border-box; position: relative; cursor: pointer; overflow: hidden; }
 .adm-tmpl-card:hover { background: #252525; }
-.adm-tmpl-title { font-size: 20px; font-weight: 400; color: #d0ee52; font-family: 'Supreme', sans-serif; line-height: normal; display: block; max-width: 195px; margin-bottom: 10px; }
+.adm-tmpl-title { position: absolute; top: 21px; left: 25px; right: 50px; font-size: 20px; font-weight: 400; color: #d0ee52; font-family: 'Supreme', sans-serif; line-height: 1.25; margin: 0; }
 .adm-tmpl-star { position: absolute; top: 21px; right: 20px; color: #d0ee52; }
-.adm-tmpl-desc { font-size: 16px; color: #ffffff; font-family: 'Supreme', sans-serif; line-height: normal; margin: 0; }
+.adm-tmpl-desc { position: absolute; top: 86px; left: 25px; right: 25px; font-size: 16px; color: #ffffff; font-family: 'Supreme', sans-serif; line-height: 1.4; margin: 0; }
 
 /* Settings */
 .adm-settings-heading { font-size: 22px; font-weight: 700; color: #d0ee52; font-family: 'Supreme', sans-serif; margin: 0 0 8px; }
