@@ -2696,7 +2696,8 @@ body {
 .adm-sub-info-value { font-size: 20px; font-weight: 700; color: #ffffff; font-family: 'Supreme', sans-serif; margin: 0; line-height: 1.45; }
 .adm-sub-actions-row { display: flex; align-items: flex-start; }
 .adm-sub-action { flex: 1; }
-.adm-sub-vsep { width: 1px; background: #333; align-self: stretch; margin: 0 32px 0 50px; flex-shrink: 0; }
+.adm-sub-action:first-child { flex: 0 0 380px; }
+.adm-sub-vsep { width: 1px; background: #333; align-self: stretch; margin: 0 60px; flex-shrink: 0; }
 .adm-sub-action-title { font-size: 16px; font-weight: 700; color: #ffffff; font-family: 'Supreme', sans-serif; margin: 0 0 12px; }
 .adm-sub-action-desc { font-size: 14px; color: #8b8b8b; font-family: 'Supreme', sans-serif; margin: 0 0 20px; line-height: 1.55; max-width: 360px; }
 .adm-sub-action-link { display: inline-flex; align-items: center; gap: 10px; color: #d0ee52; font-size: 15px; font-weight: 700; font-family: 'Supreme', sans-serif; text-decoration: none; }
