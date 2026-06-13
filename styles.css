@@ -2483,7 +2483,7 @@ body {
 .adm-sidebar-divider { position: absolute; left: 56px; top: 447px; width: 152px; height: 1px; background: #333333; }
 .adm-nav-history { top: 510px; }
 .adm-nav-support { top: 555px; }
-.adm-nav-tokens { top: 600px; }
+.adm-nav-tokens { top: 555px; }
 
 /* Words widget */
 .adm-words-widget { position: absolute; left: 56px; top: 977px; width: 170px; height: 75px; background: #272727; border-radius: 8px; display: flex; flex-direction: column; justify-content: center; padding: 0 16px; box-sizing: border-box; }
