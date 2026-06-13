@@ -2539,7 +2539,7 @@ body {
 .adm-chat-typing span:nth-child(3) { animation-delay: 0.4s; }
 @keyframes adm-blink { 0%, 60%, 100% { opacity: 0.25; transform: scale(0.9); } 30% { opacity: 1; transform: scale(1.15); } }
 .adm-chat-empty { font-size: 16px; color: #505050; font-family: 'Supreme', sans-serif; }
-.adm-chat-bottom { display: flex; flex-direction: column; align-items: center; }
+.adm-chat-bottom { display: flex; flex-direction: column; align-items: center; margin-top: 200px; }
 .adm-chat-start { font-size: 18px; color: #ffffff; font-family: 'Supreme', sans-serif; text-align: center; margin-bottom: 16px; }
 .adm-model-chips { display: flex; flex-direction: column; align-items: flex-start; gap: 12px; width: 826px; margin-bottom: 24px; }
 .adm-model-row { display: flex; gap: 20px; align-items: center; }
