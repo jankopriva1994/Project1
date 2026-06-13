@@ -2592,9 +2592,8 @@ body {
 .adm-tmpl-cards { display: flex; flex-wrap: wrap; gap: 25px; }
 .adm-tmpl-card { width: 275px; height: 173px; min-height: unset; background: #202020; border-radius: 5px; padding: 21px 25px; box-sizing: border-box; position: relative; cursor: pointer; }
 .adm-tmpl-card:hover { background: #252525; }
-.adm-tmpl-head { display: flex; justify-content: space-between; align-items: flex-start; margin-bottom: 12px; }
-.adm-tmpl-title { font-size: 20px; font-weight: 400; color: #d0ee52; font-family: 'Supreme', sans-serif; line-height: normal; margin-right: 8px; flex: 1; }
-.adm-tmpl-star { flex-shrink: 0; margin-top: 2px; }
+.adm-tmpl-title { font-size: 20px; font-weight: 400; color: #d0ee52; font-family: 'Supreme', sans-serif; line-height: normal; display: block; max-width: 195px; margin-bottom: 10px; }
+.adm-tmpl-star { position: absolute; top: 21px; right: 20px; }
 .adm-tmpl-desc { font-size: 16px; color: #ffffff; font-family: 'Supreme', sans-serif; line-height: normal; margin: 0; }
 
 /* Settings */
