@@ -2689,6 +2689,20 @@ body {
 .adm-settings-input::placeholder { color: #505050; }
 .adm-settings-save { margin-top: 16px; height: 52px; padding: 0 28px; background: #272727; color: #ffffff; font-size: 16px; font-weight: 700; font-family: 'Supreme', sans-serif; border: 1px solid #d0ee52; border-radius: 5px; cursor: pointer; }
 
+/* Subscription tab */
+.adm-sub-info-row { display: flex; gap: 16px; margin-top: 8px; margin-bottom: 0; }
+.adm-sub-info-box { width: 225px; background: #272727; border-radius: 8px; padding: 20px 24px; }
+.adm-sub-info-label { font-size: 14px; color: #8b8b8b; font-family: 'Supreme', sans-serif; margin: 0 0 10px; }
+.adm-sub-info-value { font-size: 20px; font-weight: 700; color: #ffffff; font-family: 'Supreme', sans-serif; margin: 0; line-height: 1.45; }
+.adm-sub-actions-row { display: flex; align-items: flex-start; }
+.adm-sub-action { flex: 1; }
+.adm-sub-vsep { width: 1px; background: #333; align-self: stretch; margin: 0 48px; flex-shrink: 0; }
+.adm-sub-action-title { font-size: 16px; font-weight: 700; color: #ffffff; font-family: 'Supreme', sans-serif; margin: 0 0 12px; }
+.adm-sub-action-desc { font-size: 14px; color: #8b8b8b; font-family: 'Supreme', sans-serif; margin: 0 0 20px; line-height: 1.55; max-width: 360px; }
+.adm-sub-action-link { display: inline-flex; align-items: center; gap: 10px; color: #d0ee52; font-size: 15px; font-weight: 700; font-family: 'Supreme', sans-serif; text-decoration: none; }
+.adm-sub-action-link:hover { opacity: 0.8; }
+.adm-sub-arrow { display: inline-flex; align-items: center; justify-content: center; width: 26px; height: 26px; border: 2px solid #d0ee52; border-radius: 50%; flex-shrink: 0; }
+
 /* Placeholder panels */
 .adm-placeholder { display: flex; flex-direction: column; align-items: center; justify-content: center; height: 400px; }
 .adm-placeholder-title { font-size: 22px; font-weight: 700; color: #d0ee52; font-family: 'Supreme', sans-serif; margin-bottom: 12px; }
