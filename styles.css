@@ -196,6 +196,24 @@ body {
   font-weight: 700;
 }
 
+.nav-adm-temp {
+  position: absolute;
+  left: 1468px;
+  top: 59px;
+  height: 42px;
+  padding: 0 18px;
+  border: 1px solid #505050;
+  border-radius: 7px;
+  background: #1a1b1f;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-family: 'Supreme', sans-serif;
+  font-size: 15px;
+  color: #8b8b8b;
+  text-decoration: none;
+}
+
 .nav-separator {
   position: absolute;
   left: 228px;
