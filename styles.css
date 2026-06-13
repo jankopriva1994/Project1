@@ -2582,7 +2582,7 @@ body {
 .adm-docs-file-x { color: #8b8b8b; cursor: pointer; font-size: 16px; }
 .adm-docs-translate-btn { height: 52px; padding: 0 28px; background: #d0ee52; color: #0d0e11; font-size: 16px; font-weight: 700; font-family: 'Supreme', sans-serif; border: none; border-radius: 5px; cursor: pointer; }
 .adm-docs-info-row { display: flex; align-items: center; gap: 24px; margin-bottom: 20px; }
-.adm-docs-info-item { font-size: 14px; color: #8b8b8b; font-family: 'Supreme', sans-serif; display: flex; align-items: center; gap: 6px; }
+.adm-docs-info-item { font-size: 13px; color: #8b8b8b; font-family: 'Supreme', sans-serif; display: flex; align-items: center; gap: 6px; }
 .adm-docs-lang-row { margin-top: 0; }
 .adm-docs-textarea { color: #ffffff; font-size: 15px; font-family: 'Supreme', sans-serif; line-height: 1.6; }
 .adm-docs-history { background: #272727; border-radius: 3px; width: 628px; height: 350px; padding: 20px 24px; box-sizing: border-box; }
