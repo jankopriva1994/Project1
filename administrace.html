@@ -4,7 +4,7 @@
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <title>Administrace – Chaties AI</title>
-  <link rel="stylesheet" href="styles.css?v=55" />
+  <link rel="stylesheet" href="styles.css?v=56" />
 </head>
 <body>
   <div class="page adm-page">
@@ -285,7 +285,7 @@
       <!-- Action buttons -->
       <div class="adm-trans-action-btns">
         <button class="adm-trans-btn adm-trans-btn-active">Přeložit text</button>
-        <button class="adm-trans-btn adm-trans-btn-inactive" data-goto-panel="docs">Přeložit dokument</button>
+        <button class="adm-trans-btn adm-trans-btn-inactive" data-goto-panel="docs-translate">Přeložit dokument</button>
       </div>
 
       <p class="adm-trans-info">1 slovo = 0,3 slov</p>
@@ -362,8 +362,32 @@
     </div><!-- /adm-panel-translator -->
 
 
-    <!-- PANEL 5: DOKUMENTY -->
+    <!-- PANEL 5: DOKUMENTY (landing) -->
     <div class="adm-panel adm-panel-docs" data-panel-id="docs">
+
+      <h2 class="adm-trans-heading">Vítejte v Chaties AI dokumentu</h2>
+      <p class="adm-trans-sub">Vytvořte si přímo zde svůj PR článek, slohou práci<br>nebo referát do školy.</p>
+
+      <div class="adm-trans-action-btns">
+        <button class="adm-trans-btn adm-trans-btn-active adm-docs-create-btn">+ Vytvořit nový dokument</button>
+        <button class="adm-trans-btn adm-trans-btn-inactive" data-goto-panel="docs-translate">Přeložit dokument</button>
+      </div>
+
+      <p class="adm-docs-recent-label">Nedávno přidané dokumenty</p>
+
+      <div class="adm-docs-card-grid">
+        <div class="adm-docs-doc-card">
+          <p class="adm-docs-doc-title">Článek k projektu<br>"nová identita"</p>
+          <p class="adm-docs-doc-date">Naposledy otevřen: před 20 dny</p>
+          <a href="#" class="adm-docs-doc-edit">Editovat <svg width="14" height="14" viewBox="0 0 24 24" fill="none"><path d="M5 12h14M13 6l6 6-6 6" stroke="#d0ee52" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg></a>
+        </div>
+      </div>
+
+    </div><!-- /adm-panel-docs -->
+
+
+    <!-- PANEL 5b: PŘELOŽIT DOKUMENT -->
+    <div class="adm-panel adm-panel-docs-translate" data-panel-id="docs-translate">
 
       <h2 class="adm-trans-heading">Vítejte v Chaties AI Překladači</h2>
       <p class="adm-docs-sub">Chaties překladač dokumentů podporuje tyto formáty (<span class="accent">docx, pptx, pdf, html, htm, txt, xlf a xliff</span>).<br>Minimální cena překladu je 500 slov a zahrnuje až 25 normostran. Nad 27 normostran jsou slova účtována stejně jako u klasického překladu.</p>
@@ -472,7 +496,7 @@
         <span class="adm-tip"><span class="adm-tip-label">TIP!</span> Pokud nechcete plýtvat kreditem, doporučujeme si dokumenty, které mají do 5 normostran přeložit v klasickém překladači.</span>
       </div>
 
-    </div><!-- /adm-panel-docs -->
+    </div><!-- /adm-panel-docs-translate -->
 
 
     <!-- PANEL 6: ŠABLONY -->
@@ -660,12 +684,14 @@
     });
 
     // Cross-panel CTA buttons (data-goto-panel)
+    var navAliases = { 'docs-translate': 'docs' };
     document.querySelectorAll('[data-goto-panel]').forEach(function (btn) {
       btn.addEventListener('click', function () {
         var panelId = btn.getAttribute('data-goto-panel');
         showPanel(panelId);
-        // Update sidebar nav active state
-        var navEl = document.querySelector('.adm-nav-item[data-panel="' + panelId + '"]');
+        // Update sidebar nav active state (resolve aliases)
+        var navKey = navAliases[panelId] || panelId;
+        var navEl = document.querySelector('.adm-nav-item[data-panel="' + navKey + '"]');
         setNavActive(navEl || null);
       });
     });
