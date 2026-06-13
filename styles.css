@@ -2625,8 +2625,8 @@ body {
 .adm-wysi-spacer { flex: 1; }
 .adm-wysi-fontsize { background: transparent; border: none; color: #cccccc; font-size: 14px; font-family: 'Supreme', sans-serif; cursor: pointer; padding: 0 6px; height: 32px; outline: none; }
 .adm-wysi-fontsize option { background: #1e1e1e; color: #ffffff; }
-.adm-docs-export-pdf-btn { height: 36px; padding: 0 18px; background: #272727; border: 1px solid #444; border-radius: 5px; color: #ffffff; font-size: 14px; font-family: 'Supreme', sans-serif; cursor: pointer; white-space: nowrap; flex-shrink: 0; }
-.adm-docs-export-pdf-btn:hover { border-color: #888; }
+.adm-docs-export-pdf-btn { height: 52px; padding: 0 28px; background: #272727; border: 1px solid #d0ee52; border-radius: 5px; color: #ffffff; font-size: 16px; font-weight: 700; font-family: 'Supreme', sans-serif; cursor: pointer; white-space: nowrap; flex-shrink: 0; }
+.adm-docs-export-pdf-btn:hover { background: #1e1e1e; }
 .adm-wysi-editor { width: 100%; min-height: 380px; background: #272727; border: 1px solid #333; border-top: none; border-radius: 0 0 5px 5px; padding: 24px 28px; box-sizing: border-box; color: #ffffff; font-size: 16px; font-family: 'Supreme', sans-serif; line-height: 1.7; outline: none; }
 .adm-wysi-editor:empty:before { content: 'Začněte psát nebo použijte Zeptej se AI…'; color: #505050; pointer-events: none; }
 /* AI Modal */
