@@ -485,7 +485,7 @@
             </button>
           </div>
           <!-- Right: document preview -->
-          <div class="adm-docs-img-right">
+          <div class="adm-docs-img-right" id="docsImgRight" style="visibility:hidden">
             <div class="adm-docs-img-result-header">
               <span class="adm-docs-img-result-title" id="docsImgResultTitle">Náhled dokumentu</span>
               <button class="adm-docs-download-btn" id="docsImgDownloadBtn" style="display:none">
@@ -1018,6 +1018,7 @@
     var downloadBtn    = document.getElementById('docsDownloadBtn');
     var imgRemove      = document.getElementById('docsImgRemove');
     var imgProcessBtn  = document.getElementById('docsImgProcessBtn');
+    var imgRight       = document.getElementById('docsImgRight');
     var imgResultBody  = document.getElementById('docsImgResultBody');
     var imgResultTitle = document.getElementById('docsImgResultTitle');
     var imgDownloadBtn = document.getElementById('docsImgDownloadBtn');
@@ -1048,6 +1049,7 @@
       previewText.innerHTML = '';
       if (imgResultBody) imgResultBody.innerHTML = IMG_PLACEHOLDER;
       if (imgDownloadBtn) imgDownloadBtn.style.display = 'none';
+      if (imgRight) imgRight.style.visibility = 'hidden';
       showStep(1);
     }
 
@@ -1230,6 +1232,7 @@
         var to     = getActiveLang(toDD);
         var origHTML = imgProcessBtn.innerHTML;
         imgProcessBtn.disabled = true;
+        if (imgRight) imgRight.style.visibility = 'visible';
         imgResultBody.innerHTML = '<div class="adm-docs-img-placeholder"><p>Rozpoznávám text z obrázku… (může trvat 20–60 s)</p></div>';
         imgDownloadBtn.style.display = 'none';
 
