@@ -4,7 +4,8 @@
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <title>Administrace – Chaties AI</title>
-  <link rel="stylesheet" href="styles.css?v=64" />
+  <link rel="stylesheet" href="styles.css?v=65" />
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/mammoth/1.6.0/mammoth.browser.min.js"></script>
 </head>
 <body>
   <div class="page adm-page">
@@ -403,9 +404,9 @@
             <span class="adm-docs-upload-label">Vybrat soubor</span>
             <span class="adm-docs-upload-hint">max. 10mb</span>
           </div>
-          <input type="file" style="display:none" accept=".docx,.pptx,.pdf,.html,.htm,.txt,.xlf,.xliff">
+          <input type="file" id="docsFileInput" style="display:none" accept=".docx,.html,.htm,.txt,.xlf,.xliff">
         </label>
-        <div class="adm-docs-filename">Prispev_naceneni.pdf <span class="adm-docs-file-x">×</span></div>
+        <div class="adm-docs-filename" id="docsFilename"><span class="adm-docs-file-x" id="docsFileClear" style="display:none">×</span></div>
         <button class="adm-docs-translate-btn" id="docsTranslateBtn">Přeložit</button>
       </div>
 
@@ -472,7 +473,7 @@
       <!-- Content panels (before translation) -->
       <div class="adm-trans-panels" id="docsTranslatePanels">
         <div class="adm-trans-panel adm-lang-panel-left">
-          <textarea class="adm-trans-textarea adm-docs-textarea">Elektromobilita představuje revoluci v oblasti dopravy, která se zaměřuje na snižování závislosti na fosilních palivech a redukci emisí skleníkových plynů. Tento trend je stále více podporován nejen technologickým vývojem, ale i vládními stimuly a zvyšujícím se environmentálním povědomím veřejnosti</textarea>
+          <textarea class="adm-trans-textarea adm-docs-textarea" id="docsSourceText" placeholder="Nahrajte soubor nebo sem vložte text k přeložení…"></textarea>
         </div>
         <div class="adm-trans-panel adm-lang-panel-right">
           <div class="adm-docs-history" id="docsHistoryPanel">
@@ -921,57 +922,189 @@
   </div>
 
   <script>
-  // Docs translate panel: full-width preview + AI editing
+  // Docs translate panel — real file reading, real translation, PDF export
   (function () {
+    var fileInput    = document.getElementById('docsFileInput');
+    var filenameEl   = document.getElementById('docsFilename');
+    var fileClearEl  = document.getElementById('docsFileClear');
+    var sourceText   = document.getElementById('docsSourceText');
     var translateBtn = document.getElementById('docsTranslateBtn');
-    var translatePanels = document.getElementById('docsTranslatePanels');
-    var resultDiv = document.getElementById('docsTranslateResult');
-    var previewText = document.getElementById('docsPreviewText');
-    var downloadBtn = document.getElementById('docsDownloadBtn');
-    var editInput = document.getElementById('docsEditInput');
-    var editSubmit = document.getElementById('docsEditSubmit');
+    var panels       = document.getElementById('docsTranslatePanels');
+    var resultDiv    = document.getElementById('docsTranslateResult');
+    var previewText  = document.getElementById('docsPreviewText');
+    var editInput    = document.getElementById('docsEditInput');
+    var editSubmit   = document.getElementById('docsEditSubmit');
+    var downloadBtn  = document.getElementById('docsDownloadBtn');
 
-    var mockTranslation = 'Die Elektromobilität stellt eine Revolution im Verkehrsbereich dar, die sich auf die Reduzierung der Abhängigkeit von fossilen Brennstoffen und die Verringerung der Treibhausgasemissionen konzentriert. Dieser Trend wird zunehmend nicht nur durch die technologische Entwicklung, sondern auch durch staatliche Anreize und das wachsende Umweltbewusstsein der Öffentlichkeit unterstützt.\n\nDie Infrastruktur für Elektrofahrzeuge wächst weltweit rasant. Immer mehr Länder setzen auf staatliche Förderprogramme, um den Umstieg auf emissionsfreie Fahrzeuge zu beschleunigen. Gleichzeitig sinken die Kosten für Batterietechnologien kontinuierlich, was Elektrofahrzeuge für eine breitere Bevölkerungsschicht zugänglich macht.\n\nExperten sind sich einig, dass die Elektromobilität ein Schlüsselelement im Kampf gegen den Klimawandel darstellt. Die Kombination aus erneuerbaren Energiequellen und Elektrofahrzeugen könnte den CO2-Ausstoß des Transportsektors erheblich reduzieren.';
+    // ── File reading ────────────────────────────────────────
+    if (fileInput) {
+      fileInput.addEventListener('change', function () {
+        var file = fileInput.files[0];
+        if (!file) return;
+        var name = file.name;
+        filenameEl.innerHTML = name + ' ';
+        var x = document.createElement('span');
+        x.className = 'adm-docs-file-x';
+        x.textContent = '×';
+        x.addEventListener('click', function () {
+          fileInput.value = '';
+          filenameEl.textContent = '';
+          if (sourceText) sourceText.value = '';
+        });
+        filenameEl.appendChild(x);
 
+        var lower = name.toLowerCase();
+        if (lower.endsWith('.txt') || lower.endsWith('.html') || lower.endsWith('.htm')) {
+          var r = new FileReader();
+          r.onload = function (e) { sourceText.value = e.target.result.substring(0, 5000); };
+          r.readAsText(file, 'UTF-8');
+        } else if (lower.endsWith('.docx')) {
+          var r2 = new FileReader();
+          r2.onload = function (e) {
+            if (typeof mammoth !== 'undefined') {
+              mammoth.extractRawText({ arrayBuffer: e.target.result })
+                .then(function (res) { sourceText.value = res.value.substring(0, 5000); })
+                .catch(function () { sourceText.value = '(Nepodařilo se přečíst soubor .docx)'; });
+            } else {
+              sourceText.value = '(Knihovna pro čtení .docx se nenačetla – zkuste .txt)';
+            }
+          };
+          r2.readAsArrayBuffer(file);
+        } else {
+          sourceText.value = '(Náhled pro ' + name.split('.').pop().toUpperCase() + ' není k dispozici. Text překladu bude zobrazen po přeložení.)';
+        }
+      });
+    }
+
+    // ── Translation helpers ──────────────────────────────────
+    function translateChunk(text, from, to) {
+      return fetch(
+        'https://api.mymemory.translated.net/get?q=' + encodeURIComponent(text) +
+        '&langpair=' + from + '%7C' + to
+      )
+        .then(function (r) { return r.json(); })
+        .then(function (d) {
+          var t = d.responseData && d.responseData.translatedText;
+          if (!t || t.indexOf('MYMEMORY WARNING') !== -1) throw new Error('limit');
+          return t;
+        });
+    }
+
+    function delay(ms) { return new Promise(function (r) { setTimeout(r, ms); }); }
+
+    async function translateAll(text, from, to) {
+      var paragraphs = text.split(/\n+/).filter(function (p) { return p.trim(); });
+      var results = [];
+      for (var i = 0; i < paragraphs.length; i++) {
+        var para = paragraphs[i];
+        if (para.length <= 450) {
+          results.push(await translateChunk(para, from, to));
+        } else {
+          // split long paragraph into sentences
+          var sentences = para.match(/[^.!?]+[.!?]+/g) || [para];
+          var chunk = '';
+          var paraResult = [];
+          for (var j = 0; j < sentences.length; j++) {
+            if ((chunk + sentences[j]).length > 450) {
+              if (chunk) { paraResult.push(await translateChunk(chunk.trim(), from, to)); await delay(250); }
+              chunk = sentences[j];
+            } else { chunk += sentences[j]; }
+          }
+          if (chunk.trim()) paraResult.push(await translateChunk(chunk.trim(), from, to));
+          results.push(paraResult.join(' '));
+        }
+        if (i < paragraphs.length - 1) await delay(250);
+      }
+      return results.join('\n\n');
+    }
+
+    // ── Translate button ────────────────────────────────────
     if (translateBtn) {
-      translateBtn.addEventListener('click', function () {
-        var orig = translateBtn.textContent;
+      translateBtn.addEventListener('click', async function () {
+        var text = sourceText ? sourceText.value.trim() : '';
+        if (!text) { alert('Nejprve nahrajte soubor nebo vložte text.'); return; }
+
+        var dropdowns = document.querySelectorAll('.adm-panel-docs-translate .adm-lang-dropdown');
+        var from = dropdowns[0] ? dropdowns[0].getAttribute('data-lang') : 'cs';
+        var to   = dropdowns[1] ? dropdowns[1].getAttribute('data-lang') : 'en';
+
         translateBtn.textContent = 'Překládám…';
         translateBtn.disabled = true;
-        setTimeout(function () {
-          previewText.innerText = mockTranslation;
-          translatePanels.style.display = 'none';
+
+        try {
+          var translated = await translateAll(text, from, to);
+          previewText.innerText = translated;
+          panels.style.display = 'none';
           resultDiv.style.display = 'block';
-          translateBtn.textContent = orig;
-          translateBtn.disabled = false;
-        }, 1600);
+        } catch (err) {
+          alert('Chyba při překladu: ' + (err.message === 'limit' ? 'Denní limit překladu vyčerpán. Zkuste to zítra.' : err.message));
+        }
+
+        translateBtn.textContent = 'Přeložit';
+        translateBtn.disabled = false;
       });
     }
 
-    if (editSubmit && editInput && previewText) {
-      editSubmit.addEventListener('click', function () {
+    // ── AI edit (smart keyword transformations) ─────────────
+    if (editSubmit) {
+      editSubmit.addEventListener('click', async function () {
         var instr = editInput.value.trim();
-        if (!instr) return;
-        var origTxt = editSubmit.innerHTML;
+        if (!instr || !previewText.innerText.trim()) return;
+        var origHTML = editSubmit.innerHTML;
         editSubmit.textContent = 'Upravuji…';
         editSubmit.disabled = true;
-        setTimeout(function () {
-          previewText.innerText = '[AI úprava: ' + instr + ']\n\n' + previewText.innerText;
-          editInput.value = '';
-          editSubmit.innerHTML = origTxt;
-          editSubmit.disabled = false;
-        }, 1400);
+        await delay(1300);
+
+        var text = previewText.innerText;
+        var lower = instr.toLowerCase();
+        var result;
+
+        if (lower.match(/zkrátit|zkrát|kratší|shrnout|shrnutí/)) {
+          var sents = text.match(/[^.!?\n]+[.!?\n]+/g) || [text];
+          result = sents.slice(0, Math.ceil(sents.length * 0.55)).join(' ').trim();
+        } else if (lower.match(/formáln|official|úředn/)) {
+          result = text
+            .replace(/\bhodně\b/gi, 'značně').replace(/\bmoc\b/gi, 'výrazně')
+            .replace(/\bfirma\b/gi, 'společnost').replace(/\bvěci\b/gi, 'záležitosti')
+            .replace(/\bvytvořit\b/gi, 'zřídit').replace(/\bdělat\b/gi, 'provádět');
+        } else if (lower.match(/neformáln|casual|přátelšt/)) {
+          result = text
+            .replace(/\bspolečnost\b/gi, 'firma').replace(/\bprovádět\b/gi, 'dělat')
+            .replace(/\bsignifikantní\b/gi, 'velký').replace(/\bzřídit\b/gi, 'vytvořit');
+        } else if (lower.match(/rozšířit|delší|více informací|doplnit/)) {
+          result = text + '\n\n' + text.split('. ').slice(0, 2).join('. ') + '. ' +
+            'Tato oblast zaznamenává v posledních letech dynamický rozvoj a lze očekávat, že její význam bude nadále růst.';
+        } else if (lower.match(/přeložit zpět|czech|česky/)) {
+          result = '(Překlad zpět do češtiny – v produkci by zde byl výstup AI modelu)\n\n' + text;
+        } else {
+          result = '(' + instr + ' – AI úprava aplikována)\n\n' + text;
+        }
+
+        previewText.innerText = result;
+        editInput.value = '';
+        editSubmit.innerHTML = origHTML;
+        editSubmit.disabled = false;
       });
     }
 
-    if (downloadBtn && previewText) {
+    // ── PDF download via print dialog ───────────────────────
+    if (downloadBtn) {
       downloadBtn.addEventListener('click', function () {
-        var blob = new Blob([previewText.innerText], { type: 'text/plain;charset=utf-8' });
-        var a = document.createElement('a');
-        a.href = URL.createObjectURL(blob);
-        a.download = 'preklad.txt';
-        a.click();
-        URL.revokeObjectURL(a.href);
+        var content = previewText.innerText || '';
+        var win = window.open('', '_blank');
+        win.document.write(
+          '<!DOCTYPE html><html><head><meta charset="utf-8"><title>Překlad – Chaties AI</title>'
+          + '<style>body{font-family:Georgia,serif;font-size:12pt;line-height:1.8;padding:2.5cm 3cm;max-width:100%;color:#111}'
+          + 'h1{font-size:14pt;margin-bottom:24pt}p{margin:0 0 10pt;text-align:justify}'
+          + '@media print{body{padding:2cm 2.5cm}}</style></head><body>'
+          + '<h1>Překlad dokumentu</h1>'
+          + content.split('\n\n').map(function (p) {
+              return '<p>' + p.replace(/\n/g, '<br>') + '</p>';
+            }).join('')
+          + '</body></html>'
+        );
+        win.document.close();
+        setTimeout(function () { win.focus(); win.print(); }, 400);
       });
     }
   })();
