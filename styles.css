@@ -2740,3 +2740,36 @@ body {
 .adm-docs-img-doc-content p { margin: 0 0 5pt; color: #111; }
 .adm-docs-img-doc-content h3 { margin: 10pt 0 3pt; font-size: 11pt; font-weight: bold; color: #111; }
 .adm-docs-img-doc-content br { display: block; height: 4pt; content: ''; }
+
+/* Template detail panel */
+.adm-tmpl-back-btn { background: none; border: none; color: #8b8b8b; font-size: 14px; font-family: 'Supreme', sans-serif; cursor: pointer; padding: 0; margin-bottom: 18px; display: inline-flex; align-items: center; gap: 6px; }
+.adm-tmpl-back-btn:hover { color: #fff; }
+.adm-tmpl-detail-layout { display: flex; gap: 30px; }
+.adm-tmpl-detail-left { width: 530px; flex-shrink: 0; }
+.adm-tmpl-detail-right { flex: 1; min-width: 0; display: flex; flex-direction: column; gap: 14px; }
+.adm-tmpl-detail-heading { font-size: 22px; font-weight: 700; color: #d0ee52; font-family: 'Supreme', sans-serif; margin: 0 0 8px; }
+.adm-tmpl-detail-sub { font-size: 15px; color: #ffffff; font-family: 'Supreme', sans-serif; margin: 0 0 24px; line-height: 1.5; }
+/* Dynamic fields */
+.adm-tmpl-field { margin-bottom: 18px; }
+.adm-tmpl-field-header { display: flex; align-items: center; justify-content: space-between; margin-bottom: 8px; }
+.adm-tmpl-field-label { font-size: 15px; color: #ffffff; font-family: 'Supreme', sans-serif; }
+.adm-tmpl-field-counter { font-size: 13px; color: #8b8b8b; font-family: 'Supreme', sans-serif; }
+.adm-tmpl-field-textarea { width: 100%; height: 80px; background: #272727; border: 1px solid #505050; border-radius: 5px; color: #fff; font-size: 15px; padding: 12px 16px; resize: vertical; outline: none; box-sizing: border-box; font-family: 'Supreme', sans-serif; line-height: 1.5; }
+.adm-tmpl-field-textarea::placeholder { color: #505050; }
+.adm-tmpl-field-textarea:focus { border-color: #8b8b8b; }
+/* Bottom row */
+.adm-tmpl-detail-bottom { display: flex; align-items: center; gap: 12px; margin-top: 8px; }
+.adm-tmpl-generate-btn { height: 44px; padding: 0 28px; background: #d0ee52; border: none; border-radius: 5px; color: #0d0e11; font-size: 15px; font-weight: 700; font-family: 'Supreme', sans-serif; cursor: pointer; }
+.adm-tmpl-generate-btn:hover { background: #bedd3e; }
+.adm-tmpl-generate-btn:disabled { opacity: .5; cursor: wait; }
+/* Output area */
+.adm-tmpl-detail-output { flex: 1; min-height: 440px; max-height: 560px; overflow-y: auto; background: #1a1b1e; border: 1px solid #2a2a2a; border-radius: 8px; padding: 24px 28px; color: #ffffff; font-family: 'Supreme', Arial, sans-serif; font-size: 15px; line-height: 1.7; }
+.adm-tmpl-output-content h3 { font-size: 17px; font-weight: 700; color: #d0ee52; margin: 0 0 16px; }
+.adm-tmpl-output-content h4 { font-size: 15px; font-weight: 700; color: #ffffff; margin: 18px 0 8px; }
+.adm-tmpl-output-content p { margin: 0 0 10px; color: #e0e0e0; }
+.adm-tmpl-output-content ul, .adm-tmpl-output-content ol { margin: 0 0 14px; padding-left: 22px; color: #e0e0e0; }
+.adm-tmpl-output-content li { margin-bottom: 5px; }
+.adm-tmpl-output-loading { display: flex; align-items: center; justify-content: center; min-height: 200px; }
+.adm-tmpl-detail-output-actions { display: flex; justify-content: flex-end; }
+.adm-tmpl-copy-btn { display: flex; align-items: center; gap: 7px; height: 38px; padding: 0 18px; background: #272727; border: 1px solid #505050; border-radius: 5px; color: #8b8b8b; font-size: 14px; font-family: 'Supreme', sans-serif; cursor: pointer; }
+.adm-tmpl-copy-btn:hover { color: #fff; border-color: #666; }
