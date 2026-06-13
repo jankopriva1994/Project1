@@ -4,7 +4,7 @@
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <title>Administrace – Chaties AI</title>
-  <link rel="stylesheet" href="styles.css?v=61" />
+  <link rel="stylesheet" href="styles.css?v=62" />
 </head>
 <body>
   <div class="page adm-page">
@@ -394,7 +394,7 @@
 
       <!-- CTA row -->
       <div class="adm-docs-cta-row">
-        <button class="adm-trans-btn adm-trans-btn-inactive" data-goto-panel="translator">Přeložit text</button>
+        <button class="adm-trans-btn adm-trans-btn-inactive" data-goto-panel="docs-create">+ Vytvořit nový dokument</button>
         <button class="adm-trans-btn adm-trans-btn-active">Přeložit dokument</button>
         <div class="adm-docs-sep"></div>
         <label class="adm-docs-upload-btn">
@@ -406,7 +406,7 @@
           <input type="file" style="display:none" accept=".docx,.pptx,.pdf,.html,.htm,.txt,.xlf,.xliff">
         </label>
         <div class="adm-docs-filename">Prispev_naceneni.pdf <span class="adm-docs-file-x">×</span></div>
-        <button class="adm-docs-translate-btn">Přeložit</button>
+        <button class="adm-docs-translate-btn" id="docsTranslateBtn">Přeložit</button>
       </div>
 
       <!-- Info row -->
@@ -475,7 +475,8 @@
           <textarea class="adm-trans-textarea adm-docs-textarea">Elektromobilita představuje revoluci v oblasti dopravy, která se zaměřuje na snižování závislosti na fosilních palivech a redukci emisí skleníkových plynů. Tento trend je stále více podporován nejen technologickým vývojem, ale i vládními stimuly a zvyšujícím se environmentálním povědomím veřejnosti</textarea>
         </div>
         <div class="adm-trans-panel adm-lang-panel-right">
-          <div class="adm-docs-history">
+          <!-- Default: history -->
+          <div class="adm-docs-history" id="docsHistoryPanel">
             <p class="adm-docs-history-title">Historie přeložených souborů</p>
             <p class="adm-docs-history-item">Prispev_naceneni.pdf</p>
             <p class="adm-docs-history-item">Prispev_naceneni.pdf</p>
@@ -485,6 +486,15 @@
             <p class="adm-docs-history-item">Prispev_naceneni.pdf</p>
             <p class="adm-docs-history-item">Prispev_naceneni.pdf</p>
             <p class="adm-docs-history-item">Prispev_naceneni.pdf</p>
+          </div>
+          <!-- After translation: editable preview -->
+          <div class="adm-docs-preview" id="docsPreviewPanel" style="display:none">
+            <div class="adm-docs-preview-label">Náhled překladu <span class="adm-docs-preview-hint">— text lze upravovat</span></div>
+            <div class="adm-docs-preview-text" id="docsPreviewText" contenteditable="true"></div>
+            <button class="adm-docs-download-btn" id="docsDownloadBtn">
+              <svg width="16" height="16" viewBox="0 0 24 24" fill="none"><path d="M12 3v12m0 0l-4-4m4 4l4-4" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/><path d="M3 17v2a2 2 0 0 0 2 2h14a2 2 0 0 0 2-2v-2" stroke="currentColor" stroke-width="2" stroke-linecap="round"/></svg>
+              Stáhnout překlad
+            </button>
           </div>
         </div>
       </div>
@@ -903,6 +913,51 @@
   </div>
 
   <script>
+  // Docs translate panel: preview + editable translation
+  (function () {
+    var translateBtn = document.getElementById('docsTranslateBtn');
+    var historyPanel = document.getElementById('docsHistoryPanel');
+    var previewPanel = document.getElementById('docsPreviewPanel');
+    var previewText = document.getElementById('docsPreviewText');
+    var downloadBtn = document.getElementById('docsDownloadBtn');
+
+    var mockTranslation = 'Die Elektromobilität stellt eine Revolution im Verkehrsbereich dar, '
+      + 'die sich auf die Reduzierung der Abhängigkeit von fossilen Brennstoffen und '
+      + 'die Verringerung der Treibhausgasemissionen konzentriert. '
+      + 'Dieser Trend wird zunehmend nicht nur durch die technologische Entwicklung, '
+      + 'sondern auch durch staatliche Anreize und das wachsende Umweltbewusstsein '
+      + 'der Öffentlichkeit unterstützt.\n\n'
+      + 'Die Infrastruktur für Elektrofahrzeuge wächst weltweit rasant. '
+      + 'Immer mehr Länder setzen auf staatliche Förderprogramme, um den Umstieg '
+      + 'auf emissionsfreie Fahrzeuge zu beschleunigen.';
+
+    if (translateBtn) {
+      translateBtn.addEventListener('click', function () {
+        var orig = translateBtn.textContent;
+        translateBtn.textContent = 'Překládám…';
+        translateBtn.disabled = true;
+        setTimeout(function () {
+          previewText.innerText = mockTranslation;
+          historyPanel.style.display = 'none';
+          previewPanel.style.display = 'flex';
+          translateBtn.textContent = orig;
+          translateBtn.disabled = false;
+        }, 1600);
+      });
+    }
+
+    if (downloadBtn && previewText) {
+      downloadBtn.addEventListener('click', function () {
+        var blob = new Blob([previewText.innerText], { type: 'text/plain;charset=utf-8' });
+        var a = document.createElement('a');
+        a.href = URL.createObjectURL(blob);
+        a.download = 'preklad.txt';
+        a.click();
+        URL.revokeObjectURL(a.href);
+      });
+    }
+  })();
+
   // Docs WYSIWYG + AI modal
   (function () {
     var modal = document.getElementById('docsAiModal');
