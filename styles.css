@@ -2570,20 +2570,27 @@ body {
 .adm-trans-tip { font-size: 12px; color: #d0ee52; font-family: 'Supreme', sans-serif; }
 
 /* Documents */
-.adm-docs-heading { font-size: 22px; font-weight: 700; color: #d0ee52; font-family: 'Supreme', sans-serif; margin: 0 0 8px; }
-.adm-docs-sub { font-size: 16px; color: #ffffff; font-family: 'Supreme', sans-serif; margin: 0 0 44px; line-height: 22px; }
-.adm-docs-action-btns { display: flex; gap: 10px; margin-bottom: 30px; }
-.adm-docs-btn { height: 52px; padding: 0 28px; border-radius: 5px; font-size: 16px; font-family: 'Supreme', sans-serif; cursor: pointer; }
-.adm-docs-btn-primary { background: #272727; border: 1px solid #d0ee52; color: #ffffff; font-weight: 700; }
-.adm-docs-btn-secondary { background: #272727; border: 1px solid transparent; color: #8b8b8b; }
-.adm-docs-recent-label { font-size: 16px; color: #ffffff; font-family: 'Supreme', sans-serif; margin-bottom: 14px; }
-.adm-doc-cards { display: flex; flex-wrap: wrap; gap: 14px; }
-.adm-doc-card { width: 228px; min-height: 120px; background: #2b2d31; border-radius: 8px; padding: 18px; box-sizing: border-box; cursor: pointer; }
-.adm-doc-card:hover { background: #333; }
-.adm-doc-title { font-size: 15px; font-weight: 700; color: #d0ee52; font-family: 'Supreme', sans-serif; margin: 0 0 8px; line-height: 22px; }
-.adm-doc-date { font-size: 12px; color: #8b8b8b; font-family: 'Supreme', sans-serif; margin: 0 0 14px; }
-.adm-doc-edit { color: #d0ee52; font-size: 16px; font-weight: 700; font-family: 'Supreme', sans-serif; text-decoration: none; }
-.adm-doc-edit:hover { text-decoration: underline; }
+.adm-docs-sub { font-size: 16px; color: #ffffff; font-family: 'Supreme', sans-serif; margin: 0 0 20px; line-height: 22px; }
+.adm-docs-cta-row { display: flex; align-items: center; gap: 12px; margin-bottom: 16px; }
+.adm-docs-sep { width: 1px; height: 40px; background: #444; margin: 0 4px; }
+.adm-docs-upload-btn { display: flex; align-items: center; gap: 10px; cursor: pointer; padding: 0 8px; }
+.adm-docs-upload-text { display: flex; flex-direction: column; }
+.adm-docs-upload-label { font-size: 14px; font-weight: 700; color: #d0ee52; font-family: 'Supreme', sans-serif; text-decoration: underline; }
+.adm-docs-upload-hint { font-size: 12px; color: #8b8b8b; font-family: 'Supreme', sans-serif; }
+.adm-docs-filename { font-size: 14px; color: #ffffff; font-family: 'Supreme', sans-serif; display: flex; align-items: center; gap: 8px; }
+.adm-docs-file-x { color: #8b8b8b; cursor: pointer; font-size: 16px; }
+.adm-docs-translate-btn { height: 52px; padding: 0 28px; background: #d0ee52; color: #0d0e11; font-size: 16px; font-weight: 700; font-family: 'Supreme', sans-serif; border: none; border-radius: 5px; cursor: pointer; }
+.adm-docs-info-row { display: flex; align-items: center; gap: 24px; margin-bottom: 20px; }
+.adm-docs-info-item { font-size: 14px; color: #8b8b8b; font-family: 'Supreme', sans-serif; display: flex; align-items: center; gap: 6px; }
+.adm-docs-lang-row { margin-top: 0; }
+.adm-docs-textarea { color: #ffffff; font-size: 15px; font-family: 'Supreme', sans-serif; line-height: 1.6; }
+.adm-docs-history { background: #272727; border-radius: 3px; width: 628px; height: 350px; padding: 20px 24px; box-sizing: border-box; }
+.adm-docs-history-title { font-size: 16px; font-weight: 700; color: #ffffff; font-family: 'Supreme', sans-serif; margin: 0 0 14px; }
+.adm-docs-history-item { font-size: 14px; color: #8b8b8b; font-family: 'Supreme', sans-serif; margin: 0 0 8px; cursor: pointer; }
+.adm-docs-history-item:hover { color: #ffffff; }
+.adm-docs-bottom-row { display: flex; align-items: center; gap: 12px; margin-top: 16px; }
+.adm-docs-tip { font-size: 14px; color: #8b8b8b; font-family: 'Supreme', sans-serif; }
+.adm-docs-tip-label { font-weight: 700; color: #ffffff; margin-right: 4px; }
 
 /* Templates panel */
 .adm-tmpl-heading { font-size: 22px; font-weight: 700; color: #d0ee52; font-family: 'Supreme', sans-serif; margin: 0 0 8px; }

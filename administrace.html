@@ -4,7 +4,7 @@
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <title>Administrace – Chaties AI</title>
-  <link rel="stylesheet" href="styles.css?v=48" />
+  <link rel="stylesheet" href="styles.css?v=49" />
 </head>
 <body>
   <div class="page adm-page">
@@ -285,7 +285,7 @@
       <!-- Action buttons -->
       <div class="adm-trans-action-btns">
         <button class="adm-trans-btn adm-trans-btn-active">Přeložit text</button>
-        <button class="adm-trans-btn adm-trans-btn-inactive">Přeložit dokument</button>
+        <button class="adm-trans-btn adm-trans-btn-inactive" data-goto-panel="docs">Přeložit dokument</button>
       </div>
 
       <p class="adm-trans-info">1 slovo = 0,3 slov</p>
@@ -323,24 +323,70 @@
     <!-- PANEL 5: DOKUMENTY -->
     <div class="adm-panel adm-panel-docs" data-panel-id="docs">
 
-      <h2 class="adm-docs-heading">Vítejte v Chaties AI dokumentu</h2>
-      <p class="adm-docs-sub">Vytvořte si přímo zde svůj PR článek, slohou práci nebo referát do školy.</p>
+      <h2 class="adm-trans-heading">Vítejte v Chaties AI Překladači</h2>
+      <p class="adm-docs-sub">Chaties překladač dokumentů podporuje tyto formáty (<span class="accent">docx, pptx, pdf, html, htm, txt, xlf a xliff</span>).<br>Minimální cena překladu je 500 slov a zahrnuje až 25 normostran. Nad 27 normostran jsou slova účtována stejně jako u klasického překladu.</p>
 
-      <!-- Action buttons -->
-      <div class="adm-docs-action-btns">
-        <button class="adm-docs-btn adm-docs-btn-primary">+ Vytvořit nový dokument</button>
-        <button class="adm-docs-btn adm-docs-btn-secondary">Přeložit dokument</button>
+      <!-- CTA row -->
+      <div class="adm-docs-cta-row">
+        <button class="adm-trans-btn adm-trans-btn-inactive" data-goto-panel="translator">Přeložit text</button>
+        <button class="adm-trans-btn adm-trans-btn-active">Přeložit dokument</button>
+        <div class="adm-docs-sep"></div>
+        <label class="adm-docs-upload-btn">
+          <svg width="20" height="20" viewBox="0 0 24 24" fill="none"><path d="M12 15V3m0 0l-4 4m4-4l4 4" stroke="#d0ee52" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"/><path d="M3 15v2a4 4 0 0 0 4 4h10a4 4 0 0 0 4-4v-2" stroke="#d0ee52" stroke-width="1.8" stroke-linecap="round"/></svg>
+          <div class="adm-docs-upload-text">
+            <span class="adm-docs-upload-label">Vybrat soubor</span>
+            <span class="adm-docs-upload-hint">max. 10mb</span>
+          </div>
+          <input type="file" style="display:none" accept=".docx,.pptx,.pdf,.html,.htm,.txt,.xlf,.xliff">
+        </label>
+        <div class="adm-docs-filename">Prispev_naceneni.pdf <span class="adm-docs-file-x">×</span></div>
+        <button class="adm-docs-translate-btn">Přeložit</button>
       </div>
 
-      <p class="adm-docs-recent-label">Nedávno přidané dokumenty</p>
+      <!-- Info row -->
+      <div class="adm-docs-info-row">
+        <span class="adm-docs-info-item">1 slovo = 0,3 slov
+          <svg width="14" height="14" viewBox="0 0 24 24" fill="none"><rect x="2" y="2" width="20" height="20" rx="5" stroke="#8b8b8b" stroke-width="1.5"/><path d="M12 7h.01M12 11v6" stroke="#8b8b8b" stroke-width="1.5" stroke-linecap="round"/></svg>
+        </span>
+        <span class="adm-docs-info-item">500 slov
+          <svg width="14" height="14" viewBox="0 0 24 24" fill="none"><rect x="2" y="2" width="20" height="20" rx="5" stroke="#8b8b8b" stroke-width="1.5"/><path d="M12 7h.01M12 11v6" stroke="#8b8b8b" stroke-width="1.5" stroke-linecap="round"/></svg>
+        </span>
+      </div>
 
-      <!-- Document cards -->
-      <div class="adm-doc-cards">
-        <div class="adm-doc-card">
-          <p class="adm-doc-title">Článek k projektu "nová identita"</p>
-          <p class="adm-doc-date">Naposledy otevřen: před 20 dny</p>
-          <a href="#" class="adm-doc-edit">Editovat →</a>
+      <!-- Language selectors -->
+      <div class="adm-trans-panels adm-docs-lang-row">
+        <div class="adm-trans-panel adm-lang-panel-left">
+          <div class="adm-lang-sel">
+            <svg width="18" height="18" viewBox="0 0 24 24" fill="none"><path d="M3 5h12M7 3v2M12 5c-.5 2.5-2.5 5-5 6.5M9.5 10.5c1 1.5 2.5 2.5 4 3.5" stroke="#8b8b8b" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/><path d="M14.5 12l3-3 3 3M17.5 9v9" stroke="#8b8b8b" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg>
+            Čeština ▼
+          </div>
+          <textarea class="adm-trans-textarea adm-docs-textarea">Elektromobilita představuje revoluci v oblasti dopravy, která se zaměřuje na snižování závislosti na fosilních palivech a redukci emisí skleníkových plynů. Tento trend je stále více podporován nejen technologickým vývojem, ale i vládními stimuly a zvyšujícím se environmentálním povědomím veřejnosti</textarea>
         </div>
+        <div class="adm-trans-arrow">→</div>
+        <div class="adm-trans-panel adm-lang-panel-right">
+          <div class="adm-lang-sel">
+            <svg width="18" height="18" viewBox="0 0 24 24" fill="none"><path d="M3 5h12M7 3v2M12 5c-.5 2.5-2.5 5-5 6.5M9.5 10.5c1 1.5 2.5 2.5 4 3.5" stroke="#8b8b8b" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/><path d="M14.5 12l3-3 3 3M17.5 9v9" stroke="#8b8b8b" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg>
+            Němčina ▼
+          </div>
+          <div class="adm-docs-history">
+            <p class="adm-docs-history-title">Historie přeložených souborů</p>
+            <p class="adm-docs-history-item">Prispev_naceneni.pdf</p>
+            <p class="adm-docs-history-item">Prispev_naceneni.pdf</p>
+            <p class="adm-docs-history-item">Prispev_naceneni.pdf</p>
+            <p class="adm-docs-history-item">Prispev_naceneni.pdf</p>
+            <p class="adm-docs-history-item">Prispev_naceneni.pdf</p>
+            <p class="adm-docs-history-item">Prispev_naceneni.pdf</p>
+            <p class="adm-docs-history-item">Prispev_naceneni.pdf</p>
+            <p class="adm-docs-history-item">Prispev_naceneni.pdf</p>
+          </div>
+        </div>
+      </div>
+
+      <!-- Bottom icons -->
+      <div class="adm-docs-bottom-row">
+        <svg width="20" height="20" viewBox="0 0 24 24" fill="none"><rect x="8" y="8" width="13" height="13" rx="2" stroke="#8b8b8b" stroke-width="1.5"/><path d="M3 16V5a2 2 0 0 1 2-2h11" stroke="#8b8b8b" stroke-width="1.5" stroke-linecap="round"/></svg>
+        <svg width="20" height="20" viewBox="0 0 24 24" fill="none"><circle cx="18" cy="5" r="3" stroke="#8b8b8b" stroke-width="1.5"/><circle cx="6" cy="12" r="3" stroke="#8b8b8b" stroke-width="1.5"/><circle cx="18" cy="19" r="3" stroke="#8b8b8b" stroke-width="1.5"/><path d="M8.59 13.51l6.83 3.98M15.41 6.51l-6.82 3.98" stroke="#8b8b8b" stroke-width="1.5"/></svg>
+        <span class="adm-docs-tip"><span class="adm-docs-tip-label">TIP!</span> Pokud nechcete plýtvat kreditem, doporučujeme si dokumenty, které mají do 5 normostran přeložit v klasickém překladači.</span>
       </div>
 
     </div><!-- /adm-panel-docs -->
@@ -527,6 +573,17 @@
           // Clear nav active when non-nav element triggers panel (e.g. account link)
           setNavActive(null);
         }
+      });
+    });
+
+    // Cross-panel CTA buttons (data-goto-panel)
+    document.querySelectorAll('[data-goto-panel]').forEach(function (btn) {
+      btn.addEventListener('click', function () {
+        var panelId = btn.getAttribute('data-goto-panel');
+        showPanel(panelId);
+        // Update sidebar nav active state
+        var navEl = document.querySelector('.adm-nav-item[data-panel="' + panelId + '"]');
+        setNavActive(navEl || null);
       });
     });
 
