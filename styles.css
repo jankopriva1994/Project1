@@ -2614,8 +2614,8 @@ body {
 /* Docs create (editor) panel */
 .adm-docs-create-topbar { display: flex; align-items: center; gap: 0; margin-bottom: 20px; }
 .adm-docs-create-topbar .adm-trans-action-btns { margin-bottom: 0; flex-shrink: 0; }
-.adm-docs-create-topbar .adm-docs-sep { flex-shrink: 0; }
-.adm-docs-ai-trigger { display: flex; align-items: center; gap: 8px; background: #272727; border: 1px solid #3a3a3a; border-radius: 5px; color: #ffffff; font-size: 14px; font-family: 'Supreme', sans-serif; padding: 0 18px; height: 52px; cursor: pointer; white-space: nowrap; flex-shrink: 0; }
+.adm-docs-create-topbar .adm-docs-sep { flex-shrink: 0; margin: 0 20px; }
+.adm-docs-ai-trigger { display: flex; align-items: center; gap: 8px; background: #272727; border: 1px solid #3a3a3a; border-radius: 5px; color: #ffffff; font-size: 16px; font-family: 'Supreme', sans-serif; padding: 0 18px; height: 52px; cursor: pointer; white-space: nowrap; flex-shrink: 0; }
 .adm-docs-ai-trigger:hover { border-color: #d0ee52; }
 .adm-docs-ai-hint { font-size: 13px; color: #8b8b8b; font-family: 'Supreme', sans-serif; margin: 0 0 0 16px; line-height: 1.5; }
 .adm-wysi-toolbar { display: flex; align-items: center; gap: 2px; background: #1e1e1e; border: 1px solid #333; border-bottom: none; border-radius: 5px 5px 0 0; padding: 8px 14px; }
