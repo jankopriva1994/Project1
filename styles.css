@@ -2715,3 +2715,23 @@ body {
 .adm-docs-result-back { background: none; border: 1px solid #444; border-radius: 5px; color: #8b8b8b; font-size: 14px; font-family: 'Supreme', sans-serif; cursor: pointer; padding: 6px 16px; }
 .adm-docs-result-back:hover { color: #fff; border-color: #666; }
 .adm-docs-result-bottom { margin-top: 14px; }
+
+/* Docs image OCR state (split-screen) */
+.adm-docs-img-layout { display: flex; gap: 30px; }
+.adm-docs-img-left { width: 460px; flex-shrink: 0; display: flex; flex-direction: column; }
+.adm-docs-img-right { flex: 1; min-width: 0; display: flex; flex-direction: column; }
+.adm-docs-img-file-row { display: flex; align-items: center; gap: 10px; margin-bottom: 14px; }
+.adm-docs-img-filename { font-size: 15px; color: #fff; font-family: 'Supreme', sans-serif; flex: 1; overflow: hidden; text-overflow: ellipsis; white-space: nowrap; }
+.adm-docs-img-preview-box { background: #1a1b1e; border: 1px solid #333; border-radius: 6px; overflow: hidden; height: 230px; display: flex; align-items: center; justify-content: center; }
+.adm-docs-img-preview { max-width: 100%; max-height: 230px; object-fit: contain; display: block; }
+.adm-docs-img-prompt { width: 100%; height: 70px; background: #272727; border: 1px solid #505050; border-radius: 5px; color: #fff; font-size: 15px; padding: 12px 16px; resize: none; outline: none; box-sizing: border-box; font-family: 'Supreme', sans-serif; margin-top: 14px; }
+.adm-docs-img-prompt::placeholder { color: #505050; }
+.adm-docs-img-process-btn { display: flex; width: 100%; margin-top: 12px; justify-content: center; padding: 0 20px; }
+.adm-docs-img-result-header { display: flex; align-items: center; justify-content: space-between; margin-bottom: 12px; }
+.adm-docs-img-result-title { font-size: 15px; font-weight: 700; color: #fff; font-family: 'Supreme', sans-serif; }
+.adm-docs-img-result-body { flex: 1; background: #ffffff; border-radius: 6px; min-height: 480px; max-height: 560px; overflow-y: auto; padding: 32px 36px; color: #111; font-family: Arial, sans-serif; font-size: 11pt; line-height: 1.7; box-sizing: border-box; }
+.adm-docs-img-placeholder { display: flex; flex-direction: column; align-items: center; justify-content: center; min-height: 420px; gap: 16px; color: #999; text-align: center; font-family: 'Supreme', sans-serif; }
+.adm-docs-img-placeholder p { font-size: 14px; margin: 0; max-width: 260px; }
+.adm-docs-img-doc-content p { margin: 0 0 5pt; color: #111; }
+.adm-docs-img-doc-content h3 { margin: 10pt 0 3pt; font-size: 11pt; font-weight: bold; color: #111; }
+.adm-docs-img-doc-content br { display: block; height: 4pt; content: ''; }

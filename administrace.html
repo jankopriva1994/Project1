@@ -4,8 +4,9 @@
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <title>Administrace – Chaties AI</title>
-  <link rel="stylesheet" href="styles.css?v=67" />
+  <link rel="stylesheet" href="styles.css?v=68" />
   <script src="https://cdnjs.cloudflare.com/ajax/libs/mammoth/1.6.0/mammoth.browser.min.js"></script>
+  <script src="https://cdn.jsdelivr.net/npm/tesseract.js@5/dist/tesseract.min.js"></script>
 </head>
 <body>
   <div class="page adm-page">
@@ -408,9 +409,97 @@
           <label class="adm-dropzone-pick">
             <svg width="16" height="16" viewBox="0 0 24 24" fill="none"><path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4M17 8l-5-5-5 5M12 3v12" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"/></svg>
             Vybrat soubor z počítače
-            <input type="file" id="docsFileInput" style="display:none" accept=".docx,.html,.htm,.txt,.xlf,.xliff">
+            <input type="file" id="docsFileInput" style="display:none" accept=".docx,.html,.htm,.txt,.xlf,.xliff,.jpg,.jpeg,.png,.gif,.webp,.bmp">
           </label>
-          <p class="adm-dropzone-hint">docx · html · txt · xlf · xliff &nbsp;·&nbsp; max. 10 MB</p>
+          <p class="adm-dropzone-hint">docx · html · txt · xlf · xliff · jpg · png &nbsp;·&nbsp; max. 10 MB</p>
+        </div>
+      </div>
+
+      <!-- STEP 2b: Image OCR + translate (split view) -->
+      <div id="docsImageState" style="display:none">
+        <div class="adm-docs-img-layout">
+          <!-- Left: image preview + settings -->
+          <div class="adm-docs-img-left">
+            <div class="adm-docs-img-file-row">
+              <svg width="18" height="18" viewBox="0 0 24 24" fill="none"><rect x="3" y="3" width="18" height="18" rx="2" stroke="#d0ee52" stroke-width="1.5"/><circle cx="8.5" cy="8.5" r="1.5" stroke="#d0ee52" stroke-width="1.3"/><path d="M21 15l-5-5L5 21" stroke="#d0ee52" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg>
+              <span class="adm-docs-img-filename" id="docsImgFilename"></span>
+              <button class="adm-docs-file-remove" id="docsImgRemove">× Odebrat</button>
+            </div>
+            <div class="adm-docs-img-preview-box">
+              <img id="docsImgPreview" class="adm-docs-img-preview" src="" alt="">
+            </div>
+            <p class="adm-docs-lang-label" style="margin-top:18px">Do jakého jazyka přeložit?</p>
+            <div class="adm-lang-row" style="margin-bottom:14px">
+              <div class="adm-lang-dropdown" data-lang="cs" id="docsImgLangFrom">
+                <svg width="18" height="18" viewBox="0 0 24 24" fill="none"><path d="M3 5h12M7 3v2M12 5c-.5 2.5-2.5 5-5 6.5M9.5 10.5c1 1.5 2.5 2.5 4 3.5" stroke="#8b8b8b" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/><path d="M14.5 12l3-3 3 3M17.5 9v9" stroke="#8b8b8b" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg>
+                <span class="adm-lang-name">Čeština</span>
+                <svg class="adm-lang-chevron" width="12" height="12" viewBox="0 0 24 24" fill="none"><path d="M6 9l6 6 6-6" stroke="#8b8b8b" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg>
+                <div class="adm-lang-menu">
+                  <div class="adm-lang-option adm-lang-active" data-code="cs"><span class="adm-lang-flag">🇨🇿</span><span>Čeština</span></div>
+                  <div class="adm-lang-option" data-code="sk"><span class="adm-lang-flag">🇸🇰</span><span>Slovenština</span></div>
+                  <div class="adm-lang-option" data-code="en"><span class="adm-lang-flag">🇬🇧</span><span>Angličtina</span></div>
+                  <div class="adm-lang-option" data-code="de"><span class="adm-lang-flag">🇩🇪</span><span>Němčina</span></div>
+                  <div class="adm-lang-option" data-code="fr"><span class="adm-lang-flag">🇫🇷</span><span>Francouzština</span></div>
+                  <div class="adm-lang-option" data-code="es"><span class="adm-lang-flag">🇪🇸</span><span>Španělština</span></div>
+                  <div class="adm-lang-option" data-code="it"><span class="adm-lang-flag">🇮🇹</span><span>Italština</span></div>
+                  <div class="adm-lang-option" data-code="pt"><span class="adm-lang-flag">🇵🇹</span><span>Portugalština</span></div>
+                  <div class="adm-lang-option" data-code="pl"><span class="adm-lang-flag">🇵🇱</span><span>Polština</span></div>
+                  <div class="adm-lang-option" data-code="hu"><span class="adm-lang-flag">🇭🇺</span><span>Maďarština</span></div>
+                  <div class="adm-lang-option" data-code="ro"><span class="adm-lang-flag">🇷🇴</span><span>Rumunština</span></div>
+                  <div class="adm-lang-option" data-code="nl"><span class="adm-lang-flag">🇳🇱</span><span>Nizozemština</span></div>
+                  <div class="adm-lang-option" data-code="ru"><span class="adm-lang-flag">🇷🇺</span><span>Ruština</span></div>
+                  <div class="adm-lang-option" data-code="ua"><span class="adm-lang-flag">🇺🇦</span><span>Ukrajinština</span></div>
+                  <div class="adm-lang-option" data-code="ja"><span class="adm-lang-flag">🇯🇵</span><span>Japonština</span></div>
+                  <div class="adm-lang-option" data-code="zh"><span class="adm-lang-flag">🇨🇳</span><span>Čínština</span></div>
+                </div>
+              </div>
+              <span class="adm-lang-arrow-green">→</span>
+              <div class="adm-lang-dropdown" data-lang="en" id="docsImgLangTo">
+                <svg width="18" height="18" viewBox="0 0 24 24" fill="none"><path d="M3 5h12M7 3v2M12 5c-.5 2.5-2.5 5-5 6.5M9.5 10.5c1 1.5 2.5 2.5 4 3.5" stroke="#8b8b8b" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/><path d="M14.5 12l3-3 3 3M17.5 9v9" stroke="#8b8b8b" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg>
+                <span class="adm-lang-name">Angličtina</span>
+                <svg class="adm-lang-chevron" width="12" height="12" viewBox="0 0 24 24" fill="none"><path d="M6 9l6 6 6-6" stroke="#8b8b8b" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg>
+                <div class="adm-lang-menu">
+                  <div class="adm-lang-option" data-code="cs"><span class="adm-lang-flag">🇨🇿</span><span>Čeština</span></div>
+                  <div class="adm-lang-option" data-code="sk"><span class="adm-lang-flag">🇸🇰</span><span>Slovenština</span></div>
+                  <div class="adm-lang-option adm-lang-active" data-code="en"><span class="adm-lang-flag">🇬🇧</span><span>Angličtina</span></div>
+                  <div class="adm-lang-option" data-code="de"><span class="adm-lang-flag">🇩🇪</span><span>Němčina</span></div>
+                  <div class="adm-lang-option" data-code="fr"><span class="adm-lang-flag">🇫🇷</span><span>Francouzština</span></div>
+                  <div class="adm-lang-option" data-code="es"><span class="adm-lang-flag">🇪🇸</span><span>Španělština</span></div>
+                  <div class="adm-lang-option" data-code="it"><span class="adm-lang-flag">🇮🇹</span><span>Italština</span></div>
+                  <div class="adm-lang-option" data-code="pt"><span class="adm-lang-flag">🇵🇹</span><span>Portugalština</span></div>
+                  <div class="adm-lang-option" data-code="pl"><span class="adm-lang-flag">🇵🇱</span><span>Polština</span></div>
+                  <div class="adm-lang-option" data-code="hu"><span class="adm-lang-flag">🇭🇺</span><span>Maďarština</span></div>
+                  <div class="adm-lang-option" data-code="ro"><span class="adm-lang-flag">🇷🇴</span><span>Rumunština</span></div>
+                  <div class="adm-lang-option" data-code="nl"><span class="adm-lang-flag">🇳🇱</span><span>Nizozemština</span></div>
+                  <div class="adm-lang-option" data-code="ru"><span class="adm-lang-flag">🇷🇺</span><span>Ruština</span></div>
+                  <div class="adm-lang-option" data-code="ua"><span class="adm-lang-flag">🇺🇦</span><span>Ukrajinština</span></div>
+                  <div class="adm-lang-option" data-code="ja"><span class="adm-lang-flag">🇯🇵</span><span>Japonština</span></div>
+                  <div class="adm-lang-option" data-code="zh"><span class="adm-lang-flag">🇨🇳</span><span>Čínština</span></div>
+                </div>
+              </div>
+            </div>
+            <textarea class="adm-docs-img-prompt" id="docsImgPrompt" placeholder="Volitelná instrukce… např. „Přelož tuto lékařskou zprávu a zachovej formátování.""></textarea>
+            <button class="adm-docs-translate-big-btn adm-docs-img-process-btn" id="docsImgProcessBtn">
+              <svg width="16" height="16" viewBox="0 0 24 24" fill="none" style="margin-right:8px"><path d="M8 1L9.6 6.4L15 8L9.6 9.6L8 15L6.4 9.6L1 8L6.4 6.4Z" fill="#0d0e11"/><path d="M18.5 9L19.5 12.5L23 13.5L19.5 14.5L18.5 18L17.5 14.5L14 13.5L17.5 12.5Z" fill="#0d0e11"/></svg>
+              Zpracovat dokument
+            </button>
+          </div>
+          <!-- Right: document preview -->
+          <div class="adm-docs-img-right">
+            <div class="adm-docs-img-result-header">
+              <span class="adm-docs-img-result-title" id="docsImgResultTitle">Náhled dokumentu</span>
+              <button class="adm-docs-download-btn" id="docsImgDownloadBtn" style="display:none">
+                <svg width="16" height="16" viewBox="0 0 24 24" fill="none"><path d="M12 3v12m0 0l-4-4m4 4l4-4" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/><path d="M3 17v2a2 2 0 0 0 2 2h14a2 2 0 0 0 2-2v-2" stroke="currentColor" stroke-width="2" stroke-linecap="round"/></svg>
+                Stáhnout (PDF)
+              </button>
+            </div>
+            <div class="adm-docs-img-result-body" id="docsImgResultBody">
+              <div class="adm-docs-img-placeholder">
+                <svg width="48" height="48" viewBox="0 0 24 24" fill="none"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z" stroke="#ccc" stroke-width="1.2"/><path d="M14 2v6h6M16 13H8M16 17H8M10 9H8" stroke="#ccc" stroke-width="1.2" stroke-linecap="round"/></svg>
+                <p>Náhled přeloženého dokumentu se zobrazí zde po zpracování.</p>
+              </div>
+            </div>
+          </div>
         </div>
       </div>
 
@@ -810,6 +899,7 @@
           dropdown.querySelector('.adm-lang-name').textContent = opt.querySelector('span:last-child').textContent;
           dropdown.querySelectorAll('.adm-lang-option').forEach(function (o) { o.classList.remove('adm-lang-active'); });
           opt.classList.add('adm-lang-active');
+          dropdown.setAttribute('data-lang', opt.getAttribute('data-code'));
           dropdown.classList.remove('adm-dd-open');
         });
       });
@@ -908,31 +998,43 @@
   </div>
 
   <script>
-  // Docs translate panel — 3-step flow: upload → language → result
+  // Docs translate panel — 3-step flow: upload → language/image → result
   (function () {
-    var uploadState  = document.getElementById('docsUploadState');
-    var langState    = document.getElementById('docsLangState');
-    var resultState  = document.getElementById('docsTranslateResult');
-    var dropzone     = document.getElementById('docsDropzone');
-    var fileInput    = document.getElementById('docsFileInput');
-    var selectedName = document.getElementById('docsSelectedFilename');
-    var removeBtn    = document.getElementById('docsRemoveFile');
-    var translateBtn = document.getElementById('docsTranslateBtn');
-    var resultName   = document.getElementById('docsResultFilename');
-    var startOver    = document.getElementById('docsStartOver');
-    var sourceText   = document.getElementById('docsSourceText');
-    var previewText  = document.getElementById('docsPreviewText');
-    var editInput    = document.getElementById('docsEditInput');
-    var editSubmit   = document.getElementById('docsEditSubmit');
-    var downloadBtn  = document.getElementById('docsDownloadBtn');
+    var uploadState    = document.getElementById('docsUploadState');
+    var langState      = document.getElementById('docsLangState');
+    var imageState     = document.getElementById('docsImageState');
+    var resultState    = document.getElementById('docsTranslateResult');
+    var dropzone       = document.getElementById('docsDropzone');
+    var fileInput      = document.getElementById('docsFileInput');
+    var selectedName   = document.getElementById('docsSelectedFilename');
+    var removeBtn      = document.getElementById('docsRemoveFile');
+    var translateBtn   = document.getElementById('docsTranslateBtn');
+    var resultName     = document.getElementById('docsResultFilename');
+    var startOver      = document.getElementById('docsStartOver');
+    var sourceText     = document.getElementById('docsSourceText');
+    var previewText    = document.getElementById('docsPreviewText');
+    var editInput      = document.getElementById('docsEditInput');
+    var editSubmit     = document.getElementById('docsEditSubmit');
+    var downloadBtn    = document.getElementById('docsDownloadBtn');
+    var imgRemove      = document.getElementById('docsImgRemove');
+    var imgProcessBtn  = document.getElementById('docsImgProcessBtn');
+    var imgResultBody  = document.getElementById('docsImgResultBody');
+    var imgResultTitle = document.getElementById('docsImgResultTitle');
+    var imgDownloadBtn = document.getElementById('docsImgDownloadBtn');
 
     var isHtmlMode = false;
     var docxHtmlBuffer = null;
     var currentFileName = '';
+    var currentImageDataUrl = null;
+
+    var IMG_PLACEHOLDER = '<div class="adm-docs-img-placeholder">'
+      + '<svg width="48" height="48" viewBox="0 0 24 24" fill="none"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z" stroke="#ccc" stroke-width="1.2"/><path d="M14 2v6h6M16 13H8M16 17H8M10 9H8" stroke="#ccc" stroke-width="1.2" stroke-linecap="round"/></svg>'
+      + '<p>Náhled přeloženého dokumentu se zobrazí zde po zpracování.</p></div>';
 
     function showStep(step) {
       uploadState.style.display  = step === 1 ? '' : 'none';
       langState.style.display    = step === 2 ? '' : 'none';
+      imageState.style.display   = step === 'img' ? '' : 'none';
       resultState.style.display  = step === 3 ? '' : 'none';
     }
 
@@ -942,8 +1044,18 @@
       docxHtmlBuffer = null;
       isHtmlMode = false;
       currentFileName = '';
+      currentImageDataUrl = null;
       previewText.innerHTML = '';
+      if (imgResultBody) imgResultBody.innerHTML = IMG_PLACEHOLDER;
+      if (imgDownloadBtn) imgDownloadBtn.style.display = 'none';
       showStep(1);
+    }
+
+    // ── Helpers ──────────────────────────────────────────────
+    function getActiveLang(dropdown) {
+      if (!dropdown) return 'cs';
+      var active = dropdown.querySelector('.adm-lang-option.adm-lang-active');
+      return active ? active.getAttribute('data-code') : (dropdown.getAttribute('data-lang') || 'cs');
     }
 
     // ── File reading ────────────────────────────────────────
@@ -956,6 +1068,24 @@
       currentFileName = file.name;
 
       var lower = file.name.toLowerCase();
+
+      // Images → OCR flow
+      var imageExts = ['.jpg', '.jpeg', '.png', '.gif', '.webp', '.bmp'];
+      if (imageExts.some(function(ext) { return lower.endsWith(ext); })) {
+        var imgReader = new FileReader();
+        imgReader.onload = function(e) {
+          currentImageDataUrl = e.target.result;
+          var imgEl = document.getElementById('docsImgPreview');
+          var nameEl = document.getElementById('docsImgFilename');
+          if (imgEl) imgEl.src = e.target.result;
+          if (nameEl) nameEl.textContent = currentFileName;
+          if (imgResultBody) imgResultBody.innerHTML = IMG_PLACEHOLDER;
+          if (imgDownloadBtn) imgDownloadBtn.style.display = 'none';
+          showStep('img');
+        };
+        imgReader.readAsDataURL(file);
+        return;
+      }
       if (lower.endsWith('.txt') || lower.endsWith('.xlf') || lower.endsWith('.xliff')) {
         var r = new FileReader();
         r.onload = function (e) {
@@ -1063,15 +1193,96 @@
       return div.innerHTML;
     }
 
+    // ── OCR image ───────────────────────────────────────────
+    async function ocrImage(dataUrl, progressCb) {
+      if (typeof Tesseract === 'undefined') throw new Error('Tesseract.js se nenačetl');
+      var result = await Tesseract.recognize(dataUrl, 'ces+eng', {
+        logger: function(m) {
+          if (m.status === 'recognizing text' && progressCb) {
+            progressCb(Math.round(m.progress * 100));
+          }
+        }
+      });
+      return result.data.text;
+    }
+
+    function formatOcrToHtml(text) {
+      var html = '';
+      text.split('\n').forEach(function(line) {
+        var t = line.trim();
+        if (!t) { html += '<br>'; return; }
+        if (t.length > 3 && t.length < 80 && t === t.toUpperCase() && /[A-ZÀ-ž]/.test(t)) {
+          html += '<h3>' + t + '</h3>';
+        } else {
+          html += '<p>' + t + '</p>';
+        }
+      });
+      return html;
+    }
+
+    // ── Image process button ────────────────────────────────
+    if (imgProcessBtn) {
+      imgProcessBtn.addEventListener('click', async function () {
+        if (!currentImageDataUrl) return;
+        var fromDD = document.getElementById('docsImgLangFrom');
+        var toDD   = document.getElementById('docsImgLangTo');
+        var from   = getActiveLang(fromDD);
+        var to     = getActiveLang(toDD);
+        var origHTML = imgProcessBtn.innerHTML;
+        imgProcessBtn.disabled = true;
+        imgResultBody.innerHTML = '<div class="adm-docs-img-placeholder"><p>Rozpoznávám text z obrázku… (může trvat 20–60 s)</p></div>';
+        imgDownloadBtn.style.display = 'none';
+
+        try {
+          var ocrText = await ocrImage(currentImageDataUrl, function(pct) {
+            imgProcessBtn.textContent = 'Rozpoznávám… ' + pct + '%';
+          });
+
+          imgProcessBtn.textContent = 'Překládám…';
+          imgResultBody.innerHTML = '<div class="adm-docs-img-placeholder"><p>Překládám text…</p></div>';
+
+          var translated = await translatePlainText(ocrText, from, to);
+          var formatted  = formatOcrToHtml(translated);
+
+          imgResultTitle.textContent = currentFileName.replace(/\.[^.]+$/, '') + ' – překlad';
+          imgResultBody.innerHTML = '<div class="adm-docs-img-doc-content">' + formatted + '</div>';
+          imgDownloadBtn.style.display = '';
+        } catch(err) {
+          imgResultBody.innerHTML = '<div class="adm-docs-img-placeholder"><p style="color:#ff5555">Chyba: ' + err.message + '</p></div>';
+          console.error(err);
+        }
+
+        imgProcessBtn.innerHTML = origHTML;
+        imgProcessBtn.disabled = false;
+      });
+    }
+
+    if (imgRemove) imgRemove.addEventListener('click', resetUpload);
+
+    if (imgDownloadBtn) {
+      imgDownloadBtn.addEventListener('click', function () {
+        var win = window.open('', '_blank');
+        win.document.write(
+          '<!DOCTYPE html><html><head><meta charset="utf-8"><title>' + (imgResultTitle ? imgResultTitle.textContent : 'Překlad') + '</title>'
+          + '<style>body{font-family:Arial,sans-serif;font-size:11pt;line-height:1.7;padding:2cm 2.5cm;color:#111}'
+          + 'p{margin:0 0 6pt}h3{margin:12pt 0 4pt;font-size:12pt;font-weight:bold}'
+          + '@media print{body{padding:1.5cm 2cm}}</style>'
+          + '</head><body>' + imgResultBody.innerHTML + '</body></html>'
+        );
+        win.document.close();
+        setTimeout(function() { win.focus(); win.print(); }, 400);
+      });
+    }
+
     // ── Translate button ────────────────────────────────────
     if (translateBtn) {
       translateBtn.addEventListener('click', async function () {
         var text = sourceText ? sourceText.value.trim() : '';
         if (!text) { alert('Nejprve nahrajte soubor.'); return; }
 
-        var drops = document.querySelectorAll('.adm-panel-docs-translate .adm-lang-dropdown');
-        var from = drops[0] ? drops[0].getAttribute('data-lang') : 'cs';
-        var to   = drops[1] ? drops[1].getAttribute('data-lang') : 'en';
+        var drops = document.querySelectorAll('#docsLangState .adm-lang-dropdown');
+        var from = getActiveLang(drops[0]);
+        var to   = getActiveLang(drops[1]);
 
         var origHTML = translateBtn.innerHTML;
         translateBtn.textContent = 'Překládám…';
