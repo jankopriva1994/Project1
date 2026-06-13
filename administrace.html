@@ -4,7 +4,7 @@
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <title>Administrace – Chaties AI</title>
-  <link rel="stylesheet" href="styles.css?v=70" />
+  <link rel="stylesheet" href="styles.css?v=71" />
   <script src="https://cdnjs.cloudflare.com/ajax/libs/mammoth/1.6.0/mammoth.browser.min.js"></script>
   <script src="https://cdn.jsdelivr.net/npm/tesseract.js@5/dist/tesseract.min.js"></script>
 </head>
@@ -686,31 +686,37 @@
       <!-- Template cards -->
       <div class="adm-tmpl-cards">
 
-        <div class="adm-tmpl-card">
+        <div class="adm-tmpl-card" data-tmpl-id="marketing" data-goto-panel="tmpl-detail">
+          <span class="adm-tmpl-title">Marketingový<br>plán</span>
+          <span class="adm-tmpl-star"><svg width="16" height="15" viewBox="0 0 24 24" fill="none"><path d="M12 2l3.09 6.26L22 9.27l-5 4.87 1.18 6.88L12 17.77l-6.18 3.25L7 14.14 2 9.27l6.91-1.01L12 2z" stroke="#d0ee52" stroke-width="1.5" stroke-linejoin="round"/></svg></span>
+          <p class="adm-tmpl-desc">Vyberte si z několika šablon,<br>které Vám pomohou vytvořit<br>marketingový plán pro vaši firmu.</p>
+        </div>
+
+        <div class="adm-tmpl-card" data-tmpl-id="google-ads" data-goto-panel="tmpl-detail">
           <span class="adm-tmpl-title">Google vyhledávací<br>reklama</span>
           <span class="adm-tmpl-star"><svg width="16" height="15" viewBox="0 0 24 24" fill="none"><path d="M12 2l3.09 6.26L22 9.27l-5 4.87 1.18 6.88L12 17.77l-6.18 3.25L7 14.14 2 9.27l6.91-1.01L12 2z" stroke="#d0ee52" stroke-width="1.5" stroke-linejoin="round"/></svg></span>
           <p class="adm-tmpl-desc">Šablona, která vám napíše<br>3 nadpisy a 1 popis pro vaši<br>vyhledávací reklamu na Google.</p>
         </div>
 
-        <div class="adm-tmpl-card">
+        <div class="adm-tmpl-card" data-tmpl-id="facebook-ads" data-goto-panel="tmpl-detail">
           <span class="adm-tmpl-title">Reklama<br>na Facebooku</span>
           <span class="adm-tmpl-star"><svg width="16" height="15" viewBox="0 0 24 24" fill="none"><path d="M12 2l3.09 6.26L22 9.27l-5 4.87 1.18 6.88L12 17.77l-6.18 3.25L7 14.14 2 9.27l6.91-1.01L12 2z" stroke="#d0ee52" stroke-width="1.5" stroke-linejoin="round"/></svg></span>
           <p class="adm-tmpl-desc">Šablona, která Vám pomůže<br>napsat text a nadpis pro reklamu<br>na Facebooku.</p>
         </div>
 
-        <div class="adm-tmpl-card">
+        <div class="adm-tmpl-card" data-tmpl-id="sklik-ads" data-goto-panel="tmpl-detail">
           <span class="adm-tmpl-title">Sklik vyhledávací<br>reklama</span>
           <span class="adm-tmpl-star"><svg width="16" height="15" viewBox="0 0 24 24" fill="none"><path d="M12 2l3.09 6.26L22 9.27l-5 4.87 1.18 6.88L12 17.77l-6.18 3.25L7 14.14 2 9.27l6.91-1.01L12 2z" stroke="#d0ee52" stroke-width="1.5" stroke-linejoin="round"/></svg></span>
           <p class="adm-tmpl-desc">Šablona, která vám napíše<br>3 nadpisy a 1 popis pro vaši<br>vyhledávací reklamu na Sklik.</p>
         </div>
 
-        <div class="adm-tmpl-card">
+        <div class="adm-tmpl-card" data-tmpl-id="youtube-ads" data-goto-panel="tmpl-detail">
           <span class="adm-tmpl-title">Populární<br>Youtube reklama</span>
           <span class="adm-tmpl-star"><svg width="16" height="15" viewBox="0 0 24 24" fill="none"><path d="M12 2l3.09 6.26L22 9.27l-5 4.87 1.18 6.88L12 17.77l-6.18 3.25L7 14.14 2 9.27l6.91-1.01L12 2z" stroke="#d0ee52" stroke-width="1.5" stroke-linejoin="round"/></svg></span>
           <p class="adm-tmpl-desc">Šablona, která vám vytvoří scénář<br>pro poutavou video reklamu<br>na Youtube.</p>
         </div>
 
-        <div class="adm-tmpl-card">
+        <div class="adm-tmpl-card" data-tmpl-id="webinar" data-goto-panel="tmpl-detail">
           <span class="adm-tmpl-title">Témata pro váš<br>prodejní webinář</span>
           <span class="adm-tmpl-star"><svg width="16" height="15" viewBox="0 0 24 24" fill="none"><path d="M12 2l3.09 6.26L22 9.27l-5 4.87 1.18 6.88L12 17.77l-6.18 3.25L7 14.14 2 9.27l6.91-1.01L12 2z" stroke="#d0ee52" stroke-width="1.5" stroke-linejoin="round"/></svg></span>
           <p class="adm-tmpl-desc">Šablona, která vytvoří seznam<br>10x nápadů pro prodejní webinář,<br>který přiláká vaše zákazníky.</p>
@@ -719,6 +725,62 @@
       </div>
 
     </div><!-- /adm-panel-templates -->
+
+
+    <!-- PANEL 6b: TEMPLATE DETAIL -->
+    <div class="adm-panel adm-panel-tmpl-detail" data-panel-id="tmpl-detail">
+
+      <button class="adm-tmpl-back-btn" data-goto-panel="templates">← Zpět na šablony</button>
+
+      <div class="adm-tmpl-detail-layout">
+
+        <!-- Left: form -->
+        <div class="adm-tmpl-detail-left">
+          <h2 class="adm-tmpl-detail-heading" id="tmplDetailHeading"></h2>
+          <p class="adm-tmpl-detail-sub" id="tmplDetailSub"></p>
+          <div id="tmplDetailFields"></div>
+          <div class="adm-tmpl-detail-bottom">
+            <!-- language dropdown -->
+            <div class="adm-lang-dropdown" data-lang="cs" id="tmplDetailLang">
+              <svg width="18" height="18" viewBox="0 0 24 24" fill="none"><path d="M3 5h12M7 3v2M12 5c-.5 2.5-2.5 5-5 6.5M9.5 10.5c1 1.5 2.5 2.5 4 3.5" stroke="#8b8b8b" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/><path d="M14.5 12l3-3 3 3M17.5 9v9" stroke="#8b8b8b" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg>
+              <span class="adm-lang-name">Čeština</span>
+              <svg class="adm-lang-chevron" width="12" height="12" viewBox="0 0 24 24" fill="none"><path d="M6 9l6 6 6-6" stroke="#8b8b8b" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg>
+              <div class="adm-lang-menu">
+                <div class="adm-lang-option adm-lang-active" data-code="cs"><span class="adm-lang-flag">🇨🇿</span><span>Čeština</span></div>
+                <div class="adm-lang-option" data-code="sk"><span class="adm-lang-flag">🇸🇰</span><span>Slovenština</span></div>
+                <div class="adm-lang-option" data-code="en"><span class="adm-lang-flag">🇬🇧</span><span>Angličtina</span></div>
+                <div class="adm-lang-option" data-code="de"><span class="adm-lang-flag">🇩🇪</span><span>Němčina</span></div>
+                <div class="adm-lang-option" data-code="fr"><span class="adm-lang-flag">🇫🇷</span><span>Francouzština</span></div>
+                <div class="adm-lang-option" data-code="es"><span class="adm-lang-flag">🇪🇸</span><span>Španělština</span></div>
+                <div class="adm-lang-option" data-code="it"><span class="adm-lang-flag">🇮🇹</span><span>Italština</span></div>
+                <div class="adm-lang-option" data-code="pt"><span class="adm-lang-flag">🇵🇹</span><span>Portugalština</span></div>
+                <div class="adm-lang-option" data-code="pl"><span class="adm-lang-flag">🇵🇱</span><span>Polština</span></div>
+                <div class="adm-lang-option" data-code="hu"><span class="adm-lang-flag">🇭🇺</span><span>Maďarština</span></div>
+                <div class="adm-lang-option" data-code="ro"><span class="adm-lang-flag">🇷🇴</span><span>Rumunština</span></div>
+                <div class="adm-lang-option" data-code="nl"><span class="adm-lang-flag">🇳🇱</span><span>Nizozemština</span></div>
+                <div class="adm-lang-option" data-code="ru"><span class="adm-lang-flag">🇷🇺</span><span>Ruština</span></div>
+                <div class="adm-lang-option" data-code="ua"><span class="adm-lang-flag">🇺🇦</span><span>Ukrajinština</span></div>
+                <div class="adm-lang-option" data-code="ja"><span class="adm-lang-flag">🇯🇵</span><span>Japonština</span></div>
+                <div class="adm-lang-option" data-code="zh"><span class="adm-lang-flag">🇨🇳</span><span>Čínština</span></div>
+              </div>
+            </div>
+            <button class="adm-tmpl-generate-btn" id="tmplGenerateBtn">Generovat</button>
+          </div>
+        </div>
+
+        <!-- Right: output (hidden until generate clicked) -->
+        <div class="adm-tmpl-detail-right" id="tmplDetailRight" style="visibility:hidden">
+          <div class="adm-tmpl-detail-output" id="tmplDetailOutput"></div>
+          <div class="adm-tmpl-detail-output-actions">
+            <button class="adm-tmpl-copy-btn" id="tmplCopyBtn">
+              <svg width="15" height="15" viewBox="0 0 24 24" fill="none"><rect x="9" y="9" width="13" height="13" rx="2" stroke="currentColor" stroke-width="1.8"/><path d="M5 15H4a2 2 0 0 1-2-2V4a2 2 0 0 1 2-2h9a2 2 0 0 1 2 2v1" stroke="currentColor" stroke-width="1.8" stroke-linecap="round"/></svg>
+              Kopírovat
+            </button>
+          </div>
+        </div>
+
+      </div>
+    </div><!-- /adm-panel-tmpl-detail -->
 
 
     <!-- PANEL 7: NASTAVENÍ -->
@@ -844,7 +906,7 @@
     });
 
     // Cross-panel CTA buttons (data-goto-panel)
-    var navAliases = { 'docs-translate': 'docs', 'docs-create': 'docs' };
+    var navAliases = { 'docs-translate': 'docs', 'docs-create': 'docs', 'tmpl-detail': 'templates' };
     document.querySelectorAll('[data-goto-panel]').forEach(function (btn) {
       btn.addEventListener('click', function () {
         var panelId = btn.getAttribute('data-goto-panel');
