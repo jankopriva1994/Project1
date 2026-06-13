@@ -2567,7 +2567,8 @@ body {
 .adm-trans-textarea::placeholder { color: #505050; }
 .adm-trans-bottom { display: flex; gap: 12px; align-items: center; margin-top: 12px; }
 .adm-trans-icon { color: #8b8b8b; cursor: pointer; }
-.adm-trans-tip { font-size: 12px; color: #d0ee52; font-family: 'Supreme', sans-serif; }
+.adm-tip { font-size: 14px; color: #ffffff; font-family: 'Supreme', sans-serif; font-weight: 400; }
+.adm-tip-label { font-weight: 700; color: #d0ee52; margin-right: 4px; }
 
 /* Documents */
 .adm-docs-sub { font-size: 16px; color: #ffffff; font-family: 'Supreme', sans-serif; margin: 0 0 45px; line-height: 22px; }
@@ -2589,8 +2590,6 @@ body {
 .adm-docs-history-item { font-size: 14px; color: #8b8b8b; font-family: 'Supreme', sans-serif; margin: 0 0 8px; cursor: pointer; }
 .adm-docs-history-item:hover { color: #ffffff; }
 .adm-docs-bottom-row { display: flex; align-items: center; gap: 12px; margin-top: 16px; }
-.adm-docs-tip { font-size: 14px; color: #8b8b8b; font-family: 'Supreme', sans-serif; }
-.adm-docs-tip-label { font-weight: 700; color: #ffffff; margin-right: 4px; }
 
 /* Templates panel */
 .adm-tmpl-heading { font-size: 22px; font-weight: 700; color: #d0ee52; font-family: 'Supreme', sans-serif; margin: 0 0 8px; }
