@@ -4,7 +4,7 @@
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <title>Administrace – Chaties AI</title>
-  <link rel="stylesheet" href="styles.css?v=78" />
+  <link rel="stylesheet" href="styles.css?v=79" />
   <script src="https://cdnjs.cloudflare.com/ajax/libs/mammoth/1.6.0/mammoth.browser.min.js"></script>
   <script src="https://cdn.jsdelivr.net/npm/tesseract.js@5/dist/tesseract.min.js"></script>
 </head>
@@ -1153,8 +1153,10 @@
         <button class="adm-ai-modal-close" id="docsAiClose">×</button>
       </div>
       <p class="adm-ai-modal-desc">Napiš, co chceš, aby AI vygenerovalo do tvého dokumentu.</p>
-      <textarea class="adm-ai-modal-input" id="docsAiInput" placeholder="Napiš mi článek o elektromobilitě..."></textarea>
-      <button class="adm-ai-modal-submit" id="docsAiSubmit">Vygenerovat</button>
+      <div class="adm-ai-modal-input-wrap">
+        <input class="adm-ai-modal-input" id="docsAiInput" type="text" placeholder="Napiš mi článek o elektromobilitě..." />
+        <button class="adm-ai-modal-submit" id="docsAiSubmit">Vygenerovat</button>
+      </div>
     </div>
   </div>
 
