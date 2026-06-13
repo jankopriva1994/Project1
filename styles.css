@@ -2603,12 +2603,19 @@ body {
 .adm-docs-history-item { font-size: 14px; color: #8b8b8b; font-family: 'Supreme', sans-serif; margin: 0 0 8px; cursor: pointer; }
 .adm-docs-history-item:hover { color: #ffffff; }
 .adm-docs-bottom-row { display: flex; align-items: center; gap: 12px; margin-top: 16px; }
-.adm-docs-preview { display: flex; flex-direction: column; width: 460px; height: 350px; gap: 10px; }
-.adm-docs-preview-label { font-size: 13px; color: #8b8b8b; font-family: 'Supreme', sans-serif; flex-shrink: 0; }
-.adm-docs-preview-hint { font-style: italic; }
-.adm-docs-preview-text { flex: 1; background: #272727; border: 1px solid #444; border-radius: 3px; padding: 16px 18px; color: #ffffff; font-size: 14px; font-family: 'Supreme', sans-serif; line-height: 1.65; outline: none; overflow-y: auto; white-space: pre-wrap; }
-.adm-docs-preview-text:focus { border-color: #555; }
-.adm-docs-download-btn { flex-shrink: 0; display: flex; align-items: center; justify-content: center; gap: 8px; height: 44px; background: #d0ee52; border: none; border-radius: 5px; color: #0d0e11; font-size: 15px; font-weight: 700; font-family: 'Supreme', sans-serif; cursor: pointer; }
+/* Full-width translation result */
+.adm-docs-result { width: 100%; }
+.adm-docs-result-preview { width: 100%; height: 460px; background: #272727; border: 1px solid #333; border-radius: 5px; padding: 22px 26px; box-sizing: border-box; color: #ffffff; font-size: 15px; font-family: 'Supreme', sans-serif; line-height: 1.75; overflow-y: auto; outline: none; white-space: pre-wrap; }
+.adm-docs-result-preview:focus { border-color: #505050; }
+.adm-docs-result-ai-row { display: flex; align-items: flex-start; gap: 12px; margin-top: 14px; }
+.adm-docs-result-ai-input { flex: 1; height: 80px; background: #272727; border: 1px solid #505050; border-radius: 5px; color: #ffffff; font-size: 15px; font-family: 'Supreme', sans-serif; padding: 14px 16px; resize: none; outline: none; box-sizing: border-box; }
+.adm-docs-result-ai-input::placeholder { color: #505050; }
+.adm-docs-result-ai-input:focus { border-color: #d0ee52; }
+.adm-docs-result-ai-btn { height: 80px; padding: 0 22px; background: #d0ee52; border: none; border-radius: 5px; color: #0d0e11; font-size: 15px; font-weight: 700; font-family: 'Supreme', sans-serif; cursor: pointer; white-space: nowrap; display: flex; align-items: center; gap: 8px; flex-shrink: 0; }
+.adm-docs-result-ai-btn:hover { background: #bfda3f; }
+.adm-docs-result-bottom { margin-top: 12px; }
+.adm-docs-download-btn { display: flex; align-items: center; justify-content: center; gap: 8px; height: 52px; padding: 0 28px; background: #272727; border: 1px solid #d0ee52; border-radius: 5px; color: #ffffff; font-size: 16px; font-weight: 700; font-family: 'Supreme', sans-serif; cursor: pointer; }
+.adm-docs-download-btn:hover { background: #1e1e1e; }
 .adm-docs-create-btn { white-space: nowrap; }
 .adm-docs-recent-label { font-size: 16px; color: #ffffff; font-family: 'Supreme', sans-serif; font-weight: 400; margin: 32px 0 16px; }
 .adm-docs-card-grid { display: flex; flex-wrap: wrap; gap: 16px; }
