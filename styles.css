@@ -2533,7 +2533,7 @@ body {
 .adm-img-textarea::placeholder { color: #505050; }
 .adm-img-bottom { display: flex; align-items: center; gap: 14px; margin-top: 14px; }
 .adm-img-word-count { font-size: 13px; color: #8b8b8b; font-family: 'Supreme', sans-serif; }
-.adm-generate-btn { height: 50px; padding: 0 24px; background: #d0ee52; color: #0d0e11; font-size: 15px; font-weight: 700; font-family: 'Supreme', sans-serif; border: none; border-radius: 7px; cursor: pointer; }
+.adm-generate-btn { height: 52px; padding: 0 28px; background: #272727; color: #ffffff; font-size: 16px; font-weight: 700; font-family: 'Supreme', sans-serif; border: 1px solid #d0ee52; border-radius: 5px; cursor: pointer; }
 
 /* Chat */
 .adm-chat-area { width: 100%; height: 460px; display: flex; align-items: center; justify-content: center; }
@@ -2551,9 +2551,9 @@ body {
 .adm-trans-heading { font-size: 22px; font-weight: 700; color: #d0ee52; font-family: 'Supreme', sans-serif; margin: 0 0 8px; }
 .adm-trans-sub { font-size: 16px; color: #ffffff; font-family: 'Supreme', sans-serif; margin: 0 0 40px; line-height: 22px; }
 .adm-trans-action-btns { display: flex; gap: 10px; margin-bottom: 50px; }
-.adm-trans-btn { height: 50px; padding: 0 24px; border-radius: 8px; font-size: 16px; font-family: 'Supreme', sans-serif; cursor: pointer; }
+.adm-trans-btn { height: 52px; padding: 0 28px; border-radius: 5px; font-size: 16px; font-family: 'Supreme', sans-serif; cursor: pointer; }
 .adm-trans-btn-active { background: #272727; border: 1px solid #d0ee52; color: #ffffff; font-weight: 700; }
-.adm-trans-btn-inactive { background: #272727; border: 1px solid #505050; color: #ffffff; }
+.adm-trans-btn-inactive { background: #272727; border: 1px solid transparent; color: #8b8b8b; }
 .adm-trans-info { font-size: 13px; color: #8b8b8b; font-family: 'Supreme', sans-serif; margin-bottom: 20px; }
 .adm-trans-panels { display: flex; gap: 20px; }
 .adm-trans-panel { flex: none; width: 628px; }
@@ -2569,9 +2569,9 @@ body {
 .adm-docs-heading { font-size: 22px; font-weight: 700; color: #d0ee52; font-family: 'Supreme', sans-serif; margin: 0 0 8px; }
 .adm-docs-sub { font-size: 16px; color: #ffffff; font-family: 'Supreme', sans-serif; margin: 0 0 44px; line-height: 22px; }
 .adm-docs-action-btns { display: flex; gap: 10px; margin-bottom: 30px; }
-.adm-docs-btn { height: 50px; padding: 0 24px; border-radius: 8px; font-size: 16px; font-family: 'Supreme', sans-serif; cursor: pointer; }
-.adm-docs-btn-primary { background: transparent; border: 1px solid #d0ee52; color: #ffffff; font-weight: 700; }
-.adm-docs-btn-secondary { background: #2b2d31; border: 1px solid #505050; color: #ffffff; }
+.adm-docs-btn { height: 52px; padding: 0 28px; border-radius: 5px; font-size: 16px; font-family: 'Supreme', sans-serif; cursor: pointer; }
+.adm-docs-btn-primary { background: #272727; border: 1px solid #d0ee52; color: #ffffff; font-weight: 700; }
+.adm-docs-btn-secondary { background: #272727; border: 1px solid transparent; color: #8b8b8b; }
 .adm-docs-recent-label { font-size: 16px; color: #ffffff; font-family: 'Supreme', sans-serif; margin-bottom: 14px; }
 .adm-doc-cards { display: flex; flex-wrap: wrap; gap: 14px; }
 .adm-doc-card { width: 228px; min-height: 120px; background: #2b2d31; border-radius: 8px; padding: 18px; box-sizing: border-box; cursor: pointer; }
@@ -2605,7 +2605,7 @@ body {
 .adm-settings-divider { width: 100%; height: 1px; background: #333333; margin: 25px 0 25px; }
 .adm-settings-input { width: 320px; height: 44px; background: #272727; border: 1px solid #505050; border-radius: 5px; color: #ffffff; font-size: 16px; font-family: 'Supreme', sans-serif; padding: 0 16px; outline: none; box-sizing: border-box; display: block; margin-bottom: 12px; }
 .adm-settings-input::placeholder { color: #505050; }
-.adm-settings-save { margin-top: 16px; height: 50px; padding: 0 28px; background: #272727; color: #ffffff; font-size: 16px; font-weight: 700; font-family: 'Supreme', sans-serif; border: 1px solid #d0ee52; border-radius: 5px; cursor: pointer; }
+.adm-settings-save { margin-top: 16px; height: 52px; padding: 0 28px; background: #272727; color: #ffffff; font-size: 16px; font-weight: 700; font-family: 'Supreme', sans-serif; border: 1px solid #d0ee52; border-radius: 5px; cursor: pointer; }
 
 /* Placeholder panels */
 .adm-placeholder { display: flex; flex-direction: column; align-items: center; justify-content: center; height: 400px; }
