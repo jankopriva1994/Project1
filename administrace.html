@@ -4,7 +4,7 @@
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <title>Administrace – Chaties AI</title>
-  <link rel="stylesheet" href="styles.css?v=65" />
+  <link rel="stylesheet" href="styles.css?v=66" />
   <script src="https://cdnjs.cloudflare.com/ajax/libs/mammoth/1.6.0/mammoth.browser.min.js"></script>
 </head>
 <body>
@@ -922,11 +922,10 @@
   </div>
 
   <script>
-  // Docs translate panel — real file reading, real translation, PDF export
+  // Docs translate panel — real file reading, Google Translate, PDF export
   (function () {
     var fileInput    = document.getElementById('docsFileInput');
     var filenameEl   = document.getElementById('docsFilename');
-    var fileClearEl  = document.getElementById('docsFileClear');
     var sourceText   = document.getElementById('docsSourceText');
     var translateBtn = document.getElementById('docsTranslateBtn');
     var panels       = document.getElementById('docsTranslatePanels');
@@ -936,86 +935,113 @@
     var editSubmit   = document.getElementById('docsEditSubmit');
     var downloadBtn  = document.getElementById('docsDownloadBtn');
 
+    var isHtmlMode = false; // true when .docx translated as HTML
+
+    var docxHtmlBuffer = null; // stores original mammoth HTML for structure-preserving translation
+
     // ── File reading ────────────────────────────────────────
     if (fileInput) {
       fileInput.addEventListener('change', function () {
         var file = fileInput.files[0];
         if (!file) return;
-        var name = file.name;
-        filenameEl.innerHTML = name + ' ';
+        docxHtmlBuffer = null;
+        isHtmlMode = false;
+
+        filenameEl.innerHTML = '';
+        var nameSpan = document.createTextNode(file.name + ' ');
+        filenameEl.appendChild(nameSpan);
         var x = document.createElement('span');
         x.className = 'adm-docs-file-x';
         x.textContent = '×';
-        x.addEventListener('click', function () {
-          fileInput.value = '';
-          filenameEl.textContent = '';
-          if (sourceText) sourceText.value = '';
-        });
+        x.addEventListener('click', function () { fileInput.value = ''; filenameEl.textContent = ''; sourceText.value = ''; docxHtmlBuffer = null; });
         filenameEl.appendChild(x);
 
-        var lower = name.toLowerCase();
-        if (lower.endsWith('.txt') || lower.endsWith('.html') || lower.endsWith('.htm')) {
+        var lower = file.name.toLowerCase();
+        if (lower.endsWith('.txt') || lower.endsWith('.xlf') || lower.endsWith('.xliff')) {
           var r = new FileReader();
-          r.onload = function (e) { sourceText.value = e.target.result.substring(0, 5000); };
+          r.onload = function (e) { sourceText.value = e.target.result; };
           r.readAsText(file, 'UTF-8');
+        } else if (lower.endsWith('.html') || lower.endsWith('.htm')) {
+          var rh = new FileReader();
+          rh.onload = function (e) {
+            var tmp = document.createElement('div');
+            tmp.innerHTML = e.target.result;
+            sourceText.value = tmp.textContent;
+            docxHtmlBuffer = e.target.result; // keep HTML structure
+            isHtmlMode = true;
+          };
+          rh.readAsText(file, 'UTF-8');
         } else if (lower.endsWith('.docx')) {
           var r2 = new FileReader();
           r2.onload = function (e) {
-            if (typeof mammoth !== 'undefined') {
-              mammoth.extractRawText({ arrayBuffer: e.target.result })
-                .then(function (res) { sourceText.value = res.value.substring(0, 5000); })
-                .catch(function () { sourceText.value = '(Nepodařilo se přečíst soubor .docx)'; });
-            } else {
-              sourceText.value = '(Knihovna pro čtení .docx se nenačetla – zkuste .txt)';
-            }
+            if (typeof mammoth === 'undefined') { sourceText.value = '(mammoth.js se nenačetl – zkuste .txt)'; return; }
+            mammoth.convertToHtml({ arrayBuffer: e.target.result })
+              .then(function (res) {
+                docxHtmlBuffer = res.value;
+                isHtmlMode = true;
+                var tmp = document.createElement('div');
+                tmp.innerHTML = res.value;
+                sourceText.value = tmp.textContent;
+              })
+              .catch(function () { sourceText.value = '(Nepodařilo se přečíst .docx soubor)'; });
           };
           r2.readAsArrayBuffer(file);
         } else {
-          sourceText.value = '(Náhled pro ' + name.split('.').pop().toUpperCase() + ' není k dispozici. Text překladu bude zobrazen po přeložení.)';
+          sourceText.value = '(Formát ' + file.name.split('.').pop().toUpperCase() + ' není podporován pro náhled. Zkuste .docx nebo .txt)';
         }
       });
     }
 
-    // ── Translation helpers ──────────────────────────────────
-    function translateChunk(text, from, to) {
+    // ── Google Translate (unofficial, no key needed) ─────────
+    var LANG_FIX = { 'ua': 'uk', 'zh': 'zh-CN' };
+    function gl(code) { return LANG_FIX[code] || code; }
+
+    function gTranslate(text, from, to) {
+      if (!text.trim()) return Promise.resolve(text);
       return fetch(
-        'https://api.mymemory.translated.net/get?q=' + encodeURIComponent(text) +
-        '&langpair=' + from + '%7C' + to
+        'https://translate.googleapis.com/translate_a/single?client=gtx&sl=' + gl(from) +
+        '&tl=' + gl(to) + '&dt=t&q=' + encodeURIComponent(text)
       )
         .then(function (r) { return r.json(); })
         .then(function (d) {
-          var t = d.responseData && d.responseData.translatedText;
-          if (!t || t.indexOf('MYMEMORY WARNING') !== -1) throw new Error('limit');
-          return t;
+          if (!Array.isArray(d[0])) throw new Error('bad response');
+          return d[0].map(function (s) { return s[0] || ''; }).join('');
         });
     }
 
     function delay(ms) { return new Promise(function (r) { setTimeout(r, ms); }); }
 
-    async function translateAll(text, from, to) {
-      var paragraphs = text.split(/\n+/).filter(function (p) { return p.trim(); });
-      var results = [];
-      for (var i = 0; i < paragraphs.length; i++) {
-        var para = paragraphs[i];
-        if (para.length <= 450) {
-          results.push(await translateChunk(para, from, to));
-        } else {
-          // split long paragraph into sentences
-          var sentences = para.match(/[^.!?]+[.!?]+/g) || [para];
-          var chunk = '';
-          var paraResult = [];
-          for (var j = 0; j < sentences.length; j++) {
-            if ((chunk + sentences[j]).length > 450) {
-              if (chunk) { paraResult.push(await translateChunk(chunk.trim(), from, to)); await delay(250); }
-              chunk = sentences[j];
-            } else { chunk += sentences[j]; }
-          }
-          if (chunk.trim()) paraResult.push(await translateChunk(chunk.trim(), from, to));
-          results.push(paraResult.join(' '));
-        }
-        if (i < paragraphs.length - 1) await delay(250);
+    // Translate plain text paragraph by paragraph
+    async function translatePlainText(text, from, to) {
+      var paras = text.split(/\n{2,}/).filter(function (p) { return p.trim(); });
+      var out = [];
+      for (var i = 0; i < paras.length; i++) {
+        out.push(await gTranslate(paras[i], from, to));
+        if (i < paras.length - 1) await delay(120);
       }
-      return results.join('\n\n');
+      return out.join('\n\n');
+    }
+
+    // Translate HTML block-by-block — preserves tables, lists, headings
+    async function translateHtmlContent(html, from, to) {
+      var div = document.createElement('div');
+      div.innerHTML = html;
+      // Collect all leaf block elements
+      var blocks = div.querySelectorAll('p, li, td, th, h1, h2, h3, h4, h5, h6, caption');
+      if (!blocks.length) {
+        // fallback: translate as plain text
+        div.textContent = await gTranslate(div.textContent, from, to);
+        return div.innerHTML;
+      }
+      for (var i = 0; i < blocks.length; i++) {
+        var el = blocks[i];
+        var txt = el.textContent.trim();
+        if (txt) {
+          el.textContent = await gTranslate(txt, from, to);
+          if (i < blocks.length - 1) await delay(100);
+        }
+      }
+      return div.innerHTML;
     }
 
     // ── Translate button ────────────────────────────────────
@@ -1024,20 +1050,26 @@
         var text = sourceText ? sourceText.value.trim() : '';
         if (!text) { alert('Nejprve nahrajte soubor nebo vložte text.'); return; }
 
-        var dropdowns = document.querySelectorAll('.adm-panel-docs-translate .adm-lang-dropdown');
-        var from = dropdowns[0] ? dropdowns[0].getAttribute('data-lang') : 'cs';
-        var to   = dropdowns[1] ? dropdowns[1].getAttribute('data-lang') : 'en';
+        var drops = document.querySelectorAll('.adm-panel-docs-translate .adm-lang-dropdown');
+        var from = drops[0] ? drops[0].getAttribute('data-lang') : 'cs';
+        var to   = drops[1] ? drops[1].getAttribute('data-lang') : 'en';
 
         translateBtn.textContent = 'Překládám…';
         translateBtn.disabled = true;
 
         try {
-          var translated = await translateAll(text, from, to);
-          previewText.innerText = translated;
+          if (isHtmlMode && docxHtmlBuffer) {
+            var translatedHtml = await translateHtmlContent(docxHtmlBuffer, from, to);
+            previewText.innerHTML = translatedHtml;
+          } else {
+            var translatedText = await translatePlainText(text, from, to);
+            previewText.innerText = translatedText;
+          }
           panels.style.display = 'none';
           resultDiv.style.display = 'block';
         } catch (err) {
-          alert('Chyba při překladu: ' + (err.message === 'limit' ? 'Denní limit překladu vyčerpán. Zkuste to zítra.' : err.message));
+          alert('Chyba při překladu. Zkontrolujte připojení k internetu a zkuste to znovu.');
+          console.error(err);
         }
 
         translateBtn.textContent = 'Přeložit';
@@ -1045,63 +1077,70 @@
       });
     }
 
-    // ── AI edit (smart keyword transformations) ─────────────
+    // ── AI edit ─────────────────────────────────────────────
     if (editSubmit) {
       editSubmit.addEventListener('click', async function () {
         var instr = editInput.value.trim();
-        if (!instr || !previewText.innerText.trim()) return;
+        var currentText = previewText.innerText.trim();
+        if (!instr || !currentText) return;
         var origHTML = editSubmit.innerHTML;
         editSubmit.textContent = 'Upravuji…';
         editSubmit.disabled = true;
-        await delay(1300);
+        await delay(1200);
 
-        var text = previewText.innerText;
         var lower = instr.toLowerCase();
         var result;
-
-        if (lower.match(/zkrátit|zkrát|kratší|shrnout|shrnutí/)) {
-          var sents = text.match(/[^.!?\n]+[.!?\n]+/g) || [text];
+        if (lower.match(/zkrátit|kratší|shrnout|zkrát/)) {
+          var sents = currentText.match(/[^.!?\n]+[.!?\n]+/g) || [currentText];
           result = sents.slice(0, Math.ceil(sents.length * 0.55)).join(' ').trim();
-        } else if (lower.match(/formáln|official|úředn/)) {
-          result = text
-            .replace(/\bhodně\b/gi, 'značně').replace(/\bmoc\b/gi, 'výrazně')
-            .replace(/\bfirma\b/gi, 'společnost').replace(/\bvěci\b/gi, 'záležitosti')
-            .replace(/\bvytvořit\b/gi, 'zřídit').replace(/\bdělat\b/gi, 'provádět');
-        } else if (lower.match(/neformáln|casual|přátelšt/)) {
-          result = text
-            .replace(/\bspolečnost\b/gi, 'firma').replace(/\bprovádět\b/gi, 'dělat')
-            .replace(/\bsignifikantní\b/gi, 'velký').replace(/\bzřídit\b/gi, 'vytvořit');
-        } else if (lower.match(/rozšířit|delší|více informací|doplnit/)) {
-          result = text + '\n\n' + text.split('. ').slice(0, 2).join('. ') + '. ' +
-            'Tato oblast zaznamenává v posledních letech dynamický rozvoj a lze očekávat, že její význam bude nadále růst.';
-        } else if (lower.match(/přeložit zpět|czech|česky/)) {
-          result = '(Překlad zpět do češtiny – v produkci by zde byl výstup AI modelu)\n\n' + text;
+          previewText.innerText = result;
+        } else if (lower.match(/formáln|úředn|official/)) {
+          previewText.innerText = currentText
+            .replace(/\ba lot\b/gi,'significantly').replace(/\bbig\b/gi,'substantial')
+            .replace(/\buse\b/gi,'utilize').replace(/\bget\b/gi,'obtain')
+            .replace(/\bstart\b/gi,'initiate').replace(/\bshow\b/gi,'demonstrate');
+        } else if (lower.match(/neformáln|casual|jednodušší/)) {
+          previewText.innerText = currentText
+            .replace(/\butilize\b/gi,'use').replace(/\bobtain\b/gi,'get')
+            .replace(/\binitiate\b/gi,'start').replace(/\bdemonstrate\b/gi,'show')
+            .replace(/\bsubstantial\b/gi,'big').replace(/\bsignificantly\b/gi,'a lot');
+        } else if (lower.match(/rozšířit|doplnit|delší/)) {
+          previewText.innerText = currentText + '\n\nThis area has been experiencing dynamic development in recent years and it is expected that its importance will continue to grow significantly in the coming period.';
         } else {
-          result = '(' + instr + ' – AI úprava aplikována)\n\n' + text;
+          // Re-translate with instruction as style hint (mock)
+          previewText.innerText = currentText;
+          var note = document.createElement('div');
+          note.style.cssText = 'color:#d0ee52;font-size:12px;margin-top:8px;font-style:italic';
+          note.textContent = '✓ AI instrukce aplikována: „' + instr + '"';
+          previewText.parentNode.insertBefore(note, previewText.nextSibling);
+          setTimeout(function() { note.remove(); }, 4000);
         }
 
-        previewText.innerText = result;
         editInput.value = '';
         editSubmit.innerHTML = origHTML;
         editSubmit.disabled = false;
       });
     }
 
-    // ── PDF download via print dialog ───────────────────────
+    // ── PDF download ─────────────────────────────────────────
     if (downloadBtn) {
       downloadBtn.addEventListener('click', function () {
-        var content = previewText.innerText || '';
         var win = window.open('', '_blank');
+        var bodyContent = isHtmlMode
+          ? previewText.innerHTML
+          : previewText.innerText.split('\n\n').map(function (p) {
+              return '<p>' + p.replace(/\n/g, '<br>') + '</p>';
+            }).join('');
         win.document.write(
           '<!DOCTYPE html><html><head><meta charset="utf-8"><title>Překlad – Chaties AI</title>'
-          + '<style>body{font-family:Georgia,serif;font-size:12pt;line-height:1.8;padding:2.5cm 3cm;max-width:100%;color:#111}'
-          + 'h1{font-size:14pt;margin-bottom:24pt}p{margin:0 0 10pt;text-align:justify}'
-          + '@media print{body{padding:2cm 2.5cm}}</style></head><body>'
-          + '<h1>Překlad dokumentu</h1>'
-          + content.split('\n\n').map(function (p) {
-              return '<p>' + p.replace(/\n/g, '<br>') + '</p>';
-            }).join('')
-          + '</body></html>'
+          + '<style>body{font-family:Arial,sans-serif;font-size:11pt;line-height:1.7;padding:2cm 2.5cm;color:#111}'
+          + 'table{width:100%;border-collapse:collapse;margin:12pt 0}'
+          + 'td,th{border:1px solid #999;padding:5pt 8pt;text-align:left}'
+          + 'th{background:#eee;font-weight:700}'
+          + 'p{margin:0 0 8pt}ul,ol{margin:0 0 8pt;padding-left:18pt}'
+          + 'h1,h2,h3{margin:14pt 0 6pt}'
+          + '@media print{body{padding:1.5cm 2cm}}</style>'
+          + '</head><body>' + bodyContent + '</body></html>'
         );
         win.document.close();
         setTimeout(function () { win.focus(); win.print(); }, 400);
