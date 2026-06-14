@@ -89,7 +89,7 @@ router.post('/chat', requireAuth, async (req, res) => {
 });
 
 // Definice šablon s prompty
-const HTML_RULE = ' Výstup piš přímo jako čisté HTML (používej <h3>, <p>, <ul>, <li>, <ol>, <table>). Nepoužívej markdown, žádné ``` code bloky ani jiné obalovací značky – jen čisté HTML.';
+const HTML_RULE = ' Výstup piš přímo jako čisté HTML (používej <h3>, <p>, <ul>, <li>, <ol>, <table>). Nepoužívej markdown ani ``` code bloky. Nepoužívej žádné inline styly (style="..."), class atributy ani background-color – jen čisté HTML tagy bez atributů.';
 
 const TEMPLATE_DEFS = {
   'marketing': {
