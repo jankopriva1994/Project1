@@ -1872,8 +1872,13 @@
       try {
         var sub = await apiFetch('/api/user/subscription');
         if (sub && sub.current_period_end) {
-          var dateStr   = fmtDate(sub.current_period_end).replace('\n', '<br>');
-          var renewStr  = daysUntil(sub.current_period_end);
+          var isTrialing = sub.status === 'trialing';
+          var dateStr    = fmtDate(sub.current_period_end).replace('\n', '<br>');
+          var renewStr   = isTrialing
+            ? 'První platba za ' + daysUntil(sub.current_period_end)
+            : daysUntil(sub.current_period_end);
+          var periodLabel = isTrialing ? 'Zkušební období do:' : 'Členství aktivní do:';
+
           ['adm-dash-period-end', 'adm-sub-period-end'].forEach(function (id) {
             var el = document.getElementById(id);
             if (el) el.innerHTML = dateStr;
@@ -1882,6 +1887,21 @@
             var el = document.getElementById(id);
             if (el) el.textContent = renewStr;
           });
+          // Update "Členství aktivní do" labels during trial
+          if (isTrialing) {
+            document.querySelectorAll('.adm-stat-label, .adm-sub-info-label').forEach(function (el) {
+              if (el.textContent.trim() === 'Členství aktivní do:') el.textContent = periodLabel;
+              if (el.textContent.trim() === 'Bude prodlouženo:') el.textContent = 'První platba:';
+            });
+            // Show trial badge on subscription panel
+            var subPanel = document.getElementById('adm-tab-subscription');
+            if (subPanel) {
+              var badge = document.createElement('div');
+              badge.style.cssText = 'background:#d0ee5220;border:1px solid #d0ee52;border-radius:8px;padding:12px 18px;margin-bottom:20px;color:#d0ee52;font-size:14px;font-family:Supreme,sans-serif;';
+              badge.innerHTML = '🎁 <strong>Zkušební období</strong> – 5 dní zdarma. Platební karta bude stržena až po uplynutí zkušební doby. Zrušit lze kdykoliv.';
+              subPanel.insertBefore(badge, subPanel.firstChild);
+            }
+          }
         }
       } catch (e) { console.warn('Subscription load failed', e); }
 
@@ -1901,7 +1921,7 @@
       // Handle ?payment=success / ?payment=cancelled from Stripe redirect
       var params = new URLSearchParams(window.location.search);
       if (params.get('payment') === 'success') {
-        alert('Platba proběhla úspěšně! Tokeny byly připsány na váš účet.');
+        alert('Skvěle! Vaše zkušební období 5 dní začíná. Na účtu máte 5 000 tokenů zdarma. Platební karta bude stržena až 6. den.');
         history.replaceState({}, '', 'administrace.html');
       }
 

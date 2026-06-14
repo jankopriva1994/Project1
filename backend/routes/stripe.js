@@ -74,6 +74,7 @@ router.post('/create-checkout', requireAuth, async (req, res) => {
       payment_method_types: ['card'],
       line_items: [{ price: priceId, quantity: 1 }],
       mode: 'subscription',
+      subscription_data: { trial_period_days: 5 },
       success_url: `${process.env.FRONTEND_URL}/administrace.html?payment=success`,
       cancel_url:  `${process.env.FRONTEND_URL}/administrace.html?payment=cancelled`,
       metadata: { supabase_id: req.user.id }
@@ -126,6 +127,59 @@ router.post('/webhook', express.raw({ type: 'application/json' }), async (req, r
 
   try {
     switch (event.type) {
+
+      // Trial zahájeno – přidej 5 000 zkušebních tokenů
+      case 'customer.subscription.created': {
+        const sub = event.data.object;
+        if (sub.status !== 'trialing') break;
+
+        const customerId = sub.customer;
+        const priceId    = sub.items.data[0]?.price?.id;
+
+        const { data: profile } = await supabase
+          .from('profiles')
+          .select('id, tokens_balance')
+          .eq('stripe_customer_id', customerId)
+          .single();
+
+        if (!profile) break;
+
+        const TRIAL_TOKENS = 5000;
+        const planName     = getPlanName(priceId);
+        const trialEnd     = sub.trial_end
+          ? new Date(sub.trial_end * 1000).toISOString()
+          : new Date(sub.current_period_end * 1000).toISOString();
+
+        await supabase
+          .from('profiles')
+          .update({ tokens_balance: (profile.tokens_balance || 0) + TRIAL_TOKENS, plan: planName })
+          .eq('id', profile.id);
+
+        await supabase.from('token_transactions').insert({
+          user_id:     profile.id,
+          amount:      TRIAL_TOKENS,
+          type:        'trial',
+          description: `Zkušební období 5 dní – ${TRIAL_TOKENS.toLocaleString()} tokenů zdarma`
+        });
+
+        await supabase
+          .from('subscriptions')
+          .upsert({
+            user_id:                profile.id,
+            stripe_customer_id:     customerId,
+            stripe_subscription_id: sub.id,
+            stripe_price_id:        priceId,
+            plan_name:              planName,
+            status:                 'trialing',
+            tokens_per_period:      getTokensForPrice(priceId),
+            current_period_start:   new Date(sub.current_period_start * 1000).toISOString(),
+            current_period_end:     trialEnd,
+            updated_at:             new Date().toISOString()
+          }, { onConflict: 'stripe_subscription_id' });
+
+        console.log(`🎁 Trial zahájeno: ${planName} pro ${profile.id}, +${TRIAL_TOKENS} tokenů`);
+        break;
+      }
 
       // Nové předplatné nebo obnova
       case 'invoice.payment_succeeded': {
