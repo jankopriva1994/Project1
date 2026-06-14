@@ -866,12 +866,16 @@
   <script>
   (function () {
     // Panel switching
+    var navAliases = { 'docs-translate': 'docs', 'docs-create': 'docs', 'tmpl-detail': 'templates' };
+
     function showPanel(panelId) {
       document.querySelectorAll('.adm-panel').forEach(function (p) {
         p.classList.remove('adm-panel-active');
       });
       var target = document.querySelector('.adm-panel-' + panelId);
       if (target) target.classList.add('adm-panel-active');
+      // Ulož aktuální panel do sessionStorage
+      sessionStorage.setItem('adm_panel', panelId);
     }
 
     function setNavActive(el) {
@@ -881,32 +885,39 @@
       if (el) el.classList.add('adm-nav-active');
     }
 
+    function navigateTo(panelId) {
+      showPanel(panelId);
+      var navKey = navAliases[panelId] || panelId;
+      var navEl = document.querySelector('.adm-nav-item[data-panel="' + navKey + '"]');
+      setNavActive(navEl || null);
+    }
+
+    // Obnov panel po refreshi
+    (function restorePanel() {
+      var saved = sessionStorage.getItem('adm_panel');
+      if (saved && saved !== 'dashboard') {
+        navigateTo(saved);
+      }
+    })();
+
     // Nav item clicks
     document.querySelectorAll('[data-panel]').forEach(function (el) {
       el.addEventListener('click', function (e) {
         e.preventDefault();
         var panelId = el.getAttribute('data-panel');
         showPanel(panelId);
-        // Update active nav (only for sidebar nav items)
         if (el.classList.contains('adm-nav-item')) {
           setNavActive(el);
         } else {
-          // Clear nav active when non-nav element triggers panel (e.g. account link)
           setNavActive(null);
         }
       });
     });
 
     // Cross-panel CTA buttons (data-goto-panel)
-    var navAliases = { 'docs-translate': 'docs', 'docs-create': 'docs', 'tmpl-detail': 'templates' };
     document.querySelectorAll('[data-goto-panel]').forEach(function (btn) {
       btn.addEventListener('click', function () {
-        var panelId = btn.getAttribute('data-goto-panel');
-        showPanel(panelId);
-        // Update sidebar nav active state (resolve aliases)
-        var navKey = navAliases[panelId] || panelId;
-        var navEl = document.querySelector('.adm-nav-item[data-panel="' + navKey + '"]');
-        setNavActive(navEl || null);
+        navigateTo(btn.getAttribute('data-goto-panel'));
       });
     });
 
