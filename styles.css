@@ -2733,8 +2733,9 @@ body {
 .reg-input-phone   { left: 1139px; top: 579px; width: 284px; }
 .reg-input-pass    { left: 1039px; top: 633px; width: 384px; }
 .reg-input-pass2   { left: 1039px; top: 687px; width: 384px; }
-.reg-checkbox      { left: 1039px; top: 753px; }
-.reg-btn           { left: 1039px; top: 815px; }
+.reg-pass-hint     { position:absolute; left:1039px; top:742px; font-size:12px; color:#888; font-family:Supreme,sans-serif; margin:0; }
+.reg-checkbox      { left: 1039px; top: 766px; }
+.reg-btn           { left: 1039px; top: 828px; }
 .reg-divider       { left: 1039px; top: 882px; }
 .reg-social-google { left: 1039px; top: 920px; }
 .reg-social-apple  { left: 1237px; top: 920px; }
