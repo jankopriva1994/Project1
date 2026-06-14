@@ -33,6 +33,7 @@ app.use('/api/ai',     require('./routes/ai'));
 app.use('/api/stripe', require('./routes/stripe'));
 app.use('/api/admin',   require('./routes/admin'));
 app.use('/api/blog',    require('./routes/blog'));
+app.use('/api/content', require('./routes/content'));
 app.use('/api/contact', require('./routes/contact'));
 
 // 404
