@@ -1915,6 +1915,150 @@ body {
 .ceny-page .footer-copyright          { top: 2479px; left: 228px; }
 .ceny-page .footer-privacy            { top: 2479px; left: 1138px; }
 
+/* ===================== KONTAKT PAGE ===================== */
+.kontakt-page { min-height: 1100px; }
+
+.ktk-heading {
+  position: absolute;
+  left: 228px;
+  top: 195px;
+  font-size: 48px;
+  font-weight: 700;
+  line-height: 1.18;
+  color: #ffffff;
+  font-family: 'Supreme', sans-serif;
+}
+
+.ktk-support-label {
+  position: absolute;
+  left: 228px;
+  top: 445px;
+  font-size: 18px;
+  font-weight: 700;
+  color: #d0ee52;
+  font-family: 'Supreme', sans-serif;
+}
+
+.ktk-support-row {
+  position: absolute;
+  left: 228px;
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  font-size: 16px;
+  color: #ffffff;
+  font-family: 'Supreme', sans-serif;
+}
+.ktk-support-row a { color: #ffffff; text-decoration: none; }
+.ktk-support-row a:hover { color: #d0ee52; }
+
+.ktk-support-email { top: 490px; }
+.ktk-support-phone { top: 530px; }
+.ktk-support-hours { top: 570px; }
+
+/* Form box */
+.ktk-form-box {
+  position: absolute;
+  left: 700px;
+  top: 175px;
+  width: 580px;
+}
+
+.ktk-input {
+  display: block;
+  width: 100%;
+  background: #1e1e1e;
+  border: 1px solid #2e2e2e;
+  border-radius: 8px;
+  color: #ffffff;
+  font-size: 16px;
+  font-family: 'Supreme', sans-serif;
+  padding: 14px 18px;
+  margin-bottom: 14px;
+  outline: none;
+  transition: border-color .2s;
+}
+.ktk-input:focus { border-color: #d0ee52; }
+.ktk-input::placeholder { color: #555; }
+
+.ktk-textarea {
+  display: block;
+  width: 100%;
+  background: #1e1e1e;
+  border: 1px solid #2e2e2e;
+  border-radius: 8px;
+  color: #ffffff;
+  font-size: 16px;
+  font-family: 'Supreme', sans-serif;
+  padding: 14px 18px;
+  min-height: 130px;
+  resize: vertical;
+  outline: none;
+  transition: border-color .2s;
+  margin-bottom: 14px;
+}
+.ktk-textarea:focus { border-color: #d0ee52; }
+.ktk-textarea::placeholder { color: #555; }
+
+.ktk-submit {
+  display: block;
+  margin-left: auto;
+  background: #d0ee52;
+  color: #000000;
+  border: none;
+  border-radius: 8px;
+  font-size: 16px;
+  font-weight: 700;
+  font-family: 'Supreme', sans-serif;
+  padding: 14px 32px;
+  cursor: pointer;
+  transition: background .2s;
+}
+.ktk-submit:hover { background: #c0de42; }
+.ktk-submit:disabled { opacity: .6; cursor: not-allowed; }
+
+.ktk-msg {
+  margin-top: 10px;
+  font-size: 14px;
+  text-align: right;
+  min-height: 20px;
+  font-family: 'Supreme', sans-serif;
+}
+
+/* Wave */
+.ktk-wave {
+  position: absolute;
+  left: 0;
+  top: 670px;
+  width: 1680px;
+  object-fit: cover;
+  pointer-events: none;
+  opacity: .7;
+}
+
+/* Footer overrides – kontakt page */
+.kontakt-page .footer-logo               { top: 1010px; left: 228px; }
+.kontakt-page .footer-desc               { top: 1074px; left: 228px; }
+.kontakt-page .footer-col-services-header { top: 1010px; left: 744px; }
+.kontakt-page .footer-col-services-link1  { top: 1047px; left: 744px; }
+.kontakt-page .footer-col-services-link2  { top: 1083px; left: 744px; }
+.kontakt-page .footer-col-services-link3  { top: 1119px; left: 744px; }
+.kontakt-page .footer-col-services-link4  { top: 1155px; left: 744px; }
+.kontakt-page .footer-col-info-header    { top: 1010px; left: 951px; }
+.kontakt-page .footer-col-info-link1     { top: 1047px; left: 951px; }
+.kontakt-page .footer-col-info-link2     { top: 1083px; left: 951px; }
+.kontakt-page .footer-col-info-link3     { top: 1119px; left: 951px; }
+.kontakt-page .footer-col-info-link4     { top: 1155px; left: 951px; }
+.kontakt-page .footer-col-support-header { top: 1010px; left: 1191px; }
+.kontakt-page .footer-col-support-link1  { top: 1047px; left: 1191px; }
+.kontakt-page .footer-col-support-link2  { top: 1083px; left: 1191px; }
+.kontakt-page .footer-col-support-link3  { top: 1119px; left: 1191px; }
+.kontakt-page .social-link-insta         { top: 1202px; left: 228px; }
+.kontakt-page .social-link-fb            { top: 1202px; left: 337px; }
+.kontakt-page .footer-line               { top: 1266px; left: 228px; width: 1224px; }
+.kontakt-page .footer-copyright          { top: 1297px; left: 228px; }
+.kontakt-page .footer-privacy            { top: 1297px; left: 1138px; }
+
 /* ===================== SABLONY PAGE ===================== */
 .sablony-page {
   min-height: 2641px;

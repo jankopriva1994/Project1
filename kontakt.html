@@ -1,0 +1,174 @@
+<!DOCTYPE html>
+<html lang="cs">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Kontakt – Chaties AI</title>
+  <link rel="stylesheet" href="styles.css?v=80" />
+</head>
+<body>
+  <div class="page kontakt-page">
+
+    <!-- ==================== NAVBAR ==================== -->
+    <svg class="nav-logo" viewBox="0 0 180 49" fill="none" xmlns="http://www.w3.org/2000/svg">
+      <circle cx="35.6" cy="16.9" r="3.34" fill="#c8e641"/>
+      <circle cx="19.5" cy="16.9" r="3.34" fill="#c8e641"/>
+      <rect x="11" y="23.1" width="26.2" height="10.9" rx="5.5" fill="#c8e641"/>
+      <polygon points="21.1,34 21.1,37.7 26.4,34" fill="#c8e641"/>
+      <circle cx="16.76" cy="30.9" r="2.34" fill="white"/>
+      <circle cx="24.25" cy="30.9" r="2.34" fill="white"/>
+      <circle cx="31.73" cy="30.9" r="2.34" fill="white"/>
+      <text x="48" y="37" font-family="Supreme, Arial, sans-serif" font-size="28" font-weight="500" fill="white" letter-spacing="-0.7">chaties</text>
+    </svg>
+
+    <div class="nav-ai-wrap">
+      <a href="index.html" class="nav-link-active">AI služby</a>
+      <span class="nav-caret">▾</span>
+      <div class="nav-dropdown">
+        <a href="sablony.html" class="nav-dropdown-item">Šablony</a>
+        <a href="#" class="nav-dropdown-item">Generování obrázků</a>
+        <a href="#" class="nav-dropdown-item">Chat</a>
+        <a href="#" class="nav-dropdown-item">Překladač</a>
+        <a href="#" class="nav-dropdown-item">Dokumenty</a>
+      </div>
+    </div>
+    <a href="ceny.html" class="nav-link-ceny">Ceny</a>
+    <a href="onas.html" class="nav-link-onas">O nás</a>
+    <a href="#" class="nav-link-recenze">Recenze</a>
+    <a href="blog.html" class="nav-link-vseai">Vše o AI</a>
+    <a href="kontakt.html" class="nav-link-kontakt" style="color:#d0ee52">Kontakt</a>
+
+    <a href="registrace.html" class="nav-cta">Vyzkoušej <span class="accent" style="margin-left:4px;">Chaties</span>&nbsp;zdarma</a>
+
+    <div class="nav-separator"></div>
+
+    <!-- ==================== KONTAKT CONTENT ==================== -->
+
+    <h1 class="ktk-heading">
+      <span class="accent">Máte dotazy</span> nebo<br>
+      potřebujete poradit<br>
+      s chaties?
+    </h1>
+
+    <!-- Zákaznická podpora -->
+    <p class="ktk-support-label">Zákaznická podpora</p>
+
+    <div class="ktk-support-row ktk-support-email">
+      <svg width="20" height="20" viewBox="0 0 24 24" fill="none"><rect x="2" y="4" width="20" height="16" rx="2" stroke="#d0ee52" stroke-width="1.5"/><path d="M2 7l10 7 10-7" stroke="#d0ee52" stroke-width="1.5" stroke-linecap="round"/></svg>
+      <a href="mailto:info@chaties.cz">info@chaties.cz</a>
+    </div>
+    <div class="ktk-support-row ktk-support-phone">
+      <svg width="20" height="20" viewBox="0 0 24 24" fill="none"><path d="M6.6 10.8c1.4 2.8 3.8 5.1 6.6 6.6l2.2-2.2c.3-.3.7-.4 1-.2 1.1.4 2.3.6 3.6.6.6 0 1 .4 1 1V20c0 .6-.4 1-1 1-9.4 0-17-7.6-17-17 0-.6.4-1 1-1h3.5c.6 0 1 .4 1 1 0 1.3.2 2.5.6 3.6.1.3 0 .7-.2 1L6.6 10.8z" stroke="#d0ee52" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg>
+      <a href="tel:+420111222333">+420 111 222 333</a>
+    </div>
+    <div class="ktk-support-row ktk-support-hours">
+      <svg width="20" height="20" viewBox="0 0 24 24" fill="none"><circle cx="12" cy="12" r="9" stroke="#d0ee52" stroke-width="1.5"/><path d="M12 7v5l3 3" stroke="#d0ee52" stroke-width="1.5" stroke-linecap="round"/></svg>
+      <span>Po - Pá (9-17h)</span>
+    </div>
+
+    <!-- Kontaktní formulář -->
+    <div class="ktk-form-box">
+      <input  class="ktk-input ktk-input-name"    type="text"  placeholder="Jméno a příjmení" />
+      <input  class="ktk-input ktk-input-email"   type="email" placeholder="E-mailová adresa" />
+      <input  class="ktk-input ktk-input-subject" type="text"  placeholder="Předmět" />
+      <textarea class="ktk-textarea"              placeholder="Vaše zpráva"></textarea>
+      <button class="ktk-submit" id="ktk-submit">Odeslat zprávu</button>
+      <p class="ktk-msg" id="ktk-msg"></p>
+    </div>
+
+    <!-- Wave image -->
+    <img class="ktk-wave" src="https://www.figma.com/api/mcp/asset/b9ea9e29-5542-4379-8d24-49d9283530c0" alt="" />
+
+    <!-- ==================== FOOTER ==================== -->
+    <svg class="footer-logo" viewBox="0 0 180 49" fill="none" xmlns="http://www.w3.org/2000/svg">
+      <circle cx="35.6" cy="16.9" r="3.34" fill="#c8e641"/>
+      <circle cx="19.5" cy="16.9" r="3.34" fill="#c8e641"/>
+      <rect x="11" y="23.1" width="26.2" height="10.9" rx="5.5" fill="#c8e641"/>
+      <polygon points="21.1,34 21.1,37.7 26.4,34" fill="#c8e641"/>
+      <circle cx="16.76" cy="30.9" r="2.34" fill="white"/>
+      <circle cx="24.25" cy="30.9" r="2.34" fill="white"/>
+      <circle cx="31.73" cy="30.9" r="2.34" fill="white"/>
+      <text x="48" y="37" font-family="Supreme, Arial, sans-serif" font-size="28" font-weight="500" fill="white" letter-spacing="-0.7">chaties</text>
+    </svg>
+    <p class="footer-desc"><span class="accent">Chaties.cz</span> patří mezi špičku v AI službách v Česku. Pomáháme firmám růst díky chytrým technologiím, které šetří čas, zvyšují efektivitu a snižují náklady.</p>
+
+    <span class="footer-col-services-header">Služby</span>
+    <a href="#" class="footer-col-services-link1">Generování obrázků</a>
+    <a href="#" class="footer-col-services-link2">AI Překladač</a>
+    <a href="#" class="footer-col-services-link3">Překlady dokumentů</a>
+    <a href="#" class="footer-col-services-link4">AI Chat</a>
+
+    <span class="footer-col-info-header">Důležité informace</span>
+    <a href="onas.html" class="footer-col-info-link1">O nás</a>
+    <a href="kontakt.html" class="footer-col-info-link2">Kontakt</a>
+    <a href="obchodni-podminky.html" class="footer-col-info-link3">Obchodní podmínky</a>
+    <a href="blog.html" class="footer-col-info-link4">Blog</a>
+
+    <span class="footer-col-support-header">Podpora</span>
+    <a href="mailto:marketing@chaties.cz" class="footer-col-support-link1">marketing@chaties.cz</a>
+    <a href="mailto:podpora@chaties.cz" class="footer-col-support-link2">podpora@chaties.cz</a>
+    <a href="tel:+420734832919" class="footer-col-support-link3">+420 734 832 919</a>
+
+    <a href="#" class="social-link-insta">
+      <svg class="social-icon-insta" width="20" height="20" viewBox="0 0 24 24" fill="none"><rect x="2" y="2" width="20" height="20" rx="5" stroke="white" stroke-width="1.5"/><circle cx="12" cy="12" r="4" stroke="white" stroke-width="1.5"/><circle cx="17.5" cy="6.5" r="1.2" fill="white"/></svg>
+      <span class="social-text-insta">Instagram</span>
+    </a>
+    <a href="#" class="social-link-fb">
+      <svg class="social-icon-fb" width="20" height="20" viewBox="0 0 24 24" fill="none"><rect x="2" y="2" width="20" height="20" rx="5" stroke="white" stroke-width="1.5"/><path d="M13 8h2V6h-2a3 3 0 0 0-3 3v1H8v2h2v6h2v-6h2l.5-2H12V9a1 1 0 0 1 1-1z" fill="white"/></svg>
+      <span class="social-text-fb">Facebook</span>
+    </a>
+
+    <div class="footer-line"></div>
+    <span class="footer-copyright">© 2025 Chaties AI software. All rights reserved</span>
+    <a href="#" class="footer-privacy">Zásady ochrany osobních údajů</a>
+
+  </div><!-- /.page -->
+
+  <script>
+  (function () {
+    var btn  = document.getElementById('ktk-submit');
+    var msg  = document.getElementById('ktk-msg');
+
+    btn.addEventListener('click', async function () {
+      var name    = document.querySelector('.ktk-input-name').value.trim();
+      var email   = document.querySelector('.ktk-input-email').value.trim();
+      var subject = document.querySelector('.ktk-input-subject').value.trim();
+      var body    = document.querySelector('.ktk-textarea').value.trim();
+
+      if (!name || !email || !body) {
+        msg.style.color = '#ff5555';
+        msg.textContent = 'Vyplňte prosím jméno, e-mail a zprávu.';
+        return;
+      }
+
+      btn.textContent = 'Odesílám…';
+      btn.disabled = true;
+
+      try {
+        var res = await fetch('https://project1-production-bfde.up.railway.app/api/contact', {
+          method: 'POST',
+          headers: { 'Content-Type': 'application/json' },
+          body: JSON.stringify({ name, email, subject, message: body })
+        });
+        if (res.ok) {
+          msg.style.color = '#d0ee52';
+          msg.textContent = 'Zpráva byla odeslána. Brzy se vám ozveme!';
+          document.querySelector('.ktk-input-name').value = '';
+          document.querySelector('.ktk-input-email').value = '';
+          document.querySelector('.ktk-input-subject').value = '';
+          document.querySelector('.ktk-textarea').value = '';
+        } else {
+          throw new Error();
+        }
+      } catch (e) {
+        msg.style.color = '#ff5555';
+        msg.textContent = 'Odeslání se nezdařilo. Napište nám na info@chaties.cz';
+      }
+
+      btn.textContent = 'Odeslat zprávu';
+      btn.disabled = false;
+    });
+  })();
+  </script>
+</body>
+</html>
