@@ -146,6 +146,10 @@ body {
 }
 
 .nav-link-recenze {
+  display: none;
+}
+
+.nav-link-vseai {
   position: absolute;
   left: 798px;
   top: 69px;
@@ -155,19 +159,9 @@ body {
   font-family: 'Supreme', sans-serif;
 }
 
-.nav-link-vseai {
-  position: absolute;
-  left: 897px;
-  top: 69px;
-  font-size: 16px;
-  color: #ffffff;
-  text-decoration: none;
-  font-family: 'Supreme', sans-serif;
-}
-
 .nav-link-kontakt {
   position: absolute;
-  left: 995px;
+  left: 896px;
   top: 69px;
   font-size: 16px;
   color: #ffffff;
@@ -1914,6 +1908,174 @@ body {
 .ceny-page .footer-line               { top: 2448px; left: 228px; width: 1224px; }
 .ceny-page .footer-copyright          { top: 2479px; left: 228px; }
 .ceny-page .footer-privacy            { top: 2479px; left: 1138px; }
+
+/* ===================== O NÁS PAGE ===================== */
+.onas-page { min-height: 1450px; }
+
+.onas-heading {
+  position: absolute;
+  left: 228px;
+  top: 195px;
+  font-size: 46px;
+  font-weight: 700;
+  line-height: 1.2;
+  color: #ffffff;
+  font-family: 'Supreme', sans-serif;
+}
+
+.onas-text {
+  position: absolute;
+  left: 228px;
+  top: 358px;
+  width: 420px;
+  font-size: 15px;
+  line-height: 1.65;
+  color: #bbbbbb;
+  font-family: 'Supreme', sans-serif;
+}
+
+/* Avatar */
+.onas-avatar {
+  position: absolute;
+  left: 700px;
+  top: 180px;
+  width: 220px;
+  height: 220px;
+  object-fit: contain;
+}
+
+.onas-avatar-placeholder {
+  position: absolute;
+  left: 700px;
+  top: 180px;
+  width: 220px;
+  height: 220px;
+  background: #1a1a1a;
+  border-radius: 50%;
+  display: none;
+  align-items: center;
+  justify-content: center;
+}
+
+.onas-avatar-label {
+  position: absolute;
+  left: 786px;
+  top: 408px;
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  font-size: 15px;
+  color: #ffffff;
+  font-family: 'Supreme', sans-serif;
+}
+
+.onas-avatar-line {
+  width: 30px;
+  height: 1px;
+  background: #d0ee52;
+}
+
+/* Values */
+.onas-value {
+  position: absolute;
+  display: flex;
+  align-items: flex-start;
+  gap: 16px;
+  width: 310px;
+  top: 530px;
+}
+
+.onas-value-1 { left: 228px; }
+.onas-value-2 { left: 570px; }
+.onas-value-3 { left: 912px; }
+
+.onas-value-icon {
+  flex-shrink: 0;
+  margin-top: 4px;
+}
+
+.onas-value-title {
+  font-size: 20px;
+  font-weight: 700;
+  color: #d0ee52;
+  font-family: 'Supreme', sans-serif;
+  margin-bottom: 12px;
+  line-height: 1.25;
+}
+
+.onas-value-desc {
+  font-size: 14px;
+  line-height: 1.6;
+  color: #aaaaaa;
+  font-family: 'Supreme', sans-serif;
+}
+
+/* Partners */
+.onas-partners-heading {
+  position: absolute;
+  left: 0;
+  right: 0;
+  top: 810px;
+  text-align: center;
+  font-size: 38px;
+  font-weight: 700;
+  color: #ffffff;
+  font-family: 'Supreme', sans-serif;
+}
+
+.onas-partners-row {
+  position: absolute;
+  left: 228px;
+  top: 895px;
+  width: 1224px;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+}
+
+.onas-partner-logo {
+  font-size: 16px;
+  color: #aaaaaa;
+  font-family: 'Supreme', sans-serif;
+  line-height: 1.2;
+  text-align: center;
+  display: flex;
+  align-items: center;
+}
+
+/* Wave */
+.onas-wave {
+  position: absolute;
+  left: 0;
+  top: 1000px;
+  width: 1680px;
+  object-fit: cover;
+  pointer-events: none;
+  opacity: .7;
+}
+
+/* Footer overrides – onas page */
+.onas-page .footer-logo               { top: 1160px; left: 228px; }
+.onas-page .footer-desc               { top: 1224px; left: 228px; }
+.onas-page .footer-col-services-header { top: 1160px; left: 744px; }
+.onas-page .footer-col-services-link1  { top: 1197px; left: 744px; }
+.onas-page .footer-col-services-link2  { top: 1233px; left: 744px; }
+.onas-page .footer-col-services-link3  { top: 1269px; left: 744px; }
+.onas-page .footer-col-services-link4  { top: 1305px; left: 744px; }
+.onas-page .footer-col-info-header    { top: 1160px; left: 951px; }
+.onas-page .footer-col-info-link1     { top: 1197px; left: 951px; }
+.onas-page .footer-col-info-link2     { top: 1233px; left: 951px; }
+.onas-page .footer-col-info-link3     { top: 1269px; left: 951px; }
+.onas-page .footer-col-info-link4     { top: 1305px; left: 951px; }
+.onas-page .footer-col-support-header { top: 1160px; left: 1191px; }
+.onas-page .footer-col-support-link1  { top: 1197px; left: 1191px; }
+.onas-page .footer-col-support-link2  { top: 1233px; left: 1191px; }
+.onas-page .footer-col-support-link3  { top: 1269px; left: 1191px; }
+.onas-page .social-link-insta         { top: 1352px; left: 228px; }
+.onas-page .social-link-fb            { top: 1352px; left: 337px; }
+.onas-page .footer-line               { top: 1416px; left: 228px; width: 1224px; }
+.onas-page .footer-copyright          { top: 1447px; left: 228px; }
+.onas-page .footer-privacy            { top: 1447px; left: 1138px; }
 
 /* ===================== KONTAKT PAGE ===================== */
 .kontakt-page { min-height: 1100px; }
