@@ -181,9 +181,10 @@ router.post('/webhook', express.raw({ type: 'application/json' }), async (req, r
         break;
       }
 
-      // Nové předplatné nebo obnova
+      // Nové předplatné nebo obnova (přeskočí $0 trial faktury)
       case 'invoice.payment_succeeded': {
         const invoice = event.data.object;
+        if ((invoice.amount_paid || 0) === 0) break; // trial invoice – already handled in subscription.created
         const customerId = invoice.customer;
         const priceId    = invoice.lines.data[0]?.price?.id;
         const subId      = invoice.subscription;
