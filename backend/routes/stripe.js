@@ -30,8 +30,20 @@ function getPlanName(priceId) {
 // ── POST /api/stripe/create-checkout ──────────────────────────
 // Vytvoří Stripe Checkout session a vrátí URL
 router.post('/create-checkout', requireAuth, async (req, res) => {
-  const { priceId } = req.body;
-  if (!priceId) return res.status(400).json({ error: 'Chybí priceId' });
+  let { priceId, plan } = req.body;
+
+  // Podpora přes název plánu
+  if (!priceId && plan) {
+    const planMap = {
+      starter:    process.env.STRIPE_PRICE_STARTER,
+      popular:    process.env.STRIPE_PRICE_POPULAR,
+      pro:        process.env.STRIPE_PRICE_PRO,
+      enterprise: process.env.STRIPE_PRICE_ENTERPRISE,
+    };
+    priceId = planMap[plan];
+  }
+
+  if (!priceId) return res.status(400).json({ error: 'Chybí priceId nebo plan' });
 
   try {
     // Najdi nebo vytvoř Stripe customer

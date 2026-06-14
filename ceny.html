@@ -97,10 +97,10 @@
     <p class="ceny-plan-note ceny-plan-note-p4" data-monthly="1.430 Kč měsíčně, při roční platbě." data-annual="1.430 Kč měsíčně, při roční platbě.">1.430 Kč měsíčně, při roční platbě.</p>
 
     <!-- CTA buttons -->
-    <a href="#" class="ceny-plan-cta ceny-plan-cta-p1">Chci to zkusit!</a>
-    <a href="#" class="ceny-plan-cta ceny-plan-cta-p2">Chci to zkusit!</a>
-    <a href="#" class="ceny-plan-cta ceny-plan-cta-p3">Chci to zkusit!</a>
-    <a href="#" class="ceny-plan-cta ceny-plan-cta-p4">Chci to zkusit!</a>
+    <button class="ceny-plan-cta ceny-plan-cta-p1" data-plan="starter">Chci to zkusit!</button>
+    <button class="ceny-plan-cta ceny-plan-cta-p2" data-plan="popular">Chci to zkusit!</button>
+    <button class="ceny-plan-cta ceny-plan-cta-p3" data-plan="pro">Chci to zkusit!</button>
+    <button class="ceny-plan-cta ceny-plan-cta-p4" data-plan="enterprise">Chci to zkusit!</button>
 
     <!-- ==================== FEATURES – PLAN 1 (11 rows) ==================== -->
     <span class="ceny-fi ceny-fip1 ceny-ir1"></span><span class="ceny-ft ceny-ftp1 ceny-fr1">Až <span class="accent">20</span> normostran textu</span>
@@ -209,6 +209,34 @@
     <a href="#" class="footer-privacy">Zásady ochrany osobních údajů</a>
 
   </div><!-- /.page -->
+  <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2/dist/umd/supabase.min.js"></script>
+  <script src="js/chaties.js"></script>
+  <script>
+    // Stripe checkout
+    document.querySelectorAll('[data-plan]').forEach(function (btn) {
+      btn.addEventListener('click', async function () {
+        const plan = this.dataset.plan;
+        const user = await getUser();
+        if (!user) { window.location.href = 'registrace.html'; return; }
+
+        const orig = this.textContent;
+        this.textContent = 'Načítám…';
+        this.disabled = true;
+
+        try {
+          const data = await apiFetch('/api/stripe/create-checkout', {
+            method: 'POST',
+            body: JSON.stringify({ plan })
+          });
+          window.location.href = data.url;
+        } catch (e) {
+          alert('Chyba při vytváření platby. Zkuste to znovu.');
+          this.textContent = orig;
+          this.disabled = false;
+        }
+      });
+    });
+  </script>
   <script>
     var toggle = document.querySelector('.ceny-toggle');
     var amounts = document.querySelectorAll('.ceny-price-amount');
