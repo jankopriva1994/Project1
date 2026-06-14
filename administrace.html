@@ -1599,14 +1599,9 @@
       });
     }
 
-    window.renderTemplateCards = function (templates) {
-      if (!templates || !templates.length) {
-        var c = document.getElementById('adm-tmpl-cards-dynamic');
-        if (c) c.innerHTML = '<p style="color:#555;font-size:14px">Žádné šablony k dispozici.</p>';
-        var r = document.getElementById('adm-tmpl-filter-row');
-        if (r) r.innerHTML = '';
-        return;
-      }
+    window.renderTemplateCards = function (templates, apiCategories) {
+      templates = templates || [];
+      apiCategories = apiCategories || [];
 
       // Register all templates
       _allTemplates = templates;
@@ -1614,12 +1609,20 @@
         window.TEMPLATES_DB[t.slug] = { name: t.name, sub: t.description || '', fields: t.fields || [] };
       });
 
-      // Extract unique categories in order
-      var categories = [];
+      // Build category list: first from API categories table (in order), then any extra from templates
+      var categories = apiCategories.map(function (c) { return c.name; });
       templates.forEach(function (t) {
         var cat = t.category || 'Ostatní';
         if (categories.indexOf(cat) === -1) categories.push(cat);
       });
+
+      if (!categories.length) {
+        var c = document.getElementById('adm-tmpl-cards-dynamic');
+        if (c) c.innerHTML = '<p style="color:#555;font-size:14px">Zatím nejsou k dispozici žádné šablony. Vytvořte je v CMS.</p>';
+        var r = document.getElementById('adm-tmpl-filter-row');
+        if (r) r.innerHTML = '';
+        return;
+      }
 
       // Default to first category
       _activeCategory = categories[0] || null;
@@ -1628,11 +1631,17 @@
     };
 
     window.loadTemplatesFromAPI = async function () {
+      var c = document.getElementById('adm-tmpl-cards-dynamic');
+      if (c) c.innerHTML = '<div class="adm-chat-dots" style="margin:32px auto;display:flex;justify-content:center"><span></span><span></span><span></span></div>';
       try {
-        var data = await apiFetch('/api/ai/templates');
-        window.renderTemplateCards(data);
+        var results = await Promise.all([
+          apiFetch('/api/ai/categories').catch(function () { return []; }),
+          apiFetch('/api/ai/templates').catch(function () { return []; })
+        ]);
+        var cats = results[0];
+        var templates = results[1];
+        window.renderTemplateCards(templates, cats);
       } catch (e) {
-        var c = document.getElementById('adm-tmpl-cards-dynamic');
         if (c) c.innerHTML = '<p style="color:#ff5555;font-size:14px">Nepodařilo se načíst šablony.</p>';
       }
     };
@@ -1729,10 +1738,14 @@
           });
           if (outputEl) {
             outputEl.innerHTML = '<div class="adm-tmpl-output-content">' + (data.html || data.content || '') + '</div>';
-            outputEl.querySelectorAll('[style],[bgcolor],[color]').forEach(function (el) {
+            // Odstraň <style> bloky
+            outputEl.querySelectorAll('style').forEach(function (el) { el.remove(); });
+            // Odstraň všechny atributy způsobující styling
+            outputEl.querySelectorAll('[style],[bgcolor],[color],[class]').forEach(function (el) {
               el.removeAttribute('style');
               el.removeAttribute('bgcolor');
               el.removeAttribute('color');
+              el.removeAttribute('class');
             });
           }
           updateTokenDisplay(data.tokens_remaining);

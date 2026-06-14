@@ -35,14 +35,19 @@ async function deductTokens(userId, amount, description) {
   return { ok: true };
 }
 
-// Odstraní markdown code fences a inline style/bgcolor atributy z AI výstupu
+// Odstraní markdown code fences, <style> bloky, inline styly, class a emoji z AI výstupu
 function stripMarkdownCode(text) {
   return text
     .replace(/^```(?:html|markdown|xml|)?\s*\n?/i, '')
     .replace(/\n?```\s*$/,'')
-    .replace(/\s+style="[^"]*"/gi, '')
-    .replace(/\s+bgcolor="[^"]*"/gi, '')
-    .replace(/\s+color="[^"]*"/gi, '')
+    .replace(/<style[^>]*>[\s\S]*?<\/style>/gi, '')
+    .replace(/\s+style\s*=\s*"[^"]*"/gi, '')
+    .replace(/\s+style\s*=\s*'[^']*'/gi, '')
+    .replace(/\s+class\s*=\s*"[^"]*"/gi, '')
+    .replace(/\s+class\s*=\s*'[^']*'/gi, '')
+    .replace(/\s+bgcolor\s*=\s*"[^"]*"/gi, '')
+    .replace(/\s+color\s*=\s*"[^"]*"/gi, '')
+    .replace(/[\u{1F300}-\u{1FFFF}]/gu, '')
     .trim();
 }
 
@@ -92,7 +97,7 @@ router.post('/chat', requireAuth, async (req, res) => {
 });
 
 // Definice šablon s prompty
-const HTML_RULE = ' Výstup piš přímo jako čisté HTML (používej <h3>, <p>, <ul>, <li>, <ol>, <table>). Nepoužívej markdown ani ``` code bloky. Nepoužívej žádné inline styly (style="..."), class atributy ani background-color – jen čisté HTML tagy bez atributů.';
+const HTML_RULE = ' Výstup piš přímo jako čisté HTML bez jakéhokoliv formátování. Povolené tagy: <h3>, <h4>, <p>, <ul>, <li>, <ol>, <table>, <thead>, <tbody>, <tr>, <th>, <td>, <strong>, <em>, <br>. ZAKÁZÁNO: markdown, ``` code bloky, <style> tagy, inline style="" atributy, class="" atributy, bgcolor, color atributy, emoji, ikony. Žádné atributy na tagách vůbec – jen čisté HTML tagy bez atributů.';
 
 const TEMPLATE_DEFS = {
   'marketing': {
@@ -267,6 +272,17 @@ router.get('/templates', requireAuth, async (req, res) => {
     .from('templates')
     .select('*')
     .eq('is_active', true)
+    .order('sort_order');
+
+  if (error) return res.status(500).json({ error: error.message });
+  res.json(data);
+});
+
+// ── GET /api/ai/categories ─────────────────────────────────────
+router.get('/categories', requireAuth, async (req, res) => {
+  const { data, error } = await supabase
+    .from('template_categories')
+    .select('id, name, sort_order')
     .order('sort_order');
 
   if (error) return res.status(500).json({ error: error.message });
