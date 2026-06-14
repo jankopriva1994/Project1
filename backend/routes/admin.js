@@ -4,7 +4,20 @@ const supabase = require('../lib/supabase');
 const { requireAuth } = require('../middleware/auth');
 const { requireAdmin } = require('../middleware/admin');
 
-const auth = [requireAuth, requireAdmin];
+// Admin middleware: accepts either CMS key header OR Supabase JWT + is_admin
+function adminAuth(req, res, next) {
+  const cmsKey = req.headers['x-cms-key'];
+  if (cmsKey && process.env.ADMIN_KEY && cmsKey === process.env.ADMIN_KEY) {
+    return next();
+  }
+  // Fall back to JWT + is_admin
+  requireAuth(req, res, function (err) {
+    if (err) return;
+    requireAdmin(req, res, next);
+  });
+}
+
+const auth = adminAuth;
 
 // ── TEMPLATES ──────────────────────────────────────────────
 

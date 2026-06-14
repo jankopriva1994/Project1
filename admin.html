@@ -242,11 +242,30 @@
   <script src="js/chaties.js"></script>
   <script>
     var CMS_SECRET = 'chaties2026admin';
+    var _cmsKey = null;
+
+    // Custom fetch for admin API – uses X-CMS-Key instead of Supabase JWT
+    var API_BASE = 'https://project1-production-bfde.up.railway.app';
+    function adminFetch(path, opts) {
+      opts = opts || {};
+      opts.headers = Object.assign({}, opts.headers || {}, {
+        'Content-Type': 'application/json',
+        'X-CMS-Key': _cmsKey || ''
+      });
+      return fetch(API_BASE + path, opts).then(function (r) {
+        if (!r.ok) return r.json().then(function (e) { throw new Error(e.error || r.statusText); });
+        return r.json();
+      });
+    }
+    // Override apiFetch globally for this page so existing code works
+    window.apiFetch = adminFetch;
 
     function cmsGateCheck() {
       var pw = document.getElementById('cms-gate-pw').value;
       if (pw === CMS_SECRET) {
+        _cmsKey = pw;
         sessionStorage.setItem('cms_access_ok', '1');
+        sessionStorage.setItem('cms_key', pw);
         document.getElementById('cms-gate').style.display = 'none';
         document.getElementById('cms-content').style.display = 'block';
         init();
@@ -260,6 +279,7 @@
     });
 
     if (sessionStorage.getItem('cms_access_ok') === '1') {
+      _cmsKey = sessionStorage.getItem('cms_key') || CMS_SECRET;
       document.getElementById('cms-gate').style.display = 'none';
       document.getElementById('cms-content').style.display = 'block';
     }
@@ -296,21 +316,14 @@
     makeToggle(document.getElementById('tmplActive'));
     makeToggle(document.getElementById('postPublished'));
 
-    // ── Auth guard ────────────────────────────────────────────
+    // ── Init (no Supabase login required) ─────────────────────
     async function init() {
-      const user = await getUser();
-      if (!user) { window.location.href = 'prihlaseni.html'; return; }
 
-      // Check admin
-      try {
-        await apiFetch('/api/admin/templates');
-      } catch (e) {
-        var msg = e.message || 'Neznámá chyba';
-        document.body.innerHTML = '<div style="display:flex;align-items:center;justify-content:center;height:100vh;flex-direction:column;gap:16px"><h1 style="color:#ff5555">Chyba přístupu</h1><p style="color:#aaa;font-size:14px;max-width:500px;text-align:center">' + msg + '</p><a href="administrace.html" style="color:#d0ee52">← Zpět do aplikace</a></div>';
-        return;
-      }
-
-      document.getElementById('cmsLogout').addEventListener('click', function () { logout(); });
+      document.getElementById('cmsLogout').addEventListener('click', function () {
+        sessionStorage.removeItem('cms_access_ok');
+        sessionStorage.removeItem('cms_key');
+        location.reload();
+      });
 
       loadTemplates();
       loadPosts();
