@@ -823,16 +823,7 @@
               <button class="adm-team-invite-btn">Pozvat</button>
             </div>
           </div>
-          <div class="adm-team-link-section">
-            <p class="adm-team-section-label">Pošlete odkaz s pozvánkou</p>
-            <div class="adm-team-link-wrap">
-              <input class="adm-team-link-input" id="teamInviteLink" type="text" value="www.chaties.cz/invite/AsabxykcybbaSB44" readonly />
-              <button class="adm-team-copy-btn" id="teamCopyBtn" title="Kopírovat odkaz">
-                <svg width="18" height="18" viewBox="0 0 24 24" fill="none"><rect x="9" y="9" width="13" height="13" rx="2" stroke="#8b8b8b" stroke-width="2"/><path d="M5 15H4a2 2 0 01-2-2V4a2 2 0 012-2h9a2 2 0 012 2v1" stroke="#8b8b8b" stroke-width="2" stroke-linecap="round"/></svg>
-              </button>
-              <span class="adm-team-copied" id="teamCopiedMsg">*Odkaz zkopírován</span>
-            </div>
-          </div>
+          <p class="adm-team-invite-msg" id="teamInviteMsg" style="display:none;color:#a0d060;font-size:14px;margin-top:10px"></p>
         </div>
 
         <!-- Members table -->
@@ -2003,14 +1994,15 @@
           var email = emailInput ? emailInput.value.trim() : '';
           if (!email) { alert('Zadejte e-mailovou adresu'); return; }
           inviteBtn.disabled = true; inviteBtn.textContent = 'Odesílám…';
+          var msgEl = document.getElementById('teamInviteMsg');
           try {
-            var data = await apiFetch('/api/user/team/invite', { method: 'POST', body: JSON.stringify({ email }) });
-            var linkInput = document.getElementById('teamInviteLink');
-            if (linkInput) linkInput.value = data.invite_url;
+            await apiFetch('/api/user/team/invite', { method: 'POST', body: JSON.stringify({ email }) });
             if (emailInput) emailInput.value = '';
-            alert('Pozvánka vytvořena! Zkopírujte odkaz níže a pošlete ho ' + email);
+            if (msgEl) { msgEl.textContent = 'Pozvánka byla odeslána na ' + email; msgEl.style.display = ''; setTimeout(function(){ msgEl.style.display = 'none'; }, 5000); }
             loadTeamMembers();
-          } catch(e) { alert('Chyba: ' + e.message); }
+          } catch(e) {
+            if (msgEl) { msgEl.textContent = 'Chyba: ' + e.message; msgEl.style.color = '#ff5555'; msgEl.style.display = ''; setTimeout(function(){ msgEl.style.display = 'none'; }, 5000); }
+          }
           inviteBtn.disabled = false; inviteBtn.textContent = 'Pozvat';
         });
       }

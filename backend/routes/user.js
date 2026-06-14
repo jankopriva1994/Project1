@@ -106,8 +106,36 @@ router.post('/team/invite', requireAuth, async (req, res) => {
     .select()
     .single();
   if (error) return res.status(500).json({ error: error.message });
+
   const inviteUrl = `${process.env.FRONTEND_URL}/registrace.html?invite=${token}`;
-  res.json({ invite_url: inviteUrl, member: data });
+
+  if (process.env.RESEND_API_KEY) {
+    try {
+      await fetch('https://api.resend.com/emails', {
+        method: 'POST',
+        headers: {
+          'Authorization': `Bearer ${process.env.RESEND_API_KEY}`,
+          'Content-Type': 'application/json'
+        },
+        body: JSON.stringify({
+          from: 'Chaties AI <podpora@chaties.cz>',
+          to: [email],
+          subject: 'Pozvánka do týmu na Chaties.cz',
+          html: `<p>Dobrý den,</p>
+<p>Byli jste pozváni do týmu na platformě <strong>Chaties AI</strong>.</p>
+<p>Pro přijetí pozvánky a registraci klikněte na odkaz níže:</p>
+<p><a href="${inviteUrl}" style="background:#d0ee52;color:#000;padding:12px 24px;border-radius:8px;text-decoration:none;font-weight:bold;display:inline-block;margin:8px 0">Přijmout pozvánku</a></p>
+<p style="color:#888;font-size:13px">Nebo zkopírujte tento odkaz: ${inviteUrl}</p>
+<p>Pokud jste pozvánku neočekávali, tento email ignorujte.</p>
+<p>Tým Chaties AI</p>`
+        })
+      });
+    } catch (emailErr) {
+      console.error('Email send error:', emailErr);
+    }
+  }
+
+  res.json({ success: true, member: data });
 });
 
 // DELETE /api/user/team/:id
