@@ -256,7 +256,9 @@
       try {
         await apiFetch('/api/admin/templates');
       } catch (e) {
-        document.body.innerHTML = '<div style="display:flex;align-items:center;justify-content:center;height:100vh;flex-direction:column;gap:16px"><h1 style="color:#ff5555">Přístup odepřen</h1><p style="color:#888">Tato stránka je pouze pro administrátory.</p><a href="administrace.html" style="color:#d0ee52">← Zpět do aplikace</a></div>';
+        var msg = e.message || '';
+        var isAuthErr = msg.includes('admin') || msg.includes('přihlášeni') || msg.includes('odepřen') || msg.includes('401') || msg.includes('403');
+        document.body.innerHTML = '<div style="display:flex;align-items:center;justify-content:center;height:100vh;flex-direction:column;gap:16px"><h1 style="color:#ff5555">' + (isAuthErr ? 'Přístup odepřen' : 'Chyba serveru') + '</h1><p style="color:#888">' + (isAuthErr ? 'Tato stránka je pouze pro administrátory.' : msg) + '</p><a href="administrace.html" style="color:#d0ee52">← Zpět do aplikace</a></div>';
         return;
       }
 
