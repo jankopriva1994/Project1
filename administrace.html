@@ -1959,7 +1959,7 @@
             var date = m.invited_at ? new Date(m.invited_at).toLocaleDateString('cs-CZ') : '–';
             var statusLabel = m.status === 'active' ? 'Aktivní' : m.status === 'pending' ? 'Čeká na registraci' : (m.status || '–');
             return '<div class="adm-team-table-row">'
-              + '<span class="adm-team-col adm-team-col-name">' + (m.email || '–') + '</span>'
+              + '<span class="adm-team-col adm-team-col-name">' + (m.member_email || '–') + '</span>'
               + '<span class="adm-team-col adm-team-col-date">' + date + '</span>'
               + '<span class="adm-team-col adm-team-col-status">' + statusLabel + '</span>'
               + '<span class="adm-team-col adm-team-col-del"><button class="adm-team-del-btn" data-id="' + m.id + '">' + DEL_SVG + '</button></span>'

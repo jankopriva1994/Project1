@@ -98,7 +98,7 @@ router.post('/team/invite', requireAuth, async (req, res) => {
     .from('team_members')
     .insert({
       owner_id: req.user.id,
-      email,
+      member_email: email,
       status: 'pending',
       invite_token: token,
       invited_at: new Date().toISOString()
