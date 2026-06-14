@@ -29,6 +29,7 @@
     <a href="#" class="nav-link-recenze">Recenze</a>
     <a href="blog.html" class="nav-link-vseai">Vše o AI</a>
     <a href="kontakt.html" class="nav-link-kontakt" style="color:#d0ee52">Kontakt</a>
+    <a href="prihlaseni.html" class="nav-login">Přihlásit se</a>
 
     <a href="registrace.html" class="nav-cta">Vyzkoušej <span class="accent" style="margin-left:4px;">Chaties</span>&nbsp;zdarma</a>
 
@@ -112,11 +113,12 @@
   <script>
   (async function () {
     try {
-      var user = await getUser();
-      var cta = document.querySelector('.nav-cta');
-      if (!cta || !user) return;
-      cta.href = 'administrace.html';
-      cta.innerHTML = 'Vstup do <span class="accent" style="margin-left:4px;">členské sekce</span>';
+      var user  = await getUser();
+      var cta   = document.querySelector('.nav-cta');
+      var login = document.querySelector('.nav-login');
+      if (!user) return;
+      if (cta)   { cta.href = 'administrace.html'; cta.innerHTML = 'Vstup do <span class="accent" style="margin-left:4px;">členské sekce</span>'; }
+      if (login) login.style.display = 'none';
     } catch (e) {}
   })();
   </script>

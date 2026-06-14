@@ -164,6 +164,16 @@ body {
   font-family: 'Supreme', sans-serif;
 }
 
+.nav-login {
+  position: absolute;
+  left: 1080px;
+  top: 69px;
+  font-size: 16px;
+  color: #ffffff;
+  text-decoration: none;
+  font-family: 'Supreme', sans-serif;
+}
+
 .nav-link-kontakt {
   position: absolute;
   left: 896px;
