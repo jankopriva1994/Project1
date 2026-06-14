@@ -3,7 +3,7 @@ const SUPABASE_URL = 'https://gbsicyhlsnufbuyqekul.supabase.co';
 const SUPABASE_ANON = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6Imdic2ljeWhsc251ZmJ1eXFla3VsIiwicm9sZSI6ImFub24iLCJpYXQiOjE3ODE0MTE4NDYsImV4cCI6MjA5Njk4Nzg0Nn0.ECbASzT_OY2nSSFul02dASZDvMfCLv2bZw_bmgwViEU';
 const BACKEND   = 'https://project1-production-bfde.up.railway.app';
 
-const supabase = window.supabase.createClient(SUPABASE_URL, SUPABASE_ANON);
+window.supabase = window.supabase.createClient(SUPABASE_URL, SUPABASE_ANON);
 
 // Vrátí aktuálního přihlášeného uživatele nebo null
 async function getUser() {
