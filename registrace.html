@@ -4,7 +4,7 @@
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <title>Registrace – Chaties AI</title>
-  <link rel="stylesheet" href="styles.css?v=32" />
+  <link rel="stylesheet" href="styles.css?v=82" />
 </head>
 <body>
   <div class="page registrace-page">
@@ -65,7 +65,7 @@
     </div>
 
     <p class="reg-pass-hint">Heslo musí mít alespoň 6 znaků.</p>
-    <p id="reg-error" style="display:none;color:#ff4444;font-size:13px;font-family:Supreme,sans-serif;position:absolute;left:1039px;top:779px;width:384px;"></p>
+    <p id="reg-error" class="auth-error reg-error"></p>
 
     <button id="reg-btn" class="auth-btn reg-btn">Registrovat se zdarma</button>
 
@@ -106,7 +106,7 @@
       var gdpr   = document.getElementById('reg-gdpr').checked;
       var errEl  = document.getElementById('reg-error');
 
-      function showErr(msg) { errEl.textContent = msg; errEl.style.display = 'block'; }
+      function showErr(msg) { errEl.innerHTML = '⚠&nbsp;' + msg; errEl.style.display = 'block'; }
 
       if (!fname || !lname) return showErr('Zadejte jméno a příjmení.');
       if (!email)           return showErr('Zadejte e-mail.');
