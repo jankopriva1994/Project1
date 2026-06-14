@@ -128,7 +128,7 @@ const TEMPLATE_DEFS = {
   'seo-keywords': {
     name: 'Seznam klíčových slov (SEO)',
     system: 'Jsi SEO expert. Vytváříš relevantní seznamy klíčových slov pro organické vyhledávání. Piš v češtině, pokud není řečeno jinak.' + HTML_RULE,
-    buildPrompt: (fields, lang) => `Vytvoř seznam 20 relevantních SEO klíčových slov na základě:\n\n${fields}\n\nJazyk výstupu: ${lang}. Rozděl na: hlavní klíčová slova, long-tail fráze, otázky uživatelů. U každého uveď přibližnou obtížnost (nízká/střední/vysoká) a typ záměru (informační/komerční/transakční).`
+    buildPrompt: (fields, lang) => `Vytvoř seznam 10 relevantních SEO klíčových slov na základě:\n\n${fields}\n\nJazyk výstupu: ${lang}. Rozděl na: hlavní klíčová slova a long-tail fráze. U každého uveď obtížnost (nízká/střední/vysoká) a záměr (informační/komerční/transakční).`
   }
 };
 
