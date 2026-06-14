@@ -216,6 +216,20 @@
   <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2/dist/umd/supabase.min.js"></script>
   <script src="js/chaties.js"></script>
   <script>
+    (function () {
+      var key = 'cms_access_ok';
+      var SECRET = 'chaties2026admin';
+      if (sessionStorage.getItem(key) !== '1') {
+        var pw = prompt('Zadejte přístupové heslo:');
+        if (pw !== SECRET) {
+          document.body.innerHTML = '<div style="display:flex;align-items:center;justify-content:center;height:100vh"><p style="color:#ff5555;font-family:sans-serif">Špatné heslo.</p></div>';
+          throw new Error('unauthorized');
+        }
+        sessionStorage.setItem(key, '1');
+      }
+    })();
+  </script>
+  <script>
   (function () {
 
     // ── Helpers ───────────────────────────────────────────────
