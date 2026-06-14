@@ -1,8 +1,19 @@
 const express = require('express');
 const router = express.Router();
 const crypto = require('crypto');
+const nodemailer = require('nodemailer');
 const supabase = require('../lib/supabase');
 const { requireAuth } = require('../middleware/auth');
+
+function createMailer() {
+  if (!process.env.SMTP_HOST || !process.env.SMTP_USER || !process.env.SMTP_PASS) return null;
+  return nodemailer.createTransport({
+    host: process.env.SMTP_HOST,
+    port: parseInt(process.env.SMTP_PORT || '587'),
+    secure: process.env.SMTP_PORT === '465',
+    auth: { user: process.env.SMTP_USER, pass: process.env.SMTP_PASS }
+  });
+}
 
 // GET /api/user/profile
 router.get('/profile', requireAuth, async (req, res) => {
@@ -119,14 +130,28 @@ router.post('/team/invite', requireAuth, async (req, res) => {
 
   const inviteUrl = `${process.env.FRONTEND_URL || 'https://chaties.cz'}/registrace.html?invite=${token}`;
 
-  // Pošli pozvánku přes Supabase Auth (nevyžaduje žádnou externí službu)
-  try {
-    await supabase.auth.admin.inviteUserByEmail(email, {
-      redirectTo: inviteUrl
-    });
-  } catch (emailErr) {
-    // Uživatel už existuje v Supabase – nevadí, odkaz bude fungovat i tak
-    console.log('Invite email skipped (user may already exist):', emailErr.message);
+  // Pošli pozvánku přes SMTP (nodemailer)
+  const mailer = createMailer();
+  if (mailer) {
+    try {
+      await mailer.sendMail({
+        from: `"Chaties AI" <${process.env.SMTP_USER}>`,
+        to: email,
+        subject: 'Pozvánka do týmu na Chaties.cz',
+        html: `<div style="font-family:Arial,sans-serif;max-width:520px;margin:0 auto">
+  <h2 style="color:#111">Byli jste pozváni do týmu na <span style="color:#5a8a00">Chaties AI</span></h2>
+  <p>Kliknutím na tlačítko níže přijmete pozvánku a zaregistrujete se:</p>
+  <a href="${inviteUrl}" style="display:inline-block;background:#d0ee52;color:#000;padding:12px 28px;border-radius:8px;text-decoration:none;font-weight:bold;margin:12px 0">Přijmout pozvánku</a>
+  <p style="color:#888;font-size:13px;margin-top:16px">Nebo zkopírujte tento odkaz do prohlížeče:<br>${inviteUrl}</p>
+  <hr style="border:none;border-top:1px solid #eee;margin:24px 0">
+  <p style="color:#aaa;font-size:12px">Tým Chaties AI &nbsp;·&nbsp; chaties.cz</p>
+</div>`
+      });
+    } catch (emailErr) {
+      console.error('SMTP send error:', emailErr.message);
+    }
+  } else {
+    console.log('SMTP není nakonfigurováno – pozvánka vytvořena bez emailu:', inviteUrl);
   }
 
   res.json({ success: true, member: data });
