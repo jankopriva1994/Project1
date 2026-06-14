@@ -71,11 +71,17 @@
     .toggle.on::after { left: 21px; }
 
     /* CONTENT BLOCKS */
-    .cb-row { display: flex; align-items: flex-start; gap: 16px; padding: 14px 0; border-bottom: 1px solid #1c1c1c; }
-    .cb-label { width: 220px; flex-shrink: 0; }
-    .cb-label strong { display: block; font-size: 14px; color: #ddd; }
-    .cb-label span { font-size: 12px; color: #555; }
-    .cb-row textarea { flex: 1; background: #1a1a1a; border: 1px solid #2a2a2a; border-radius: 6px; color: #e0e0e0; padding: 8px 10px; font-size: 13px; min-height: 60px; resize: vertical; font-family: inherit; }
+    .cb-page-tabs { display: flex; gap: 8px; margin-bottom: 24px; flex-wrap: wrap; }
+    .cb-page-tab { background: #1a1a1a; border: 1px solid #2a2a2a; color: #aaa; padding: 7px 16px; border-radius: 6px; font-size: 13px; cursor: pointer; font-family: inherit; transition: all .15s; }
+    .cb-page-tab:hover { color: #fff; border-color: #444; }
+    .cb-page-tab.active { background: #1a2e0a; border-color: #d0ee52; color: #d0ee52; }
+    .cb-section-header { font-size: 11px; font-weight: 700; color: #555; text-transform: uppercase; letter-spacing: .07em; padding: 20px 0 8px; margin-bottom: 0; }
+    .cb-section-header:first-child { padding-top: 0; }
+    .cb-row { display: flex; align-items: flex-start; gap: 16px; padding: 12px 0; border-bottom: 1px solid #1c1c1c; }
+    .cb-label { width: 200px; flex-shrink: 0; }
+    .cb-label strong { display: block; font-size: 13px; color: #ddd; }
+    .cb-label span { font-size: 11px; color: #444; }
+    .cb-row textarea { flex: 1; background: #1a1a1a; border: 1px solid #2a2a2a; border-radius: 6px; color: #e0e0e0; padding: 8px 10px; font-size: 13px; min-height: 52px; resize: vertical; font-family: inherit; }
     .cb-row textarea:focus { outline: none; border-color: #d0ee52; }
     .cb-save { background: #1a2e0a; color: #a0d060; border: 1px solid #2a4a10; padding: 6px 14px; border-radius: 6px; font-size: 12px; cursor: pointer; white-space: nowrap; }
     .cb-save:hover { background: #22380e; }
@@ -206,6 +212,7 @@
       <section class="cms-section" id="sec-content">
         <h2 class="cms-h2">Texty webu</h2>
         <p class="cms-sub">Editujte klíčové texty zobrazené na veřejném webu.</p>
+        <div class="cb-page-tabs" id="contentPageTabs"></div>
         <div id="contentList"></div>
       </section>
 
@@ -489,6 +496,71 @@
     });
 
     // ── CONTENT BLOCKS ────────────────────────────────────────
+    var CONTENT_GROUPS = [
+      {
+        id: 'home', label: 'Domovská stránka',
+        sections: [
+          { label: 'Hero sekce', keys: ['home_hero_title','home_hero_subtitle','home_hero_cta'] },
+          { label: 'Funkce', keys: ['home_features_heading','home_features_subtext'] },
+          { label: 'Benefits – nadpisy', keys: ['home_benefits_chip','home_benefits_heading','home_benefits_desc','home_benefits_cta'] },
+          { label: 'Benefits – karty', keys: [
+            'home_benefit_c1r1_title','home_benefit_c1r1_text',
+            'home_benefit_c1r2_title','home_benefit_c1r2_text',
+            'home_benefit_c1r3_title','home_benefit_c1r3_text',
+            'home_benefit_c2r1_title','home_benefit_c2r1_text',
+            'home_benefit_c2r2_title','home_benefit_c2r2_text',
+            'home_benefit_c2r3_title','home_benefit_c2r3_text'
+          ]},
+          { label: 'AI Služby', keys: ['home_aiservices_heading','home_aiservices_subtext'] },
+          { label: 'Blog', keys: ['home_blog_heading','home_blog_subtext'] },
+          { label: 'Newsletter', keys: ['home_newsletter_heading','home_newsletter_subtext'] }
+        ]
+      },
+      {
+        id: 'ceny', label: 'Stránka Ceny',
+        sections: [
+          { label: 'Obecné', keys: ['ceny_hero_title','ceny_hero_subtitle','ceny_banner_text','ceny_score','ceny_customers'] },
+          { label: 'Tarif 1 – Starter (5 000 tokenů)', keys: [
+            'ceny_p1_tokens','ceny_p1_price_monthly','ceny_p1_price_annual','ceny_p1_note_monthly','ceny_p1_note_annual','ceny_p1_cta',
+            'ceny_p1_ft1','ceny_p1_ft2','ceny_p1_ft3','ceny_p1_ft4','ceny_p1_ft5','ceny_p1_ft6',
+            'ceny_p1_ft7','ceny_p1_ft8','ceny_p1_ft9','ceny_p1_ft10','ceny_p1_ft11'
+          ]},
+          { label: 'Tarif 2 – Popular (20 000 tokenů)', keys: [
+            'ceny_p2_tokens','ceny_p2_price_monthly','ceny_p2_price_annual','ceny_p2_note_monthly','ceny_p2_note_annual','ceny_p2_cta',
+            'ceny_p2_ft1','ceny_p2_ft2','ceny_p2_ft3','ceny_p2_ft4','ceny_p2_ft5','ceny_p2_ft6','ceny_p2_ft7',
+            'ceny_p2_ft8','ceny_p2_ft9','ceny_p2_ft10','ceny_p2_ft11','ceny_p2_ft12','ceny_p2_ft13','ceny_p2_ft14'
+          ]},
+          { label: 'Tarif 3 – Pro (50 000 tokenů)', keys: [
+            'ceny_p3_tokens','ceny_p3_price_monthly','ceny_p3_price_annual','ceny_p3_note_monthly','ceny_p3_note_annual','ceny_p3_cta',
+            'ceny_p3_ft1','ceny_p3_ft2','ceny_p3_ft3','ceny_p3_ft4','ceny_p3_ft5','ceny_p3_ft6','ceny_p3_ft7',
+            'ceny_p3_ft8','ceny_p3_ft9','ceny_p3_ft10','ceny_p3_ft11','ceny_p3_ft12','ceny_p3_ft13','ceny_p3_ft14'
+          ]},
+          { label: 'Tarif 4 – Enterprise (100 000 tokenů)', keys: [
+            'ceny_p4_tokens','ceny_p4_price_monthly','ceny_p4_price_annual','ceny_p4_note_monthly','ceny_p4_note_annual','ceny_p4_cta',
+            'ceny_p4_ft1','ceny_p4_ft2','ceny_p4_ft3','ceny_p4_ft4','ceny_p4_ft5','ceny_p4_ft6','ceny_p4_ft7',
+            'ceny_p4_ft8','ceny_p4_ft9','ceny_p4_ft10','ceny_p4_ft11','ceny_p4_ft12','ceny_p4_ft13','ceny_p4_ft14'
+          ]}
+        ]
+      },
+      {
+        id: 'onas', label: 'O nás',
+        sections: [
+          { label: 'Obecné', keys: ['onas_heading','onas_text','onas_partners_heading'] },
+          { label: 'Hodnoty', keys: [
+            'onas_value1_title','onas_value1_desc',
+            'onas_value2_title','onas_value2_desc',
+            'onas_value3_title','onas_value3_desc'
+          ]}
+        ]
+      },
+      {
+        id: 'kontakt', label: 'Kontakt',
+        sections: [
+          { label: 'Obecné', keys: ['ktk_heading','ktk_support_label'] }
+        ]
+      }
+    ];
+
     var BLOCK_LABELS = {
       'homepage_hero_title':      'Hlavní nadpis (homepage)',
       'homepage_hero_subtitle':   'Podnadpis (homepage)',
@@ -630,27 +702,64 @@
       'ceny_p4_ft14':             '[Tarif 4] Funkce 14'
     };
 
+    var allContentBlocks = {};
+    var activeContentPage = 'home';
+
     async function loadContent() {
       var blocks = await apiFetch('/api/admin/content');
+      allContentBlocks = {};
+      blocks.forEach(function (b) { allContentBlocks[b.key] = b.value || ''; });
+
+      var tabs = document.getElementById('contentPageTabs');
+      tabs.innerHTML = '';
+      CONTENT_GROUPS.forEach(function (group) {
+        var btn = document.createElement('button');
+        btn.className = 'cb-page-tab' + (group.id === activeContentPage ? ' active' : '');
+        btn.textContent = group.label;
+        btn.addEventListener('click', function () {
+          activeContentPage = group.id;
+          tabs.querySelectorAll('.cb-page-tab').forEach(function (t) { t.classList.remove('active'); });
+          btn.classList.add('active');
+          renderContentPage(group.id);
+        });
+        tabs.appendChild(btn);
+      });
+
+      renderContentPage(activeContentPage);
+    }
+
+    function renderContentPage(pageId) {
+      var group = CONTENT_GROUPS.find(function (g) { return g.id === pageId; });
+      if (!group) return;
       var list = document.getElementById('contentList');
       list.innerHTML = '';
-      blocks.forEach(function (b) {
-        var row = document.createElement('div');
-        row.className = 'cb-row';
-        var label = BLOCK_LABELS[b.key] || b.key;
-        row.innerHTML = '<div class="cb-label"><strong>' + label + '</strong><span>' + b.key + '</span></div>'
-          + '<textarea>' + (b.value || '') + '</textarea>'
-          + '<button class="cb-save">Uložit</button>';
-        var ta  = row.querySelector('textarea');
-        var btn = row.querySelector('.cb-save');
-        btn.addEventListener('click', async function () {
-          try {
-            await apiFetch('/api/admin/content/' + b.key, { method: 'PUT', body: JSON.stringify({ value: ta.value }) });
-            btn.textContent = 'Uloženo ✓';
-            setTimeout(function () { btn.textContent = 'Uložit'; }, 2000);
-          } catch(e) { btn.textContent = 'Chyba!'; }
+
+      group.sections.forEach(function (section) {
+        var hdr = document.createElement('div');
+        hdr.className = 'cb-section-header';
+        hdr.textContent = section.label;
+        list.appendChild(hdr);
+
+        section.keys.forEach(function (key) {
+          var rawLabel = BLOCK_LABELS[key] || key;
+          var label = rawLabel.replace(/^\[.*?\]\s*/, '');
+          var row = document.createElement('div');
+          row.className = 'cb-row';
+          row.innerHTML = '<div class="cb-label"><strong>' + label + '</strong><span>' + key + '</span></div>'
+            + '<textarea>' + (allContentBlocks[key] || '') + '</textarea>'
+            + '<button class="cb-save">Uložit</button>';
+          var ta  = row.querySelector('textarea');
+          var btn = row.querySelector('.cb-save');
+          btn.addEventListener('click', async function () {
+            try {
+              await apiFetch('/api/admin/content/' + key, { method: 'PUT', body: JSON.stringify({ value: ta.value }) });
+              allContentBlocks[key] = ta.value;
+              btn.textContent = 'Uloženo ✓';
+              setTimeout(function () { btn.textContent = 'Uložit'; }, 2000);
+            } catch (e) { btn.textContent = 'Chyba!'; }
+          });
+          list.appendChild(row);
         });
-        list.appendChild(row);
       });
     }
 

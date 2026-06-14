@@ -1720,7 +1720,7 @@ body {
   line-height: 24px;
 }
 .ceny-plan-label-p1 { left: 228px; }
-.ceny-plan-label-p2 { left: 541px; }
+.ceny-plan-label-p2 { left: 541px; top: 816px; }
 .ceny-plan-label-p3 { left: 854px; }
 .ceny-plan-label-p4 { left: 1167px; }
 
@@ -1729,7 +1729,7 @@ body {
   position: absolute;
   left: 541px;
   top: 856px;
-  width: 312px;
+  width: 285px;
   display: flex;
   align-items: center;
   justify-content: center;
