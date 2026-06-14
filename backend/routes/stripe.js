@@ -9,16 +9,18 @@ const stripe = new Stripe(process.env.STRIPE_SECRET_KEY);
 // Mapování Price ID → počet tokenů (z .env)
 function getTokensForPrice(priceId) {
   const map = {
-    [process.env.STRIPE_PRICE_BASIC]:      parseInt(process.env.TOKENS_BASIC)      || 50000,
-    [process.env.STRIPE_PRICE_PRO]:        parseInt(process.env.TOKENS_PRO)        || 200000,
-    [process.env.STRIPE_PRICE_ENTERPRISE]: parseInt(process.env.TOKENS_ENTERPRISE) || 1000000,
+    [process.env.STRIPE_PRICE_STARTER]:    parseInt(process.env.TOKENS_STARTER)    || 5000,
+    [process.env.STRIPE_PRICE_POPULAR]:    parseInt(process.env.TOKENS_POPULAR)    || 20000,
+    [process.env.STRIPE_PRICE_PRO]:        parseInt(process.env.TOKENS_PRO)        || 50000,
+    [process.env.STRIPE_PRICE_ENTERPRISE]: parseInt(process.env.TOKENS_ENTERPRISE) || 100000,
   };
   return map[priceId] || 0;
 }
 
 function getPlanName(priceId) {
   const map = {
-    [process.env.STRIPE_PRICE_BASIC]:      'basic',
+    [process.env.STRIPE_PRICE_STARTER]:    'starter',
+    [process.env.STRIPE_PRICE_POPULAR]:    'popular',
     [process.env.STRIPE_PRICE_PRO]:        'pro',
     [process.env.STRIPE_PRICE_ENTERPRISE]: 'enterprise',
   };
