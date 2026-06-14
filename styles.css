@@ -49,10 +49,15 @@ body {
 }
 
 /* ===================== NAVBAR ===================== */
-.nav-logo {
+.nav-logo-link {
   position: absolute;
   left: 230px;
   top: 53px;
+  display: block;
+  line-height: 0;
+}
+
+.nav-logo {
   height: 44px;
   width: auto;
   display: block;
