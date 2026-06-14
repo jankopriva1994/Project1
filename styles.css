@@ -1724,15 +1724,25 @@ body {
 .ceny-plan-label-p3 { left: 854px; }
 .ceny-plan-label-p4 { left: 1167px; }
 
-/* Popular label */
+/* Popular badge */
 .ceny-popular {
   position: absolute;
-  left: 572px;
-  top: 825px;
-  font-size: 14px;
-  color: #8b8b8b;
+  left: 541px;
+  top: 856px;
+  width: 312px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 6px;
+  background: #d0ee52;
+  color: #0d0e11;
   font-family: 'Supreme', sans-serif;
-  line-height: 20px;
+  font-size: 13px;
+  font-weight: 700;
+  letter-spacing: .06em;
+  text-transform: uppercase;
+  padding: 6px 0;
+  border-radius: 8px 8px 0 0;
 }
 
 /* Price boxes */
@@ -1745,7 +1755,7 @@ body {
   border-radius: 10px;
 }
 .ceny-plan-box-p1 { left: 228px; }
-.ceny-plan-box-p2 { left: 541px; }
+.ceny-plan-box-p2 { left: 541px; border: 2px solid #d0ee52; border-top: none; border-radius: 0 0 10px 10px; }
 .ceny-plan-box-p3 { left: 854px; }
 .ceny-plan-box-p4 { left: 1167px; }
 
