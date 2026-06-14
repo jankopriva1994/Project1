@@ -145,6 +145,19 @@
         await supabase.auth.signInWithPassword({ email: email, password: pass });
       }
 
+      // Pokud přišel přes pozvánku – aktualizuj status v týmu
+      var inviteToken = new URLSearchParams(window.location.search).get('invite');
+      if (inviteToken) {
+        try {
+          await apiFetch('/api/user/team/accept-invite', {
+            method: 'POST',
+            body: JSON.stringify({ token: inviteToken })
+          });
+        } catch (e) { /* nevadí, přihlásíme normálně */ }
+        window.location.href = 'administrace.html';
+        return;
+      }
+
       // Přesměrování na výběr tarifu
       window.location.href = 'ceny.html';
     });

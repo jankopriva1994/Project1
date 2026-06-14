@@ -94,6 +94,16 @@ router.post('/team/invite', requireAuth, async (req, res) => {
   const { email } = req.body;
   if (!email) return res.status(400).json({ error: 'Chybí email' });
   const token = crypto.randomBytes(20).toString('hex');
+
+  // Zkontrolujeme jestli už není v týmu
+  const { data: existing } = await supabase
+    .from('team_members')
+    .select('id')
+    .eq('owner_id', req.user.id)
+    .eq('member_email', email)
+    .maybeSingle();
+  if (existing) return res.status(400).json({ error: 'Tento člen je již v týmu.' });
+
   const { data, error } = await supabase
     .from('team_members')
     .insert({
@@ -107,34 +117,35 @@ router.post('/team/invite', requireAuth, async (req, res) => {
     .single();
   if (error) return res.status(500).json({ error: error.message });
 
-  const inviteUrl = `${process.env.FRONTEND_URL}/registrace.html?invite=${token}`;
+  const inviteUrl = `${process.env.FRONTEND_URL || 'https://chaties.cz'}/registrace.html?invite=${token}`;
 
-  if (process.env.RESEND_API_KEY) {
-    try {
-      await fetch('https://api.resend.com/emails', {
-        method: 'POST',
-        headers: {
-          'Authorization': `Bearer ${process.env.RESEND_API_KEY}`,
-          'Content-Type': 'application/json'
-        },
-        body: JSON.stringify({
-          from: 'Chaties AI <podpora@chaties.cz>',
-          to: [email],
-          subject: 'Pozvánka do týmu na Chaties.cz',
-          html: `<p>Dobrý den,</p>
-<p>Byli jste pozváni do týmu na platformě <strong>Chaties AI</strong>.</p>
-<p>Pro přijetí pozvánky a registraci klikněte na odkaz níže:</p>
-<p><a href="${inviteUrl}" style="background:#d0ee52;color:#000;padding:12px 24px;border-radius:8px;text-decoration:none;font-weight:bold;display:inline-block;margin:8px 0">Přijmout pozvánku</a></p>
-<p style="color:#888;font-size:13px">Nebo zkopírujte tento odkaz: ${inviteUrl}</p>
-<p>Pokud jste pozvánku neočekávali, tento email ignorujte.</p>
-<p>Tým Chaties AI</p>`
-        })
-      });
-    } catch (emailErr) {
-      console.error('Email send error:', emailErr);
-    }
+  // Pošli pozvánku přes Supabase Auth (nevyžaduje žádnou externí službu)
+  try {
+    await supabase.auth.admin.inviteUserByEmail(email, {
+      redirectTo: inviteUrl
+    });
+  } catch (emailErr) {
+    // Uživatel už existuje v Supabase – nevadí, odkaz bude fungovat i tak
+    console.log('Invite email skipped (user may already exist):', emailErr.message);
   }
 
+  res.json({ success: true, member: data });
+});
+
+// POST /api/user/team/accept-invite
+router.post('/team/accept-invite', requireAuth, async (req, res) => {
+  const { token } = req.body;
+  if (!token) return res.status(400).json({ error: 'Chybí token' });
+
+  const { data, error } = await supabase
+    .from('team_members')
+    .update({ status: 'active', member_id: req.user.id })
+    .eq('invite_token', token)
+    .eq('member_email', req.user.email)
+    .select()
+    .single();
+
+  if (error || !data) return res.status(404).json({ error: 'Pozvánka nenalezena nebo již použita.' });
   res.json({ success: true, member: data });
 });
 
