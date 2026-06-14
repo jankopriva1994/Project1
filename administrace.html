@@ -708,6 +708,12 @@
           <p class="adm-tmpl-desc">Šablona, která vytvoří seznam<br>10x nápadů pro prodejní webinář,<br>který přiláká vaše zákazníky.</p>
         </div>
 
+        <div class="adm-tmpl-card" data-tmpl-id="seo-keywords" data-goto-panel="tmpl-detail">
+          <span class="adm-tmpl-title">Seznam klíčových<br>slov (SEO)</span>
+          <span class="adm-tmpl-star"><svg width="16" height="15" viewBox="0 0 24 24" fill="none"><path d="M12 2l3.09 6.26L22 9.27l-5 4.87 1.18 6.88L12 17.77l-6.18 3.25L7 14.14 2 9.27l6.91-1.01L12 2z" stroke="#d0ee52" stroke-width="1.5" stroke-linejoin="round"/></svg></span>
+          <p class="adm-tmpl-desc">Šablona, která vytvoří seznam<br>20 relevantních klíčových slov<br>pro SEO optimalizaci vašeho webu.</p>
+        </div>
+
       </div>
 
     </div><!-- /adm-panel-templates -->
@@ -1670,12 +1676,21 @@
           { label: 'Popis produktu/služby', max: 5000, placeholder: 'Co prodáváte? Jaký problém řeší váš produkt?' },
           { label: 'Cílová skupina', max: 2000, placeholder: 'Kdo jsou vaši zákazníci? Jaké mají problémy?' }
         ]
+      },
+      'seo-keywords': {
+        name: 'Seznam klíčových slov (SEO)',
+        sub: 'Šablona, která vám vytvoří seznam 20 relevantních klíčových slov pro SEO optimalizaci vašeho webu.',
+        fields: [
+          { label: 'Popis produktu/služby', max: 5000, placeholder: 'Popište svůj produkt nebo službu, kterou nabízíte.' },
+          { label: 'Ideální zákazník', max: 2000, placeholder: 'Kdo je váš ideální zákazník? Co hledá na internetu?' },
+          { label: 'Tón hlasu', max: 500, placeholder: 'Např: profesionální, přátelský, odborný...' }
+        ]
       }
     };
 
     var currentTmplId = null;
 
-    // ── Mock output generators ───────────────────────────────
+    // ── (Mock generators removed – real AI used) ─────────────
     function mockMarketing(values) {
       var firma = (values[0] || 'vaší firmy').substring(0, 120);
       var cil = (values[1] || 'růst zákazníků').substring(0, 80);
