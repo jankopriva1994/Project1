@@ -7,6 +7,7 @@
   <link rel="stylesheet" href="styles.css?v=81" />
 </head>
 <body>
+  <script>if(sessionStorage.getItem('site_ok')!=='1'){sessionStorage.setItem('site_return',location.pathname+location.search);location.replace('gate.html');}</script>
   <div class="page onas-page">
 
     <!-- ==================== NAVBAR ==================== -->
@@ -35,12 +36,12 @@
 
     <!-- ==================== HERO SECTION ==================== -->
 
-    <h1 class="onas-heading">
+    <h1 class="onas-heading" data-cms-key="onas_heading">
       <span class="accent">Kdo stojí za Chaties.cz</span><br>
       a jaká je naše vize?
     </h1>
 
-    <p class="onas-text">
+    <p class="onas-text" data-cms-key="onas_text">
       Jsme dva nadšenci do technologií co rádi tvoří, budují a posouvají<br>
       hranice kupředu. Na <span class="accent">Chaties.cz</span> dáváme dohromady to, co sami<br>
       rádi používáme a co nám dává smysl. Za celou platformou stojíme<br>
@@ -66,8 +67,8 @@
         <svg width="28" height="28" viewBox="0 0 24 24" fill="none"><circle cx="12" cy="5" r="2" stroke="#d0ee52" stroke-width="1.5"/><circle cx="5" cy="19" r="2" stroke="#d0ee52" stroke-width="1.5"/><circle cx="19" cy="19" r="2" stroke="#d0ee52" stroke-width="1.5"/><path d="M12 7v4M12 11l-5 6M12 11l5 6" stroke="#d0ee52" stroke-width="1.5" stroke-linecap="round"/></svg>
       </div>
       <div>
-        <h3 class="onas-value-title">Demokracie<br>v AI</h3>
-        <p class="onas-value-desc">Chceme zpřístupnit sílu umělé inteligence každému – bez složitého nastavování, bez bariér. Ať už jsi kreativec, podnikatel nebo student, AI nástroje by měly být jednoduché, přehledné a dostupné pro všechny.</p>
+        <h3 class="onas-value-title" data-cms-key="onas_value1_title">Demokracie<br>v AI</h3>
+        <p class="onas-value-desc" data-cms-key="onas_value1_desc">Chceme zpřístupnit sílu umělé inteligence každému – bez složitého nastavování, bez bariér. Ať už jsi kreativec, podnikatel nebo student, AI nástroje by měly být jednoduché, přehledné a dostupné pro všechny.</p>
       </div>
     </div>
 
@@ -77,8 +78,8 @@
         <svg width="28" height="28" viewBox="0 0 24 24" fill="none"><path d="M12 2C8 2 5 5.5 5 9c0 2.4 1.2 4.5 3 5.7V17h8v-2.3c1.8-1.2 3-3.3 3-5.7 0-3.5-3-7-7-7z" stroke="#d0ee52" stroke-width="1.5" stroke-linejoin="round"/><path d="M9 17v2a3 3 0 0 0 6 0v-2" stroke="#d0ee52" stroke-width="1.5"/></svg>
       </div>
       <div>
-        <h3 class="onas-value-title">Tvořit,<br>ne řešit</h3>
-        <p class="onas-value-desc">Naším cílem je, aby se lidé mohli soustředit na to, co je baví – tvoření, nápady, projekty – a ne se ztrácet v technologii. Naše platforma ti má šetřit čas, energii a nervy. Prostě zapneš a jedeš.</p>
+        <h3 class="onas-value-title" data-cms-key="onas_value2_title">Tvořit,<br>ne řešit</h3>
+        <p class="onas-value-desc" data-cms-key="onas_value2_desc">Naším cílem je, aby se lidé mohli soustředit na to, co je baví – tvoření, nápady, projekty – a ne se ztrácet v technologii. Naše platforma ti má šetřit čas, energii a nervy. Prostě zapneš a jedeš.</p>
       </div>
     </div>
 
@@ -88,14 +89,14 @@
         <svg width="28" height="28" viewBox="0 0 24 24" fill="none"><circle cx="9" cy="7" r="3" stroke="#d0ee52" stroke-width="1.5"/><circle cx="17" cy="9" r="2.5" stroke="#d0ee52" stroke-width="1.5"/><path d="M1 20c0-3.3 3.6-6 8-6s8 2.7 8 6" stroke="#d0ee52" stroke-width="1.5" stroke-linecap="round"/><path d="M17 14c2.2.5 4 2 4 4" stroke="#d0ee52" stroke-width="1.5" stroke-linecap="round"/></svg>
       </div>
       <div>
-        <h3 class="onas-value-title">Z Česka<br>do celého světa</h3>
-        <p class="onas-value-desc">Věříme, že i malý tým s velkým srdcem může vytvořit něco, co bude mít dopad. Chceme budovat platformu, která má kořeny u nás, ale otevřená je všem – bez hranic a bez zbytečných složitostí.</p>
+        <h3 class="onas-value-title" data-cms-key="onas_value3_title">Z Česka<br>do celého světa</h3>
+        <p class="onas-value-desc" data-cms-key="onas_value3_desc">Věříme, že i malý tým s velkým srdcem může vytvořit něco, co bude mít dopad. Chceme budovat platformu, která má kořeny u nás, ale otevřená je všem – bez hranic a bez zbytečných složitostí.</p>
       </div>
     </div>
 
     <!-- ==================== PARTNEŘI ==================== -->
 
-    <h2 class="onas-partners-heading">Naši významní partneři</h2>
+    <h2 class="onas-partners-heading" data-cms-key="onas_partners_heading">Naši významní partneři</h2>
 
     <div class="onas-partners-row">
       <span class="onas-partner-logo">www<br><strong>živě</strong></span>
@@ -147,5 +148,20 @@
     <a href="#" class="footer-privacy">Zásady ochrany osobních údajů</a>
 
   </div><!-- /.page -->
+  <script>
+    (function () {
+      fetch('https://project1-production-bfde.up.railway.app/api/content')
+        .then(function (r) { return r.json(); })
+        .then(function (blocks) {
+          var map = {};
+          blocks.forEach(function (b) { map[b.key] = b.value; });
+          document.querySelectorAll('[data-cms-key]').forEach(function (el) {
+            var key = el.getAttribute('data-cms-key');
+            if (map[key] != null) el.innerHTML = map[key];
+          });
+        })
+        .catch(function () {});
+    })();
+  </script>
 </body>
 </html>

@@ -7,6 +7,7 @@
   <link rel="stylesheet" href="styles.css?v=81" />
 </head>
 <body>
+  <script>if(sessionStorage.getItem('site_ok')!=='1'){sessionStorage.setItem('site_return',location.pathname+location.search);location.replace('gate.html');}</script>
   <div class="page kontakt-page">
 
     <!-- ==================== NAVBAR ==================== -->
@@ -35,14 +36,14 @@
 
     <!-- ==================== KONTAKT CONTENT ==================== -->
 
-    <h1 class="ktk-heading">
+    <h1 class="ktk-heading" data-cms-key="ktk_heading">
       <span class="accent">Máte dotazy</span> nebo<br>
       potřebujete poradit<br>
       s chaties?
     </h1>
 
     <!-- Zákaznická podpora -->
-    <p class="ktk-support-label">Zákaznická podpora</p>
+    <p class="ktk-support-label" data-cms-key="ktk_support_label">Zákaznická podpora</p>
 
     <div class="ktk-support-row ktk-support-email">
       <svg width="20" height="20" viewBox="0 0 24 24" fill="none"><rect x="2" y="4" width="20" height="16" rx="2" stroke="#d0ee52" stroke-width="1.5"/><path d="M2 7l10 7 10-7" stroke="#d0ee52" stroke-width="1.5" stroke-linecap="round"/></svg>
@@ -106,6 +107,21 @@
 
   </div><!-- /.page -->
 
+  <script>
+  (function () {
+    fetch('https://project1-production-bfde.up.railway.app/api/content')
+      .then(function (r) { return r.json(); })
+      .then(function (blocks) {
+        var map = {};
+        blocks.forEach(function (b) { map[b.key] = b.value; });
+        document.querySelectorAll('[data-cms-key]').forEach(function (el) {
+          var key = el.getAttribute('data-cms-key');
+          if (map[key] != null) el.innerHTML = map[key];
+        });
+      })
+      .catch(function () {});
+  })();
+  </script>
   <script>
   (function () {
     var btn  = document.getElementById('ktk-submit');

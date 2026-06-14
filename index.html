@@ -7,6 +7,7 @@
   <link rel="stylesheet" href="styles.css?v=36" />
 </head>
 <body>
+  <script>if(sessionStorage.getItem('site_ok')!=='1'){sessionStorage.setItem('site_return',location.pathname+location.search);location.replace('gate.html');}</script>
   <div class="page">
 
     <!-- ==================== NAVBAR ==================== -->
@@ -40,25 +41,25 @@
       alt="Wave background"
     />
 
-    <h1 class="hero-headline" style="opacity:0;transform:translateY(70px)">
+    <h1 class="hero-headline" data-cms-key="home_hero_title" style="opacity:0;transform:translateY(70px)">
       Tvořte <span class="hero-anim-word accent">obsah</span> <span class="accent">s nejrychlejší</span><br>
       <span class="accent">umělou inteligencí</span> na pár kliknutí
     </h1>
 
-    <p class="hero-subtitle" style="opacity:0;transform:translateY(70px)">
+    <p class="hero-subtitle" data-cms-key="home_hero_subtitle" style="opacity:0;transform:translateY(70px)">
       <strong><span class="accent">Chaties.cz</span></strong> je vaše všestranná AI platforma. Pište texty, generujte obrázky,
       překládejte dokumenty a mnohem více – vše na jednom místě.
     </p>
 
-    <a href="#" class="hero-cta" style="opacity:0;transform:translateY(70px)">Vyzkoušej <span class="accent" style="margin-left:4px;">Chaties</span>&nbsp;zdarma</a>
+    <a href="#" class="hero-cta" data-cms-key="home_hero_cta" style="opacity:0;transform:translateY(70px)">Vyzkoušej <span class="accent" style="margin-left:4px;">Chaties</span>&nbsp;zdarma</a>
 
     <!-- ==================== FEATURES SECTION ==================== -->
-    <h2 class="features-heading">
+    <h2 class="features-heading" data-cms-key="home_features_heading">
       <span class="accent">Unikátní nástroj,</span> pro správu<br>
       vaší kampaní, psaní článků a chytlavých popisků
     </h2>
 
-    <p class="features-subtext">
+    <p class="features-subtext" data-cms-key="home_features_subtext">
       <strong><span class="accent">Chaties.cz</span></strong><span> je nejrychlejší kompletní platforma</span>
     </p>
 
@@ -101,18 +102,18 @@
     />
 
     <!-- ==================== BENEFITS SECTION ==================== -->
-    <span class="benefits-chip">Chci rozjet</span>
+    <span class="benefits-chip" data-cms-key="home_benefits_chip">Chci rozjet</span>
 
-    <h2 class="benefits-heading">
+    <h2 class="benefits-heading" data-cms-key="home_benefits_heading">
       Chci rozjet <span class="accent">svůj</span><br>
       <span class="accent">business naplno!</span>
     </h2>
 
-    <p class="benefits-desc">
+    <p class="benefits-desc" data-cms-key="home_benefits_desc">
       Naše AI služby ti pomohou nejen ušetřit čas, ale především zefektivnit tvé podnikání. Ať už jsi freelancer, firma nebo start-up, AI dokáže přinést výsledky, které by jinak zabraly hodiny&nbsp;práce.
     </p>
 
-    <a href="#" class="benefits-cta">Vyzkoušej <span class="accent" style="margin-left:4px;">Chaties</span>&nbsp;zdarma</a>
+    <a href="#" class="benefits-cta" data-cms-key="home_benefits_cta">Vyzkoušej <span class="accent" style="margin-left:4px;">Chaties</span>&nbsp;zdarma</a>
 
     <!-- Vertical dividers (hidden) -->
     <div class="benefits-divider-left"></div>
@@ -127,24 +128,24 @@
     <div class="benefits-div-c2-r3"></div>
 
     <!-- Benefits grid col 1 -->
-    <span class="benefit-c1-r1-title">Obsah, který konvertuje</span>
-    <span class="benefit-c1-r1-text">Tvořte obsah, který Vám vydělá peníze</span>
+    <span class="benefit-c1-r1-title" data-cms-key="home_benefit_c1r1_title">Obsah, který konvertuje</span>
+    <span class="benefit-c1-r1-text" data-cms-key="home_benefit_c1r1_text">Tvořte obsah, který Vám vydělá peníze</span>
 
-    <span class="benefit-c1-r2-title">Ušetřete čas i peníze</span>
-    <span class="benefit-c1-r2-text">Bez grafika, bez překladatele, prostě hned</span>
+    <span class="benefit-c1-r2-title" data-cms-key="home_benefit_c1r2_title">Ušetřete čas i peníze</span>
+    <span class="benefit-c1-r2-text" data-cms-key="home_benefit_c1r2_text">Bez grafika, bez překladatele, prostě hned</span>
 
-    <span class="benefit-c1-r3-title">Vše na jednom místě</span>
-    <span class="benefit-c1-r3-text">AI chat, obrázky, překlady, dokumenty</span>
+    <span class="benefit-c1-r3-title" data-cms-key="home_benefit_c1r3_title">Vše na jednom místě</span>
+    <span class="benefit-c1-r3-text" data-cms-key="home_benefit_c1r3_text">AI chat, obrázky, překlady, dokumenty</span>
 
     <!-- Benefits grid col 2 -->
-    <span class="benefit-c2-r1-title">Stále nové funkce</span>
-    <span class="benefit-c2-r1-text">Chaties se neustále vyvíjí, abyste měli vždy přístup k nejnovějším AI technologiím</span>
+    <span class="benefit-c2-r1-title" data-cms-key="home_benefit_c2r1_title">Stále nové funkce</span>
+    <span class="benefit-c2-r1-text" data-cms-key="home_benefit_c2r1_text">Chaties se neustále vyvíjí, abyste měli vždy přístup k nejnovějším AI technologiím</span>
 
-    <span class="benefit-c2-r2-title">AI podnikání</span>
-    <span class="benefit-c2-r2-text">AI nástroje, které zrychlí, zjednoduší a zefektivní vaše podnikání</span>
+    <span class="benefit-c2-r2-title" data-cms-key="home_benefit_c2r2_title">AI podnikání</span>
+    <span class="benefit-c2-r2-text" data-cms-key="home_benefit_c2r2_text">AI nástroje, které zrychlí, zjednoduší a zefektivní vaše podnikání</span>
 
-    <span class="benefit-c2-r3-title">Pro práci i zábavu</span>
-    <span class="benefit-c2-r3-text">Univerzální pomocník pro každého</span>
+    <span class="benefit-c2-r3-title" data-cms-key="home_benefit_c2r3_title">Pro práci i zábavu</span>
+    <span class="benefit-c2-r3-text" data-cms-key="home_benefit_c2r3_text">Univerzální pomocník pro každého</span>
 
     <!-- Horizontal separator -->
     <div class="benefits-separator"></div>
@@ -152,12 +153,12 @@
     <!-- ==================== AI SERVICES SECTION ==================== -->
     <div class="ai-services-chip">AI služby</div>
 
-    <h2 class="ai-services-heading">
+    <h2 class="ai-services-heading" data-cms-key="home_aiservices_heading">
       <span class="accent">Chceš být první,</span> kdo se<br>
       dozví o chystaných novinkách?
     </h2>
 
-    <p class="ai-services-subtext">
+    <p class="ai-services-subtext" data-cms-key="home_aiservices_subtext">
       <span class="accent">Přihlaš svůj odběr</span> a buď mezi prvními, kdo bude vědět o chystaných novinkách.
     </p>
 
@@ -190,12 +191,12 @@
     <!-- ==================== BLOG SECTION ==================== -->
     <div class="blog-chip">Blog</div>
 
-    <h2 class="blog-heading">
+    <h2 class="blog-heading" data-cms-key="home_blog_heading">
       <span class="accent">Aktuální informace,</span><br>
       Blog, features a další.
     </h2>
 
-    <p class="blog-subtext">Zde najdete nejaktuálnější informace ze světa AI a chaties.cz</p>
+    <p class="blog-subtext" data-cms-key="home_blog_subtext">Zde najdete nejaktuálnější informace ze světa AI a chaties.cz</p>
 
     <a href="blog.html" class="blog-all-link">Všechny články</a>
     <img class="blog-arrow-link"
@@ -244,12 +245,12 @@
     <!-- ==================== NEWSLETTER CTA SECTION ==================== -->
     <div class="newsletter-chip">CHATIES NEWSLETTER</div>
 
-    <h2 class="newsletter-heading">
+    <h2 class="newsletter-heading" data-cms-key="home_newsletter_heading">
       <span class="accent">Chceš být první,</span> kdo se<br>
       dozví o chystaných novinkách?
     </h2>
 
-    <p class="newsletter-subtext">
+    <p class="newsletter-subtext" data-cms-key="home_newsletter_subtext">
       <span class="accent">Přihlaš svůj odběr</span> a buď mezi prvními, kdo bude vědět o chystaných novinkách.
     </p>
 
@@ -313,6 +314,22 @@
 
   </div><!-- /.page -->
 
+  <script>
+    // CMS content loader
+    (function () {
+      fetch('https://project1-production-bfde.up.railway.app/api/content')
+        .then(function (r) { return r.json(); })
+        .then(function (blocks) {
+          var map = {};
+          blocks.forEach(function (b) { map[b.key] = b.value; });
+          document.querySelectorAll('[data-cms-key]').forEach(function (el) {
+            var key = el.getAttribute('data-cms-key');
+            if (map[key] != null) el.innerHTML = map[key];
+          });
+        })
+        .catch(function () {});
+    })();
+  </script>
   <script>
     (function () {
       var tabs = [

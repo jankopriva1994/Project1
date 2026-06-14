@@ -1,0 +1,103 @@
+<!DOCTYPE html>
+<html lang="cs">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Chaties AI – Přístup</title>
+  <style>
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+    body {
+      font-family: 'Segoe UI', Arial, sans-serif;
+      background: #0d0e11;
+      min-height: 100vh;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+    }
+    .gate-box {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      gap: 20px;
+      width: 340px;
+    }
+    .gate-logo {
+      height: 42px;
+      margin-bottom: 8px;
+    }
+    .gate-title {
+      color: #fff;
+      font-size: 18px;
+      font-weight: 600;
+      text-align: center;
+    }
+    .gate-sub {
+      color: #666;
+      font-size: 14px;
+      text-align: center;
+      margin-top: -8px;
+    }
+    .gate-input {
+      width: 100%;
+      background: #1a1a1a;
+      border: 1px solid #2e2e2e;
+      border-radius: 10px;
+      color: #fff;
+      padding: 12px 16px;
+      font-size: 15px;
+      outline: none;
+      transition: border-color .2s;
+    }
+    .gate-input:focus { border-color: #d0ee52; }
+    .gate-btn {
+      width: 100%;
+      background: #d0ee52;
+      color: #000;
+      border: none;
+      border-radius: 10px;
+      padding: 12px;
+      font-size: 15px;
+      font-weight: 700;
+      cursor: pointer;
+      transition: background .15s;
+    }
+    .gate-btn:hover { background: #c0de42; }
+    .gate-err {
+      color: #ff5555;
+      font-size: 13px;
+      display: none;
+    }
+  </style>
+</head>
+<body>
+  <div class="gate-box">
+    <img class="gate-logo" src="assets/img/logo.svg" alt="Chaties" />
+    <p class="gate-title">Stránka je chráněna heslem</p>
+    <p class="gate-sub">Zadejte heslo pro přístup na web</p>
+    <input id="gate-pw" class="gate-input" type="password" placeholder="Heslo" autocomplete="current-password" />
+    <button class="gate-btn" onclick="gateCheck()">Vstoupit</button>
+    <p class="gate-err" id="gate-err">Špatné heslo. Zkuste to znovu.</p>
+  </div>
+  <script>
+    var GATE_SECRET = 'chaties2026';
+
+    function gateCheck() {
+      var pw = document.getElementById('gate-pw').value;
+      if (pw === GATE_SECRET) {
+        sessionStorage.setItem('site_ok', '1');
+        var ret = sessionStorage.getItem('site_return') || 'index.html';
+        sessionStorage.removeItem('site_return');
+        location.href = ret;
+      } else {
+        document.getElementById('gate-err').style.display = 'block';
+        document.getElementById('gate-pw').value = '';
+        document.getElementById('gate-pw').focus();
+      }
+    }
+
+    document.getElementById('gate-pw').addEventListener('keydown', function (e) {
+      if (e.key === 'Enter') gateCheck();
+    });
+  </script>
+</body>
+</html>
