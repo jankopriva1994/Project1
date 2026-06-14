@@ -2454,27 +2454,9 @@ body {
   margin-bottom: 12px;
 }
 
-/* Footer overrides – blog detail page */
-.blog-detail-page .footer-logo               { top: 640px;  left: 228px; }
-.blog-detail-page .footer-desc               { top: 707px;  left: 228px; }
-.blog-detail-page .footer-col-services-header { top: 643px; }
-.blog-detail-page .footer-col-services-link1  { top: 680px; }
-.blog-detail-page .footer-col-services-link2  { top: 716px; }
-.blog-detail-page .footer-col-services-link3  { top: 752px; }
-.blog-detail-page .footer-col-services-link4  { top: 788px; }
-.blog-detail-page .footer-col-info-header    { top: 643px; }
-.blog-detail-page .footer-col-info-link1     { top: 680px; }
-.blog-detail-page .footer-col-info-link2     { top: 716px; }
-.blog-detail-page .footer-col-info-link3     { top: 752px; }
-.blog-detail-page .footer-col-info-link4     { top: 788px; }
-.blog-detail-page .footer-col-support-header { top: 643px; }
-.blog-detail-page .footer-col-support-link1  { top: 680px; }
-.blog-detail-page .footer-col-support-link2  { top: 716px; }
-.blog-detail-page .social-link-insta         { top: 835px;  left: 228px; }
-.blog-detail-page .social-link-fb            { top: 835px;  left: 337px; }
-.blog-detail-page .footer-line               { top: 898px;  left: 228px; width: 1224px; }
-.blog-detail-page .footer-copyright          { top: 929px;  left: 228px; }
-.blog-detail-page .footer-privacy            { top: 929px;  left: 1109px; }
+/* Footer overrides – blog detail page (tops set by JS based on article height) */
+.blog-detail-page .footer-logo               { left: 228px; }
+.blog-detail-page .footer-desc               { left: 228px; }
 
 /* ==================== AUTH PAGES – SHARED ==================== */
 

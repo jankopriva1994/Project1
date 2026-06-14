@@ -4,7 +4,7 @@
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <title>Máme nový vzhled webových stránek a administrace – Chaties AI</title>
-  <link rel="stylesheet" href="styles.css?v=32" />
+  <link rel="stylesheet" href="styles.css?v=81" />
 </head>
 <body>
   <div class="page blog-detail-page">
@@ -47,7 +47,7 @@
       <p>Nový design vychází z principů čistoty a přehlednosti. Každý prvek má své místo a účel. Žádné zbytečné rušivé elementy – jen to, co potřebujete k práci. Zákaznická administrace dostala zcela novou strukturu s rychlým přístupem ke všem AI nástrojům.</p>
 
       <a href="blog.html" class="bdetail-back">
-        <img class="bdetail-back-arrow" src="https://www.figma.com/api/mcp/asset/52c8e77c-f53c-4652-bdc2-003a621da093" alt="←" />
+        <svg class="bdetail-back-arrow" width="16" height="16" viewBox="0 0 24 24" fill="none"><path d="M5 12h14M12 5l7 7-7 7" stroke="#d0ee52" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg>
         <span class="bdetail-back-text">Zpátky na výpis článků</span>
       </a>
 
@@ -98,5 +98,56 @@
     <a href="#" class="footer-privacy">Zásady ochrany osobních údajů</a>
 
   </div><!-- /.page -->
+
+  <script>
+  (function () {
+    var article = document.querySelector('.bdetail-article');
+    var page    = document.querySelector('.blog-detail-page');
+    if (!article || !page) return;
+
+    var GAP = 80;
+    var FOOTER_OFFSETS = {
+      'footer-logo':               { dTop: 0,   left: '228px' },
+      'footer-desc':               { dTop: 67,  left: '228px' },
+      'footer-col-services-header':{ dTop: 3 },
+      'footer-col-services-link1': { dTop: 40 },
+      'footer-col-services-link2': { dTop: 76 },
+      'footer-col-services-link3': { dTop: 112 },
+      'footer-col-services-link4': { dTop: 148 },
+      'footer-col-info-header':    { dTop: 3 },
+      'footer-col-info-link1':     { dTop: 40 },
+      'footer-col-info-link2':     { dTop: 76 },
+      'footer-col-info-link3':     { dTop: 112 },
+      'footer-col-info-link4':     { dTop: 148 },
+      'footer-col-support-header': { dTop: 3 },
+      'footer-col-support-link1':  { dTop: 40 },
+      'footer-col-support-link2':  { dTop: 76 },
+      'social-link-insta':         { dTop: 195, left: '228px' },
+      'social-link-fb':            { dTop: 195, left: '337px' },
+      'footer-line':               { dTop: 258, left: '228px', width: '1224px' },
+      'footer-copyright':          { dTop: 289, left: '228px' },
+      'footer-privacy':            { dTop: 289, left: '1109px' },
+    };
+
+    function reposition() {
+      var articleBottom = article.getBoundingClientRect().bottom - page.getBoundingClientRect().top;
+      var footerStart   = articleBottom + GAP;
+
+      Object.keys(FOOTER_OFFSETS).forEach(function (cls) {
+        var el = page.querySelector('.' + cls);
+        if (!el) return;
+        var o = FOOTER_OFFSETS[cls];
+        el.style.top = (footerStart + o.dTop) + 'px';
+        if (o.left)  el.style.left  = o.left;
+        if (o.width) el.style.width = o.width;
+      });
+
+      page.style.minHeight = (footerStart + 330) + 'px';
+    }
+
+    reposition();
+    window.addEventListener('resize', reposition);
+  })();
+  </script>
 </body>
 </html>
