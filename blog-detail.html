@@ -154,8 +154,12 @@
     };
 
     function reposition() {
-      var articleBottom = article.getBoundingClientRect().bottom - page.getBoundingClientRect().top;
+      var articleBottom = article.offsetTop + article.offsetHeight;
       var footerStart   = articleBottom + GAP;
+
+      // Footer musí být nejméně na spodní hraně viewportu
+      var minByViewport = window.innerHeight - 330 - page.offsetTop;
+      if (minByViewport > footerStart) footerStart = minByViewport;
 
       Object.keys(FOOTER_OFFSETS).forEach(function (cls) {
         var el = page.querySelector('.' + cls);
