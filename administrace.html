@@ -4,7 +4,7 @@
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <title>Administrace – Chaties AI</title>
-  <link rel="stylesheet" href="styles.css?v=82" />
+  <link rel="stylesheet" href="styles.css?v=83" />
   <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2/dist/umd/supabase.min.js"></script>
   <script src="https://cdnjs.cloudflare.com/ajax/libs/mammoth/1.6.0/mammoth.browser.min.js"></script>
   <script src="https://cdn.jsdelivr.net/npm/tesseract.js@5/dist/tesseract.min.js"></script>
@@ -752,18 +752,21 @@
 
       <!-- Security tab panel -->
       <div class="adm-settings-tab-panel" id="adm-tab-security" style="display:none;">
-        <div class="adm-placeholder">
-          <p class="adm-placeholder-title">Heslo a zabezpečení</p>
-          <p class="adm-placeholder-sub">Správa hesla a bezpečnostních nastavení.</p>
-        </div>
+        <p style="color:#8b8b8b;font-size:14px;margin:0 0 20px;font-family:Supreme,sans-serif;">Zadejte nové heslo. Nemusíte zadávat staré heslo.</p>
+        <input id="adm-pwd-new" class="adm-settings-input" type="password" placeholder="Nové heslo (min. 6 znaků)" />
+        <input id="adm-pwd-confirm" class="adm-settings-input" type="password" placeholder="Potvrdit nové heslo" />
+        <button class="adm-settings-save" id="adm-pwd-save">Změnit heslo</button>
       </div>
 
       <!-- Billing tab panel -->
       <div class="adm-settings-tab-panel" id="adm-tab-billing" style="display:none;">
-        <div class="adm-placeholder">
-          <p class="adm-placeholder-title">Fakturační údaje</p>
-          <p class="adm-placeholder-sub">Vaše fakturační informace a adresa.</p>
-        </div>
+        <input id="adm-bill-company" class="adm-settings-input" type="text" placeholder="Název firmy" />
+        <input id="adm-bill-ic" class="adm-settings-input" type="text" placeholder="IČO" />
+        <input id="adm-bill-dic" class="adm-settings-input" type="text" placeholder="DIČ" />
+        <input id="adm-bill-address" class="adm-settings-input" type="text" placeholder="Ulice a číslo popisné" />
+        <input id="adm-bill-city" class="adm-settings-input" type="text" placeholder="Město" />
+        <input id="adm-bill-zip" class="adm-settings-input" type="text" placeholder="PSČ" />
+        <button class="adm-settings-save" id="adm-bill-save">Uložit fakturační údaje</button>
       </div>
 
       <!-- Subscription tab panel -->
@@ -835,40 +838,12 @@
         <!-- Members table -->
         <div class="adm-team-table">
           <div class="adm-team-table-head">
-            <span class="adm-team-col adm-team-col-name">Jméno</span>
-            <span class="adm-team-col adm-team-col-date">Přidaný od:</span>
-            <span class="adm-team-col adm-team-col-amount">Částka</span>
+            <span class="adm-team-col adm-team-col-name">E-mail</span>
+            <span class="adm-team-col adm-team-col-date">Pozváno:</span>
             <span class="adm-team-col adm-team-col-status">Stav</span>
             <span class="adm-team-col adm-team-col-del"></span>
           </div>
-          <div class="adm-team-table-row">
-            <span class="adm-team-col adm-team-col-name">Jan Kopřiva</span>
-            <span class="adm-team-col adm-team-col-date">27.04.2024 15:42</span>
-            <span class="adm-team-col adm-team-col-amount">650,-</span>
-            <span class="adm-team-col adm-team-col-status">Zaplacená</span>
-            <span class="adm-team-col adm-team-col-del"><button class="adm-team-del-btn"><svg width="18" height="18" viewBox="0 0 24 24" fill="none"><polyline points="3 6 5 6 21 6" stroke="#8b8b8b" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/><path d="M19 6l-1 14a2 2 0 01-2 2H8a2 2 0 01-2-2L5 6" stroke="#8b8b8b" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/><path d="M10 11v6M14 11v6" stroke="#8b8b8b" stroke-width="2" stroke-linecap="round"/><path d="M9 6V4a1 1 0 011-1h4a1 1 0 011 1v2" stroke="#8b8b8b" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg></button></span>
-          </div>
-          <div class="adm-team-table-row">
-            <span class="adm-team-col adm-team-col-name">Martin Kolář</span>
-            <span class="adm-team-col adm-team-col-date">27.04.2024 15:42</span>
-            <span class="adm-team-col adm-team-col-amount">1 650,-</span>
-            <span class="adm-team-col adm-team-col-status">Zaplacená</span>
-            <span class="adm-team-col adm-team-col-del"><button class="adm-team-del-btn"><svg width="18" height="18" viewBox="0 0 24 24" fill="none"><polyline points="3 6 5 6 21 6" stroke="#8b8b8b" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/><path d="M19 6l-1 14a2 2 0 01-2 2H8a2 2 0 01-2-2L5 6" stroke="#8b8b8b" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/><path d="M10 11v6M14 11v6" stroke="#8b8b8b" stroke-width="2" stroke-linecap="round"/><path d="M9 6V4a1 1 0 011-1h4a1 1 0 011 1v2" stroke="#8b8b8b" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg></button></span>
-          </div>
-          <div class="adm-team-table-row">
-            <span class="adm-team-col adm-team-col-name">Tomáš Nenosil</span>
-            <span class="adm-team-col adm-team-col-date">27.04.2024 15:42</span>
-            <span class="adm-team-col adm-team-col-amount">1 650,-</span>
-            <span class="adm-team-col adm-team-col-status">Zaplacená</span>
-            <span class="adm-team-col adm-team-col-del"><button class="adm-team-del-btn"><svg width="18" height="18" viewBox="0 0 24 24" fill="none"><polyline points="3 6 5 6 21 6" stroke="#8b8b8b" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/><path d="M19 6l-1 14a2 2 0 01-2 2H8a2 2 0 01-2-2L5 6" stroke="#8b8b8b" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/><path d="M10 11v6M14 11v6" stroke="#8b8b8b" stroke-width="2" stroke-linecap="round"/><path d="M9 6V4a1 1 0 011-1h4a1 1 0 011 1v2" stroke="#8b8b8b" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg></button></span>
-          </div>
-          <div class="adm-team-table-row">
-            <span class="adm-team-col adm-team-col-name">Patricie Nevadná</span>
-            <span class="adm-team-col adm-team-col-date">27.04.2024 15:42</span>
-            <span class="adm-team-col adm-team-col-amount">2 450,-</span>
-            <span class="adm-team-col adm-team-col-status">Zaplacená</span>
-            <span class="adm-team-col adm-team-col-del"><button class="adm-team-del-btn"><svg width="18" height="18" viewBox="0 0 24 24" fill="none"><polyline points="3 6 5 6 21 6" stroke="#8b8b8b" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/><path d="M19 6l-1 14a2 2 0 01-2 2H8a2 2 0 01-2-2L5 6" stroke="#8b8b8b" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/><path d="M10 11v6M14 11v6" stroke="#8b8b8b" stroke-width="2" stroke-linecap="round"/><path d="M9 6V4a1 1 0 011-1h4a1 1 0 011 1v2" stroke="#8b8b8b" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg></button></span>
-          </div>
+          <div id="adm-team-rows"><p style="color:#555;font-size:14px;padding:16px 0">Načítám…</p></div>
         </div>
 
       </div>
@@ -1912,6 +1887,113 @@
           }
         }
       } catch (e) { console.warn('Subscription load failed', e); }
+
+      // ── Heslo a zabezpečení ─────────────────────────────────
+      var pwdSaveBtn = document.getElementById('adm-pwd-save');
+      if (pwdSaveBtn) {
+        pwdSaveBtn.addEventListener('click', async function () {
+          var newPwd     = (document.getElementById('adm-pwd-new')     || {}).value || '';
+          var confirmPwd = (document.getElementById('adm-pwd-confirm') || {}).value || '';
+          if (newPwd.length < 6) { alert('Heslo musí mít alespoň 6 znaků'); return; }
+          if (newPwd !== confirmPwd) { alert('Hesla se neshodují'); return; }
+          pwdSaveBtn.disabled = true; pwdSaveBtn.textContent = 'Ukládám…';
+          var result = await supabase.auth.updateUser({ password: newPwd });
+          if (result.error) { alert('Chyba: ' + result.error.message); }
+          else {
+            document.getElementById('adm-pwd-new').value = '';
+            document.getElementById('adm-pwd-confirm').value = '';
+            pwdSaveBtn.textContent = 'Heslo změněno ✓';
+          }
+          pwdSaveBtn.disabled = false;
+          setTimeout(function () { pwdSaveBtn.textContent = 'Změnit heslo'; }, 3000);
+        });
+      }
+
+      // ── Fakturační údaje ─────────────────────────────────────
+      try {
+        var billing = await apiFetch('/api/user/billing');
+        var billFields = ['company_name','ic','dic','address','city','zip'];
+        var billIds    = ['adm-bill-company','adm-bill-ic','adm-bill-dic','adm-bill-address','adm-bill-city','adm-bill-zip'];
+        billFields.forEach(function (f, i) {
+          var el = document.getElementById(billIds[i]);
+          if (el && billing[f]) el.value = billing[f];
+        });
+      } catch(e) {}
+
+      var billSaveBtn = document.getElementById('adm-bill-save');
+      if (billSaveBtn) {
+        billSaveBtn.addEventListener('click', async function () {
+          billSaveBtn.disabled = true; billSaveBtn.textContent = 'Ukládám…';
+          try {
+            await apiFetch('/api/user/billing', {
+              method: 'PATCH',
+              body: JSON.stringify({
+                company_name: (document.getElementById('adm-bill-company') || {}).value,
+                ic:           (document.getElementById('adm-bill-ic')      || {}).value,
+                dic:          (document.getElementById('adm-bill-dic')     || {}).value,
+                address:      (document.getElementById('adm-bill-address') || {}).value,
+                city:         (document.getElementById('adm-bill-city')    || {}).value,
+                zip:          (document.getElementById('adm-bill-zip')     || {}).value
+              })
+            });
+            billSaveBtn.textContent = 'Uloženo ✓';
+          } catch(e) { alert('Chyba: ' + e.message); billSaveBtn.textContent = 'Uložit fakturační údaje'; }
+          billSaveBtn.disabled = false;
+          setTimeout(function () { billSaveBtn.textContent = 'Uložit fakturační údaje'; }, 3000);
+        });
+      }
+
+      // ── Tým ──────────────────────────────────────────────────
+      var DEL_SVG = '<svg width="18" height="18" viewBox="0 0 24 24" fill="none"><polyline points="3 6 5 6 21 6" stroke="#8b8b8b" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/><path d="M19 6l-1 14a2 2 0 01-2 2H8a2 2 0 01-2-2L5 6" stroke="#8b8b8b" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/><path d="M10 11v6M14 11v6" stroke="#8b8b8b" stroke-width="2" stroke-linecap="round"/><path d="M9 6V4a1 1 0 011-1h4a1 1 0 011 1v2" stroke="#8b8b8b" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg>';
+
+      async function loadTeamMembers() {
+        var rows = document.getElementById('adm-team-rows');
+        if (!rows) return;
+        try {
+          var members = await apiFetch('/api/user/team');
+          if (!members || members.length === 0) {
+            rows.innerHTML = '<p style="color:#555;font-size:14px;padding:16px 0">Zatím žádní členové týmu.</p>';
+            return;
+          }
+          rows.innerHTML = members.map(function (m) {
+            var date = m.invited_at ? new Date(m.invited_at).toLocaleDateString('cs-CZ') : '–';
+            var statusLabel = m.status === 'active' ? 'Aktivní' : m.status === 'pending' ? 'Čeká na registraci' : (m.status || '–');
+            return '<div class="adm-team-table-row">'
+              + '<span class="adm-team-col adm-team-col-name">' + (m.email || '–') + '</span>'
+              + '<span class="adm-team-col adm-team-col-date">' + date + '</span>'
+              + '<span class="adm-team-col adm-team-col-status">' + statusLabel + '</span>'
+              + '<span class="adm-team-col adm-team-col-del"><button class="adm-team-del-btn" data-id="' + m.id + '">' + DEL_SVG + '</button></span>'
+              + '</div>';
+          }).join('');
+          rows.querySelectorAll('.adm-team-del-btn').forEach(function (btn) {
+            btn.addEventListener('click', async function () {
+              if (!confirm('Odstranit člena týmu?')) return;
+              try { await apiFetch('/api/user/team/' + this.dataset.id, { method: 'DELETE' }); loadTeamMembers(); }
+              catch(e) { alert('Chyba: ' + e.message); }
+            });
+          });
+        } catch(e) { rows.innerHTML = '<p style="color:#555;font-size:14px;padding:16px 0">Chyba při načítání týmu.</p>'; }
+      }
+      loadTeamMembers();
+
+      var inviteBtn = document.querySelector('.adm-team-invite-btn');
+      if (inviteBtn) {
+        inviteBtn.addEventListener('click', async function () {
+          var emailInput = document.querySelector('.adm-team-email-input');
+          var email = emailInput ? emailInput.value.trim() : '';
+          if (!email) { alert('Zadejte e-mailovou adresu'); return; }
+          inviteBtn.disabled = true; inviteBtn.textContent = 'Odesílám…';
+          try {
+            var data = await apiFetch('/api/user/team/invite', { method: 'POST', body: JSON.stringify({ email }) });
+            var linkInput = document.getElementById('teamInviteLink');
+            if (linkInput) linkInput.value = data.invite_url;
+            if (emailInput) emailInput.value = '';
+            alert('Pozvánka vytvořena! Zkopírujte odkaz níže a pošlete ho ' + email);
+            loadTeamMembers();
+          } catch(e) { alert('Chyba: ' + e.message); }
+          inviteBtn.disabled = false; inviteBtn.textContent = 'Pozvat';
+        });
+      }
 
       // Stripe portal (změnit kartu / zrušit)
       async function openPortal(e) {
