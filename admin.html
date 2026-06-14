@@ -129,6 +129,7 @@
     <!-- SIDEBAR -->
     <nav class="cms-sidebar">
       <div class="cms-nav-item active" data-tab="templates">Šablony</div>
+      <div class="cms-nav-item" data-tab="categories">Kategorie</div>
       <div class="cms-nav-item" data-tab="blog">Blog</div>
       <div class="cms-nav-item" data-tab="content">Texty webu</div>
       <div class="cms-nav-item" data-tab="users">Uživatelé</div>
@@ -150,8 +151,10 @@
           <div class="form-row"><label>Slug (URL klíč, bez mezer)</label><input type="text" id="tmplSlug" /></div>
           <div class="form-row"><label>Popis</label><input type="text" id="tmplDesc" /></div>
           <div class="form-row">
-            <label>Kategorie (název skupiny v aplikaci, např. "Reklamy", "SEO", "Sociální sítě")</label>
-            <input type="text" id="tmplCat" placeholder="Reklamy" />
+            <label>Kategorie</label>
+            <select id="tmplCat">
+              <option value="">— bez kategorie —</option>
+            </select>
           </div>
           <div class="form-row"><label>Pořadí</label><input type="number" id="tmplOrder" value="0" /></div>
           <div class="form-row">
@@ -183,6 +186,31 @@
         <table class="cms-table" id="tmplTable">
           <thead><tr><th>Název</th><th>Slug</th><th>Kategorie</th><th>Aktivní</th><th></th></tr></thead>
           <tbody id="tmplBody"></tbody>
+        </table>
+      </section>
+
+      <!-- ── KATEGORIE ── -->
+      <section class="cms-section" id="sec-categories">
+        <h2 class="cms-h2">Kategorie šablon</h2>
+        <p class="cms-sub">Vytvářejte a spravujte kategorie, do kterých pak zařazujete šablony.</p>
+        <button class="btn-primary" id="catNewBtn">+ Nová kategorie</button>
+
+        <div id="catForm" class="cms-form" style="display:none">
+          <h3 id="catFormTitle">Nová kategorie</h3>
+          <input type="hidden" id="catId" />
+          <div class="form-row"><label>Název kategorie</label><input type="text" id="catName" placeholder="Reklamy" /></div>
+          <div class="form-row"><label>Pořadí</label><input type="number" id="catOrder" value="0" /></div>
+          <div class="form-actions">
+            <button class="btn-primary" id="catSave">Uložit</button>
+            <button class="btn-secondary" id="catCancel">Zrušit</button>
+            <button class="btn-danger" id="catDelete" style="display:none">Smazat</button>
+          </div>
+          <p id="catMsg"></p>
+        </div>
+
+        <table class="cms-table" id="catTable">
+          <thead><tr><th>Název</th><th>Pořadí</th><th></th></tr></thead>
+          <tbody id="catBody"></tbody>
         </table>
       </section>
 
@@ -328,11 +356,103 @@
         location.reload();
       });
 
+      loadCategories();
       loadTemplates();
       loadPosts();
       loadContent();
       loadUsers();
     }
+
+    // ── CATEGORIES ────────────────────────────────────────────
+    var categories = [];
+
+    async function loadCategories() {
+      categories = await apiFetch('/api/admin/categories');
+      renderCategories();
+      populateCatSelect();
+    }
+
+    function renderCategories() {
+      var tbody = document.getElementById('catBody');
+      tbody.innerHTML = '';
+      categories.forEach(function (c) {
+        var tr = document.createElement('tr');
+        tr.innerHTML = '<td>' + c.name + '</td>'
+          + '<td style="color:#666;font-size:13px">' + (c.sort_order || 0) + '</td>'
+          + '<td><button class="btn-secondary" style="font-size:12px;padding:5px 12px">Upravit</button></td>';
+        tr.querySelector('button').addEventListener('click', function () { openCatEdit(c); });
+        tbody.appendChild(tr);
+      });
+    }
+
+    function populateCatSelect() {
+      var sel = document.getElementById('tmplCat');
+      var cur = sel.value;
+      sel.innerHTML = '<option value="">— bez kategorie —</option>';
+      categories.forEach(function (c) {
+        var opt = document.createElement('option');
+        opt.value = c.name;
+        opt.textContent = c.name;
+        sel.appendChild(opt);
+      });
+      sel.value = cur;
+    }
+
+    function openCatForm(clear) {
+      document.getElementById('catForm').style.display = '';
+      document.getElementById('catTable').style.display = 'none';
+      document.getElementById('catNewBtn').style.display = 'none';
+      if (clear) {
+        document.getElementById('catFormTitle').textContent = 'Nová kategorie';
+        document.getElementById('catId').value = '';
+        document.getElementById('catName').value = '';
+        document.getElementById('catOrder').value = '0';
+        document.getElementById('catDelete').style.display = 'none';
+      }
+    }
+
+    function closeCatForm() {
+      document.getElementById('catForm').style.display = 'none';
+      document.getElementById('catTable').style.display = '';
+      document.getElementById('catNewBtn').style.display = '';
+    }
+
+    function openCatEdit(c) {
+      openCatForm(false);
+      document.getElementById('catFormTitle').textContent = 'Upravit kategorii';
+      document.getElementById('catId').value = c.id;
+      document.getElementById('catName').value = c.name;
+      document.getElementById('catOrder').value = c.sort_order || 0;
+      document.getElementById('catDelete').style.display = '';
+    }
+
+    document.getElementById('catNewBtn').addEventListener('click', function () { openCatForm(true); });
+    document.getElementById('catCancel').addEventListener('click', closeCatForm);
+
+    document.getElementById('catSave').addEventListener('click', async function () {
+      var id   = document.getElementById('catId').value;
+      var body = {
+        name:       document.getElementById('catName').value,
+        sort_order: parseInt(document.getElementById('catOrder').value) || 0
+      };
+      try {
+        if (id) await apiFetch('/api/admin/categories/' + id, { method: 'PUT', body: JSON.stringify(body) });
+        else    await apiFetch('/api/admin/categories',       { method: 'POST', body: JSON.stringify(body) });
+        await loadCategories();
+        closeCatForm();
+        showMsg(document.getElementById('catMsg'), 'Uloženo ✓', true);
+      } catch(e) { showMsg(document.getElementById('catMsg'), e.message, false); }
+    });
+
+    document.getElementById('catDelete').addEventListener('click', async function () {
+      var id = document.getElementById('catId').value;
+      if (!id || !confirm('Smazat kategorii?')) return;
+      try {
+        await apiFetch('/api/admin/categories/' + id, { method: 'DELETE' });
+        await loadCategories();
+        closeCatForm();
+      } catch(e) { showMsg(document.getElementById('catMsg'), e.message, false); }
+    });
 
     // ── TEMPLATES ─────────────────────────────────────────────
     var templates = [];
@@ -369,6 +489,7 @@
         document.getElementById('tmplDesc').value = '';
         document.getElementById('tmplCat').value = '';
         document.getElementById('tmplOrder').value = '0';
+
         document.getElementById('tmplFields').value = '[]';
         document.getElementById('tmplSystemPrompt').value = '';
         document.getElementById('tmplUserPrompt').value = '';
@@ -390,7 +511,15 @@
       document.getElementById('tmplName').value = t.name;
       document.getElementById('tmplSlug').value = t.slug;
       document.getElementById('tmplDesc').value = t.description || '';
-      document.getElementById('tmplCat').value = t.category || '';
+      // Set category dropdown – if value not in list, add it temporarily
+      var catSel = document.getElementById('tmplCat');
+      var catVal = t.category || '';
+      if (catVal && !Array.from(catSel.options).some(function(o){ return o.value === catVal; })) {
+        var opt = document.createElement('option');
+        opt.value = catVal; opt.textContent = catVal;
+        catSel.appendChild(opt);
+      }
+      catSel.value = catVal;
       document.getElementById('tmplOrder').value = t.sort_order || 0;
       document.getElementById('tmplFields').value = JSON.stringify(t.fields || [], null, 2);
       document.getElementById('tmplSystemPrompt').value = t.system_prompt || '';

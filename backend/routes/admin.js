@@ -19,6 +19,47 @@ function adminAuth(req, res, next) {
 
 const auth = adminAuth;
 
+// ── TEMPLATE CATEGORIES ────────────────────────────────────
+
+router.get('/categories', auth, async (req, res) => {
+  const { data, error } = await supabase
+    .from('template_categories')
+    .select('*')
+    .order('sort_order');
+  if (error) return res.status(500).json({ error: error.message });
+  res.json(data);
+});
+
+router.post('/categories', auth, async (req, res) => {
+  const { name, sort_order } = req.body;
+  if (!name) return res.status(400).json({ error: 'Chybí název kategorie' });
+  const { data, error } = await supabase
+    .from('template_categories')
+    .insert({ name, sort_order: sort_order || 0 })
+    .select()
+    .single();
+  if (error) return res.status(500).json({ error: error.message });
+  res.json(data);
+});
+
+router.put('/categories/:id', auth, async (req, res) => {
+  const { name, sort_order } = req.body;
+  const { data, error } = await supabase
+    .from('template_categories')
+    .update({ name, sort_order })
+    .eq('id', req.params.id)
+    .select()
+    .single();
+  if (error) return res.status(500).json({ error: error.message });
+  res.json(data);
+});
+
+router.delete('/categories/:id', auth, async (req, res) => {
+  const { error } = await supabase.from('template_categories').delete().eq('id', req.params.id);
+  if (error) return res.status(500).json({ error: error.message });
+  res.json({ success: true });
+});
+
 // ── TEMPLATES ──────────────────────────────────────────────
 
 router.get('/templates', auth, async (req, res) => {
