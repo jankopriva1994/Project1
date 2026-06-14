@@ -2011,6 +2011,13 @@
       // Load profile
       try {
         var profile = await apiFetch('/api/user/profile');
+
+        // Free users without active plan → redirect to pricing
+        if (!profile.plan || profile.plan === 'free') {
+          location.replace('ceny.html');
+          return;
+        }
+
         updateTokenDisplay(profile.tokens_balance);
 
         // Profile tab

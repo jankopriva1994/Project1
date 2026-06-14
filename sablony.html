@@ -174,5 +174,18 @@
       });
     })();
   </script>
+  <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2/dist/umd/supabase.min.js"></script>
+  <script src="js/chaties.js"></script>
+  <script>
+  (async function () {
+    try {
+      var user = await getUser();
+      var cta = document.querySelector('.nav-cta');
+      if (!cta || !user) return;
+      cta.href = 'administrace.html';
+      cta.innerHTML = 'Vstup do <span class="accent" style="margin-left:4px;">členské sekce</span>';
+    } catch (e) {}
+  })();
+  </script>
 </body>
 </html>

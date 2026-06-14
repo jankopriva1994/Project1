@@ -30,7 +30,7 @@
     <a href="blog.html" class="nav-link-vseai">Vše o AI</a>
     <a href="kontakt.html" class="nav-link-kontakt">Kontakt</a>
 
-    <a href="registrace.html" class="nav-cta">Vstup do <span class="accent" style="margin-left:4px;">členské sekce</span></a>
+    <a href="registrace.html" class="nav-cta">Vyzkoušej <span class="accent" style="margin-left:4px;">Chaties</span>&nbsp;zdarma</a>
 
     <div class="nav-separator"></div>
 
@@ -148,6 +148,19 @@
     <a href="#" class="footer-privacy">Zásady ochrany osobních údajů</a>
 
   </div><!-- /.page -->
+  <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2/dist/umd/supabase.min.js"></script>
+  <script src="js/chaties.js"></script>
+  <script>
+    (async function () {
+      try {
+        var user = await getUser();
+        var cta = document.querySelector('.nav-cta');
+        if (!cta || !user) return;
+        cta.href = 'administrace.html';
+        cta.innerHTML = 'Vstup do <span class="accent" style="margin-left:4px;">členské sekce</span>';
+      } catch (e) {}
+    })();
+  </script>
   <script>
     (function () {
       fetch('https://project1-production-bfde.up.railway.app/api/content')
