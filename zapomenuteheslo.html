@@ -45,8 +45,57 @@
 
     <input class="auth-input zap-input-email" type="email" placeholder="E-mail" />
 
-    <button class="auth-btn zap-btn">Odeslat odkaz pro obnovu hesla</button>
+    <button id="zap-btn" class="auth-btn zap-btn">Odeslat odkaz pro obnovu hesla</button>
+    <p id="zap-msg" class="auth-error" style="left:1039px;top:755px;width:384px;"></p>
 
   </div><!-- /.page -->
+
+  <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2/dist/umd/supabase.min.js"></script>
+  <script src="js/chaties.js"></script>
+  <script>
+  (function () {
+    var btn = document.getElementById('zap-btn');
+    var msg = document.getElementById('zap-msg');
+
+    btn.addEventListener('click', async function () {
+      var email = document.querySelector('.zap-input-email').value.trim();
+      msg.style.display = 'none';
+
+      if (!email) {
+        msg.style.color = '#ff5555';
+        msg.style.background = 'rgba(255,85,85,0.08)';
+        msg.style.border = '1px solid rgba(255,85,85,0.35)';
+        msg.innerHTML = '⚠&nbsp;Zadejte váš e-mail.';
+        msg.style.display = 'block';
+        return;
+      }
+
+      btn.textContent = 'Odesílám…';
+      btn.disabled = true;
+
+      var { error } = await supabase.auth.resetPasswordForEmail(email, {
+        redirectTo: 'https://chaties.cz/nove-heslo.html'
+      });
+
+      if (error) {
+        msg.style.color = '#ff5555';
+        msg.style.background = 'rgba(255,85,85,0.08)';
+        msg.style.border = '1px solid rgba(255,85,85,0.35)';
+        msg.innerHTML = '⚠&nbsp;Nepodařilo se odeslat e-mail. Zkuste to znovu.';
+        msg.style.display = 'block';
+        btn.textContent = 'Odeslat odkaz pro obnovu hesla';
+        btn.disabled = false;
+        return;
+      }
+
+      msg.style.color = '#d0ee52';
+      msg.style.background = 'rgba(208,238,82,0.08)';
+      msg.style.border = '1px solid rgba(208,238,82,0.3)';
+      msg.innerHTML = '✓&nbsp;Odkaz byl odeslán. Zkontrolujte svůj e-mail.';
+      msg.style.display = 'block';
+      btn.textContent = 'Odesláno';
+    });
+  })();
+  </script>
 </body>
 </html>

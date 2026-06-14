@@ -1,0 +1,103 @@
+<!DOCTYPE html>
+<html lang="cs">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Nové heslo – Chaties AI</title>
+  <link rel="stylesheet" href="styles.css?v=82" />
+</head>
+<body>
+  <div class="page zapomenuteheslo-page">
+
+    <!-- ==================== NAVBAR ==================== -->
+    <a href="index.html" class="nav-logo-link"><img class="nav-logo" src="assets/img/logo.svg" alt="Chaties" /></a>
+
+    <div class="nav-ai-wrap">
+      <a href="index.html" class="nav-link-active">AI služby</a>
+      <span class="nav-caret">▾</span>
+      <div class="nav-dropdown">
+        <a href="sablony.html" class="nav-dropdown-item">Šablony</a>
+        <a href="#" class="nav-dropdown-item">Generování obrázků</a>
+        <a href="#" class="nav-dropdown-item">Chat</a>
+        <a href="#" class="nav-dropdown-item">Překladač</a>
+        <a href="#" class="nav-dropdown-item">Dokumenty</a>
+      </div>
+    </div>
+    <a href="ceny.html" class="nav-link-ceny">Ceny</a>
+    <a href="onas.html" class="nav-link-onas">O nás</a>
+    <a href="#" class="nav-link-recenze">Recenze</a>
+    <a href="blog.html" class="nav-link-vseai">Vše o AI</a>
+    <a href="kontakt.html" class="nav-link-kontakt">Kontakt</a>
+
+    <a href="registrace.html" class="nav-cta">Vyzkoušej <span class="accent" style="margin-left:4px;">Chaties</span>&nbsp;zdarma</a>
+
+    <div class="nav-separator"></div>
+
+    <!-- ==================== DECORATIVE IMAGE ==================== -->
+    <img class="auth-img" src="https://www.figma.com/api/mcp/asset/6e417e86-e6e3-4cad-a2ce-5d1e0920f29c" alt="" />
+
+    <!-- ==================== NEW PASSWORD FORM ==================== -->
+    <h1 class="auth-heading zap-heading">
+      <span class="accent">Nastavte si<br>nové heslo</span>
+    </h1>
+
+    <p class="auth-subtext zap-subtext" style="color:#8b8b8b;">Zadejte nové heslo pro váš účet.<br>Heslo musí mít alespoň 6 znaků.</p>
+
+    <input id="nov-pass"  class="auth-input zap-input-email" type="password" placeholder="Nové heslo" />
+    <input id="nov-pass2" class="auth-input zap-input-email" type="password" placeholder="Potvrdit heslo" style="top:693px;" />
+
+    <button id="nov-btn" class="auth-btn zap-btn" style="top:757px;">Nastavit nové heslo</button>
+    <p id="nov-msg" class="auth-error" style="left:1039px;top:819px;width:384px;"></p>
+
+  </div><!-- /.page -->
+
+  <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2/dist/umd/supabase.min.js"></script>
+  <script src="js/chaties.js"></script>
+  <script>
+  (function () {
+    var btn  = document.getElementById('nov-btn');
+    var msg  = document.getElementById('nov-msg');
+
+    function showErr(text) {
+      msg.style.color = '#ff5555';
+      msg.style.background = 'rgba(255,85,85,0.08)';
+      msg.style.border = '1px solid rgba(255,85,85,0.35)';
+      msg.innerHTML = '⚠&nbsp;' + text;
+      msg.style.display = 'block';
+    }
+
+    function showOk(text) {
+      msg.style.color = '#d0ee52';
+      msg.style.background = 'rgba(208,238,82,0.08)';
+      msg.style.border = '1px solid rgba(208,238,82,0.3)';
+      msg.innerHTML = '✓&nbsp;' + text;
+      msg.style.display = 'block';
+    }
+
+    btn.addEventListener('click', async function () {
+      var pass  = document.getElementById('nov-pass').value;
+      var pass2 = document.getElementById('nov-pass2').value;
+      msg.style.display = 'none';
+
+      if (pass.length < 6)  return showErr('Heslo musí mít alespoň 6 znaků.');
+      if (pass !== pass2)   return showErr('Hesla se neshodují.');
+
+      btn.textContent = 'Ukládám…';
+      btn.disabled = true;
+
+      var { error } = await supabase.auth.updateUser({ password: pass });
+
+      if (error) {
+        showErr('Nepodařilo se změnit heslo. Zkuste požádat o nový odkaz.');
+        btn.textContent = 'Nastavit nové heslo';
+        btn.disabled = false;
+        return;
+      }
+
+      showOk('Heslo bylo změněno. Přesměrovávám na přihlášení…');
+      setTimeout(function () { window.location.href = 'prihlaseni.html'; }, 2000);
+    });
+  })();
+  </script>
+</body>
+</html>
