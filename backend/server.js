@@ -8,6 +8,11 @@ const app = express();
 app.use(cors({
   origin: [
     process.env.FRONTEND_URL || 'https://chaties.cz',
+    'https://chaties.cz',
+    'http://chaties.cz',
+    'https://www.chaties.cz',
+    'http://www.chaties.cz',
+    'http://399188.w88.wedos.ws',
     'http://localhost:8080',
     'http://127.0.0.1:8080'
   ],
