@@ -353,6 +353,7 @@
         <!-- Share icon -->
         <svg class="adm-trans-icon" width="20" height="20" viewBox="0 0 24 24" fill="none"><circle cx="18" cy="5" r="3" stroke="currentColor" stroke-width="1.5"/><circle cx="6" cy="12" r="3" stroke="currentColor" stroke-width="1.5"/><circle cx="18" cy="19" r="3" stroke="currentColor" stroke-width="1.5"/><path d="M8.59 13.51l6.83 3.98M15.41 6.51l-6.82 3.98" stroke="currentColor" stroke-width="1.5"/></svg>
         <span class="adm-tip"><span class="adm-tip-label">TIP!</span> Pokud nechcete plýtvat kreditem, doporučujeme si vše připravit mimo překladač a vložit až výsledný text, který chcete přeložit.</span>
+        <button class="adm-tmpl-generate-btn" id="translateBtn" style="margin-left:auto">Přeložit</button>
       </div>
 
     </div><!-- /adm-panel-translator -->
@@ -2015,6 +2016,36 @@
             if (msgEl) { msgEl.textContent = 'Chyba: ' + e.message; msgEl.style.color = '#ff5555'; msgEl.style.display = ''; setTimeout(function(){ msgEl.style.display = 'none'; }, 5000); }
           }
           inviteBtn.disabled = false; inviteBtn.textContent = 'Pozvat';
+        });
+      }
+
+      // ── Překladač textu ──────────────────────────────────────
+      var textTranslateBtn = document.getElementById('translateBtn');
+      if (textTranslateBtn) {
+        textTranslateBtn.addEventListener('click', async function () {
+          var panel = document.querySelector('.adm-panel-translator');
+          if (!panel) return;
+          var inputTA  = panel.querySelector('.adm-trans-textarea:not(.adm-trans-output)');
+          var outputTA = panel.querySelector('.adm-trans-output');
+          var text = inputTA ? inputTA.value.trim() : '';
+          if (!text) return;
+          var dropdowns = panel.querySelectorAll('.adm-lang-dropdown');
+          var fromLang = dropdowns[0] ? dropdowns[0].getAttribute('data-lang') : 'cs';
+          var toLang   = dropdowns[1] ? dropdowns[1].getAttribute('data-lang') : 'en';
+          textTranslateBtn.disabled = true;
+          textTranslateBtn.textContent = 'Překládám…';
+          if (outputTA) outputTA.value = '';
+          try {
+            var data = await apiFetch('/api/ai/translate', {
+              method: 'POST',
+              body: JSON.stringify({ text, from: fromLang, to: toLang })
+            });
+            if (outputTA) outputTA.value = data.translated || '';
+          } catch(e) {
+            if (outputTA) outputTA.value = 'Chyba: ' + e.message;
+          }
+          textTranslateBtn.disabled = false;
+          textTranslateBtn.textContent = 'Přeložit';
         });
       }
 
