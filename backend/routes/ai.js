@@ -125,32 +125,52 @@ router.post('/generate', requireAuth, async (req, res) => {
   const tmplKey = templateId || templateSlug;
   if (!tmplKey || !fields) return res.status(400).json({ error: 'Chybí parametry' });
 
-  const tmpl = TEMPLATE_DEFS[tmplKey];
-  if (!tmpl) return res.status(404).json({ error: 'Šablona nenalezena' });
+  const fieldText = Object.entries(fields)
+    .filter(([, v]) => v && v.trim())
+    .map(([label, value]) => `${label}:\n${value}`)
+    .join('\n\n');
 
-  const check = await deductTokens(req.user.id, 50, `Šablona: ${tmpl.name}`);
+  const langLabel = language === 'cs' ? 'čeština' : language;
+
+  // Load template from DB first, fall back to hardcoded TEMPLATE_DEFS
+  let systemPrompt, userPrompt, tmplName;
+
+  const { data: dbTmpl } = await supabase
+    .from('templates')
+    .select('name, system_prompt, user_prompt')
+    .eq('slug', tmplKey)
+    .eq('is_active', true)
+    .single();
+
+  if (dbTmpl && dbTmpl.system_prompt && dbTmpl.user_prompt) {
+    tmplName     = dbTmpl.name;
+    systemPrompt = dbTmpl.system_prompt;
+    userPrompt   = dbTmpl.user_prompt
+      .replace(/\{fields\}/g, fieldText)
+      .replace(/\{language\}/g, langLabel);
+  } else {
+    const tmpl = TEMPLATE_DEFS[tmplKey];
+    if (!tmpl) return res.status(404).json({ error: 'Šablona nenalezena' });
+    tmplName     = tmpl.name;
+    systemPrompt = tmpl.system;
+    userPrompt   = tmpl.buildPrompt(fieldText, langLabel);
+  }
+
+  const check = await deductTokens(req.user.id, 50, `Šablona: ${tmplName}`);
   if (!check.ok) return res.status(402).json({ error: check.error });
 
   try {
-    const fieldText = Object.entries(fields)
-      .filter(([, v]) => v && v.trim())
-      .map(([label, value]) => `${label}:\n${value}`)
-      .join('\n\n');
-
-    const langLabel = language === 'cs' ? 'čeština' : language;
-    const prompt = tmpl.buildPrompt(fieldText, langLabel);
-
     const response = await anthropic.messages.create({
       model: 'claude-sonnet-4-6',
       max_tokens: 4096,
-      system: tmpl.system,
-      messages: [{ role: 'user', content: prompt }]
+      system: systemPrompt,
+      messages: [{ role: 'user', content: userPrompt }]
     });
 
     const content = response.content[0].text;
     const tokensUsed = response.usage.input_tokens + response.usage.output_tokens;
 
-    await saveHistory(req.user.id, 'template', tmpl.name, content, tokensUsed, { templateId: tmplKey });
+    await saveHistory(req.user.id, 'template', tmplName, content, tokensUsed, { templateId: tmplKey });
 
     res.json({ content, tokens_used: tokensUsed });
   } catch (err) {

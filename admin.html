@@ -156,6 +156,14 @@
             <textarea id="tmplFields" class="tall" placeholder='[{"label":"Popis produktu","max":5000,"placeholder":"Popište produkt..."}]'></textarea>
           </div>
           <div class="form-row">
+            <label>System prompt (instrukce pro AI)</label>
+            <textarea id="tmplSystemPrompt" class="tall" placeholder="Jsi expert na... Výstup formátuj v HTML. Piš v češtině, pokud není řečeno jinak."></textarea>
+          </div>
+          <div class="form-row">
+            <label>User prompt – šablona zprávy <span style="color:#d0ee52">{fields}</span> = vyplněná pole, <span style="color:#d0ee52">{language}</span> = zvolený jazyk</label>
+            <textarea id="tmplUserPrompt" class="tall" placeholder="Vytvoř ... na základě:\n\n{fields}\n\nJazyk: {language}."></textarea>
+          </div>
+          <div class="form-row">
             <div class="toggle-wrap">
               <button class="toggle on" id="tmplActive" title="Aktivní"></button>
               <span style="font-size:13px;color:#aaa">Šablona aktivní</span>
@@ -346,6 +354,8 @@
         document.getElementById('tmplCat').value = 'marketing';
         document.getElementById('tmplOrder').value = '0';
         document.getElementById('tmplFields').value = '[]';
+        document.getElementById('tmplSystemPrompt').value = '';
+        document.getElementById('tmplUserPrompt').value = '';
         document.getElementById('tmplActive').classList.add('on');
         document.getElementById('tmplDelete').style.display = 'none';
       }
@@ -367,6 +377,8 @@
       document.getElementById('tmplCat').value = t.category || 'marketing';
       document.getElementById('tmplOrder').value = t.sort_order || 0;
       document.getElementById('tmplFields').value = JSON.stringify(t.fields || [], null, 2);
+      document.getElementById('tmplSystemPrompt').value = t.system_prompt || '';
+      document.getElementById('tmplUserPrompt').value = t.user_prompt || '';
       if (t.is_active) document.getElementById('tmplActive').classList.add('on');
       else document.getElementById('tmplActive').classList.remove('on');
       document.getElementById('tmplDelete').style.display = '';
@@ -385,8 +397,10 @@
         description: document.getElementById('tmplDesc').value,
         category:   document.getElementById('tmplCat').value,
         sort_order: parseInt(document.getElementById('tmplOrder').value) || 0,
-        fields:     fields,
-        is_active:  document.getElementById('tmplActive').classList.contains('on')
+        fields:        fields,
+        system_prompt: document.getElementById('tmplSystemPrompt').value,
+        user_prompt:   document.getElementById('tmplUserPrompt').value,
+        is_active:     document.getElementById('tmplActive').classList.contains('on')
       };
       try {
         if (id) await apiFetch('/api/admin/templates/' + id, { method: 'PUT', body: JSON.stringify(body) });

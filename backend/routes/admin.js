@@ -18,11 +18,11 @@ router.get('/templates', auth, async (req, res) => {
 });
 
 router.post('/templates', auth, async (req, res) => {
-  const { slug, name, description, fields, category, sort_order, is_active } = req.body;
+  const { slug, name, description, fields, category, sort_order, is_active, system_prompt, user_prompt } = req.body;
   if (!slug || !name) return res.status(400).json({ error: 'Chybí slug nebo name' });
   const { data, error } = await supabase
     .from('templates')
-    .insert({ slug, name, description, fields: fields || [], category, sort_order: sort_order || 0, is_active: is_active !== false })
+    .insert({ slug, name, description, fields: fields || [], category, sort_order: sort_order || 0, is_active: is_active !== false, system_prompt, user_prompt })
     .select()
     .single();
   if (error) return res.status(500).json({ error: error.message });
@@ -30,10 +30,10 @@ router.post('/templates', auth, async (req, res) => {
 });
 
 router.put('/templates/:id', auth, async (req, res) => {
-  const { slug, name, description, fields, category, sort_order, is_active } = req.body;
+  const { slug, name, description, fields, category, sort_order, is_active, system_prompt, user_prompt } = req.body;
   const { data, error } = await supabase
     .from('templates')
-    .update({ slug, name, description, fields, category, sort_order, is_active, updated_at: new Date().toISOString() })
+    .update({ slug, name, description, fields, category, sort_order, is_active, system_prompt, user_prompt, updated_at: new Date().toISOString() })
     .eq('id', req.params.id)
     .select()
     .single();

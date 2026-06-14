@@ -669,51 +669,9 @@
         <button class="adm-filter-pill">Reality</button>
       </div>
 
-      <!-- Template cards -->
-      <div class="adm-tmpl-cards">
-
-        <div class="adm-tmpl-card" data-tmpl-id="marketing" data-goto-panel="tmpl-detail">
-          <span class="adm-tmpl-title">Marketingový<br>plán</span>
-          <span class="adm-tmpl-star"><svg width="16" height="15" viewBox="0 0 24 24" fill="none"><path d="M12 2l3.09 6.26L22 9.27l-5 4.87 1.18 6.88L12 17.77l-6.18 3.25L7 14.14 2 9.27l6.91-1.01L12 2z" stroke="#d0ee52" stroke-width="1.5" stroke-linejoin="round"/></svg></span>
-          <p class="adm-tmpl-desc">Vyberte si z několika šablon,<br>které Vám pomohou vytvořit<br>marketingový plán pro vaši firmu.</p>
-        </div>
-
-        <div class="adm-tmpl-card" data-tmpl-id="google-ads" data-goto-panel="tmpl-detail">
-          <span class="adm-tmpl-title">Google vyhledávací<br>reklama</span>
-          <span class="adm-tmpl-star"><svg width="16" height="15" viewBox="0 0 24 24" fill="none"><path d="M12 2l3.09 6.26L22 9.27l-5 4.87 1.18 6.88L12 17.77l-6.18 3.25L7 14.14 2 9.27l6.91-1.01L12 2z" stroke="#d0ee52" stroke-width="1.5" stroke-linejoin="round"/></svg></span>
-          <p class="adm-tmpl-desc">Šablona, která vám napíše<br>3 nadpisy a 1 popis pro vaši<br>vyhledávací reklamu na Google.</p>
-        </div>
-
-        <div class="adm-tmpl-card" data-tmpl-id="facebook-ads" data-goto-panel="tmpl-detail">
-          <span class="adm-tmpl-title">Reklama<br>na Facebooku</span>
-          <span class="adm-tmpl-star"><svg width="16" height="15" viewBox="0 0 24 24" fill="none"><path d="M12 2l3.09 6.26L22 9.27l-5 4.87 1.18 6.88L12 17.77l-6.18 3.25L7 14.14 2 9.27l6.91-1.01L12 2z" stroke="#d0ee52" stroke-width="1.5" stroke-linejoin="round"/></svg></span>
-          <p class="adm-tmpl-desc">Šablona, která Vám pomůže<br>napsat text a nadpis pro reklamu<br>na Facebooku.</p>
-        </div>
-
-        <div class="adm-tmpl-card" data-tmpl-id="sklik-ads" data-goto-panel="tmpl-detail">
-          <span class="adm-tmpl-title">Sklik vyhledávací<br>reklama</span>
-          <span class="adm-tmpl-star"><svg width="16" height="15" viewBox="0 0 24 24" fill="none"><path d="M12 2l3.09 6.26L22 9.27l-5 4.87 1.18 6.88L12 17.77l-6.18 3.25L7 14.14 2 9.27l6.91-1.01L12 2z" stroke="#d0ee52" stroke-width="1.5" stroke-linejoin="round"/></svg></span>
-          <p class="adm-tmpl-desc">Šablona, která vám napíše<br>3 nadpisy a 1 popis pro vaši<br>vyhledávací reklamu na Sklik.</p>
-        </div>
-
-        <div class="adm-tmpl-card" data-tmpl-id="youtube-ads" data-goto-panel="tmpl-detail">
-          <span class="adm-tmpl-title">Populární<br>Youtube reklama</span>
-          <span class="adm-tmpl-star"><svg width="16" height="15" viewBox="0 0 24 24" fill="none"><path d="M12 2l3.09 6.26L22 9.27l-5 4.87 1.18 6.88L12 17.77l-6.18 3.25L7 14.14 2 9.27l6.91-1.01L12 2z" stroke="#d0ee52" stroke-width="1.5" stroke-linejoin="round"/></svg></span>
-          <p class="adm-tmpl-desc">Šablona, která vám vytvoří scénář<br>pro poutavou video reklamu<br>na Youtube.</p>
-        </div>
-
-        <div class="adm-tmpl-card" data-tmpl-id="webinar" data-goto-panel="tmpl-detail">
-          <span class="adm-tmpl-title">Témata pro váš<br>prodejní webinář</span>
-          <span class="adm-tmpl-star"><svg width="16" height="15" viewBox="0 0 24 24" fill="none"><path d="M12 2l3.09 6.26L22 9.27l-5 4.87 1.18 6.88L12 17.77l-6.18 3.25L7 14.14 2 9.27l6.91-1.01L12 2z" stroke="#d0ee52" stroke-width="1.5" stroke-linejoin="round"/></svg></span>
-          <p class="adm-tmpl-desc">Šablona, která vytvoří seznam<br>10x nápadů pro prodejní webinář,<br>který přiláká vaše zákazníky.</p>
-        </div>
-
-        <div class="adm-tmpl-card" data-tmpl-id="seo-keywords" data-goto-panel="tmpl-detail">
-          <span class="adm-tmpl-title">Seznam klíčových<br>slov (SEO)</span>
-          <span class="adm-tmpl-star"><svg width="16" height="15" viewBox="0 0 24 24" fill="none"><path d="M12 2l3.09 6.26L22 9.27l-5 4.87 1.18 6.88L12 17.77l-6.18 3.25L7 14.14 2 9.27l6.91-1.01L12 2z" stroke="#d0ee52" stroke-width="1.5" stroke-linejoin="round"/></svg></span>
-          <p class="adm-tmpl-desc">Šablona, která vytvoří seznam<br>20 relevantních klíčových slov<br>pro SEO optimalizaci vašeho webu.</p>
-        </div>
-
+      <!-- Template cards – rendered dynamically from API -->
+      <div class="adm-tmpl-cards" id="adm-tmpl-cards-dynamic">
+        <p style="color:#555;font-size:14px">Načítám šablony…</p>
       </div>
 
     </div><!-- /adm-panel-templates -->
@@ -1623,241 +1581,63 @@
 
   <!-- Template detail panel IIFE -->
   <script>
-  (function () {
-    var TEMPLATES = {
-      'marketing': {
-        name: 'Marketingový plán',
-        sub: 'Vyberte si z několika šablon, které Vám pomohou vytvořit prodejní popisek k vašemu produktu, chytlavý titulek k youtube nebo tiktok videu, několik témat k chystanému článku a nebo taky vám napíšou slohovou práci.',
-        fields: [
-          { label: 'Popis firmy', max: 100000, placeholder: 'Popište Vaší firmu, zákazníka a co přesně prodáváte nebo nabízíte' },
-          { label: 'Cíl', max: 5000, placeholder: 'Jakých cílů chcete dosáhnout díky tomuto plánu?\nNapř: "chceme získat 100 zákazníků"' },
-          { label: 'Aktuální situace', max: 5000, placeholder: 'Popište současnou situaci Vaší firmy co se týče cílů, které chcete dosáhnout\nnapř: "náš největší problém je nízká konverze na webu"' }
-        ]
-      },
-      'google-ads': {
-        name: 'Google vyhledávací reklama',
-        sub: 'Šablona, která vám napíše 3 nadpisy a 1 popis pro vaši vyhledávací reklamu na Google.',
-        fields: [
-          { label: 'Popis produktu/služby', max: 5000, placeholder: 'Co prodáváte nebo nabízíte? Popište svůj produkt nebo službu.' },
-          { label: 'Cílová skupina', max: 2000, placeholder: 'Kdo jsou vaši zákazníci? Např: "firmy hledající účetní software"' },
-          { label: 'Klíčová slova', max: 1000, placeholder: 'Jaká klíčová slova chcete cílit? Např: "účetní software, fakturace online"' }
-        ]
-      },
-      'facebook-ads': {
-        name: 'Reklama na Facebooku',
-        sub: 'Šablona, která Vám pomůže napsat text a nadpis pro reklamu na Facebooku.',
-        fields: [
-          { label: 'Popis produktu/služby', max: 5000, placeholder: 'Co prodáváte nebo nabízíte?' },
-          { label: 'Cílová skupina', max: 2000, placeholder: 'Kdo jsou vaši zákazníci? Věk, zájmy, potřeby...' },
-          { label: 'Akce nebo nabídka', max: 1000, placeholder: 'Máte speciální nabídku, slevu nebo akci? Např: "30% sleva do konce měsíce"' }
-        ]
-      },
-      'sklik-ads': {
-        name: 'Sklik vyhledávací reklama',
-        sub: 'Šablona, která vám napíše 3 nadpisy a 1 popis pro vaši vyhledávací reklamu na Sklik.',
-        fields: [
-          { label: 'Popis produktu/služby', max: 5000, placeholder: 'Co prodáváte nebo nabízíte?' },
-          { label: 'Cílová skupina', max: 2000, placeholder: 'Kdo jsou vaši zákazníci?' }
-        ]
-      },
-      'youtube-ads': {
-        name: 'Populární Youtube reklama',
-        sub: 'Šablona, která vám vytvoří scénář pro poutavou video reklamu na Youtube.',
-        fields: [
-          { label: 'Popis produktu/služby', max: 5000, placeholder: 'Co chcete inzerovat? Popište produkt nebo službu.' },
-          { label: 'Cílová skupina', max: 2000, placeholder: 'Kdo jsou vaši zákazníci?' },
-          { label: 'Délka reklamy', max: 100, placeholder: 'Jak dlouhá má být reklama? Např: "15 sekund" nebo "30 sekund"' }
-        ]
-      },
-      'webinar': {
-        name: 'Témata pro váš prodejní webinář',
-        sub: 'Šablona, která vytvoří seznam 10 nápadů pro prodejní webinář, který přiláká vaše zákazníky.',
-        fields: [
-          { label: 'Popis produktu/služby', max: 5000, placeholder: 'Co prodáváte? Jaký problém řeší váš produkt?' },
-          { label: 'Cílová skupina', max: 2000, placeholder: 'Kdo jsou vaši zákazníci? Jaké mají problémy?' }
-        ]
-      },
-      'seo-keywords': {
-        name: 'Seznam klíčových slov (SEO)',
-        sub: 'Šablona, která vám vytvoří seznam 20 relevantních klíčových slov pro SEO optimalizaci vašeho webu.',
-        fields: [
-          { label: 'Popis produktu/služby', max: 5000, placeholder: 'Popište svůj produkt nebo službu, kterou nabízíte.' },
-          { label: 'Ideální zákazník', max: 2000, placeholder: 'Kdo je váš ideální zákazník? Co hledá na internetu?' },
-          { label: 'Tón hlasu', max: 500, placeholder: 'Např: profesionální, přátelský, odborný...' }
-        ]
+    // ── Templates loaded dynamically from API ───────────────
+    window.TEMPLATES_DB = {};  // slug → { name, sub, fields }
+
+    window.renderTemplateCards = function (templates) {
+      var starSVG = '<svg width="16" height="15" viewBox="0 0 24 24" fill="none"><path d="M12 2l3.09 6.26L22 9.27l-5 4.87 1.18 6.88L12 17.77l-6.18 3.25L7 14.14 2 9.27l6.91-1.01L12 2z" stroke="#d0ee52" stroke-width="1.5" stroke-linejoin="round"/></svg>';
+      var container = document.getElementById('adm-tmpl-cards-dynamic');
+      if (!container) return;
+      container.innerHTML = '';
+      if (!templates || !templates.length) {
+        container.innerHTML = '<p style="color:#555;font-size:14px">Žádné šablony k dispozici.</p>';
+        return;
+      }
+      templates.forEach(function (t) {
+        window.TEMPLATES_DB[t.slug] = { name: t.name, sub: t.description || '', fields: t.fields || [] };
+        var card = document.createElement('div');
+        card.className = 'adm-tmpl-card';
+        card.setAttribute('data-tmpl-id', t.slug);
+        card.setAttribute('data-goto-panel', 'tmpl-detail');
+        var titleLines = t.name.replace(/\s+/, '<br>');
+        var descText = (t.description || '').replace(/\n/g, '<br>');
+        card.innerHTML = '<span class="adm-tmpl-title">' + t.name + '</span>'
+          + '<span class="adm-tmpl-star">' + starSVG + '</span>'
+          + '<p class="adm-tmpl-desc">' + descText + '</p>';
+        card.addEventListener('click', function () { loadTemplateAndNavigate(t.slug); });
+        container.appendChild(card);
+      });
+    };
+
+    window.loadTemplatesFromAPI = async function () {
+      try {
+        var data = await apiFetch('/api/ai/templates');
+        window.renderTemplateCards(data);
+      } catch (e) {
+        var c = document.getElementById('adm-tmpl-cards-dynamic');
+        if (c) c.innerHTML = '<p style="color:#ff5555;font-size:14px">Nepodařilo se načíst šablony.</p>';
       }
     };
 
     var currentTmplId = null;
 
-    // ── (Mock generators removed – real AI used) ─────────────
-    function mockMarketing(values) {
-      var firma = (values[0] || 'vaší firmy').substring(0, 120);
-      var cil = (values[1] || 'růst zákazníků').substring(0, 80);
-      var situace = (values[2] || 'startovací fáze').substring(0, 100);
-      return '<div class="adm-tmpl-output-content">'
-        + '<h3>Marketingový plán — ' + firma.substring(0, 50) + (firma.length > 50 ? '…' : '') + '</h3>'
-        + '<h4>1. Shrnutí situace</h4>'
-        + '<p>Na základě vaší aktuální situace — <em>' + situace + '</em> — jsme identifikovali klíčové oblasti pro zlepšení a růst.</p>'
-        + '<h4>2. Cíle plánu</h4>'
-        + '<p>Primární cíl: <strong>' + cil + '</strong></p>'
-        + '<ul>'
-        + '<li>Zvýšit povědomí o značce v cílové skupině o 40 %</li>'
-        + '<li>Zlepšit konverzní poměr webu z 1,2 % na 3,5 %</li>'
-        + '<li>Dosáhnout ROI marketingových výdajů minimálně 3:1</li>'
-        + '</ul>'
-        + '<h4>3. Doporučené kanály</h4>'
-        + '<ol>'
-        + '<li><strong>Google Ads (Search):</strong> Zaměřit se na zákazníky s vysokou nákupní intencí</li>'
-        + '<li><strong>Facebook &amp; Instagram:</strong> Budování povědomí a remarketing</li>'
-        + '<li><strong>SEO &amp; content marketing:</strong> Dlouhodobý organický provoz</li>'
-        + '<li><strong>E-mail marketing:</strong> Udržování stávající zákaznické báze</li>'
-        + '</ol>'
-        + '<h4>4. Rozpočet a priority</h4>'
-        + '<p>Doporučujeme alokovat 60 % rozpočtu na výkonnostní kanály (Google, Meta Ads), 25 % na obsah a SEO, 15 % na testování nových kanálů a formátů.</p>'
-        + '<h4>5. Měření úspěchu</h4>'
-        + '<ul>'
-        + '<li>Sledovat CPL (cost per lead) a CAC (customer acquisition cost)</li>'
-        + '<li>Týdenní reporty výkonu kampaní</li>'
-        + '<li>Měsíční review a optimalizace alokace rozpočtu</li>'
-        + '</ul>'
-        + '</div>';
+    function loadTemplateAndNavigate(id) {
+      loadTemplate(id);
+      // Trigger panel switch
+      var navAliases = { 'tmpl-detail': 'templates' };
+      document.querySelectorAll('.adm-panel').forEach(function (p) { p.classList.remove('adm-panel-active'); });
+      var target = document.querySelector('.adm-panel-tmpl-detail');
+      if (target) target.classList.add('adm-panel-active');
+      var navEl = document.querySelector('.adm-nav-item[data-panel="templates"]');
+      if (navEl) {
+        document.querySelectorAll('.adm-nav-item').forEach(function (n) { n.classList.remove('adm-nav-active'); });
+        navEl.classList.add('adm-nav-active');
+      }
     }
-
-    function mockGoogleAds(values) {
-      var produkt = (values[0] || 'váš produkt').substring(0, 80);
-      var skupina = (values[1] || 'vaši zákazníci').substring(0, 60);
-      var klicova = (values[2] || 'hlavní klíčová slova').substring(0, 60);
-      return '<div class="adm-tmpl-output-content">'
-        + '<h3>Google vyhledávací reklama</h3>'
-        + '<p>Vygenerováno pro: <em>' + produkt + '</em></p>'
-        + '<h4>Nadpis 1 (max. 30 znaků)</h4>'
-        + '<p><strong>' + produkt.substring(0, 25) + ' – Vyzkoušejte' + '</strong></p>'
-        + '<h4>Nadpis 2 (max. 30 znaků)</h4>'
-        + '<p><strong>Rychlé řešení pro ' + skupina.substring(0, 14) + '</strong></p>'
-        + '<h4>Nadpis 3 (max. 30 znaků)</h4>'
-        + '<p><strong>Oblíbené. Vyzkoušejte zdarma.</strong></p>'
-        + '<h4>Popis (max. 90 znaků)</h4>'
-        + '<p>Hledáte ' + klicova.substring(0, 30) + '? Nabízíme ' + produkt.substring(0, 30) + ' přesně pro ' + skupina.substring(0, 20) + '. Začněte ještě dnes!</p>'
-        + '<h4>Doporučení</h4>'
-        + '<ul>'
-        + '<li>Otestujte alespoň 3 varianty nadpisů A/B testingem</li>'
-        + '<li>Přidejte rozšíření reklam: sitelinks, callouts, structured snippets</li>'
-        + '<li>Nastavte konverzní sledování před spuštěním kampaně</li>'
-        + '</ul>'
-        + '</div>';
-    }
-
-    function mockFacebookAds(values) {
-      var produkt = (values[0] || 'váš produkt').substring(0, 80);
-      var skupina = (values[1] || 'vaši zákazníci').substring(0, 60);
-      var akce = (values[2] || '').substring(0, 60);
-      var akcePart = akce ? '<p><strong>Speciální nabídka:</strong> ' + akce + '</p>' : '';
-      return '<div class="adm-tmpl-output-content">'
-        + '<h3>Reklama na Facebooku</h3>'
-        + '<h4>Hlavní text reklamy</h4>'
-        + '<p>Hledáte spolehlivé řešení pro ' + skupina.substring(0, 40) + '? 🎯</p>'
-        + '<p>' + produkt.substring(0, 100) + '. Tisíce spokojených zákazníků to potvrzují.</p>'
-        + akcePart
-        + '<p>👉 Klikněte níže a zjistěte více.</p>'
-        + '<h4>Nadpis reklamy (primární)</h4>'
-        + '<p><strong>' + produkt.substring(0, 40) + ' – Zjistěte více</strong></p>'
-        + '<h4>Nadpis reklamy (alternativa)</h4>'
-        + '<p><strong>Přesně to, co ' + skupina.substring(0, 25) + ' hledá</strong></p>'
-        + '<h4>Popis (pod nadpisem)</h4>'
-        + '<p>Vyzkoušejte bez závazků. Zaručená spokojenost nebo peníze zpět.</p>'
-        + '<h4>Doporučení k cílení</h4>'
-        + '<ul>'
-        + '<li>Cílit na zájmy spojené s: ' + skupina.substring(0, 50) + '</li>'
-        + '<li>Věk a lokalita dle vašeho produktu</li>'
-        + '<li>Lookalike audience z vašich stávajících zákazníků</li>'
-        + '</ul>'
-        + '</div>';
-    }
-
-    function mockSklikAds(values) {
-      var produkt = (values[0] || 'váš produkt').substring(0, 80);
-      var skupina = (values[1] || 'vaši zákazníci').substring(0, 60);
-      return '<div class="adm-tmpl-output-content">'
-        + '<h3>Sklik vyhledávací reklama</h3>'
-        + '<p>Vygenerováno pro: <em>' + produkt + '</em></p>'
-        + '<h4>Nadpis 1 (max. 33 znaků)</h4>'
-        + '<p><strong>' + produkt.substring(0, 28) + ' – Koupit' + '</strong></p>'
-        + '<h4>Nadpis 2 (max. 33 znaků)</h4>'
-        + '<p><strong>Ověřené řešení pro firmy</strong></p>'
-        + '<h4>Nadpis 3 (max. 33 znaků)</h4>'
-        + '<p><strong>Rychlá dodávka, snadné vrácení</strong></p>'
-        + '<h4>Popis (max. 76 znaků)</h4>'
-        + '<p>' + produkt.substring(0, 35) + ' pro ' + skupina.substring(0, 20) + '. Objednejte online a ušetřete!</p>'
-        + '<h4>Tipy pro Sklik</h4>'
-        + '<ul>'
-        + '<li>Přidejte rozšíření Sitelinks a Callout extensions</li>'
-        + '<li>Nastavte geotargeting na relevantní regiony</li>'
-        + '<li>Použijte přesnou a frázovou shodu klíčových slov</li>'
-        + '<li>Sledujte Quality Score a optimalizujte landing page</li>'
-        + '</ul>'
-        + '</div>';
-    }
-
-    function mockYoutubeAds(values) {
-      var produkt = (values[0] || 'váš produkt').substring(0, 80);
-      var skupina = (values[1] || 'vaši zákazníci').substring(0, 60);
-      var delka = (values[2] || '30 sekund').substring(0, 30);
-      return '<div class="adm-tmpl-output-content">'
-        + '<h3>Scénář Youtube reklamy (' + delka + ')</h3>'
-        + '<h4>0–5 sekund: Hook (nelze přeskočit)</h4>'
-        + '<p>„Pokud jste ' + skupina.substring(0, 35) + ' a stále řešíte [problém], tohle je pro vás."</p>'
-        + '<p><em>Vizuál: dynamický záběr produktu nebo tváře se silnou emocí.</em></p>'
-        + '<h4>5–15 sekund: Problém a řešení</h4>'
-        + '<p>„Každý den ' + skupina.substring(0, 30) + ' ztrácí čas nebo peníze kvůli starým metodám. ' + produkt.substring(0, 50) + ' to mění."</p>'
-        + '<p><em>Vizuál: srovnání „před" a „po", případová studie nebo testimonial.</em></p>'
-        + '<h4>15–25 sekund: Benefity</h4>'
-        + '<ul>'
-        + '<li>Ušetřete až 40 % času díky automatizaci</li>'
-        + '<li>Jednoduchá integrace – nastavíte za 5 minut</li>'
-        + '<li>Stovky spokojených zákazníků</li>'
-        + '</ul>'
-        + '<h4>25–30 sekund: Call to action</h4>'
-        + '<p>„Klikněte na odkaz níže a vyzkoušejte ' + produkt.substring(0, 30) + ' zdarma po dobu 14 dní."</p>'
-        + '<p><em>Vizuál: výzva k akci s URL nebo tlačítkem.</em></p>'
-        + '</div>';
-    }
-
-    function mockWebinar(values) {
-      var produkt = (values[0] || 'váš produkt').substring(0, 80);
-      var skupina = (values[1] || 'vaši zákazníci').substring(0, 60);
-      return '<div class="adm-tmpl-output-content">'
-        + '<h3>10 témat pro prodejní webinář</h3>'
-        + '<p>Na základě vašeho produktu (<em>' + produkt.substring(0, 60) + '</em>) a cílové skupiny (<em>' + skupina.substring(0, 40) + '</em>):</p>'
-        + '<ol>'
-        + '<li><strong>„5 největších chyb, které dělá ' + skupina.substring(0, 30) + ' a jak se jim vyhnout"</strong></li>'
-        + '<li><strong>„Jak dosáhnout [cíl] za 30 dní bez [bolestivé alternativy]"</strong></li>'
-        + '<li><strong>„Zákulisí: Jak ' + produkt.substring(0, 30) + ' pomohlo 3 firmám zdvojnásobit výsledky"</strong></li>'
-        + '<li><strong>„Živé demo: Od nuly k prvnímu výsledku za 60 minut"</strong></li>'
-        + '<li><strong>„Otázky a odpovědi: Vše, co jste chtěli vědět o ' + produkt.substring(0, 25) + '"</strong></li>'
-        + '<li><strong>„Tajemství úspěšných ' + skupina.substring(0, 30) + ': Co dělají jinak"</strong></li>'
-        + '<li><strong>„ROI kalkulačka: Kolik vám ' + produkt.substring(0, 25) + ' ušetří nebo vydělá?"</strong></li>'
-        + '<li><strong>„Trendy v oboru: Co čeká ' + skupina.substring(0, 25) + ' v příštích 12 měsících"</strong></li>'
-        + '<li><strong>„Případová studie: Od problému k úspěchu s ' + produkt.substring(0, 25) + '"</strong></li>'
-        + '<li><strong>„Exkluzivní nabídka jen pro účastníky webináře"</strong></li>'
-        + '</ol>'
-        + '<h4>Tip k organizaci</h4>'
-        + '<p>Nejlépe fungující formát: 40 minut obsahu + 15 minut Q&amp;A + 5 minut prezentace nabídky. Délka webináře 60 minut je ideální pro konverzi.</p>'
-        + '</div>';
-    }
-
-    var generators = {
-      'marketing': mockMarketing,
-      'google-ads': mockGoogleAds,
-      'facebook-ads': mockFacebookAds,
-      'sklik-ads': mockSklikAds,
-      'youtube-ads': mockYoutubeAds,
-      'webinar': mockWebinar
-    };
 
     // ── Render fields ────────────────────────────────────────
     function loadTemplate(id) {
-      var tmpl = TEMPLATES[id];
+      var tmpl = window.TEMPLATES_DB[id];
       if (!tmpl) return;
       currentTmplId = id;
 
@@ -1878,14 +1658,14 @@
       if (fieldsEl) {
         fieldsEl.innerHTML = '';
         tmpl.fields.forEach(function (field, idx) {
-          var maxFmt = field.max.toLocaleString('cs-CZ');
+          var maxFmt = (field.max || 5000).toLocaleString('cs-CZ');
           var div = document.createElement('div');
           div.className = 'adm-tmpl-field';
           div.innerHTML = '<div class="adm-tmpl-field-header">'
             + '<span class="adm-tmpl-field-label">' + field.label + '</span>'
             + '<span class="adm-tmpl-field-counter" id="tmplCounter' + idx + '">0/' + maxFmt + '</span>'
             + '</div>'
-            + '<textarea class="adm-tmpl-field-textarea" id="tmplField' + idx + '" placeholder="' + field.placeholder.replace(/"/g, '&quot;') + '" maxlength="' + field.max + '"></textarea>';
+            + '<textarea class="adm-tmpl-field-textarea" id="tmplField' + idx + '" placeholder="' + (field.placeholder || '').replace(/"/g, '&quot;') + '" maxlength="' + (field.max || 5000) + '"></textarea>';
           fieldsEl.appendChild(div);
 
           var ta = div.querySelector('textarea');
@@ -1905,7 +1685,7 @@
     if (generateBtn) {
       generateBtn.addEventListener('click', async function () {
         if (!currentTmplId) return;
-        var tmpl = TEMPLATES[currentTmplId];
+        var tmpl = window.TEMPLATES_DB[currentTmplId];
         if (!tmpl) return;
 
         // Collect field values as label → value pairs
@@ -1965,16 +1745,6 @@
         }
       });
     }
-
-    // ── Card click handlers ──────────────────────────────────
-    document.querySelectorAll('[data-tmpl-id]').forEach(function (card) {
-      card.addEventListener('click', function () {
-        var id = card.getAttribute('data-tmpl-id');
-        if (id) loadTemplate(id);
-      });
-    });
-
-  })();
   </script>
 
   <script src="js/chaties.js"></script>
@@ -2090,6 +1860,11 @@
       if (params.get('payment') === 'success') {
         alert('Platba proběhla úspěšně! Tokeny byly připsány na váš účet.');
         history.replaceState({}, '', 'administrace.html');
+      }
+
+      // Load templates from API dynamically
+      if (typeof window.loadTemplatesFromAPI === 'function') {
+        window.loadTemplatesFromAPI();
       }
     }
 
