@@ -142,13 +142,8 @@
           <div class="form-row"><label>Slug (URL klíč, bez mezer)</label><input type="text" id="tmplSlug" /></div>
           <div class="form-row"><label>Popis</label><input type="text" id="tmplDesc" /></div>
           <div class="form-row">
-            <label>Kategorie</label>
-            <select id="tmplCat">
-              <option value="marketing">marketing</option>
-              <option value="advertising">advertising</option>
-              <option value="content">content</option>
-              <option value="social">social</option>
-            </select>
+            <label>Kategorie (název skupiny v aplikaci, např. "Reklamy", "SEO", "Sociální sítě")</label>
+            <input type="text" id="tmplCat" placeholder="Reklamy" />
           </div>
           <div class="form-row"><label>Pořadí</label><input type="number" id="tmplOrder" value="0" /></div>
           <div class="form-row">
@@ -364,7 +359,7 @@
         document.getElementById('tmplName').value = '';
         document.getElementById('tmplSlug').value = '';
         document.getElementById('tmplDesc').value = '';
-        document.getElementById('tmplCat').value = 'marketing';
+        document.getElementById('tmplCat').value = '';
         document.getElementById('tmplOrder').value = '0';
         document.getElementById('tmplFields').value = '[]';
         document.getElementById('tmplSystemPrompt').value = '';
@@ -387,7 +382,7 @@
       document.getElementById('tmplName').value = t.name;
       document.getElementById('tmplSlug').value = t.slug;
       document.getElementById('tmplDesc').value = t.description || '';
-      document.getElementById('tmplCat').value = t.category || 'marketing';
+      document.getElementById('tmplCat').value = t.category || '';
       document.getElementById('tmplOrder').value = t.sort_order || 0;
       document.getElementById('tmplFields').value = JSON.stringify(t.fields || [], null, 2);
       document.getElementById('tmplSystemPrompt').value = t.system_prompt || '';

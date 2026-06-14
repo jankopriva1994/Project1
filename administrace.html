@@ -1593,19 +1593,40 @@
         container.innerHTML = '<p style="color:#555;font-size:14px">Žádné šablony k dispozici.</p>';
         return;
       }
+
+      // Register all templates in DB
       templates.forEach(function (t) {
         window.TEMPLATES_DB[t.slug] = { name: t.name, sub: t.description || '', fields: t.fields || [] };
-        var card = document.createElement('div');
-        card.className = 'adm-tmpl-card';
-        card.setAttribute('data-tmpl-id', t.slug);
-        card.setAttribute('data-goto-panel', 'tmpl-detail');
-        var titleLines = t.name.replace(/\s+/, '<br>');
-        var descText = (t.description || '').replace(/\n/g, '<br>');
-        card.innerHTML = '<span class="adm-tmpl-title">' + t.name + '</span>'
-          + '<span class="adm-tmpl-star">' + starSVG + '</span>'
-          + '<p class="adm-tmpl-desc">' + descText + '</p>';
-        card.addEventListener('click', function () { loadTemplateAndNavigate(t.slug); });
-        container.appendChild(card);
+      });
+
+      // Group by category
+      var groups = {};
+      var groupOrder = [];
+      templates.forEach(function (t) {
+        var cat = t.category || 'Ostatní';
+        if (!groups[cat]) { groups[cat] = []; groupOrder.push(cat); }
+        groups[cat].push(t);
+      });
+
+      // Render groups
+      groupOrder.forEach(function (cat) {
+        var heading = document.createElement('div');
+        heading.className = 'adm-tmpl-category-heading';
+        heading.textContent = cat;
+        container.appendChild(heading);
+
+        groups[cat].forEach(function (t) {
+          var card = document.createElement('div');
+          card.className = 'adm-tmpl-card';
+          card.setAttribute('data-tmpl-id', t.slug);
+          card.innerHTML = '<span class="adm-tmpl-title">' + t.name + '</span>'
+            + '<span class="adm-tmpl-star">' + starSVG + '</span>'
+            + '<p class="adm-tmpl-desc">' + (t.description || '') + '</p>';
+          card.addEventListener('click', (function (slug) {
+            return function () { loadTemplateAndNavigate(slug); };
+          })(t.slug));
+          container.appendChild(card);
+        });
       });
     };
 
