@@ -119,7 +119,7 @@
       btn.disabled = true;
       errEl.style.display = 'none';
 
-      var { error } = await supabase.auth.signUp({
+      var { data, error } = await supabase.auth.signUp({
         email,
         password: pass,
         options: { data: { full_name: fname + ' ' + lname } }
@@ -130,6 +130,11 @@
         btn.textContent = 'Registrovat se zdarma';
         btn.disabled = false;
         return;
+      }
+
+      // Pokud Supabase vyžaduje potvrzení e-mailu, session nebude nastavena – přihlásíme ručně
+      if (!data.session) {
+        await supabase.auth.signInWithPassword({ email: email, password: pass });
       }
 
       // Přesměrování na výběr tarifu
