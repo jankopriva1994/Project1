@@ -1,0 +1,533 @@
+<!DOCTYPE html>
+<html lang="cs">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>CMS – Chaties AI</title>
+  <style>
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+    body { font-family: 'Segoe UI', Arial, sans-serif; background: #0e0e0e; color: #e0e0e0; min-height: 100vh; display: flex; flex-direction: column; }
+
+    /* TOPBAR */
+    .cms-topbar { background: #161616; border-bottom: 1px solid #2a2a2a; padding: 0 32px; height: 56px; display: flex; align-items: center; justify-content: space-between; }
+    .cms-topbar-title { font-size: 18px; font-weight: 600; color: #fff; }
+    .cms-topbar-title span { color: #d0ee52; }
+    .cms-logout { background: none; border: 1px solid #3a3a3a; color: #aaa; padding: 6px 16px; border-radius: 6px; cursor: pointer; font-size: 13px; }
+    .cms-logout:hover { border-color: #d0ee52; color: #d0ee52; }
+
+    /* LAYOUT */
+    .cms-body { display: flex; flex: 1; }
+
+    /* SIDEBAR */
+    .cms-sidebar { width: 220px; background: #141414; border-right: 1px solid #222; padding: 24px 0; flex-shrink: 0; }
+    .cms-nav-item { display: block; padding: 11px 24px; color: #aaa; font-size: 14px; cursor: pointer; border-left: 3px solid transparent; transition: all .15s; }
+    .cms-nav-item:hover { color: #fff; background: #1e1e1e; }
+    .cms-nav-item.active { color: #d0ee52; border-left-color: #d0ee52; background: #1a1f0f; }
+
+    /* MAIN */
+    .cms-main { flex: 1; padding: 32px; overflow-y: auto; }
+    .cms-section { display: none; }
+    .cms-section.active { display: block; }
+
+    h2.cms-h2 { font-size: 22px; font-weight: 600; color: #fff; margin-bottom: 8px; }
+    p.cms-sub { color: #888; font-size: 14px; margin-bottom: 24px; }
+
+    /* BUTTONS */
+    .btn-primary { background: #d0ee52; color: #000; border: none; padding: 9px 20px; border-radius: 7px; font-size: 14px; font-weight: 600; cursor: pointer; }
+    .btn-primary:hover { background: #c0de42; }
+    .btn-danger { background: #3a1010; color: #ff5555; border: 1px solid #5a1515; padding: 7px 14px; border-radius: 6px; font-size: 13px; cursor: pointer; }
+    .btn-danger:hover { background: #4a1515; }
+    .btn-secondary { background: #222; color: #ccc; border: 1px solid #333; padding: 7px 14px; border-radius: 6px; font-size: 13px; cursor: pointer; }
+    .btn-secondary:hover { background: #2a2a2a; }
+
+    /* TABLE */
+    .cms-table { width: 100%; border-collapse: collapse; margin-top: 16px; }
+    .cms-table th { text-align: left; padding: 10px 14px; font-size: 12px; color: #666; text-transform: uppercase; letter-spacing: .05em; border-bottom: 1px solid #222; }
+    .cms-table td { padding: 12px 14px; font-size: 14px; border-bottom: 1px solid #1c1c1c; vertical-align: middle; }
+    .cms-table tr:hover td { background: #161616; }
+    .badge { display: inline-block; padding: 2px 8px; border-radius: 4px; font-size: 12px; }
+    .badge-green { background: #1a2e0a; color: #a0d060; }
+    .badge-gray  { background: #222; color: #666; }
+
+    /* FORM */
+    .cms-form { background: #161616; border: 1px solid #222; border-radius: 10px; padding: 24px; margin-top: 20px; max-width: 700px; }
+    .cms-form h3 { font-size: 16px; color: #fff; margin-bottom: 20px; }
+    .form-row { margin-bottom: 16px; }
+    .form-row label { display: block; font-size: 13px; color: #888; margin-bottom: 6px; }
+    .form-row input, .form-row textarea, .form-row select {
+      width: 100%; background: #1e1e1e; border: 1px solid #2e2e2e; border-radius: 7px;
+      color: #e0e0e0; padding: 9px 12px; font-size: 14px; font-family: inherit;
+    }
+    .form-row input:focus, .form-row textarea:focus, .form-row select:focus {
+      outline: none; border-color: #d0ee52;
+    }
+    .form-row textarea { resize: vertical; min-height: 120px; }
+    .form-row textarea.tall { min-height: 280px; }
+    .form-actions { display: flex; gap: 12px; margin-top: 20px; }
+    .toggle-wrap { display: flex; align-items: center; gap: 10px; }
+    .toggle { width: 40px; height: 22px; background: #333; border-radius: 11px; cursor: pointer; position: relative; transition: background .2s; border: none; }
+    .toggle.on { background: #d0ee52; }
+    .toggle::after { content: ''; position: absolute; width: 16px; height: 16px; background: #fff; border-radius: 50%; top: 3px; left: 3px; transition: left .2s; }
+    .toggle.on::after { left: 21px; }
+
+    /* CONTENT BLOCKS */
+    .cb-row { display: flex; align-items: flex-start; gap: 16px; padding: 14px 0; border-bottom: 1px solid #1c1c1c; }
+    .cb-label { width: 220px; flex-shrink: 0; }
+    .cb-label strong { display: block; font-size: 14px; color: #ddd; }
+    .cb-label span { font-size: 12px; color: #555; }
+    .cb-row textarea { flex: 1; background: #1a1a1a; border: 1px solid #2a2a2a; border-radius: 6px; color: #e0e0e0; padding: 8px 10px; font-size: 13px; min-height: 60px; resize: vertical; font-family: inherit; }
+    .cb-row textarea:focus { outline: none; border-color: #d0ee52; }
+    .cb-save { background: #1a2e0a; color: #a0d060; border: 1px solid #2a4a10; padding: 6px 14px; border-radius: 6px; font-size: 12px; cursor: pointer; white-space: nowrap; }
+    .cb-save:hover { background: #22380e; }
+
+    /* USERS */
+    .user-admin-btn { background: none; border: 1px solid #333; color: #888; padding: 4px 10px; border-radius: 5px; font-size: 12px; cursor: pointer; }
+    .user-admin-btn.is-admin { border-color: #d0ee52; color: #d0ee52; }
+
+    /* SEARCH */
+    .cms-search { background: #1a1a1a; border: 1px solid #2a2a2a; border-radius: 7px; color: #e0e0e0; padding: 8px 12px; font-size: 14px; width: 280px; margin-bottom: 16px; }
+    .cms-search:focus { outline: none; border-color: #d0ee52; }
+
+    .msg-ok  { color: #a0d060; font-size: 13px; margin-top: 8px; }
+    .msg-err { color: #ff5555; font-size: 13px; margin-top: 8px; }
+  </style>
+</head>
+<body>
+
+  <!-- TOPBAR -->
+  <div class="cms-topbar">
+    <div class="cms-topbar-title">CMS – <span>Chaties</span> AI</div>
+    <button class="cms-logout" id="cmsLogout">Odhlásit se</button>
+  </div>
+
+  <div class="cms-body">
+
+    <!-- SIDEBAR -->
+    <nav class="cms-sidebar">
+      <div class="cms-nav-item active" data-tab="templates">Šablony</div>
+      <div class="cms-nav-item" data-tab="blog">Blog</div>
+      <div class="cms-nav-item" data-tab="content">Texty webu</div>
+      <div class="cms-nav-item" data-tab="users">Uživatelé</div>
+    </nav>
+
+    <!-- MAIN -->
+    <main class="cms-main">
+
+      <!-- ── ŠABLONY ── -->
+      <section class="cms-section active" id="sec-templates">
+        <h2 class="cms-h2">Šablony</h2>
+        <p class="cms-sub">Přidávejte, upravujte a mažte šablony s AI prompty.</p>
+        <button class="btn-primary" id="tmplNewBtn">+ Nová šablona</button>
+
+        <div id="tmplForm" class="cms-form" style="display:none">
+          <h3 id="tmplFormTitle">Nová šablona</h3>
+          <input type="hidden" id="tmplId" />
+          <div class="form-row"><label>Název</label><input type="text" id="tmplName" /></div>
+          <div class="form-row"><label>Slug (URL klíč, bez mezer)</label><input type="text" id="tmplSlug" /></div>
+          <div class="form-row"><label>Popis</label><input type="text" id="tmplDesc" /></div>
+          <div class="form-row">
+            <label>Kategorie</label>
+            <select id="tmplCat">
+              <option value="marketing">marketing</option>
+              <option value="advertising">advertising</option>
+              <option value="content">content</option>
+              <option value="social">social</option>
+            </select>
+          </div>
+          <div class="form-row"><label>Pořadí</label><input type="number" id="tmplOrder" value="0" /></div>
+          <div class="form-row">
+            <label>Pole formuláře (JSON pole)</label>
+            <textarea id="tmplFields" class="tall" placeholder='[{"label":"Popis produktu","max":5000,"placeholder":"Popište produkt..."}]'></textarea>
+          </div>
+          <div class="form-row">
+            <div class="toggle-wrap">
+              <button class="toggle on" id="tmplActive" title="Aktivní"></button>
+              <span style="font-size:13px;color:#aaa">Šablona aktivní</span>
+            </div>
+          </div>
+          <div class="form-actions">
+            <button class="btn-primary" id="tmplSave">Uložit</button>
+            <button class="btn-secondary" id="tmplCancel">Zrušit</button>
+            <button class="btn-danger" id="tmplDelete" style="display:none">Smazat</button>
+          </div>
+          <p id="tmplMsg"></p>
+        </div>
+
+        <table class="cms-table" id="tmplTable">
+          <thead><tr><th>Název</th><th>Slug</th><th>Kategorie</th><th>Aktivní</th><th></th></tr></thead>
+          <tbody id="tmplBody"></tbody>
+        </table>
+      </section>
+
+      <!-- ── BLOG ── -->
+      <section class="cms-section" id="sec-blog">
+        <h2 class="cms-h2">Blog</h2>
+        <p class="cms-sub">Psaní a správa blogových článků.</p>
+        <button class="btn-primary" id="postNewBtn">+ Nový článek</button>
+
+        <div id="postForm" class="cms-form" style="display:none">
+          <h3 id="postFormTitle">Nový článek</h3>
+          <input type="hidden" id="postId" />
+          <div class="form-row"><label>Titulek</label><input type="text" id="postTitle" /></div>
+          <div class="form-row"><label>Slug (URL)</label><input type="text" id="postSlug" /></div>
+          <div class="form-row"><label>Perex (krátký popis)</label><textarea id="postExcerpt" style="min-height:70px"></textarea></div>
+          <div class="form-row"><label>Obsah (HTML)</label><textarea id="postContent" class="tall"></textarea></div>
+          <div class="form-row">
+            <div class="toggle-wrap">
+              <button class="toggle" id="postPublished" title="Publikováno"></button>
+              <span style="font-size:13px;color:#aaa">Publikovat</span>
+            </div>
+          </div>
+          <div class="form-actions">
+            <button class="btn-primary" id="postSave">Uložit</button>
+            <button class="btn-secondary" id="postCancel">Zrušit</button>
+            <button class="btn-danger" id="postDelete" style="display:none">Smazat</button>
+          </div>
+          <p id="postMsg"></p>
+        </div>
+
+        <table class="cms-table" id="postTable">
+          <thead><tr><th>Titulek</th><th>Slug</th><th>Publikováno</th><th>Datum</th><th></th></tr></thead>
+          <tbody id="postBody"></tbody>
+        </table>
+      </section>
+
+      <!-- ── TEXTY WEBU ── -->
+      <section class="cms-section" id="sec-content">
+        <h2 class="cms-h2">Texty webu</h2>
+        <p class="cms-sub">Editujte klíčové texty zobrazené na veřejném webu.</p>
+        <div id="contentList"></div>
+      </section>
+
+      <!-- ── UŽIVATELÉ ── -->
+      <section class="cms-section" id="sec-users">
+        <h2 class="cms-h2">Uživatelé</h2>
+        <p class="cms-sub">Přehled registrovaných uživatelů.</p>
+        <input class="cms-search" type="text" id="userSearch" placeholder="Hledat dle e-mailu nebo jména..." />
+        <table class="cms-table">
+          <thead><tr><th>E-mail</th><th>Jméno</th><th>Plán</th><th>Tokeny</th><th>Admin</th><th>Registrace</th></tr></thead>
+          <tbody id="userBody"></tbody>
+        </table>
+      </section>
+
+    </main>
+  </div>
+
+  <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2/dist/umd/supabase.min.js"></script>
+  <script src="js/chaties.js"></script>
+  <script>
+  (function () {
+
+    // ── Helpers ───────────────────────────────────────────────
+    function fmtDate(iso) {
+      if (!iso) return '–';
+      return new Date(iso).toLocaleDateString('cs-CZ', { day:'2-digit', month:'2-digit', year:'numeric' });
+    }
+
+    function showMsg(el, text, ok) {
+      el.textContent = text;
+      el.className = ok ? 'msg-ok' : 'msg-err';
+      setTimeout(function () { el.textContent = ''; }, 3000);
+    }
+
+    // ── Tab switching ─────────────────────────────────────────
+    document.querySelectorAll('.cms-nav-item').forEach(function (nav) {
+      nav.addEventListener('click', function () {
+        document.querySelectorAll('.cms-nav-item').forEach(function (n) { n.classList.remove('active'); });
+        document.querySelectorAll('.cms-section').forEach(function (s) { s.classList.remove('active'); });
+        nav.classList.add('active');
+        document.getElementById('sec-' + nav.dataset.tab).classList.add('active');
+      });
+    });
+
+    // ── Toggle helper ─────────────────────────────────────────
+    function makeToggle(el) {
+      el.addEventListener('click', function () { el.classList.toggle('on'); });
+    }
+    makeToggle(document.getElementById('tmplActive'));
+    makeToggle(document.getElementById('postPublished'));
+
+    // ── Auth guard ────────────────────────────────────────────
+    async function init() {
+      const user = await getUser();
+      if (!user) { window.location.href = 'prihlaseni.html'; return; }
+
+      // Check admin
+      try {
+        await apiFetch('/api/admin/templates');
+      } catch (e) {
+        document.body.innerHTML = '<div style="display:flex;align-items:center;justify-content:center;height:100vh;flex-direction:column;gap:16px"><h1 style="color:#ff5555">Přístup odepřen</h1><p style="color:#888">Tato stránka je pouze pro administrátory.</p><a href="administrace.html" style="color:#d0ee52">← Zpět do aplikace</a></div>';
+        return;
+      }
+
+      document.getElementById('cmsLogout').addEventListener('click', function () { logout(); });
+
+      loadTemplates();
+      loadPosts();
+      loadContent();
+      loadUsers();
+    }
+
+    // ── TEMPLATES ─────────────────────────────────────────────
+    var templates = [];
+
+    async function loadTemplates() {
+      templates = await apiFetch('/api/admin/templates');
+      renderTemplates();
+    }
+
+    function renderTemplates() {
+      var tbody = document.getElementById('tmplBody');
+      tbody.innerHTML = '';
+      templates.forEach(function (t) {
+        var tr = document.createElement('tr');
+        tr.innerHTML = '<td>' + t.name + '</td>'
+          + '<td style="color:#666;font-size:13px">' + t.slug + '</td>'
+          + '<td>' + (t.category || '–') + '</td>'
+          + '<td><span class="badge ' + (t.is_active ? 'badge-green' : 'badge-gray') + '">' + (t.is_active ? 'Aktivní' : 'Skrytá') + '</span></td>'
+          + '<td><button class="btn-secondary" style="font-size:12px;padding:5px 12px" data-id="' + t.id + '">Upravit</button></td>';
+        tr.querySelector('button').addEventListener('click', function () { openTmplEdit(t); });
+        tbody.appendChild(tr);
+      });
+    }
+
+    function openTmplForm(clear) {
+      document.getElementById('tmplForm').style.display = '';
+      document.getElementById('tmplTable').style.display = 'none';
+      document.getElementById('tmplNewBtn').style.display = 'none';
+      if (clear) {
+        document.getElementById('tmplFormTitle').textContent = 'Nová šablona';
+        document.getElementById('tmplId').value = '';
+        document.getElementById('tmplName').value = '';
+        document.getElementById('tmplSlug').value = '';
+        document.getElementById('tmplDesc').value = '';
+        document.getElementById('tmplCat').value = 'marketing';
+        document.getElementById('tmplOrder').value = '0';
+        document.getElementById('tmplFields').value = '[]';
+        document.getElementById('tmplActive').classList.add('on');
+        document.getElementById('tmplDelete').style.display = 'none';
+      }
+    }
+
+    function closeTmplForm() {
+      document.getElementById('tmplForm').style.display = 'none';
+      document.getElementById('tmplTable').style.display = '';
+      document.getElementById('tmplNewBtn').style.display = '';
+    }
+
+    function openTmplEdit(t) {
+      openTmplForm(false);
+      document.getElementById('tmplFormTitle').textContent = 'Upravit šablonu';
+      document.getElementById('tmplId').value = t.id;
+      document.getElementById('tmplName').value = t.name;
+      document.getElementById('tmplSlug').value = t.slug;
+      document.getElementById('tmplDesc').value = t.description || '';
+      document.getElementById('tmplCat').value = t.category || 'marketing';
+      document.getElementById('tmplOrder').value = t.sort_order || 0;
+      document.getElementById('tmplFields').value = JSON.stringify(t.fields || [], null, 2);
+      if (t.is_active) document.getElementById('tmplActive').classList.add('on');
+      else document.getElementById('tmplActive').classList.remove('on');
+      document.getElementById('tmplDelete').style.display = '';
+    }
+
+    document.getElementById('tmplNewBtn').addEventListener('click', function () { openTmplForm(true); });
+    document.getElementById('tmplCancel').addEventListener('click', closeTmplForm);
+
+    document.getElementById('tmplSave').addEventListener('click', async function () {
+      var id     = document.getElementById('tmplId').value;
+      var fields;
+      try { fields = JSON.parse(document.getElementById('tmplFields').value); } catch(e) { showMsg(document.getElementById('tmplMsg'), 'Chybný JSON v polích', false); return; }
+      var body = {
+        name:       document.getElementById('tmplName').value,
+        slug:       document.getElementById('tmplSlug').value,
+        description: document.getElementById('tmplDesc').value,
+        category:   document.getElementById('tmplCat').value,
+        sort_order: parseInt(document.getElementById('tmplOrder').value) || 0,
+        fields:     fields,
+        is_active:  document.getElementById('tmplActive').classList.contains('on')
+      };
+      try {
+        if (id) await apiFetch('/api/admin/templates/' + id, { method: 'PUT', body: JSON.stringify(body) });
+        else    await apiFetch('/api/admin/templates',       { method: 'POST', body: JSON.stringify(body) });
+        await loadTemplates();
+        closeTmplForm();
+        showMsg(document.getElementById('tmplMsg'), 'Uloženo ✓', true);
+      } catch(e) { showMsg(document.getElementById('tmplMsg'), e.message, false); }
+    });
+
+    document.getElementById('tmplDelete').addEventListener('click', async function () {
+      var id = document.getElementById('tmplId').value;
+      if (!id || !confirm('Smazat šablonu?')) return;
+      try {
+        await apiFetch('/api/admin/templates/' + id, { method: 'DELETE' });
+        await loadTemplates();
+        closeTmplForm();
+      } catch(e) { showMsg(document.getElementById('tmplMsg'), e.message, false); }
+    });
+
+    // ── BLOG ─────────────────────────────────────────────────
+    var posts = [];
+
+    async function loadPosts() {
+      posts = await apiFetch('/api/admin/posts');
+      renderPosts();
+    }
+
+    function renderPosts() {
+      var tbody = document.getElementById('postBody');
+      tbody.innerHTML = '';
+      posts.forEach(function (p) {
+        var tr = document.createElement('tr');
+        tr.innerHTML = '<td>' + p.title + '</td>'
+          + '<td style="color:#666;font-size:13px">' + p.slug + '</td>'
+          + '<td><span class="badge ' + (p.is_published ? 'badge-green' : 'badge-gray') + '">' + (p.is_published ? 'Ano' : 'Draft') + '</span></td>'
+          + '<td style="color:#666;font-size:13px">' + fmtDate(p.published_at || p.created_at) + '</td>'
+          + '<td><button class="btn-secondary" style="font-size:12px;padding:5px 12px" data-id="' + p.id + '">Upravit</button></td>';
+        tr.querySelector('button').addEventListener('click', function () { openPostEdit(p); });
+        tbody.appendChild(tr);
+      });
+    }
+
+    function openPostForm(clear) {
+      document.getElementById('postForm').style.display = '';
+      document.getElementById('postTable').style.display = 'none';
+      document.getElementById('postNewBtn').style.display = 'none';
+      if (clear) {
+        document.getElementById('postFormTitle').textContent = 'Nový článek';
+        document.getElementById('postId').value = '';
+        document.getElementById('postTitle').value = '';
+        document.getElementById('postSlug').value = '';
+        document.getElementById('postExcerpt').value = '';
+        document.getElementById('postContent').value = '';
+        document.getElementById('postPublished').classList.remove('on');
+        document.getElementById('postDelete').style.display = 'none';
+      }
+    }
+
+    function closePostForm() {
+      document.getElementById('postForm').style.display = 'none';
+      document.getElementById('postTable').style.display = '';
+      document.getElementById('postNewBtn').style.display = '';
+    }
+
+    function openPostEdit(p) {
+      openPostForm(false);
+      document.getElementById('postFormTitle').textContent = 'Upravit článek';
+      document.getElementById('postId').value = p.id;
+      document.getElementById('postTitle').value = p.title;
+      document.getElementById('postSlug').value = p.slug;
+      document.getElementById('postExcerpt').value = p.excerpt || '';
+      document.getElementById('postContent').value = p.content || '';
+      if (p.is_published) document.getElementById('postPublished').classList.add('on');
+      else document.getElementById('postPublished').classList.remove('on');
+      document.getElementById('postDelete').style.display = '';
+    }
+
+    document.getElementById('postNewBtn').addEventListener('click', function () { openPostForm(true); });
+    document.getElementById('postCancel').addEventListener('click', closePostForm);
+
+    document.getElementById('postSave').addEventListener('click', async function () {
+      var id = document.getElementById('postId').value;
+      var body = {
+        title:        document.getElementById('postTitle').value,
+        slug:         document.getElementById('postSlug').value,
+        excerpt:      document.getElementById('postExcerpt').value,
+        content:      document.getElementById('postContent').value,
+        is_published: document.getElementById('postPublished').classList.contains('on')
+      };
+      try {
+        if (id) await apiFetch('/api/admin/posts/' + id, { method: 'PUT', body: JSON.stringify(body) });
+        else    await apiFetch('/api/admin/posts',       { method: 'POST', body: JSON.stringify(body) });
+        await loadPosts();
+        closePostForm();
+      } catch(e) { showMsg(document.getElementById('postMsg'), e.message, false); }
+    });
+
+    document.getElementById('postDelete').addEventListener('click', async function () {
+      var id = document.getElementById('postId').value;
+      if (!id || !confirm('Smazat článek?')) return;
+      try {
+        await apiFetch('/api/admin/posts/' + id, { method: 'DELETE' });
+        await loadPosts();
+        closePostForm();
+      } catch(e) { showMsg(document.getElementById('postMsg'), e.message, false); }
+    });
+
+    // ── CONTENT BLOCKS ────────────────────────────────────────
+    var BLOCK_LABELS = {
+      'homepage_hero_title':      'Hlavní nadpis (homepage)',
+      'homepage_hero_subtitle':   'Podnadpis (homepage)',
+      'pricing_starter_desc':     'Popis plánu Starter',
+      'pricing_popular_desc':     'Popis plánu Popular',
+      'pricing_pro_desc':         'Popis plánu Pro',
+      'pricing_enterprise_desc':  'Popis plánu Enterprise'
+    };
+
+    async function loadContent() {
+      var blocks = await apiFetch('/api/admin/content');
+      var list = document.getElementById('contentList');
+      list.innerHTML = '';
+      blocks.forEach(function (b) {
+        var row = document.createElement('div');
+        row.className = 'cb-row';
+        var label = BLOCK_LABELS[b.key] || b.key;
+        row.innerHTML = '<div class="cb-label"><strong>' + label + '</strong><span>' + b.key + '</span></div>'
+          + '<textarea>' + (b.value || '') + '</textarea>'
+          + '<button class="cb-save">Uložit</button>';
+        var ta  = row.querySelector('textarea');
+        var btn = row.querySelector('.cb-save');
+        btn.addEventListener('click', async function () {
+          try {
+            await apiFetch('/api/admin/content/' + b.key, { method: 'PUT', body: JSON.stringify({ value: ta.value }) });
+            btn.textContent = 'Uloženo ✓';
+            setTimeout(function () { btn.textContent = 'Uložit'; }, 2000);
+          } catch(e) { btn.textContent = 'Chyba!'; }
+        });
+        list.appendChild(row);
+      });
+    }
+
+    // ── USERS ─────────────────────────────────────────────────
+    var allUsers = [];
+
+    async function loadUsers() {
+      allUsers = await apiFetch('/api/admin/users');
+      renderUsers(allUsers);
+    }
+
+    function renderUsers(list) {
+      var tbody = document.getElementById('userBody');
+      tbody.innerHTML = '';
+      list.forEach(function (u) {
+        var tr = document.createElement('tr');
+        tr.innerHTML = '<td>' + u.email + '</td>'
+          + '<td>' + (u.full_name || '–') + '</td>'
+          + '<td><span class="badge ' + (u.plan !== 'free' ? 'badge-green' : 'badge-gray') + '">' + u.plan + '</span></td>'
+          + '<td>' + (u.tokens_balance || 0).toLocaleString('cs-CZ') + '</td>'
+          + '<td><button class="user-admin-btn ' + (u.is_admin ? 'is-admin' : '') + '" data-id="' + u.id + '" data-admin="' + u.is_admin + '">' + (u.is_admin ? 'Admin ✓' : 'Admin') + '</button></td>'
+          + '<td style="color:#666;font-size:13px">' + fmtDate(u.created_at) + '</td>';
+        tr.querySelector('.user-admin-btn').addEventListener('click', async function (e) {
+          var btn   = e.currentTarget;
+          var isAdm = btn.dataset.admin === 'true';
+          try {
+            await apiFetch('/api/admin/users/' + btn.dataset.id + '/admin', { method: 'PUT', body: JSON.stringify({ is_admin: !isAdm }) });
+            await loadUsers();
+          } catch(err) { alert(err.message); }
+        });
+        tbody.appendChild(tr);
+      });
+    }
+
+    document.getElementById('userSearch').addEventListener('input', function (e) {
+      var q = e.target.value.toLowerCase();
+      renderUsers(allUsers.filter(function (u) {
+        return (u.email || '').toLowerCase().includes(q) || (u.full_name || '').toLowerCase().includes(q);
+      }));
+    });
+
+    init();
+  })();
+  </script>
+
+</body>
+</html>

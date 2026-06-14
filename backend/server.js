@@ -26,6 +26,8 @@ app.get('/health', (req, res) => res.json({ status: 'ok', timestamp: new Date() 
 app.use('/api/user',   require('./routes/user'));
 app.use('/api/ai',     require('./routes/ai'));
 app.use('/api/stripe', require('./routes/stripe'));
+app.use('/api/admin',  require('./routes/admin'));
+app.use('/api/blog',   require('./routes/blog'));
 
 // 404
 app.use((req, res) => res.status(404).json({ error: 'Endpoint nenalezen' }));
