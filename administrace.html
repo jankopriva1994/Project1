@@ -1727,7 +1727,14 @@
             method: 'POST',
             body: JSON.stringify({ templateId: currentTmplId, fields: fields, language: lang })
           });
-          if (outputEl) outputEl.innerHTML = '<div class="adm-tmpl-output-content">' + (data.html || data.content || '') + '</div>';
+          if (outputEl) {
+            outputEl.innerHTML = '<div class="adm-tmpl-output-content">' + (data.html || data.content || '') + '</div>';
+            outputEl.querySelectorAll('[style],[bgcolor],[color]').forEach(function (el) {
+              el.removeAttribute('style');
+              el.removeAttribute('bgcolor');
+              el.removeAttribute('color');
+            });
+          }
           updateTokenDisplay(data.tokens_remaining);
         } catch (err) {
           if (outputEl) outputEl.innerHTML = '<div class="adm-tmpl-output-content"><p style="color:#ff5555">Chyba: ' + (err.message || 'Generování selhalo.') + '</p></div>';

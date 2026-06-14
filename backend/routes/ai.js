@@ -35,11 +35,14 @@ async function deductTokens(userId, amount, description) {
   return { ok: true };
 }
 
-// Odstraní markdown code fences (```html...``` nebo ```...```)
+// Odstraní markdown code fences a inline style/bgcolor atributy z AI výstupu
 function stripMarkdownCode(text) {
   return text
     .replace(/^```(?:html|markdown|xml|)?\s*\n?/i, '')
     .replace(/\n?```\s*$/,'')
+    .replace(/\s+style="[^"]*"/gi, '')
+    .replace(/\s+bgcolor="[^"]*"/gi, '')
+    .replace(/\s+color="[^"]*"/gi, '')
     .trim();
 }
 
