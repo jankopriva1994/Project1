@@ -35,6 +35,14 @@ async function deductTokens(userId, amount, description) {
   return { ok: true };
 }
 
+// Odstraní markdown code fences (```html...``` nebo ```...```)
+function stripMarkdownCode(text) {
+  return text
+    .replace(/^```(?:html|markdown|xml|)?\s*\n?/i, '')
+    .replace(/\n?```\s*$/,'')
+    .trim();
+}
+
 // Uložení do historie
 async function saveHistory(userId, type, title, content, tokensUsed, metadata = {}) {
   await supabase.from('history').insert({
@@ -81,40 +89,42 @@ router.post('/chat', requireAuth, async (req, res) => {
 });
 
 // Definice šablon s prompty
+const HTML_RULE = ' Výstup piš přímo jako čisté HTML (používej <h3>, <p>, <ul>, <li>, <ol>, <table>). Nepoužívej markdown, žádné ``` code bloky ani jiné obalovací značky – jen čisté HTML.';
+
 const TEMPLATE_DEFS = {
   'marketing': {
     name: 'Marketingový plán',
-    system: 'Jsi expert na tvorbu marketingových strategií. Vytváříš profesionální, strukturované a konkrétní marketingové plány. Výstup formátuj v HTML (používej <h3>, <p>, <ul>, <li>, <ol>). Piš v češtině, pokud není řečeno jinak.',
+    system: 'Jsi expert na tvorbu marketingových strategií. Vytváříš profesionální, strukturované a konkrétní marketingové plány. Piš v češtině, pokud není řečeno jinak.' + HTML_RULE,
     buildPrompt: (fields, lang) => `Vytvoř detailní marketingový plán na základě těchto informací:\n\n${fields}\n\nJazyk výstupu: ${lang}. Zahrň: shrnutí situace, cíle, doporučené kanály, rozpočtové priority a měření úspěchu.`
   },
   'google-ads': {
     name: 'Google vyhledávací reklama',
-    system: 'Jsi expert na Google Ads a PPC reklamu. Vytváříš přesné, přesvědčivé texty reklam dodržující limity znaků. Výstup formátuj v HTML. Piš v češtině, pokud není řečeno jinak.',
+    system: 'Jsi expert na Google Ads a PPC reklamu. Vytváříš přesné, přesvědčivé texty reklam dodržující limity znaků. Piš v češtině, pokud není řečeno jinak.' + HTML_RULE,
     buildPrompt: (fields, lang) => `Vytvoř 3 varianty Google vyhledávací reklamy (každá: 3 nadpisy max. 30 znaků + 2 popisky max. 90 znaků) na základě:\n\n${fields}\n\nJazyk výstupu: ${lang}. U každého nadpisu uveď počet znaků.`
   },
   'facebook-ads': {
     name: 'Reklama na Facebooku',
-    system: 'Jsi expert na Facebook a Instagram reklamu. Vytváříš poutavé texty, které zaujmou v newsfeedu. Výstup formátuj v HTML. Piš v češtině, pokud není řečeno jinak.',
+    system: 'Jsi expert na Facebook a Instagram reklamu. Vytváříš poutavé texty, které zaujmou v newsfeedu. Piš v češtině, pokud není řečeno jinak.' + HTML_RULE,
     buildPrompt: (fields, lang) => `Vytvoř 2 varianty Facebook reklamy (hlavní text, nadpis, popis) na základě:\n\n${fields}\n\nJazyk výstupu: ${lang}. Přidej doporučení pro cílení a formát.`
   },
   'sklik-ads': {
     name: 'Sklik vyhledávací reklama',
-    system: 'Jsi expert na Sklik (Seznam.cz) PPC reklamu. Výstup formátuj v HTML. Piš v češtině.',
+    system: 'Jsi expert na Sklik (Seznam.cz) PPC reklamu. Piš v češtině.' + HTML_RULE,
     buildPrompt: (fields, lang) => `Vytvoř 3 varianty Sklik vyhledávací reklamy (každá: 3 nadpisy max. 33 znaků + 1 popis max. 76 znaků) na základě:\n\n${fields}\n\nJazyk: ${lang}. U každého nadpisu uveď počet znaků.`
   },
   'youtube-ads': {
     name: 'Populární Youtube reklama',
-    system: 'Jsi expert na video marketing a YouTube reklamy. Vytváříš scénáře, které zaujmou v prvních 5 sekundách. Výstup formátuj v HTML. Piš v češtině, pokud není řečeno jinak.',
+    system: 'Jsi expert na video marketing a YouTube reklamy. Vytváříš scénáře, které zaujmou v prvních 5 sekundách. Piš v češtině, pokud není řečeno jinak.' + HTML_RULE,
     buildPrompt: (fields, lang) => `Vytvoř scénář YouTube reklamy na základě:\n\n${fields}\n\nJazyk výstupu: ${lang}. Rozděl scénář po sekundách (0-5s hook, 5-15s problém/řešení, 15-25s benefity, závěr CTA). Přidej pokyny pro vizuál.`
   },
   'webinar': {
     name: 'Témata pro prodejní webinář',
-    system: 'Jsi expert na prodejní webináře a online marketing. Výstup formátuj v HTML. Piš v češtině, pokud není řečeno jinak.',
+    system: 'Jsi expert na prodejní webináře a online marketing. Piš v češtině, pokud není řečeno jinak.' + HTML_RULE,
     buildPrompt: (fields, lang) => `Vytvoř 10 konkrétních témat pro prodejní webinář na základě:\n\n${fields}\n\nJazyk výstupu: ${lang}. Pro každé téma uveď název, proč přitáhne publikum a klíčový příslib pro účastníky. Přidej tipy na strukturu webináře.`
   },
   'seo-keywords': {
     name: 'Seznam klíčových slov (SEO)',
-    system: 'Jsi SEO expert. Vytváříš relevantní seznamy klíčových slov pro organické vyhledávání. Výstup formátuj v HTML. Piš v češtině, pokud není řečeno jinak.',
+    system: 'Jsi SEO expert. Vytváříš relevantní seznamy klíčových slov pro organické vyhledávání. Piš v češtině, pokud není řečeno jinak.' + HTML_RULE,
     buildPrompt: (fields, lang) => `Vytvoř seznam 20 relevantních SEO klíčových slov na základě:\n\n${fields}\n\nJazyk výstupu: ${lang}. Rozděl na: hlavní klíčová slova, long-tail fráze, otázky uživatelů. U každého uveď přibližnou obtížnost (nízká/střední/vysoká) a typ záměru (informační/komerční/transakční).`
   }
 };
@@ -167,12 +177,19 @@ router.post('/generate', requireAuth, async (req, res) => {
       messages: [{ role: 'user', content: userPrompt }]
     });
 
-    const content = response.content[0].text;
+    const raw = response.content[0].text;
+    const content = stripMarkdownCode(raw);
     const tokensUsed = response.usage.input_tokens + response.usage.output_tokens;
 
     await saveHistory(req.user.id, 'template', tmplName, content, tokensUsed, { templateId: tmplKey });
 
-    res.json({ content, tokens_used: tokensUsed });
+    const { data: updatedProfile } = await supabase
+      .from('profiles')
+      .select('tokens_balance')
+      .eq('id', req.user.id)
+      .single();
+
+    res.json({ content, tokens_used: tokensUsed, tokens_remaining: updatedProfile?.tokens_balance ?? 0 });
   } catch (err) {
     console.error('Generate error:', err);
     res.status(500).json({ error: 'Chyba při generování obsahu' });
