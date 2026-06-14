@@ -1797,8 +1797,8 @@
       try {
         var profile = await apiFetch('/api/user/profile');
 
-        // Free users without active plan → redirect to pricing
-        if (!profile.plan || profile.plan === 'free') {
+        // Free users without active plan → redirect to pricing (admins bypass this)
+        if (!profile.is_admin && (!profile.plan || profile.plan === 'free')) {
           location.replace('ceny.html');
           return;
         }
