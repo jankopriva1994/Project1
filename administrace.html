@@ -1797,10 +1797,18 @@
       try {
         var profile = await apiFetch('/api/user/profile');
 
-        // Free users without active plan → redirect to pricing (admins bypass this)
+        // Admins have unlimited access; free users go to pricing
         if (!profile.is_admin && (!profile.plan || profile.plan === 'free')) {
           location.replace('ceny.html');
           return;
+        }
+
+        // Give admin unlimited tokens display
+        if (profile.is_admin) {
+          var sidebarEl = document.getElementById('adm-sidebar-tokens');
+          var dashEl = document.getElementById('adm-dash-tokens');
+          if (sidebarEl) sidebarEl.textContent = '∞ slov';
+          if (dashEl) dashEl.textContent = '∞ slov';
         }
 
         updateTokenDisplay(profile.tokens_balance);

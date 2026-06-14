@@ -7,7 +7,7 @@ const { requireAuth } = require('../middleware/auth');
 router.get('/profile', requireAuth, async (req, res) => {
   const { data, error } = await supabase
     .from('profiles')
-    .select('id, email, full_name, tokens_balance, plan, created_at')
+    .select('id, email, full_name, tokens_balance, plan, is_admin, created_at')
     .eq('id', req.user.id)
     .single();
 
