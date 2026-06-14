@@ -3156,6 +3156,10 @@ body {
 .adm-tmpl-output-content p { margin: 0 0 10px; color: #e0e0e0; }
 .adm-tmpl-output-content ul, .adm-tmpl-output-content ol { margin: 0 0 14px; padding-left: 22px; color: #e0e0e0; }
 .adm-tmpl-output-content li { margin-bottom: 5px; }
+.adm-tmpl-output-content table { width: 100%; border-collapse: collapse; margin: 12px 0; }
+.adm-tmpl-output-content table th { background: #2a2d3a !important; color: #d0ee52 !important; padding: 10px 14px; text-align: left; font-size: 13px; font-weight: 600; }
+.adm-tmpl-output-content table td { padding: 9px 14px; color: #e0e0e0 !important; background: #22242a !important; border-bottom: 1px solid #2e2e2e; font-size: 14px; }
+.adm-tmpl-output-content table tr:nth-child(even) td { background: #1e2026 !important; }
 .adm-tmpl-output-loading { display: flex; align-items: center; justify-content: center; min-height: 200px; }
 .adm-tmpl-detail-output-actions { display: flex; justify-content: flex-end; }
 .adm-tmpl-copy-btn { display: flex; align-items: center; gap: 7px; height: 38px; padding: 0 18px; background: #272727; border: 1px solid #505050; border-radius: 5px; color: #8b8b8b; font-size: 14px; font-family: 'Supreme', sans-serif; cursor: pointer; }
