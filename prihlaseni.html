@@ -54,10 +54,12 @@
 
     <p class="auth-subtext pri-subtext">Ještě nemáte svůj účet? <a href="registrace.html" class="auth-link">Zaregistrujte se ZDARMA</a></p>
 
-    <input class="auth-input pri-input-email" type="email" placeholder="E-mail" />
-    <input class="auth-input auth-input-lock pri-input-pass" type="password" placeholder="Heslo" />
+    <input id="pri-email" class="auth-input pri-input-email" type="email" placeholder="E-mail" />
+    <input id="pri-pass" class="auth-input auth-input-lock pri-input-pass" type="password" placeholder="Heslo" />
 
     <a href="zapomenuteheslo.html" class="auth-forgot pri-forgot">Zapomenuté heslo?</a>
+
+    <p id="pri-error" style="color:#ff4d4d;font-size:13px;position:absolute;left:0;right:0;text-align:center;top:0;display:none;"></p>
 
     <!-- Cloudflare captcha mock -->
     <div class="auth-captcha pri-captcha">
@@ -72,7 +74,7 @@
       </div>
     </div>
 
-    <button class="auth-btn pri-btn">Přihlásit se a začít vytvářet</button>
+    <button id="pri-btn" class="auth-btn pri-btn">Přihlásit se a začít vytvářet</button>
 
     <div class="auth-divider-wrap pri-divider">
       <div class="auth-divider-line"></div>
@@ -98,5 +100,53 @@
     </a>
 
   </div><!-- /.page -->
+
+  <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2/dist/umd/supabase.min.js"></script>
+  <script src="js/chaties.js"></script>
+  <script>
+    (async () => {
+      // Pokud je už přihlášen, přesměruj
+      const user = await getUser();
+      if (user) { window.location.href = 'administrace.html'; return; }
+
+      const btn   = document.getElementById('pri-btn');
+      const err   = document.getElementById('pri-error');
+
+      function showError(msg) {
+        err.textContent = msg;
+        err.style.display = 'block';
+      }
+
+      btn.addEventListener('click', async () => {
+        const email    = document.getElementById('pri-email').value.trim();
+        const password = document.getElementById('pri-pass').value;
+
+        err.style.display = 'none';
+
+        if (!email || !password) { showError('Vyplňte e-mail a heslo.'); return; }
+
+        btn.textContent = 'Přihlašuji...';
+        btn.disabled = true;
+
+        const { error } = await supabase.auth.signInWithPassword({ email, password });
+
+        if (error) {
+          showError(error.message === 'Invalid login credentials'
+            ? 'Nesprávný e-mail nebo heslo.'
+            : error.message);
+          btn.textContent = 'Přihlásit se a začít vytvářet';
+          btn.disabled = false;
+          return;
+        }
+
+        window.location.href = 'administrace.html';
+      });
+
+      // Přihlášení stisknutím Enter
+      document.getElementById('pri-pass').addEventListener('keydown', e => {
+        if (e.key === 'Enter') btn.click();
+      });
+    })();
+  </script>
 </body>
 </html>

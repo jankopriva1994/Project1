@@ -5,6 +5,7 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <title>Administrace – Chaties AI</title>
   <link rel="stylesheet" href="styles.css?v=79" />
+  <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2/dist/umd/supabase.min.js"></script>
   <script src="https://cdnjs.cloudflare.com/ajax/libs/mammoth/1.6.0/mammoth.browser.min.js"></script>
   <script src="https://cdn.jsdelivr.net/npm/tesseract.js@5/dist/tesseract.min.js"></script>
 </head>
@@ -36,7 +37,7 @@
         Můj účet
       </a>
       <div class="adm-topbar-vsep"></div>
-      <a href="prihlaseni.html" class="adm-logout-link">Odhlásit se</a>
+      <a href="#" id="adm-logout" class="adm-logout-link">Odhlásit se</a>
     </div>
 
     <!-- Invite button -->
@@ -101,7 +102,7 @@
     <!-- Words widget -->
     <div class="adm-words-widget">
       <span class="adm-words-label">Dostupný počet slov:</span>
-      <span class="adm-words-value">19 852 slov</span>
+      <span class="adm-words-value" id="adm-sidebar-tokens">– slov</span>
     </div>
 
     <!-- ==================== CONTENT PANELS ==================== -->
@@ -113,15 +114,15 @@
       <div class="adm-dash-stats">
         <div class="adm-stat-card">
           <p class="adm-stat-label">Dostupný počet slov:</p>
-          <p class="adm-stat-value">19 852 slov</p>
+          <p class="adm-stat-value" id="adm-dash-tokens">–</p>
         </div>
         <div class="adm-stat-card">
           <p class="adm-stat-label">Členství aktivní do:</p>
-          <p class="adm-stat-value">30. 04. 2024<br>15:25:26</p>
+          <p class="adm-stat-value" id="adm-dash-period-end">–</p>
         </div>
         <div class="adm-stat-card">
           <p class="adm-stat-label">Bude prodlouženo:</p>
-          <p class="adm-stat-value">Za 12 dní</p>
+          <p class="adm-stat-value" id="adm-dash-renew">–</p>
         </div>
       </div>
 
@@ -796,9 +797,9 @@
 
       <!-- Profile tab panel (default) -->
       <div class="adm-settings-tab-panel" id="adm-tab-profile">
-        <input class="adm-settings-input" type="text" placeholder="Jméno a příjmení" />
-        <input class="adm-settings-input" type="email" placeholder="E-mailová adresa" />
-        <button class="adm-settings-save">Uložit změny</button>
+        <input id="adm-profile-name" class="adm-settings-input" type="text" placeholder="Jméno a příjmení" />
+        <input id="adm-profile-email" class="adm-settings-input" type="email" placeholder="E-mailová adresa" />
+        <button class="adm-settings-save" id="adm-profile-save">Uložit změny</button>
       </div>
 
       <!-- Security tab panel -->
@@ -824,11 +825,11 @@
         <div class="adm-sub-info-row">
           <div class="adm-sub-info-box">
             <p class="adm-sub-info-label">Členství aktivní do:</p>
-            <p class="adm-sub-info-value">30. 04. 2024<br>15:25:26</p>
+            <p class="adm-sub-info-value" id="adm-sub-period-end">–</p>
           </div>
           <div class="adm-sub-info-box">
             <p class="adm-sub-info-label">Bude prodlouženo:</p>
-            <p class="adm-sub-info-value">Za 12 dní</p>
+            <p class="adm-sub-info-value" id="adm-sub-renew">–</p>
           </div>
         </div>
 
@@ -837,7 +838,7 @@
           <div class="adm-sub-action">
             <h4 class="adm-sub-action-title">Chcete si změnit platební kartu?</h4>
             <p class="adm-sub-action-desc">Po kliknutí na tlačítko níže, budete přesměrováni na zabezpečenou stránku platební brány.</p>
-            <a href="#" class="adm-sub-action-link">
+            <a href="#" id="adm-sub-portal-btn" class="adm-sub-action-link">
               Změnit platební kartu
               <span class="adm-sub-arrow">
                 <svg width="22" height="22" viewBox="0 0 24 24" fill="none"><path d="M5 12h14M13 6l6 6-6 6" stroke="#d0ee52" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"/></svg>
@@ -848,7 +849,7 @@
           <div class="adm-sub-action">
             <h4 class="adm-sub-action-title">Zrušení předplatného</h4>
             <p class="adm-sub-action-desc">Prosím, mějte na paměti, že po zrušení předplatného můžeme smazat kdykoliv Vaše data bez předchozího upozornění.</p>
-            <a href="#" class="adm-sub-action-link">
+            <a href="#" id="adm-sub-cancel-btn" class="adm-sub-action-link">
               Zrušit předplatné
               <span class="adm-sub-arrow">
                 <svg width="22" height="22" viewBox="0 0 24 24" fill="none"><path d="M5 12h14M13 6l6 6-6 6" stroke="#d0ee52" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"/></svg>
@@ -1088,18 +1089,7 @@
     var emptyEl   = document.querySelector('.adm-chat-empty');
     var startEl   = document.querySelector('.adm-chat-start');
 
-    var responses = [
-      'Samozřejmě! Zde je odpověď na váš dotaz. Chaties AI je připravena vám pomoci s jakýmkoli obsahem.',
-      'Výborně! Připravil jsem pro vás podrobnou odpověď. Pokud potřebujete cokoli upravit, jen napište.',
-      'To je skvělá otázka. Tady je co jsem pro vás připravil – dejte vědět, pokud chcete cokoliv upřesnit.',
-      'Rád vám s tím pomohu! Zde je první návrh. Můžeme ho dále rozvíjet nebo upravovat dle vašich potřeb.',
-      'Jasně! Chaties AI zpracovala váš požadavek. Výsledek najdete výše – v případě potřeby stačí napsat.',
-    ];
-
-    function getSelectedModel() {
-      var active = document.querySelector('.adm-panel-chat .adm-chip-selected');
-      return active ? active.textContent.trim() : 'GPT-5.5';
-    }
+    var chatHistory = [];
 
     function send() {
       var msg = textarea.value.trim();
@@ -1115,7 +1105,10 @@
       userDiv.textContent = msg;
       chatArea.appendChild(userDiv);
       textarea.value = '';
+      sendBtn.disabled = true;
       chatArea.scrollTop = chatArea.scrollHeight;
+
+      chatHistory.push({ role: 'user', content: msg });
 
       // Typing indicator
       var typingDiv = document.createElement('div');
@@ -1124,15 +1117,29 @@
       chatArea.appendChild(typingDiv);
       chatArea.scrollTop = chatArea.scrollHeight;
 
-      var delay = 1200 + Math.random() * 800;
-      setTimeout(function () {
+      apiFetch('/api/ai/chat', {
+        method: 'POST',
+        body: JSON.stringify({ message: msg, history: chatHistory.slice(-10) })
+      }).then(function (data) {
         chatArea.removeChild(typingDiv);
         var aiDiv = document.createElement('div');
         aiDiv.className = 'adm-chat-msg adm-chat-msg-ai';
-        aiDiv.textContent = responses[Math.floor(Math.random() * responses.length)];
+        aiDiv.textContent = data.reply || '';
         chatArea.appendChild(aiDiv);
+        chatHistory.push({ role: 'assistant', content: data.reply || '' });
         chatArea.scrollTop = chatArea.scrollHeight;
-      }, delay);
+        updateTokenDisplay(data.tokens_remaining);
+      }).catch(function (err) {
+        chatArea.removeChild(typingDiv);
+        var errDiv = document.createElement('div');
+        errDiv.className = 'adm-chat-msg adm-chat-msg-ai';
+        errDiv.style.color = '#ff5555';
+        errDiv.textContent = 'Chyba: ' + (err.message || 'Nepodařilo se odeslat zprávu.');
+        chatArea.appendChild(errDiv);
+        chatArea.scrollTop = chatArea.scrollHeight;
+      }).finally(function () {
+        sendBtn.disabled = false;
+      });
     }
 
     sendBtn.addEventListener('click', send);
@@ -1563,24 +1570,29 @@
     if (closeBtn) closeBtn.addEventListener('click', function () { modal.classList.remove('adm-modal-open'); });
     if (modal) modal.addEventListener('click', function (e) { if (e.target === modal) modal.classList.remove('adm-modal-open'); });
 
-    // Submit AI prompt (mock)
+    // Submit AI prompt – real API
     if (submitBtn) {
-      submitBtn.addEventListener('click', function () {
+      submitBtn.addEventListener('click', async function () {
         var prompt = aiInput.value.trim();
         if (!prompt) return;
         var orig = submitBtn.textContent;
         submitBtn.textContent = 'Generuji…';
         submitBtn.disabled = true;
-        setTimeout(function () {
-          var mock = '<h2 style="font-size:20px;font-weight:700;margin:0 0 12px">' + prompt + '</h2>'
-            + '<p>Toto je ukázkový text vygenerovaný AI na základě vašeho zadání. V produkční verzi zde bude skutečná odpověď od jazykového modelu přizpůsobená vašim potřebám.</p>'
-            + '<p>Pokud chcete upravit délku nebo styl textu, jednoduše upřesněte svůj dotaz a AI vám připraví novou verzi.</p>';
-          if (editor) editor.innerHTML = mock;
+        try {
+          var data = await apiFetch('/api/ai/chat', {
+            method: 'POST',
+            body: JSON.stringify({ message: prompt, history: [] })
+          });
+          var reply = (data.reply || '').replace(/\n/g, '<br>');
+          if (editor) editor.innerHTML = '<p>' + reply + '</p>';
+          updateTokenDisplay(data.tokens_remaining);
           modal.classList.remove('adm-modal-open');
           aiInput.value = '';
-          submitBtn.textContent = orig;
-          submitBtn.disabled = false;
-        }, 1400);
+        } catch (err) {
+          alert('Chyba: ' + (err.message || 'Generování selhalo.'));
+        }
+        submitBtn.textContent = orig;
+        submitBtn.disabled = false;
       });
     }
 
@@ -1885,16 +1897,19 @@
     var outputEl = document.getElementById('tmplDetailOutput');
 
     if (generateBtn) {
-      generateBtn.addEventListener('click', function () {
+      generateBtn.addEventListener('click', async function () {
         if (!currentTmplId) return;
         var tmpl = TEMPLATES[currentTmplId];
         if (!tmpl) return;
 
-        // Collect values
-        var values = tmpl.fields.map(function (f, idx) {
+        // Collect field values as label → value pairs
+        var fields = {};
+        tmpl.fields.forEach(function (f, idx) {
           var ta = document.getElementById('tmplField' + idx);
-          return ta ? ta.value.trim() : '';
+          fields[f.label] = ta ? ta.value.trim() : '';
         });
+
+        var lang = (document.getElementById('tmplDetailLang') || {}).getAttribute('data-lang') || 'cs';
 
         // Show loading
         generateBtn.disabled = true;
@@ -1903,12 +1918,18 @@
           outputEl.innerHTML = '<div class="adm-tmpl-output-loading"><div class="adm-chat-dots"><span></span><span></span><span></span></div></div>';
         }
 
-        setTimeout(function () {
-          var gen = generators[currentTmplId];
-          var html = gen ? gen(values) : '<div class="adm-tmpl-output-content"><p>Výstup není dostupný.</p></div>';
-          if (outputEl) outputEl.innerHTML = html;
-          generateBtn.disabled = false;
-        }, 1800);
+        try {
+          var data = await apiFetch('/api/ai/generate', {
+            method: 'POST',
+            body: JSON.stringify({ templateId: currentTmplId, fields: fields, language: lang })
+          });
+          if (outputEl) outputEl.innerHTML = '<div class="adm-tmpl-output-content">' + (data.html || data.content || '') + '</div>';
+          updateTokenDisplay(data.tokens_remaining);
+        } catch (err) {
+          if (outputEl) outputEl.innerHTML = '<div class="adm-tmpl-output-content"><p style="color:#ff5555">Chyba: ' + (err.message || 'Generování selhalo.') + '</p></div>';
+        }
+
+        generateBtn.disabled = false;
       });
     }
 
@@ -1947,6 +1968,119 @@
       });
     });
 
+  })();
+  </script>
+
+  <script src="js/chaties.js"></script>
+  <script>
+  // ── Auth guard + profile init ─────────────────────────────
+  (function () {
+
+    function fmtTokens(n) {
+      return typeof n === 'number' ? n.toLocaleString('cs-CZ') + ' slov' : '–';
+    }
+
+    function updateTokenDisplay(tokensRemaining) {
+      if (typeof tokensRemaining !== 'number') return;
+      var s = tokensRemaining.toLocaleString('cs-CZ') + ' slov';
+      var sidebar = document.getElementById('adm-sidebar-tokens');
+      var dash    = document.getElementById('adm-dash-tokens');
+      if (sidebar) sidebar.textContent = s;
+      if (dash)    dash.textContent    = s;
+    }
+
+    // Expose updateTokenDisplay globally so chat/generate scripts can call it
+    window.updateTokenDisplay = updateTokenDisplay;
+
+    function fmtDate(iso) {
+      if (!iso) return '–';
+      var d = new Date(iso);
+      return d.toLocaleDateString('cs-CZ', { day: '2-digit', month: '2-digit', year: 'numeric' })
+        + '\n' + d.toLocaleTimeString('cs-CZ', { hour: '2-digit', minute: '2-digit', second: '2-digit' });
+    }
+
+    function daysUntil(iso) {
+      if (!iso) return '–';
+      var diff = Math.ceil((new Date(iso) - Date.now()) / 86400000);
+      if (diff <= 0) return 'Vypršelo';
+      return 'Za ' + diff + ' dní';
+    }
+
+    async function init() {
+      const user = await getUser();
+      if (!user) {
+        window.location.href = 'prihlaseni.html';
+        return;
+      }
+
+      // Logout
+      var logoutEl = document.getElementById('adm-logout');
+      if (logoutEl) logoutEl.addEventListener('click', function (e) { e.preventDefault(); logout(); });
+
+      // Load profile
+      try {
+        var profile = await apiFetch('/api/user/profile');
+        updateTokenDisplay(profile.tokens_balance);
+
+        // Profile tab
+        var nameEl  = document.getElementById('adm-profile-name');
+        var emailEl = document.getElementById('adm-profile-email');
+        if (nameEl)  nameEl.value  = profile.full_name  || '';
+        if (emailEl) emailEl.value = profile.email      || '';
+      } catch (e) { console.warn('Profile load failed', e); }
+
+      // Save profile changes
+      var saveBtn = document.getElementById('adm-profile-save');
+      if (saveBtn) {
+        saveBtn.addEventListener('click', async function () {
+          var name = (document.getElementById('adm-profile-name') || {}).value || '';
+          try {
+            await apiFetch('/api/user/profile', { method: 'PATCH', body: JSON.stringify({ full_name: name }) });
+            saveBtn.textContent = 'Uloženo ✓';
+            setTimeout(function () { saveBtn.textContent = 'Uložit změny'; }, 2000);
+          } catch (e) { alert('Chyba při ukládání: ' + e.message); }
+        });
+      }
+
+      // Load subscription
+      try {
+        var sub = await apiFetch('/api/user/subscription');
+        if (sub && sub.current_period_end) {
+          var dateStr   = fmtDate(sub.current_period_end).replace('\n', '<br>');
+          var renewStr  = daysUntil(sub.current_period_end);
+          ['adm-dash-period-end', 'adm-sub-period-end'].forEach(function (id) {
+            var el = document.getElementById(id);
+            if (el) el.innerHTML = dateStr;
+          });
+          ['adm-dash-renew', 'adm-sub-renew'].forEach(function (id) {
+            var el = document.getElementById(id);
+            if (el) el.textContent = renewStr;
+          });
+        }
+      } catch (e) { console.warn('Subscription load failed', e); }
+
+      // Stripe portal (změnit kartu / zrušit)
+      async function openPortal(e) {
+        if (e) e.preventDefault();
+        try {
+          var data = await apiFetch('/api/stripe/portal', { method: 'POST' });
+          if (data.url) window.location.href = data.url;
+        } catch (err) { alert('Chyba: ' + err.message); }
+      }
+      var portalBtn = document.getElementById('adm-sub-portal-btn');
+      var cancelBtn = document.getElementById('adm-sub-cancel-btn');
+      if (portalBtn) portalBtn.addEventListener('click', openPortal);
+      if (cancelBtn) cancelBtn.addEventListener('click', openPortal);
+
+      // Handle ?payment=success / ?payment=cancelled from Stripe redirect
+      var params = new URLSearchParams(window.location.search);
+      if (params.get('payment') === 'success') {
+        alert('Platba proběhla úspěšně! Tokeny byly připsány na váš účet.');
+        history.replaceState({}, '', 'administrace.html');
+      }
+    }
+
+    init();
   })();
   </script>
 
