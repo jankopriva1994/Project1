@@ -1910,7 +1910,7 @@ body {
 .ceny-page .footer-privacy            { top: 2479px; left: 1138px; }
 
 /* ===================== O NÁS PAGE ===================== */
-.onas-page { min-height: 1450px; }
+.onas-page { min-height: 1550px; }
 
 .onas-heading {
   position: absolute;
@@ -1982,7 +1982,7 @@ body {
   align-items: flex-start;
   gap: 16px;
   width: 310px;
-  top: 530px;
+  top: 600px;
 }
 
 .onas-value-1 { left: 228px; }
@@ -2047,7 +2047,7 @@ body {
 .onas-wave {
   position: absolute;
   left: 0;
-  top: 1000px;
+  top: 1080px;
   width: 1680px;
   object-fit: cover;
   pointer-events: none;
@@ -2055,27 +2055,27 @@ body {
 }
 
 /* Footer overrides – onas page */
-.onas-page .footer-logo               { top: 1160px; left: 228px; }
-.onas-page .footer-desc               { top: 1224px; left: 228px; }
-.onas-page .footer-col-services-header { top: 1160px; left: 744px; }
-.onas-page .footer-col-services-link1  { top: 1197px; left: 744px; }
-.onas-page .footer-col-services-link2  { top: 1233px; left: 744px; }
-.onas-page .footer-col-services-link3  { top: 1269px; left: 744px; }
-.onas-page .footer-col-services-link4  { top: 1305px; left: 744px; }
-.onas-page .footer-col-info-header    { top: 1160px; left: 951px; }
-.onas-page .footer-col-info-link1     { top: 1197px; left: 951px; }
-.onas-page .footer-col-info-link2     { top: 1233px; left: 951px; }
-.onas-page .footer-col-info-link3     { top: 1269px; left: 951px; }
-.onas-page .footer-col-info-link4     { top: 1305px; left: 951px; }
-.onas-page .footer-col-support-header { top: 1160px; left: 1191px; }
-.onas-page .footer-col-support-link1  { top: 1197px; left: 1191px; }
-.onas-page .footer-col-support-link2  { top: 1233px; left: 1191px; }
-.onas-page .footer-col-support-link3  { top: 1269px; left: 1191px; }
-.onas-page .social-link-insta         { top: 1352px; left: 228px; }
-.onas-page .social-link-fb            { top: 1352px; left: 337px; }
-.onas-page .footer-line               { top: 1416px; left: 228px; width: 1224px; }
-.onas-page .footer-copyright          { top: 1447px; left: 228px; }
-.onas-page .footer-privacy            { top: 1447px; left: 1138px; }
+.onas-page .footer-logo               { top: 1260px; left: 228px; }
+.onas-page .footer-desc               { top: 1324px; left: 228px; }
+.onas-page .footer-col-services-header { top: 1260px; left: 744px; }
+.onas-page .footer-col-services-link1  { top: 1297px; left: 744px; }
+.onas-page .footer-col-services-link2  { top: 1333px; left: 744px; }
+.onas-page .footer-col-services-link3  { top: 1369px; left: 744px; }
+.onas-page .footer-col-services-link4  { top: 1405px; left: 744px; }
+.onas-page .footer-col-info-header    { top: 1260px; left: 951px; }
+.onas-page .footer-col-info-link1     { top: 1297px; left: 951px; }
+.onas-page .footer-col-info-link2     { top: 1333px; left: 951px; }
+.onas-page .footer-col-info-link3     { top: 1369px; left: 951px; }
+.onas-page .footer-col-info-link4     { top: 1405px; left: 951px; }
+.onas-page .footer-col-support-header { top: 1260px; left: 1191px; }
+.onas-page .footer-col-support-link1  { top: 1297px; left: 1191px; }
+.onas-page .footer-col-support-link2  { top: 1333px; left: 1191px; }
+.onas-page .footer-col-support-link3  { top: 1369px; left: 1191px; }
+.onas-page .social-link-insta         { top: 1452px; left: 228px; }
+.onas-page .social-link-fb            { top: 1452px; left: 337px; }
+.onas-page .footer-line               { top: 1516px; left: 228px; width: 1224px; }
+.onas-page .footer-copyright          { top: 1547px; left: 228px; }
+.onas-page .footer-privacy            { top: 1547px; left: 1138px; }
 
 /* ===================== KONTAKT PAGE ===================== */
 .kontakt-page { min-height: 1100px; }
