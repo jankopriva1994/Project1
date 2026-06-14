@@ -651,28 +651,13 @@
       <h2 class="adm-tmpl-heading">Šablony, které vám pomohou!</h2>
       <p class="adm-tmpl-sub">Vyberte si z několika šablon, které Vám pomohou vytvořit prodejní popisek k vašemu produktu, chytlavý titulek k youtube nebo tiktok videu, několik témat k chystanému článku a nebo taky vám napíšou slohovou práci.</p>
 
-      <!-- Filter row 1 -->
-      <div class="adm-filter-row">
-        <button class="adm-filter-pill">Blog</button>
-        <button class="adm-filter-pill adm-pill-active">Reklamy</button>
-        <button class="adm-filter-pill">Web</button>
-        <button class="adm-filter-pill">Obsah</button>
-        <button class="adm-filter-pill">Email</button>
-        <button class="adm-filter-pill">Video</button>
-      </div>
-
-      <!-- Filter row 2 -->
-      <div class="adm-filter-row adm-filter-row-2">
-        <button class="adm-filter-pill">Sociální sítě</button>
-        <button class="adm-filter-pill">AI grafika</button>
-        <button class="adm-filter-pill">SEO</button>
-        <button class="adm-filter-pill">Reality</button>
+      <!-- Filter pills – rendered dynamically from API -->
+      <div class="adm-filter-row" id="adm-tmpl-filter-row" style="flex-wrap:wrap;margin-bottom:28px">
+        <p style="color:#555;font-size:14px">Načítám…</p>
       </div>
 
       <!-- Template cards – rendered dynamically from API -->
-      <div class="adm-tmpl-cards" id="adm-tmpl-cards-dynamic">
-        <p style="color:#555;font-size:14px">Načítám šablony…</p>
-      </div>
+      <div class="adm-tmpl-cards" id="adm-tmpl-cards-dynamic"></div>
 
     </div><!-- /adm-panel-templates -->
 
@@ -1584,50 +1569,79 @@
     // ── Templates loaded dynamically from API ───────────────
     window.TEMPLATES_DB = {};  // slug → { name, sub, fields }
 
-    window.renderTemplateCards = function (templates) {
-      var starSVG = '<svg width="16" height="15" viewBox="0 0 24 24" fill="none"><path d="M12 2l3.09 6.26L22 9.27l-5 4.87 1.18 6.88L12 17.77l-6.18 3.25L7 14.14 2 9.27l6.91-1.01L12 2z" stroke="#d0ee52" stroke-width="1.5" stroke-linejoin="round"/></svg>';
+    var _allTemplates = [];
+    var _activeCategory = null;
+    var starSVG = '<svg width="16" height="15" viewBox="0 0 24 24" fill="none"><path d="M12 2l3.09 6.26L22 9.27l-5 4.87 1.18 6.88L12 17.77l-6.18 3.25L7 14.14 2 9.27l6.91-1.01L12 2z" stroke="#d0ee52" stroke-width="1.5" stroke-linejoin="round"/></svg>';
+
+    function renderCards(filterCat) {
       var container = document.getElementById('adm-tmpl-cards-dynamic');
       if (!container) return;
       container.innerHTML = '';
+      var list = filterCat
+        ? _allTemplates.filter(function (t) { return (t.category || 'Ostatní') === filterCat; })
+        : _allTemplates;
+      if (!list.length) {
+        container.innerHTML = '<p style="color:#555;font-size:14px">Žádné šablony v této kategorii.</p>';
+        return;
+      }
+      list.forEach(function (t) {
+        var card = document.createElement('div');
+        card.className = 'adm-tmpl-card';
+        card.setAttribute('data-tmpl-id', t.slug);
+        card.innerHTML = '<span class="adm-tmpl-title">' + t.name + '</span>'
+          + '<span class="adm-tmpl-star">' + starSVG + '</span>'
+          + '<p class="adm-tmpl-desc">' + (t.description || '') + '</p>';
+        card.addEventListener('click', (function (slug) {
+          return function () { loadTemplateAndNavigate(slug); };
+        })(t.slug));
+        container.appendChild(card);
+      });
+    }
+
+    function renderFilterPills(categories, activeCat) {
+      var row = document.getElementById('adm-tmpl-filter-row');
+      if (!row) return;
+      row.innerHTML = '';
+      categories.forEach(function (cat) {
+        var btn = document.createElement('button');
+        btn.className = 'adm-filter-pill' + (cat === activeCat ? ' adm-pill-active' : '');
+        btn.textContent = cat;
+        btn.addEventListener('click', function () {
+          _activeCategory = cat;
+          row.querySelectorAll('.adm-filter-pill').forEach(function (b) { b.classList.remove('adm-pill-active'); });
+          btn.classList.add('adm-pill-active');
+          renderCards(cat);
+        });
+        row.appendChild(btn);
+      });
+    }
+
+    window.renderTemplateCards = function (templates) {
       if (!templates || !templates.length) {
-        container.innerHTML = '<p style="color:#555;font-size:14px">Žádné šablony k dispozici.</p>';
+        var c = document.getElementById('adm-tmpl-cards-dynamic');
+        if (c) c.innerHTML = '<p style="color:#555;font-size:14px">Žádné šablony k dispozici.</p>';
+        var r = document.getElementById('adm-tmpl-filter-row');
+        if (r) r.innerHTML = '';
         return;
       }
 
-      // Register all templates in DB
+      // Register all templates
+      _allTemplates = templates;
       templates.forEach(function (t) {
         window.TEMPLATES_DB[t.slug] = { name: t.name, sub: t.description || '', fields: t.fields || [] };
       });
 
-      // Group by category
-      var groups = {};
-      var groupOrder = [];
+      // Extract unique categories in order
+      var categories = [];
       templates.forEach(function (t) {
         var cat = t.category || 'Ostatní';
-        if (!groups[cat]) { groups[cat] = []; groupOrder.push(cat); }
-        groups[cat].push(t);
+        if (categories.indexOf(cat) === -1) categories.push(cat);
       });
 
-      // Render groups
-      groupOrder.forEach(function (cat) {
-        var heading = document.createElement('div');
-        heading.className = 'adm-tmpl-category-heading';
-        heading.textContent = cat;
-        container.appendChild(heading);
-
-        groups[cat].forEach(function (t) {
-          var card = document.createElement('div');
-          card.className = 'adm-tmpl-card';
-          card.setAttribute('data-tmpl-id', t.slug);
-          card.innerHTML = '<span class="adm-tmpl-title">' + t.name + '</span>'
-            + '<span class="adm-tmpl-star">' + starSVG + '</span>'
-            + '<p class="adm-tmpl-desc">' + (t.description || '') + '</p>';
-          card.addEventListener('click', (function (slug) {
-            return function () { loadTemplateAndNavigate(slug); };
-          })(t.slug));
-          container.appendChild(card);
-        });
-      });
+      // Default to first category
+      _activeCategory = categories[0] || null;
+      renderFilterPills(categories, _activeCategory);
+      renderCards(_activeCategory);
     };
 
     window.loadTemplatesFromAPI = async function () {
