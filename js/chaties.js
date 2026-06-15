@@ -5,24 +5,38 @@ const BACKEND   = 'https://project1-production-bfde.up.railway.app';
 
 window.supabase = window.supabase.createClient(SUPABASE_URL, SUPABASE_ANON);
 
-// Škálování stránky na viewporty menší než 1680px
+// Škálování stránky na viewporty menší než 1680px (CSS transform – cross-browser standard)
 (function scaleToViewport() {
   function apply() {
     var page = document.querySelector('.page');
     if (!page) return;
     var vw = window.innerWidth;
-    if (vw < 1680) {
-      var scale = (vw / 1680).toFixed(5);
-      page.style.zoom = scale;
+    var designWidth = 1680;
+
+    if (vw >= designWidth) {
+      page.style.transform = '';
+      page.style.transformOrigin = '';
+      document.body.style.height = '';
+      document.body.style.overflowX = '';
+      return;
+    }
+
+    var scale = vw / designWidth;
+    page.style.transformOrigin = 'top left';
+    page.style.transform = 'scale(' + scale + ')';
+    document.body.style.overflowX = 'hidden';
+
+    // Kompenzace výšky – transform nemění layout flow
+    var isAdmin = !!document.querySelector('.adm-panel');
+    if (!isAdmin) {
+      document.body.style.height = Math.ceil(page.offsetHeight * scale) + 'px';
     } else {
-      page.style.zoom = '1';
+      document.body.style.height = Math.ceil(980 * scale) + 'px';
     }
   }
-  if (document.readyState === 'loading') {
-    document.addEventListener('DOMContentLoaded', apply);
-  } else {
-    apply();
-  }
+
+  if (document.readyState !== 'loading') apply();
+  else document.addEventListener('DOMContentLoaded', apply);
   window.addEventListener('resize', apply);
 })();
 
