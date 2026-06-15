@@ -113,10 +113,10 @@
     .fb-col-h.mx  { width: 68px; flex-shrink: 0; }
     .fb-col-h.rm  { width: 36px; }
     .fb-row { display: flex; gap: 8px; align-items: center; background: #1a1a1a; border: 1px solid #2a2a2a; border-radius: 7px; padding: 8px 10px; }
-    .fb-row input { background: #111; border: 1px solid #2a2a2a; border-radius: 5px; color: #e0e0e0; padding: 6px 9px; font-size: 13px; font-family: inherit; }
+    .fb-row input { background: #111; border: 1px solid #2a2a2a; border-radius: 5px; color: #e0e0e0; padding: 6px 9px; font-size: 13px; font-family: inherit; width: auto; min-width: 0; }
     .fb-row input:focus { outline: none; border-color: #d0ee52; }
-    .fb-field-label { flex: 2; }
-    .fb-field-placeholder { flex: 3; }
+    .fb-field-label { flex: 2 1 0; min-width: 0; }
+    .fb-field-placeholder { flex: 3 1 0; min-width: 0; }
     .fb-field-max { width: 68px; flex-shrink: 0; }
     .fb-remove { background: none; border: none; color: #444; font-size: 16px; cursor: pointer; padding: 0 4px; line-height: 1; flex-shrink: 0; }
     .fb-remove:hover { color: #ff5555; }
