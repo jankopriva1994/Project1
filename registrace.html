@@ -127,10 +127,20 @@
       btn.disabled = true;
       errEl.style.display = 'none';
 
+      var inviteToken = new URLSearchParams(window.location.search).get('invite');
+
+      // Ulož invite token před registrací – použijeme ho po potvrzení emailu
+      if (inviteToken) {
+        localStorage.setItem('pendingInvite', inviteToken);
+      }
+
       var { data, error } = await supabase.auth.signUp({
         email,
         password: pass,
-        options: { data: { full_name: fname + ' ' + lname } }
+        options: {
+          data: { full_name: fname + ' ' + lname },
+          emailRedirectTo: 'https://chaties.cz/administrace.html'
+        }
       });
 
       if (error) {
@@ -140,20 +150,25 @@
         return;
       }
 
-      // Pokud Supabase vyžaduje potvrzení e-mailu, session nebude nastavena – přihlásíme ručně
+      // Email potvrzení je vyžadováno – zobraz zprávu, nepřesměrovávej
       if (!data.session) {
-        await supabase.auth.signInWithPassword({ email: email, password: pass });
+        errEl.style.color = '#a0d060';
+        errEl.innerHTML = 'Registrace proběhla úspěšně! Na e-mail <strong>' + email + '</strong> jsme odeslali potvrzovací odkaz. Klikněte na něj pro dokončení registrace.';
+        errEl.style.display = 'block';
+        btn.textContent = 'Registrovat se zdarma';
+        btn.disabled = false;
+        return;
       }
 
-      // Pokud přišel přes pozvánku – aktualizuj status v týmu
-      var inviteToken = new URLSearchParams(window.location.search).get('invite');
+      // Session existuje okamžitě (potvrzení emailu vypnuto) – zpracuj pozvánku hned
       if (inviteToken) {
         try {
           await apiFetch('/api/user/team/accept-invite', {
             method: 'POST',
             body: JSON.stringify({ token: inviteToken })
           });
-        } catch (e) { /* nevadí, přihlásíme normálně */ }
+          localStorage.removeItem('pendingInvite');
+        } catch (e) {}
         window.location.href = 'administrace.html';
         return;
       }

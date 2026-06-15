@@ -1844,11 +1844,23 @@
       var logoutEl = document.getElementById('adm-logout');
       if (logoutEl) logoutEl.addEventListener('click', function (e) { e.preventDefault(); logout(); });
 
+      // Dokončení pozvánky po potvrzení emailu
+      var pendingInvite = localStorage.getItem('pendingInvite');
+      if (pendingInvite) {
+        try {
+          await apiFetch('/api/user/team/accept-invite', {
+            method: 'POST',
+            body: JSON.stringify({ token: pendingInvite })
+          });
+        } catch (e) {}
+        localStorage.removeItem('pendingInvite');
+      }
+
       // Load profile
       try {
         var profile = await apiFetch('/api/user/profile');
 
-        // Admins have unlimited access; free users go to pricing
+        // Admins and team members have access; free users go to pricing
         if (!profile.is_admin && (!profile.plan || profile.plan === 'free')) {
           location.replace('ceny.html');
           return;

@@ -182,6 +182,10 @@ router.post('/team/accept-invite', requireAuth, async (req, res) => {
     .single();
 
   if (error || !data) return res.status(404).json({ error: 'Pozvánka nenalezena nebo již použita.' });
+
+  // Nastav pozvanému uživateli plan 'team' – přeskočí výběr tarifu
+  await supabase.from('profiles').update({ plan: 'team' }).eq('id', req.user.id);
+
   res.json({ success: true, member: data });
 });
 
