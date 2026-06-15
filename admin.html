@@ -170,97 +170,55 @@
         <p class="cms-sub">Přidávejte, upravujte a mažte šablony s AI prompty.</p>
         <button class="btn-primary" id="tmplNewBtn">+ Nová šablona</button>
 
-        <div id="tmplForm" class="cms-form cms-form-wide" style="display:none">
+        <div id="tmplForm" class="cms-form" style="display:none;max-width:860px">
           <h3 id="tmplFormTitle">Nová šablona</h3>
           <input type="hidden" id="tmplId" />
 
-          <div class="tmpl-cols">
+          <div class="form-row">
+            <label>Název šablony</label>
+            <input type="text" id="tmplName" placeholder="např. Google vyhledávací reklama" />
+          </div>
+          <input type="hidden" id="tmplSlug" />
 
-            <!-- LEFT: základní info -->
-            <div>
-              <div class="field-group-title">Základní informace</div>
+          <div class="form-row">
+            <label>Krátký popis <span style="color:#555;font-weight:400;font-size:12px">– zobrazí se pod názvem šablony</span></label>
+            <input type="text" id="tmplDesc" placeholder="Šablona, která vám napíše 3 nadpisy a 1 popis pro vaši reklamu na Google." />
+          </div>
 
-              <div class="form-row">
-                <label>Název šablony
-                  <span class="field-hint">Jak se šablona jmenuje – zobrazí se uživatelům při výběru</span>
-                </label>
-                <input type="text" id="tmplName" placeholder="např. Popis produktu, Reklamní text na FB…" />
-              </div>
+          <div class="form-row">
+            <label>Kategorie</label>
+            <select id="tmplCat" style="max-width:300px">
+              <option value="">— bez kategorie —</option>
+            </select>
+          </div>
 
-              <div class="form-row">
-                <label>Slug (URL klíč)
-                  <span class="field-hint">Generuje se automaticky z názvu. Jen malá písmena, pomlčky, bez mezer a diakritiky.</span>
-                </label>
-                <input type="text" id="tmplSlug" placeholder="popis-produktu" />
-              </div>
+          <div class="form-row">
+            <label>Pořadí <span style="color:#555;font-weight:400;font-size:12px">– 0 = zobrazí se první</span></label>
+            <input type="number" id="tmplOrder" value="0" style="width:80px" />
+          </div>
 
-              <div class="form-row">
-                <label>Krátký popis
-                  <span class="field-hint">Pár slov co šablona dělá – zobrazí se pod názvem v seznamu šablon</span>
-                </label>
-                <input type="text" id="tmplDesc" placeholder="Vytvoří profesionální popis produktu pro e-shop…" />
-              </div>
+          <div class="form-row" style="margin-top:24px">
+            <label>Prompt pro AI <span style="color:#555;font-weight:400;font-size:12px">– napiš normálně co má AI udělat, uživatel to neuvidí</span></label>
+            <textarea id="tmplSystemPrompt" class="tall" placeholder="Jsi expert na Google reklamu. Na základě zadaných informací vytvoříš 3 různé nadpisy (max 30 znaků každý) a 1 popis (max 90 znaků) pro Google vyhledávací reklamu. Piš výstižně a přesvědčivě."></textarea>
+          </div>
 
-              <div class="form-row">
-                <label>Kategorie
-                  <span class="field-hint">Do které skupiny šablona patří (kategorie přidáš v záložce Kategorie)</span>
-                </label>
-                <select id="tmplCat">
-                  <option value="">— bez kategorie —</option>
-                </select>
-              </div>
+          <div class="form-row" style="margin-top:24px">
+            <label>Pole, která uživatel vyplní <span style="color:#555;font-weight:400;font-size:12px">– každé pole = jeden textový rámeček ve formuláři</span></label>
+            <div id="tmplFieldBuilder" class="field-builder"></div>
+            <button type="button" class="btn-add-field" id="tmplAddField">+ Přidat pole</button>
+          </div>
 
-              <div class="form-row">
-                <label>Pořadí zobrazení
-                  <span class="field-hint">Čím menší číslo, tím výše se šablona zobrazí. 0 = úplně první.</span>
-                </label>
-                <input type="number" id="tmplOrder" value="0" style="width:100px" />
-              </div>
-
-              <div class="form-row" style="margin-top:20px">
-                <div class="toggle-wrap">
-                  <button class="toggle on" id="tmplActive" title="Aktivní"></button>
-                  <div>
-                    <span style="font-size:13px;color:#ccc;display:block">Šablona aktivní</span>
-                    <span class="field-hint" style="margin-top:2px">Vypnuté šablony se uživatelům nezobrazí</span>
-                  </div>
-                </div>
-              </div>
+          <div class="form-row" style="margin-top:20px">
+            <div class="toggle-wrap">
+              <button class="toggle on" id="tmplActive" title="Aktivní"></button>
+              <span style="font-size:13px;color:#aaa">Šablona aktivní (viditelná pro uživatele)</span>
             </div>
-
-            <!-- RIGHT: AI nastavení -->
-            <div>
-              <div class="field-group-title">AI nastavení</div>
-
-              <div class="form-row">
-                <label>Vstupní pole formuláře
-                  <span class="field-hint">Co uživatel vyplní před spuštěním AI. Každé pole = jeden textový rámeček ve formuláři. Přidej tolik polí, kolik potřebuješ.</span>
-                </label>
-                <div id="tmplFieldBuilder" class="field-builder"></div>
-                <button type="button" class="btn-add-field" id="tmplAddField">+ Přidat pole formuláře</button>
-              </div>
-
-              <div class="form-row" style="margin-top:20px">
-                <label>System prompt – instrukce pro AI
-                  <span class="field-hint">Říká AI co je zač a jak má odpovídat. <strong style="color:#ccc">Uživatel toto nevidí.</strong> Napiš sem: jaký je AI expert, v jakém formátu má psát, v jakém jazyce. HTML výstup doporučujeme vždy.</span>
-                </label>
-                <textarea id="tmplSystemPrompt" class="tall" placeholder="Jsi expert copywriter a marketingový specialista.&#10;&#10;Výstup vždy formátuj jako HTML – používej &lt;h2&gt;, &lt;p&gt;, &lt;ul&gt;, &lt;strong&gt; apod.&#10;Piš v češtině, pokud uživatel nezvolí jiný jazyk.&#10;Buď konkrétní, výstižný a profesionální."></textarea>
-              </div>
-
-              <div class="form-row">
-                <label>User prompt – šablona zprávy pro AI
-                  <span class="field-hint">Zpráva která se pošle AI. Vlož <strong style="color:#d0ee52">{fields}</strong> na místo kde se doplní co uživatel napsal, a <strong style="color:#d0ee52">{language}</strong> pro zvolený výstupní jazyk.</span>
-                </label>
-                <textarea id="tmplUserPrompt" class="tall" placeholder="Vytvoř profesionální text na základě těchto informací:&#10;&#10;{fields}&#10;&#10;Jazyk výstupu: {language}."></textarea>
-              </div>
-            </div>
-
-          </div><!-- /tmpl-cols -->
+          </div>
 
           <div class="form-actions" style="margin-top:24px;border-top:1px solid #1e1e1e;padding-top:20px">
             <button class="btn-primary" id="tmplSave">Uložit šablonu</button>
             <button class="btn-secondary" id="tmplCancel">Zrušit</button>
-            <button class="btn-danger" id="tmplDelete" style="display:none">Smazat šablonu</button>
+            <button class="btn-danger" id="tmplDelete" style="display:none">Smazat</button>
           </div>
           <p id="tmplMsg"></p>
         </div>
@@ -444,38 +402,19 @@
     function renderFieldBuilder(fields) {
       var builder = document.getElementById('tmplFieldBuilder');
       builder.innerHTML = '';
-      if (!fields || !fields.length) {
-        builder.innerHTML = '<p class="fb-empty">Zatím žádná pole – klikni na tlačítko níže a přidej první.</p>';
-        return;
-      }
-      var hdr = document.createElement('div');
-      hdr.className = 'fb-col-headers';
-      hdr.innerHTML = '<span class="fb-col-h lbl">Název pole</span><span class="fb-col-h ph">Placeholder (nápověda pro uživatele)</span><span class="fb-col-h mx">Max znaků</span><span class="fb-col-h rm"></span>';
-      builder.appendChild(hdr);
+      if (!fields || !fields.length) return;
       fields.forEach(function (f) { addFieldRow(f); });
     }
 
     function addFieldRow(f) {
       f = f || {};
       var builder = document.getElementById('tmplFieldBuilder');
-      // remove empty state
-      var empty = builder.querySelector('.fb-empty');
-      if (empty) {
-        builder.innerHTML = '<div class="fb-col-headers"><span class="fb-col-h lbl">Název pole</span><span class="fb-col-h ph">Placeholder (nápověda pro uživatele)</span><span class="fb-col-h mx">Max znaků</span><span class="fb-col-h rm"></span></div>';
-      }
       var row = document.createElement('div');
       row.className = 'fb-row';
       row.innerHTML =
-        '<input class="fb-field-label" type="text" placeholder="Popis produktu" value="' + (f.label || '').replace(/"/g,'&quot;') + '" />' +
-        '<input class="fb-field-placeholder" type="text" placeholder="Popište produkt co nejdetailněji…" value="' + (f.placeholder || '').replace(/"/g,'&quot;') + '" />' +
-        '<input class="fb-field-max" type="number" placeholder="5000" value="' + (f.max || '') + '" />' +
+        '<input class="fb-field-label" type="text" placeholder="např. Název firmy, Popis produktu, Cílová skupina…" value="' + (f.label || '').replace(/"/g,'&quot;') + '" style="flex:1;min-width:0" />' +
         '<button class="fb-remove" title="Odebrat pole">×</button>';
-      row.querySelector('.fb-remove').addEventListener('click', function () {
-        row.remove();
-        if (!builder.querySelectorAll('.fb-row').length) {
-          builder.innerHTML = '<p class="fb-empty">Zatím žádná pole – klikni na tlačítko níže a přidej první.</p>';
-        }
-      });
+      row.querySelector('.fb-remove').addEventListener('click', function () { row.remove(); });
       builder.appendChild(row);
     }
 
@@ -484,13 +423,7 @@
       var fields = [];
       rows.forEach(function (row) {
         var label = row.querySelector('.fb-field-label').value.trim();
-        if (!label) return;
-        var f = { label: label };
-        var ph = row.querySelector('.fb-field-placeholder').value.trim();
-        if (ph) f.placeholder = ph;
-        var mx = parseInt(row.querySelector('.fb-field-max').value);
-        if (mx > 0) f.max = mx;
-        fields.push(f);
+        if (label) fields.push({ label: label, max: 10000 });
       });
       return fields;
     }
@@ -648,7 +581,6 @@
 
         renderFieldBuilder([]);
         document.getElementById('tmplSystemPrompt').value = '';
-        document.getElementById('tmplUserPrompt').value = '';
         document.getElementById('tmplActive').classList.add('on');
         document.getElementById('tmplDelete').style.display = 'none';
       }
@@ -692,14 +624,14 @@
       var id     = document.getElementById('tmplId').value;
       var fields = collectFieldsFromBuilder();
       var body = {
-        name:       document.getElementById('tmplName').value,
-        slug:       document.getElementById('tmplSlug').value,
-        description: document.getElementById('tmplDesc').value,
-        category:   document.getElementById('tmplCat').value,
-        sort_order: parseInt(document.getElementById('tmplOrder').value) || 0,
+        name:          document.getElementById('tmplName').value,
+        slug:          document.getElementById('tmplSlug').value,
+        description:   document.getElementById('tmplDesc').value,
+        category:      document.getElementById('tmplCat').value,
+        sort_order:    parseInt(document.getElementById('tmplOrder').value) || 0,
         fields:        fields,
         system_prompt: document.getElementById('tmplSystemPrompt').value,
-        user_prompt:   document.getElementById('tmplUserPrompt').value,
+        user_prompt:   '{fields}\n\nJazyk výstupu: {language}.',
         is_active:     document.getElementById('tmplActive').classList.contains('on')
       };
       try {
