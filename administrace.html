@@ -40,7 +40,7 @@
     </div>
 
     <!-- Invite button -->
-    <a href="#" class="adm-invite-btn">Pozvat kamaráda</a>
+    <a href="#" class="adm-invite-btn" id="inviteKamaradaBtn">Pozvat kamaráda</a>
 
     <!-- Topbar separator -->
     <div class="adm-topbar-line"></div>
@@ -941,6 +941,17 @@
         if (targetPanel) targetPanel.style.display = 'block';
       });
     });
+
+    // "Pozvat kamaráda" → nastavení → záložka Tým
+    var inviteKamaradaBtn = document.getElementById('inviteKamaradaBtn');
+    if (inviteKamaradaBtn) {
+      inviteKamaradaBtn.addEventListener('click', function (e) {
+        e.preventDefault();
+        showPanel('settings');
+        var teamTab = document.querySelector('[data-settings-tab="team"]');
+        if (teamTab) teamTab.click();
+      });
+    }
 
     // Copy invite link
     var copyBtn = document.getElementById('teamCopyBtn');
