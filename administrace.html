@@ -947,9 +947,13 @@
     if (inviteKamaradaBtn) {
       inviteKamaradaBtn.addEventListener('click', function (e) {
         e.preventDefault();
-        showPanel('settings');
+        navigateTo('settings');
+        document.querySelectorAll('.adm-settings-tab').forEach(function (t) { t.classList.remove('adm-tab-active'); });
+        document.querySelectorAll('.adm-settings-tab-panel').forEach(function (p) { p.style.display = 'none'; });
         var teamTab = document.querySelector('[data-settings-tab="team"]');
-        if (teamTab) teamTab.click();
+        if (teamTab) teamTab.classList.add('adm-tab-active');
+        var teamPanel = document.getElementById('adm-tab-team');
+        if (teamPanel) teamPanel.style.display = 'block';
       });
     }
 
