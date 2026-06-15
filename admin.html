@@ -622,9 +622,16 @@
     document.getElementById('tmplSave').addEventListener('click', async function () {
       var id     = document.getElementById('tmplId').value;
       var fields = collectFieldsFromBuilder();
+      var name = document.getElementById('tmplName').value.trim();
+      if (!name) { showMsg(document.getElementById('tmplMsg'), 'Vyplň název šablony', false); return; }
+      var slug = document.getElementById('tmplSlug').value.trim();
+      if (!slug) {
+        slug = name.toLowerCase().normalize('NFD').replace(/[̀-ͯ]/g,'').replace(/[^a-z0-9]+/g,'-').replace(/^-+|-+$/g,'');
+        document.getElementById('tmplSlug').value = slug;
+      }
       var body = {
-        name:          document.getElementById('tmplName').value,
-        slug:          document.getElementById('tmplSlug').value,
+        name:          name,
+        slug:          slug,
         description:   document.getElementById('tmplDesc').value,
         category:      document.getElementById('tmplCat').value,
         sort_order:    parseInt(document.getElementById('tmplOrder').value) || 0,
@@ -639,7 +646,11 @@
         await loadTemplates();
         closeTmplForm();
         showMsg(document.getElementById('tmplMsg'), 'Uloženo ✓', true);
-      } catch(e) { showMsg(document.getElementById('tmplMsg'), e.message, false); }
+      } catch(e) {
+        var msg = e.message || 'Neznámá chyba';
+        if (msg === 'Failed to fetch') msg = 'Nelze se připojit k serveru – zkontroluj připojení a zkus znovu.';
+        showMsg(document.getElementById('tmplMsg'), msg, false);
+      }
     });
 
     document.getElementById('tmplDelete').addEventListener('click', async function () {
