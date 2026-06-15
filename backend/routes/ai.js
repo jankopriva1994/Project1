@@ -255,7 +255,60 @@ router.post('/translate', requireAuth, async (req, res) => {
   }
 });
 
-// ── POST /api/ai/image ─────────────────────────────────────────
+// ── POST /api/ai/translate-image ───────────────────────────────
+// Přeloží obrázek dokumentu přímo přes Claude vision (OCR + překlad + zachování formátování)
+router.post('/translate-image', requireAuth, async (req, res) => {
+  const { imageBase64, mimeType = 'image/jpeg', from = 'cs', to = 'en', instruction = '' } = req.body;
+  if (!imageBase64) return res.status(400).json({ error: 'Chybí obrázek' });
+
+  const effectiveId = await getEffectiveUserId(req.user.id);
+  const check = await deductTokens(effectiveId, 50, `Překlad dokumentu (vision) ${from}→${to}`);
+  if (!check.ok) return res.status(402).json({ error: check.error });
+
+  const systemPrompt = `Jsi odborný překladatel dokumentů. Dostaneš obrázek dokumentu.
+Tvým úkolem je:
+1. Přečíst celý text z obrázku
+2. Přeložit ho z jazyka "${from}" do jazyka "${to}"
+3. Zachovat původní formátování dokumentu: podtržení, tučný text, nadpisy, oddělující čáry, strukturu odstavců, odrážky
+4. Vrátit výsledek jako validní HTML s inline styly pro formátování
+
+Pravidla pro HTML výstup:
+- Podtržený text: <span style="text-decoration:underline">text</span>
+- Tučný text: <strong>text</strong>
+- Nadpisy sekcí: <h3 style="margin:14pt 0 4pt">text</h3>
+- Odstavce: <p style="margin:0 0 6pt">text</p>
+- Horizontální oddělovač: <hr style="border:none;border-top:1px solid #333;margin:12pt 0">
+- Tabulky: použij <table> se stávající strukturou
+- Vrať POUZE HTML kód, bez jakéhokoliv komentáře, bez markdown backticks${instruction ? '\n\nDodatečná instrukce: ' + instruction : ''}`;
+
+  try {
+    const response = await anthropic.messages.create({
+      model: 'claude-sonnet-4-6',
+      max_tokens: 8192,
+      system: systemPrompt,
+      messages: [{
+        role: 'user',
+        content: [{
+          type: 'image',
+          source: { type: 'base64', media_type: mimeType, data: imageBase64 }
+        }, {
+          type: 'text',
+          text: `Přelož tento dokument z ${from} do ${to} a zachovej formátování jako HTML.`
+        }]
+      }]
+    });
+
+    const html = response.content[0].text.replace(/^```html\n?/i, '').replace(/\n?```$/,'');
+    const tokensUsed = response.usage.input_tokens + response.usage.output_tokens;
+
+    await saveHistory(req.user.id, 'translate', `Překlad dokumentu (vision) ${from}→${to}`, html.slice(0, 200), tokensUsed);
+
+    res.json({ html, tokens_used: tokensUsed });
+  } catch (err) {
+    console.error('Translate-image error:', err);
+    res.status(500).json({ error: 'Chyba při překladu dokumentu: ' + err.message });
+  }
+});
 router.post('/image', requireAuth, async (req, res) => {
   const { prompt, size = '1024x1024' } = req.body;
   if (!prompt) return res.status(400).json({ error: 'Chybí popis obrázku' });

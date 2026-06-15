@@ -4,7 +4,7 @@
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <title>Administrace – Chaties AI</title>
-  <link rel="stylesheet" href="styles.css?v=89" />
+  <link rel="stylesheet" href="styles.css?v=90" />
   <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2/dist/umd/supabase.min.js"></script>
   <script src="https://cdnjs.cloudflare.com/ajax/libs/mammoth/1.6.0/mammoth.browser.min.js"></script>
   <script src="https://cdn.jsdelivr.net/npm/tesseract.js@5/dist/tesseract.min.js"></script>
@@ -388,7 +388,7 @@
     <div class="adm-panel adm-panel-docs-translate" data-panel-id="docs-translate">
 
       <h2 class="adm-trans-heading">Přeložit dokument</h2>
-      <p class="adm-trans-sub">Nahrajte soubor a přeložte ho do více než 16 jazyků. Podporované formáty: docx, html, htm, txt, xlf, xliff.</p>
+      <p class="adm-trans-sub">Nahrajte soubor a přeložte ho do více než 16 jazyků. Podporované formáty: docx, html, htm, txt, xlf, xliff, jpg, png.<span class="adm-claude-badge">⚡ Překládá Claude Sonnet 4.6</span></p>
 
       <!-- CTA nav -->
       <div class="adm-docs-cta-row" style="margin-bottom:16px">
@@ -1333,7 +1333,7 @@
       return html;
     }
 
-    // ── Image process button ────────────────────────────────
+    // ── Image process button – Claude vision (OCR + překlad + formátování v jednom) ──
     if (imgProcessBtn) {
       imgProcessBtn.addEventListener('click', async function () {
         if (!currentImageDataUrl) return;
@@ -1344,23 +1344,24 @@
         var origHTML = imgProcessBtn.innerHTML;
         imgProcessBtn.disabled = true;
         if (imgRight) imgRight.style.visibility = 'visible';
-        imgResultBody.innerHTML = '<div class="adm-docs-img-placeholder"><p>Rozpoznávám text z obrázku… (může trvat 20–60 s)</p></div>';
+        imgResultBody.innerHTML = '<div class="adm-docs-img-placeholder"><p>Claude čte a překládá dokument… (může trvat 15–40 s)</p></div>';
         imgDownloadGroup.style.display = 'none';
+        imgProcessBtn.textContent = 'Překládám…';
 
         try {
-          var ocrText = await ocrImage(currentImageDataUrl, function(pct) {
-            imgProcessBtn.textContent = 'Rozpoznávám… ' + pct + '%';
+          var match = currentImageDataUrl.match(/^data:([^;]+);base64,(.+)$/);
+          if (!match) throw new Error('Nepodporovaný formát obrázku');
+          var mimeType    = match[1];
+          var imageBase64 = match[2];
+          var imgInstruction = document.getElementById('docsImgPrompt') ? document.getElementById('docsImgPrompt').value.trim() : '';
+
+          var result = await apiFetch('/api/ai/translate-image', {
+            method: 'POST',
+            body: JSON.stringify({ imageBase64, mimeType, from, to, instruction: imgInstruction })
           });
 
-          imgProcessBtn.textContent = 'Překládám…';
-          imgResultBody.innerHTML = '<div class="adm-docs-img-placeholder"><p>Překládám text…</p></div>';
-
-          var imgInstruction = document.getElementById('docsImgPrompt') ? document.getElementById('docsImgPrompt').value.trim() : '';
-          var translated = await translatePlainText(ocrText, from, to, imgInstruction);
-          var formatted  = formatOcrToHtml(translated);
-
           imgResultTitle.textContent = currentFileName.replace(/\.[^.]+$/, '') + ' – překlad';
-          imgResultBody.innerHTML = '<div class="adm-docs-img-doc-content">' + formatted + '</div>';
+          imgResultBody.innerHTML = '<div class="adm-docs-img-doc-content">' + result.html + '</div>';
           imgDownloadGroup.style.display = 'flex';
         } catch(err) {
           imgResultBody.innerHTML = '<div class="adm-docs-img-placeholder"><p style="color:#ff5555">Chyba: ' + err.message + '</p></div>';
