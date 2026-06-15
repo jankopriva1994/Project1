@@ -40,7 +40,7 @@
     </div>
 
     <!-- Invite button -->
-    <a href="#" class="adm-invite-btn" id="inviteKamaradaBtn">Pozvat kamaráda</a>
+    <a href="#" class="adm-invite-btn" data-goto-panel="settings" data-open-settings-tab="team">Pozvat kamaráda</a>
 
     <!-- Topbar separator -->
     <div class="adm-topbar-line"></div>
@@ -917,8 +917,18 @@
 
     // Cross-panel CTA buttons (data-goto-panel)
     document.querySelectorAll('[data-goto-panel]').forEach(function (btn) {
-      btn.addEventListener('click', function () {
+      btn.addEventListener('click', function (e) {
+        e.preventDefault();
         navigateTo(btn.getAttribute('data-goto-panel'));
+        var openTab = btn.getAttribute('data-open-settings-tab');
+        if (openTab) {
+          document.querySelectorAll('.adm-settings-tab').forEach(function (t) { t.classList.remove('adm-tab-active'); });
+          document.querySelectorAll('.adm-settings-tab-panel').forEach(function (p) { p.style.display = 'none'; });
+          var tab = document.querySelector('[data-settings-tab="' + openTab + '"]');
+          if (tab) tab.classList.add('adm-tab-active');
+          var panel = document.getElementById('adm-tab-' + openTab);
+          if (panel) panel.style.display = 'block';
+        }
       });
     });
 
@@ -941,21 +951,6 @@
         if (targetPanel) targetPanel.style.display = 'block';
       });
     });
-
-    // "Pozvat kamaráda" → nastavení → záložka Tým
-    var inviteKamaradaBtn = document.getElementById('inviteKamaradaBtn');
-    if (inviteKamaradaBtn) {
-      inviteKamaradaBtn.addEventListener('click', function (e) {
-        e.preventDefault();
-        navigateTo('settings');
-        document.querySelectorAll('.adm-settings-tab').forEach(function (t) { t.classList.remove('adm-tab-active'); });
-        document.querySelectorAll('.adm-settings-tab-panel').forEach(function (p) { p.style.display = 'none'; });
-        var teamTab = document.querySelector('[data-settings-tab="team"]');
-        if (teamTab) teamTab.classList.add('adm-tab-active');
-        var teamPanel = document.getElementById('adm-tab-team');
-        if (teamPanel) teamPanel.style.display = 'block';
-      });
-    }
 
     // Copy invite link
     var copyBtn = document.getElementById('teamCopyBtn');
