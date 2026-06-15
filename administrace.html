@@ -4,7 +4,7 @@
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <title>Administrace – Chaties AI</title>
-  <link rel="stylesheet" href="styles.css?v=93" />
+  <link rel="stylesheet" href="styles.css?v=94" />
   <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2/dist/umd/supabase.min.js"></script>
   <script src="https://cdnjs.cloudflare.com/ajax/libs/mammoth/1.6.0/mammoth.browser.min.js"></script>
   <script src="https://cdn.jsdelivr.net/npm/tesseract.js@5/dist/tesseract.min.js"></script>
@@ -1391,6 +1391,22 @@
     }
 
     // ── Image process button – Claude vision (OCR + překlad + formátování v jednom) ──
+
+    function compressImage(dataUrl, maxWidth, quality) {
+      return new Promise(function(resolve) {
+        var img = new Image();
+        img.onload = function() {
+          var w = img.width, h = img.height;
+          if (w > maxWidth) { h = Math.round(h * maxWidth / w); w = maxWidth; }
+          var canvas = document.createElement('canvas');
+          canvas.width = w; canvas.height = h;
+          canvas.getContext('2d').drawImage(img, 0, 0, w, h);
+          resolve(canvas.toDataURL('image/jpeg', quality));
+        };
+        img.src = dataUrl;
+      });
+    }
+
     if (imgProcessBtn) {
       imgProcessBtn.addEventListener('click', async function () {
         if (!currentImageDataUrl) return;
@@ -1406,11 +1422,14 @@
         imgProcessBtn.textContent = 'Překládám…';
 
         try {
-          var match = currentImageDataUrl.match(/^data:([^;]+);base64,(.+)$/);
+          imgProcessBtn.textContent = 'Kompresuji obrázek…';
+          var compressed = await compressImage(currentImageDataUrl, 1600, 0.88);
+          var match = compressed.match(/^data:([^;]+);base64,(.+)$/);
           if (!match) throw new Error('Nepodporovaný formát obrázku');
           var mimeType    = match[1];
           var imageBase64 = match[2];
           var imgInstruction = document.getElementById('docsImgPrompt') ? document.getElementById('docsImgPrompt').value.trim() : '';
+          imgProcessBtn.textContent = 'Překládám…';
 
           var result = await apiFetch('/api/ai/translate-image', {
             method: 'POST',
