@@ -102,6 +102,19 @@
 
   </div><!-- /.page -->
 
+  <!-- Success overlay po registraci -->
+  <div id="reg-success-overlay" style="display:none;position:fixed;inset:0;background:rgba(13,14,17,0.97);z-index:9999;display:none;align-items:center;justify-content:center;flex-direction:column;text-align:center;font-family:'Supreme',sans-serif;">
+    <div style="max-width:480px;padding:40px 32px;">
+      <div style="width:72px;height:72px;background:#d0ee5220;border:2px solid #d0ee52;border-radius:50%;display:flex;align-items:center;justify-content:center;margin:0 auto 24px;">
+        <svg width="32" height="32" viewBox="0 0 24 24" fill="none"><path d="M5 13l4 4L19 7" stroke="#d0ee52" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"/></svg>
+      </div>
+      <h2 style="color:#ffffff;font-size:24px;font-weight:700;margin:0 0 12px;">Registrace úspěšná!</h2>
+      <p style="color:#8b8b8b;font-size:16px;line-height:1.6;margin:0 0 8px;">Na váš e-mail jsme odeslali potvrzovací odkaz.</p>
+      <p style="color:#8b8b8b;font-size:16px;line-height:1.6;margin:0 0 28px;">Klikněte na něj pro dokončení registrace.</p>
+      <p id="reg-redirect-countdown" style="color:#d0ee52;font-size:14px;font-weight:600;">Přesměrování za 3 s...</p>
+    </div>
+  </div>
+
   <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2/dist/umd/supabase.min.js"></script>
   <script src="js/chaties.js"></script>
   <script>
@@ -150,13 +163,17 @@
         return;
       }
 
-      // Email potvrzení je vyžadováno – zobraz zprávu, nepřesměrovávej
+      // Email potvrzení je vyžadováno – zobraz overlay s odpočtem
       if (!data.session) {
-        errEl.style.color = '#a0d060';
-        errEl.innerHTML = 'Registrace proběhla úspěšně! Na e-mail <strong>' + email + '</strong> jsme odeslali potvrzovací odkaz. Klikněte na něj pro dokončení registrace.';
-        errEl.style.display = 'block';
-        btn.textContent = 'Registrovat se zdarma';
-        btn.disabled = false;
+        var overlay = document.getElementById('reg-success-overlay');
+        var countdown = document.getElementById('reg-redirect-countdown');
+        overlay.style.display = 'flex';
+        var secs = 3;
+        var timer = setInterval(function () {
+          secs--;
+          if (countdown) countdown.textContent = 'Přesměrování za ' + secs + ' s...';
+          if (secs <= 0) { clearInterval(timer); window.location.href = 'index.html'; }
+        }, 1000);
         return;
       }
 

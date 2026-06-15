@@ -8,6 +8,17 @@ const { requireAuth } = require('../middleware/auth');
 const anthropic = new Anthropic({ apiKey: process.env.ANTHROPIC_API_KEY });
 const openai    = new OpenAI({ apiKey: process.env.OPENAI_API_KEY });
 
+// Vrátí ID vlastníka týmu pokud je uživatel pozvaným členem, jinak vlastní ID
+async function getEffectiveUserId(userId) {
+  const { data } = await supabase
+    .from('team_members')
+    .select('owner_id')
+    .eq('member_id', userId)
+    .eq('status', 'active')
+    .maybeSingle();
+  return data?.owner_id || userId;
+}
+
 // Kontrola a odečet tokenů
 async function deductTokens(userId, amount, description) {
   const { data: profile } = await supabase
@@ -68,7 +79,8 @@ router.post('/chat', requireAuth, async (req, res) => {
   const { message, history = [] } = req.body;
   if (!message) return res.status(400).json({ error: 'Chybí zpráva' });
 
-  const check = await deductTokens(req.user.id, 10, `Chat: ${message.slice(0, 50)}`);
+  const effectiveId = await getEffectiveUserId(req.user.id);
+  const check = await deductTokens(effectiveId, 10, `Chat: ${message.slice(0, 50)}`);
   if (!check.ok) return res.status(402).json({ error: check.error });
 
   try {
@@ -174,7 +186,8 @@ router.post('/generate', requireAuth, async (req, res) => {
     userPrompt   = tmpl.buildPrompt(fieldText, langLabel);
   }
 
-  const check = await deductTokens(req.user.id, 50, `Šablona: ${tmplName}`);
+  const effectiveId = await getEffectiveUserId(req.user.id);
+  const check = await deductTokens(effectiveId, 50, `Šablona: ${tmplName}`);
   if (!check.ok) return res.status(402).json({ error: check.error });
 
   try {
@@ -194,7 +207,7 @@ router.post('/generate', requireAuth, async (req, res) => {
     const { data: updatedProfile } = await supabase
       .from('profiles')
       .select('tokens_balance')
-      .eq('id', req.user.id)
+      .eq('id', effectiveId)
       .single();
 
     res.json({ content, tokens_used: tokensUsed, tokens_remaining: updatedProfile?.tokens_balance ?? 0 });
@@ -212,7 +225,8 @@ router.post('/translate', requireAuth, async (req, res) => {
   const charCount = text.length;
   const tokenCost = Math.max(5, Math.ceil(charCount / 100));
 
-  const check = await deductTokens(req.user.id, tokenCost, `Překlad ${from}→${to}`);
+  const effectiveId = await getEffectiveUserId(req.user.id);
+  const check = await deductTokens(effectiveId, tokenCost, `Překlad ${from}→${to}`);
   if (!check.ok) return res.status(402).json({ error: check.error });
 
   try {
@@ -243,7 +257,8 @@ router.post('/image', requireAuth, async (req, res) => {
   const { prompt, size = '1024x1024' } = req.body;
   if (!prompt) return res.status(400).json({ error: 'Chybí popis obrázku' });
 
-  const check = await deductTokens(req.user.id, 100, `Obrázek: ${prompt.slice(0, 50)}`);
+  const effectiveId = await getEffectiveUserId(req.user.id);
+  const check = await deductTokens(effectiveId, 100, `Obrázek: ${prompt.slice(0, 50)}`);
   if (!check.ok) return res.status(402).json({ error: check.error });
 
   try {

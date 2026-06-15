@@ -43,6 +43,24 @@ router.get('/profile', requireAuth, async (req, res) => {
     .eq('id', req.user.id)
     .single();
   if (error) return res.status(500).json({ error: error.message });
+
+  // Pokud je uživatel členem týmu, zobraz tokeny vlastníka
+  const { data: membership } = await supabase
+    .from('team_members')
+    .select('owner_id')
+    .eq('member_id', req.user.id)
+    .eq('status', 'active')
+    .maybeSingle();
+
+  if (membership?.owner_id) {
+    const { data: ownerProfile } = await supabase
+      .from('profiles')
+      .select('tokens_balance')
+      .eq('id', membership.owner_id)
+      .single();
+    if (ownerProfile) data.tokens_balance = ownerProfile.tokens_balance;
+  }
+
   res.json(data);
 });
 
