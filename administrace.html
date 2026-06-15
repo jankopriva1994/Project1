@@ -1995,21 +1995,42 @@
         var rows = document.getElementById('adm-team-rows');
         if (!rows) return;
         try {
-          var members = await apiFetch('/api/user/team');
+          var res = await apiFetch('/api/user/team');
+          var members = res.members || res; // zpětná kompatibilita
+          var owner   = res.owner;
+          var isMember = res.is_member;
+
+          var html = '';
+
+          // Pokud je uživatel pozvaný člen – zobraz vlastníka týmu jako první
+          if (isMember && owner) {
+            html += '<div class="adm-team-table-row">'
+              + '<span class="adm-team-col adm-team-col-name">' + (owner.full_name || owner.email || '–') + ' <span style="color:#d0ee52;font-size:12px">(vlastník týmu)</span></span>'
+              + '<span class="adm-team-col adm-team-col-date">–</span>'
+              + '<span class="adm-team-col adm-team-col-status">Aktivní</span>'
+              + '<span class="adm-team-col adm-team-col-del"></span>'
+              + '</div>';
+          }
+
           if (!members || members.length === 0) {
-            rows.innerHTML = '<p style="color:#555;font-size:14px;padding:16px 0">Zatím žádní členové týmu.</p>';
+            if (!html) html = '<p style="color:#555;font-size:14px;padding:16px 0">Zatím žádní členové týmu.</p>';
+            rows.innerHTML = html;
             return;
           }
-          rows.innerHTML = members.map(function (m) {
+
+          html += members.map(function (m) {
             var date = m.invited_at ? new Date(m.invited_at).toLocaleDateString('cs-CZ') : '–';
             var statusLabel = m.status === 'active' ? 'Aktivní' : m.status === 'pending' ? 'Čeká na registraci' : (m.status || '–');
+            var delBtn = isMember ? '' : '<button class="adm-team-del-btn" data-id="' + m.id + '">' + DEL_SVG + '</button>';
             return '<div class="adm-team-table-row">'
               + '<span class="adm-team-col adm-team-col-name">' + (m.member_email || '–') + '</span>'
               + '<span class="adm-team-col adm-team-col-date">' + date + '</span>'
               + '<span class="adm-team-col adm-team-col-status">' + statusLabel + '</span>'
-              + '<span class="adm-team-col adm-team-col-del"><button class="adm-team-del-btn" data-id="' + m.id + '">' + DEL_SVG + '</button></span>'
+              + '<span class="adm-team-col adm-team-col-del">' + delBtn + '</span>'
               + '</div>';
           }).join('');
+
+          rows.innerHTML = html;
           rows.querySelectorAll('.adm-team-del-btn').forEach(function (btn) {
             btn.addEventListener('click', async function () {
               if (!confirm('Odstranit člena týmu?')) return;

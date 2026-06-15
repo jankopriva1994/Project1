@@ -129,13 +129,32 @@ router.patch('/billing', requireAuth, async (req, res) => {
 
 // GET /api/user/team
 router.get('/team', requireAuth, async (req, res) => {
+  // Zjistí, jestli je uživatel vlastník nebo pozvaný člen
+  const { data: membership } = await supabase
+    .from('team_members')
+    .select('owner_id')
+    .eq('member_id', req.user.id)
+    .eq('status', 'active')
+    .maybeSingle();
+
+  // Pokud je pozvaný člen → zobraz celý tým svého vlastníka
+  const ownerId = membership?.owner_id || req.user.id;
+
   const { data, error } = await supabase
     .from('team_members')
     .select('*')
-    .eq('owner_id', req.user.id)
+    .eq('owner_id', ownerId)
     .order('invited_at', { ascending: false });
   if (error) return res.status(500).json({ error: error.message });
-  res.json(data);
+
+  // Přidej info o vlastníkovi týmu
+  const { data: ownerProfile } = await supabase
+    .from('profiles')
+    .select('id, email, full_name')
+    .eq('id', ownerId)
+    .single();
+
+  res.json({ members: data, owner: ownerProfile, is_member: !!membership });
 });
 
 // POST /api/user/team/invite
