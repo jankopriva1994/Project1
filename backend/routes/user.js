@@ -11,7 +11,10 @@ function createMailer() {
     host: process.env.SMTP_HOST,
     port: parseInt(process.env.SMTP_PORT || '465'),
     secure: (process.env.SMTP_PORT || '465') === '465',
-    auth: { user: process.env.SMTP_USER, pass: process.env.SMTP_PASS }
+    auth: { user: process.env.SMTP_USER, pass: process.env.SMTP_PASS },
+    connectionTimeout: 10000,
+    greetingTimeout: 10000,
+    socketTimeout: 10000
   });
 }
 
@@ -130,15 +133,17 @@ router.post('/team/invite', requireAuth, async (req, res) => {
 
   const inviteUrl = `${process.env.FRONTEND_URL || 'https://chaties.cz'}/registrace.html?invite=${token}`;
 
-  // Pošli pozvánku přes SMTP (nodemailer)
+  // Odpovíme hned – email pošleme na pozadí
+  res.json({ success: true, member: data });
+
+  // Pošli pozvánku přes SMTP asynchronně (neblokuje response)
   const mailer = createMailer();
   if (mailer) {
-    try {
-      await mailer.sendMail({
-        from: `"Chaties AI" <${process.env.SMTP_USER}>`,
-        to: email,
-        subject: 'Pozvánka do týmu na Chaties.cz',
-        html: `<div style="font-family:Arial,sans-serif;max-width:520px;margin:0 auto">
+    mailer.sendMail({
+      from: `"Chaties AI" <${process.env.SMTP_USER}>`,
+      to: email,
+      subject: 'Pozvánka do týmu na Chaties.cz',
+      html: `<div style="font-family:Arial,sans-serif;max-width:520px;margin:0 auto">
   <h2 style="color:#111">Byli jste pozváni do týmu na <span style="color:#5a8a00">Chaties AI</span></h2>
   <p>Kliknutím na tlačítko níže přijmete pozvánku a zaregistrujete se:</p>
   <a href="${inviteUrl}" style="display:inline-block;background:#d0ee52;color:#000;padding:12px 28px;border-radius:8px;text-decoration:none;font-weight:bold;margin:12px 0">Přijmout pozvánku</a>
@@ -146,15 +151,14 @@ router.post('/team/invite', requireAuth, async (req, res) => {
   <hr style="border:none;border-top:1px solid #eee;margin:24px 0">
   <p style="color:#aaa;font-size:12px">Tým Chaties AI &nbsp;·&nbsp; chaties.cz</p>
 </div>`
-      });
-    } catch (emailErr) {
+    }).then(() => {
+      console.log('Pozvánka odeslána na:', email);
+    }).catch(emailErr => {
       console.error('SMTP send error:', emailErr.message);
-    }
+    });
   } else {
     console.log('SMTP není nakonfigurováno – pozvánka vytvořena bez emailu:', inviteUrl);
   }
-
-  res.json({ success: true, member: data });
 });
 
 // POST /api/user/team/accept-invite
