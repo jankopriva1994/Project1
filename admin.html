@@ -611,7 +611,6 @@
       document.getElementById('tmplOrder').value = t.sort_order || 0;
       renderFieldBuilder(t.fields || []);
       document.getElementById('tmplSystemPrompt').value = t.system_prompt || '';
-      document.getElementById('tmplUserPrompt').value = t.user_prompt || '';
       if (t.is_active) document.getElementById('tmplActive').classList.add('on');
       else document.getElementById('tmplActive').classList.remove('on');
       document.getElementById('tmplDelete').style.display = '';
