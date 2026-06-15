@@ -219,7 +219,7 @@ router.post('/generate', requireAuth, async (req, res) => {
 
 // ── POST /api/ai/translate ─────────────────────────────────────
 router.post('/translate', requireAuth, async (req, res) => {
-  const { text, from = 'cs', to = 'en' } = req.body;
+  const { text, from = 'cs', to = 'en', instruction = '' } = req.body;
   if (!text) return res.status(400).json({ error: 'Chybí text k překladu' });
 
   const charCount = text.length;
@@ -229,11 +229,14 @@ router.post('/translate', requireAuth, async (req, res) => {
   const check = await deductTokens(effectiveId, tokenCost, `Překlad ${from}→${to}`);
   if (!check.ok) return res.status(402).json({ error: check.error });
 
+  const systemPrompt = 'Jsi profesionální překladatel. Překládáš přesně, přirozeně a zachováváš formátování původního textu. Vrať pouze přeložený text bez komentářů a bez jakéhokoliv uvozování.'
+    + (instruction ? `\n\nDodatečná instrukce od uživatele: ${instruction}` : '');
+
   try {
     const response = await anthropic.messages.create({
       model: 'claude-sonnet-4-6',
-      max_tokens: 4096,
-      system: 'Jsi profesionální překladatel. Překládáš přesně, přirozeně a zachováváš formátování původního textu. Vrať pouze přeložený text bez komentářů.',
+      max_tokens: 8192,
+      system: systemPrompt,
       messages: [{
         role: 'user',
         content: `Přelož z ${from} do ${to}:\n\n${text}`
