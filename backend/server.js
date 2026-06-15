@@ -13,6 +13,9 @@ app.use(cors({
     'https://www.chaties.cz',
     'http://www.chaties.cz',
 
+    'http://399188.w88.wedos.ws',
+    'https://399188.w88.wedos.ws',
+
     'http://localhost:8080',
     'http://127.0.0.1:8080'
   ],
