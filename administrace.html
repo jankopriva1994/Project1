@@ -4,7 +4,7 @@
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <title>Administrace – Chaties AI</title>
-  <link rel="stylesheet" href="styles.css?v=92" />
+  <link rel="stylesheet" href="styles.css?v=93" />
   <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2/dist/umd/supabase.min.js"></script>
   <script src="https://cdnjs.cloudflare.com/ajax/libs/mammoth/1.6.0/mammoth.browser.min.js"></script>
   <script src="https://cdn.jsdelivr.net/npm/tesseract.js@5/dist/tesseract.min.js"></script>
@@ -372,13 +372,8 @@
       </div>
 
       <p class="adm-docs-recent-label">Nedávno přidané dokumenty</p>
-
-      <div class="adm-docs-card-grid">
-        <div class="adm-docs-doc-card">
-          <p class="adm-docs-doc-title">Článek k projektu<br>"nová identita"</p>
-          <p class="adm-docs-doc-date">Naposledy otevřen: před 20 dny</p>
-          <a href="#" class="adm-docs-doc-edit">Editovat <svg width="14" height="14" viewBox="0 0 24 24" fill="none"><path d="M5 12h14M13 6l6 6-6 6" stroke="#d0ee52" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg></a>
-        </div>
+      <div class="adm-docs-card-grid" id="docsCardGrid">
+        <p class="adm-docs-empty" id="docsEmptyMsg" style="display:none;color:#505050;font-size:15px;font-family:'Supreme',sans-serif">Zatím žádné dokumenty. Přeložte nebo vytvořte první dokument.</p>
       </div>
 
     </div><!-- /adm-panel-docs -->
@@ -904,6 +899,67 @@
       setNavActive(navEl || null);
     }
 
+    // ── Docs panel: načti dokumenty ze serveru ──────────────────
+    async function loadDocsPanel() {
+      var grid = document.getElementById('docsCardGrid');
+      var emptyMsg = document.getElementById('docsEmptyMsg');
+      if (!grid) return;
+
+      grid.querySelectorAll('.adm-docs-doc-card').forEach(function(c) { c.remove(); });
+
+      var docs;
+      try { docs = await apiFetch('/api/documents'); } catch(e) { return; }
+
+      if (!docs.length) {
+        if (emptyMsg) emptyMsg.style.display = '';
+        return;
+      }
+      if (emptyMsg) emptyMsg.style.display = 'none';
+
+      docs.forEach(function(doc) {
+        var dateStr = new Date(doc.updated_at).toLocaleDateString('cs-CZ', { day:'numeric', month:'long', year:'numeric' });
+        var typeLabel = doc.doc_type === 'translated' ? 'Přeložený dokument' : 'Vytvořený dokument';
+        var card = document.createElement('div');
+        card.className = 'adm-docs-doc-card';
+        card.innerHTML = '<p class="adm-docs-doc-title">' + doc.title.replace(/</g,'&lt;') + '</p>'
+          + '<p class="adm-docs-doc-type">' + typeLabel + '</p>'
+          + '<p class="adm-docs-doc-date">' + dateStr + '</p>'
+          + '<div class="adm-docs-doc-actions">'
+          + '<button class="adm-docs-doc-edit" data-doc-id="' + doc.id + '">Editovat <svg width="13" height="13" viewBox="0 0 24 24" fill="none"><path d="M5 12h14M13 6l6 6-6 6" stroke="#d0ee52" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg></button>'
+          + '<button class="adm-docs-doc-delete" data-doc-id="' + doc.id + '" title="Smazat">× Smazat</button>'
+          + '</div>';
+        grid.appendChild(card);
+      });
+
+      grid.querySelectorAll('.adm-docs-doc-edit').forEach(function(btn) {
+        btn.addEventListener('click', async function() {
+          var id = btn.getAttribute('data-doc-id');
+          try {
+            var doc = await apiFetch('/api/documents/' + id);
+            var editor = document.getElementById('docsEditor');
+            if (editor) {
+              editor.innerHTML = doc.content;
+              navigateTo('docs-create');
+              currentDocId = id;
+            }
+          } catch(e) { alert('Nepodařilo se načíst dokument.'); }
+        });
+      });
+
+      grid.querySelectorAll('.adm-docs-doc-delete').forEach(function(btn) {
+        btn.addEventListener('click', async function() {
+          if (!confirm('Opravdu smazat dokument?')) return;
+          var id = btn.getAttribute('data-doc-id');
+          try {
+            await apiFetch('/api/documents/' + id, { method: 'DELETE' });
+            btn.closest('.adm-docs-doc-card').remove();
+            var remaining = grid.querySelectorAll('.adm-docs-doc-card');
+            if (!remaining.length && emptyMsg) emptyMsg.style.display = '';
+          } catch(e) { alert('Nepodařilo se smazat dokument.'); }
+        });
+      });
+    }
+
     // Obnov panel po refreshi
     (function restorePanel() {
       var saved = sessionStorage.getItem('adm_panel');
@@ -923,6 +979,7 @@
         } else {
           setNavActive(null);
         }
+        if (panelId === 'docs') loadDocsPanel();
       });
     });
 
@@ -1360,9 +1417,11 @@
             body: JSON.stringify({ imageBase64, mimeType, from, to, instruction: imgInstruction })
           });
 
-          imgResultTitle.textContent = currentFileName.replace(/\.[^.]+$/, '') + ' – překlad';
+          var docTitle = currentFileName.replace(/\.[^.]+$/, '') + ' – překlad';
+          imgResultTitle.textContent = docTitle;
           imgResultBody.innerHTML = '<div class="adm-docs-img-doc-content">' + result.html + '</div>';
           imgDownloadGroup.style.display = 'flex';
+          apiFetch('/api/documents', { method: 'POST', body: JSON.stringify({ title: docTitle, content: result.html, doc_type: 'translated' }) }).catch(function(){});
         } catch(err) {
           imgResultBody.innerHTML = '<div class="adm-docs-img-placeholder"><p style="color:#ff5555">Chyba: ' + err.message + '</p></div>';
           console.error(err);
@@ -1446,6 +1505,9 @@
           }
           resultName.textContent = currentFileName;
           showStep(3);
+          var savedContent = isHtmlMode ? previewText.innerHTML : previewText.innerText.split('\n\n').map(function(p){ return '<p>' + p.replace(/\n/g,'<br>') + '</p>'; }).join('');
+          var savedTitle = currentFileName.replace(/\.[^.]+$/, '') + ' – překlad';
+          apiFetch('/api/documents', { method: 'POST', body: JSON.stringify({ title: savedTitle, content: savedContent, doc_type: 'translated' }) }).catch(function(){});
         } catch (err) {
           alert('Chyba při překladu. Zkontrolujte připojení k internetu a zkuste to znovu.');
           console.error(err);
@@ -2168,7 +2230,13 @@
       if (typeof window.loadTemplatesFromAPI === 'function') {
         window.loadTemplatesFromAPI();
       }
+
+      // Load docs panel if it's the active panel on start
+      var activePanel = sessionStorage.getItem('adm_panel');
+      if (activePanel === 'docs') loadDocsPanel();
     }
+
+    var currentDocId = null;
 
     init();
   })();

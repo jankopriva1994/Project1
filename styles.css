@@ -2964,10 +2964,14 @@ body {
 .adm-docs-create-btn { white-space: nowrap; }
 .adm-docs-recent-label { font-size: 16px; color: #ffffff; font-family: 'Supreme', sans-serif; font-weight: 400; margin: 32px 0 16px; }
 .adm-docs-card-grid { display: flex; flex-wrap: wrap; gap: 16px; }
-.adm-docs-doc-card { width: 200px; background: #272727; border-radius: 5px; padding: 20px 20px 18px; box-sizing: border-box; }
-.adm-docs-doc-title { font-size: 16px; font-weight: 700; color: #d0ee52; font-family: 'Supreme', sans-serif; margin: 0 0 12px; line-height: 1.35; }
-.adm-docs-doc-date { font-size: 13px; color: #8b8b8b; font-family: 'Supreme', sans-serif; margin: 0 0 14px; }
-.adm-docs-doc-edit { font-size: 14px; font-weight: 700; color: #d0ee52; font-family: 'Supreme', sans-serif; text-decoration: none; display: flex; align-items: center; gap: 6px; }
+.adm-docs-doc-card { width: 200px; background: #272727; border-radius: 5px; padding: 20px 20px 18px; box-sizing: border-box; display: flex; flex-direction: column; }
+.adm-docs-doc-title { font-size: 15px; font-weight: 700; color: #d0ee52; font-family: 'Supreme', sans-serif; margin: 0 0 8px; line-height: 1.35; word-break: break-word; }
+.adm-docs-doc-type { font-size: 11px; font-weight: 600; color: #8b8b8b; font-family: 'Supreme', sans-serif; text-transform: uppercase; letter-spacing: .5px; margin: 0 0 8px; }
+.adm-docs-doc-date { font-size: 12px; color: #505050; font-family: 'Supreme', sans-serif; margin: 0 0 14px; flex: 1; }
+.adm-docs-doc-actions { display: flex; align-items: center; justify-content: space-between; margin-top: auto; }
+.adm-docs-doc-edit { font-size: 13px; font-weight: 700; color: #d0ee52; font-family: 'Supreme', sans-serif; text-decoration: none; display: flex; align-items: center; gap: 5px; background: none; border: none; cursor: pointer; padding: 0; }
+.adm-docs-doc-delete { font-size: 12px; color: #505050; font-family: 'Supreme', sans-serif; background: none; border: none; cursor: pointer; padding: 0; }
+.adm-docs-doc-delete:hover { color: #ff5555; }
 
 /* Docs create (editor) panel */
 .adm-docs-create-topbar { display: flex; align-items: center; gap: 0; margin-bottom: 20px; }
