@@ -3169,6 +3169,7 @@ body {
 .adm-tmpl-output-content table td { padding: 9px 14px; color: #333 !important; background: #fff !important; border-bottom: 1px solid #eee; font-size: 14px; }
 .adm-tmpl-output-content table tr:nth-child(even) td { background: #f9f9f9 !important; }
 .adm-tmpl-output-loading { display: flex; align-items: center; justify-content: center; min-height: 200px; }
+.adm-tmpl-output-plain { white-space: pre-wrap; font-family: 'Supreme', Arial, sans-serif; font-size: 15px; line-height: 1.7; color: #1a1a1a; margin: 0; }
 .adm-tmpl-detail-output-actions { display: flex; justify-content: flex-end; }
 .adm-tmpl-copy-btn { display: flex; align-items: center; gap: 7px; height: 38px; padding: 0 18px; background: #272727; border: 1px solid #505050; border-radius: 5px; color: #8b8b8b; font-size: 14px; font-family: 'Supreme', sans-serif; cursor: pointer; }
 .adm-tmpl-copy-btn:hover { color: #fff; border-color: #666; }

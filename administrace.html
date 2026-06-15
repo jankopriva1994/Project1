@@ -1885,16 +1885,22 @@
             body: JSON.stringify({ templateId: currentTmplId, fields: fields, language: lang })
           });
           if (outputEl) {
-            outputEl.innerHTML = '<div class="adm-tmpl-output-content">' + (data.html || data.content || '') + '</div>';
-            // Odstraň <style> bloky
-            outputEl.querySelectorAll('style').forEach(function (el) { el.remove(); });
-            // Odstraň všechny atributy způsobující styling
-            outputEl.querySelectorAll('[style],[bgcolor],[color],[class]').forEach(function (el) {
-              el.removeAttribute('style');
-              el.removeAttribute('bgcolor');
-              el.removeAttribute('color');
-              el.removeAttribute('class');
-            });
+            var raw = data.content || data.html || '';
+            var isHtml = /<[a-z][\s\S]*>/i.test(raw);
+            if (isHtml) {
+              outputEl.innerHTML = '<div class="adm-tmpl-output-content">' + raw + '</div>';
+              outputEl.querySelectorAll('style').forEach(function (el) { el.remove(); });
+              outputEl.querySelectorAll('[style],[bgcolor],[color],[class]').forEach(function (el) {
+                el.removeAttribute('style'); el.removeAttribute('bgcolor');
+                el.removeAttribute('color'); el.removeAttribute('class');
+              });
+            } else {
+              var pre = document.createElement('pre');
+              pre.className = 'adm-tmpl-output-content adm-tmpl-output-plain';
+              pre.textContent = raw;
+              outputEl.innerHTML = '';
+              outputEl.appendChild(pre);
+            }
           }
           updateTokenDisplay(data.tokens_remaining);
         } catch (err) {
