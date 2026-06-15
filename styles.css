@@ -3168,11 +3168,4 @@ body {
 .adm-tmpl-copy-btn { display: flex; align-items: center; gap: 7px; height: 38px; padding: 0 18px; background: #272727; border: 1px solid #505050; border-radius: 5px; color: #8b8b8b; font-size: 14px; font-family: 'Supreme', sans-serif; cursor: pointer; }
 .adm-tmpl-copy-btn:hover { color: #fff; border-color: #666; }
 
-/* ── Desktop scaling pro obrazovky < 1680px ────────────────────
-   Celý .page se proporcionálně zmenší – funguje v Chrome + Safari (MacBook).
-   Firefox nepodporuje zoom: calc(), tam stránka zůstane scrollovatelná. */
-@media screen and (max-width: 1679px) {
-  .page {
-    zoom: calc(100vw / 1680);
-  }
-}
+/* Škálování řeší JS v chaties.js – page.style.zoom = vw/1680 */

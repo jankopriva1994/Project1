@@ -5,6 +5,27 @@ const BACKEND   = 'https://project1-production-bfde.up.railway.app';
 
 window.supabase = window.supabase.createClient(SUPABASE_URL, SUPABASE_ANON);
 
+// Škálování stránky na viewporty menší než 1680px
+(function scaleToViewport() {
+  function apply() {
+    var page = document.querySelector('.page');
+    if (!page) return;
+    var vw = window.innerWidth;
+    if (vw < 1680) {
+      var scale = (vw / 1680).toFixed(5);
+      page.style.zoom = scale;
+    } else {
+      page.style.zoom = '1';
+    }
+  }
+  if (document.readyState === 'loading') {
+    document.addEventListener('DOMContentLoaded', apply);
+  } else {
+    apply();
+  }
+  window.addEventListener('resize', apply);
+})();
+
 // Vrátí aktuálního přihlášeného uživatele nebo null
 async function getUser() {
   const { data: { user } } = await supabase.auth.getUser();
