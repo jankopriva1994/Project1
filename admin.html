@@ -458,8 +458,12 @@
     var templates = [];
 
     async function loadTemplates() {
-      templates = await apiFetch('/api/admin/templates');
-      renderTemplates();
+      try {
+        templates = await apiFetch('/api/admin/templates');
+        renderTemplates();
+      } catch (e) {
+        document.getElementById('tmplBody').innerHTML = '<tr><td colspan="5" style="color:#ff5555;padding:16px">Chyba načítání: ' + e.message + '</td></tr>';
+      }
     }
 
     function renderTemplates() {
@@ -865,7 +869,13 @@
     var activeContentPage = 'home';
 
     async function loadContent() {
-      var blocks = await apiFetch('/api/admin/content');
+      var blocks;
+      try {
+        blocks = await apiFetch('/api/admin/content');
+      } catch(e) {
+        document.querySelector('#sec-content .cms-main, #sec-content') && (document.querySelector('#sec-content p.cms-sub').insertAdjacentHTML('afterend', '<p style="color:#ff5555;margin-bottom:12px">Chyba načítání textů: ' + e.message + '</p>'));
+        return;
+      }
       allContentBlocks = {};
       blocks.forEach(function (b) { allContentBlocks[b.key] = b.value || ''; });
 
