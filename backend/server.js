@@ -22,7 +22,7 @@ app.use(cors({
 // Stripe webhook potřebuje raw body – musí být PŘED express.json()
 app.use('/api/stripe/webhook', express.raw({ type: 'application/json' }));
 
-app.use(express.json());
+app.use(express.json({ limit: '20mb' }));
 
 // Health check
 app.get('/health', (req, res) => res.json({ status: 'ok', timestamp: new Date() }));
