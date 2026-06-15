@@ -4,7 +4,7 @@
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <title>Administrace – Chaties AI</title>
-  <link rel="stylesheet" href="styles.css?v=86" />
+  <link rel="stylesheet" href="styles.css?v=87" />
   <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2/dist/umd/supabase.min.js"></script>
   <script src="https://cdnjs.cloudflare.com/ajax/libs/mammoth/1.6.0/mammoth.browser.min.js"></script>
   <script src="https://cdn.jsdelivr.net/npm/tesseract.js@5/dist/tesseract.min.js"></script>
@@ -281,7 +281,7 @@
       <!-- Action buttons -->
       <div class="adm-trans-action-btns">
         <button class="adm-trans-btn adm-trans-btn-active">Přeložit text</button>
-        <button class="adm-trans-btn adm-trans-btn-inactive" data-goto-panel="docs-translate">Přeložit dokument</button>
+        <button class="adm-trans-btn adm-trans-btn-inactive" data-goto-panel="docs-translate">Nahrát soubor k překladu</button>
       </div>
 
       <p class="adm-trans-info">1 slovo = 0,3 slov</p>
@@ -367,7 +367,7 @@
 
       <div class="adm-trans-action-btns">
         <button class="adm-trans-btn adm-trans-btn-active adm-docs-create-btn" data-goto-panel="docs-create">+ Vytvořit nový dokument</button>
-        <button class="adm-trans-btn adm-trans-btn-inactive" data-goto-panel="docs-translate">Přeložit dokument</button>
+        <button class="adm-trans-btn adm-trans-btn-inactive" data-goto-panel="docs-translate">Nahrát soubor k překladu</button>
       </div>
 
       <p class="adm-docs-recent-label">Nedávno přidané dokumenty</p>
@@ -390,9 +390,9 @@
       <p class="adm-trans-sub">Nahrajte soubor a přeložte ho do více než 16 jazyků. Podporované formáty: docx, html, htm, txt, xlf, xliff.</p>
 
       <!-- CTA nav -->
-      <div class="adm-docs-cta-row" style="margin-bottom:32px">
+      <div class="adm-docs-cta-row" style="margin-bottom:16px">
         <button class="adm-trans-btn adm-trans-btn-inactive" data-goto-panel="docs-create">+ Vytvořit nový dokument</button>
-        <button class="adm-trans-btn adm-trans-btn-active">Přeložit dokument</button>
+        <button class="adm-trans-btn adm-trans-btn-active">Nahrát soubor k překladu</button>
       </div>
 
       <!-- STEP 1: Dropzone -->
@@ -598,7 +598,7 @@
       <div class="adm-docs-create-topbar">
         <div class="adm-trans-action-btns" style="margin-bottom:0">
           <button class="adm-trans-btn adm-trans-btn-active adm-docs-create-btn">+ Vytvořit nový dokument</button>
-          <button class="adm-trans-btn adm-trans-btn-inactive" data-goto-panel="docs-translate">Přeložit dokument</button>
+          <button class="adm-trans-btn adm-trans-btn-inactive" data-goto-panel="docs-translate">Nahrát soubor k překladu</button>
         </div>
         <div class="adm-docs-sep"></div>
         <button class="adm-docs-ai-trigger" id="docsAiBtn">
@@ -1367,6 +1367,16 @@
     }
 
     if (imgRemove) imgRemove.addEventListener('click', resetUpload);
+
+    var imgPromptEl = document.getElementById('docsImgPrompt');
+    if (imgPromptEl && imgProcessBtn) {
+      imgPromptEl.addEventListener('keydown', function (e) {
+        if (e.key === 'Enter' && !e.shiftKey) {
+          e.preventDefault();
+          imgProcessBtn.click();
+        }
+      });
+    }
 
     if (imgDownloadBtn) {
       imgDownloadBtn.addEventListener('click', function () {
