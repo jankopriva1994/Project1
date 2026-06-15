@@ -2028,7 +2028,7 @@
           var inputTA  = panel.querySelector('.adm-trans-textarea:not(.adm-trans-output)');
           var outputTA = panel.querySelector('.adm-trans-output');
           var text = inputTA ? inputTA.value.trim() : '';
-          if (!text) return;
+          if (!text) { if (outputTA) outputTA.value = 'Zadejte text k přeložení.'; return; }
           var dropdowns = panel.querySelectorAll('.adm-lang-dropdown');
           var fromLang = dropdowns[0] ? dropdowns[0].getAttribute('data-lang') : 'cs';
           var toLang   = dropdowns[1] ? dropdowns[1].getAttribute('data-lang') : 'en';
