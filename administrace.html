@@ -4,7 +4,7 @@
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <title>Administrace – Chaties AI</title>
-  <link rel="stylesheet" href="styles.css?v=94" />
+  <link rel="stylesheet" href="styles.css?v=95" />
   <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2/dist/umd/supabase.min.js"></script>
   <script src="https://cdnjs.cloudflare.com/ajax/libs/mammoth/1.6.0/mammoth.browser.min.js"></script>
   <script src="https://cdn.jsdelivr.net/npm/tesseract.js@5/dist/tesseract.min.js"></script>
@@ -987,7 +987,9 @@
     document.querySelectorAll('[data-goto-panel]').forEach(function (btn) {
       btn.addEventListener('click', function (e) {
         e.preventDefault();
-        navigateTo(btn.getAttribute('data-goto-panel'));
+        var target = btn.getAttribute('data-goto-panel');
+        navigateTo(target);
+        if (target === 'docs') loadDocsPanel();
         var openTab = btn.getAttribute('data-open-settings-tab');
         if (openTab) {
           document.querySelectorAll('.adm-settings-tab').forEach(function (t) { t.classList.remove('adm-tab-active'); });
@@ -1440,7 +1442,7 @@
           imgResultTitle.textContent = docTitle;
           imgResultBody.innerHTML = '<div class="adm-docs-img-doc-content">' + result.html + '</div>';
           imgDownloadGroup.style.display = 'flex';
-          apiFetch('/api/documents', { method: 'POST', body: JSON.stringify({ title: docTitle, content: result.html, doc_type: 'translated' }) }).catch(function(){});
+          apiFetch('/api/documents', { method: 'POST', body: JSON.stringify({ title: docTitle, content: result.html, doc_type: 'translated' }) }).catch(function(e){ console.error('Uložení dokumentu selhalo:', e.message); });
         } catch(err) {
           imgResultBody.innerHTML = '<div class="adm-docs-img-placeholder"><p style="color:#ff5555">Chyba: ' + err.message + '</p></div>';
           console.error(err);
@@ -1526,7 +1528,7 @@
           showStep(3);
           var savedContent = isHtmlMode ? previewText.innerHTML : previewText.innerText.split('\n\n').map(function(p){ return '<p>' + p.replace(/\n/g,'<br>') + '</p>'; }).join('');
           var savedTitle = currentFileName.replace(/\.[^.]+$/, '') + ' – překlad';
-          apiFetch('/api/documents', { method: 'POST', body: JSON.stringify({ title: savedTitle, content: savedContent, doc_type: 'translated' }) }).catch(function(){});
+          apiFetch('/api/documents', { method: 'POST', body: JSON.stringify({ title: savedTitle, content: savedContent, doc_type: 'translated' }) }).catch(function(e){ console.error('Uložení dokumentu selhalo:', e.message); });
         } catch (err) {
           alert('Chyba při překladu. Zkontrolujte připojení k internetu a zkuste to znovu.');
           console.error(err);
