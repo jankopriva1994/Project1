@@ -2892,7 +2892,7 @@ body {
 /* Translator */
 .adm-trans-heading { font-size: 22px; font-weight: 700; color: #d0ee52; font-family: 'Supreme', sans-serif; margin: 0 0 8px; }
 .adm-trans-sub { font-size: 16px; color: #ffffff; font-family: 'Supreme', sans-serif; margin: 0 0 20px; line-height: 22px; }
-.adm-claude-badge { display: inline-flex; align-items: center; gap: 4px; margin-left: 14px; background: #1e2a10; border: 1px solid #d0ee52; border-radius: 20px; padding: 2px 12px; font-size: 12px; font-weight: 600; color: #d0ee52; font-family: 'Supreme', sans-serif; vertical-align: middle; white-space: nowrap; }
+.adm-claude-badge { display: inline-flex; align-items: center; gap: 6px; margin-left: 14px; background: #272727; border: 1px solid #d0ee52; border-radius: 7px; padding: 5px 14px; font-size: 13px; font-weight: 700; color: #ffffff; font-family: 'Supreme', sans-serif; vertical-align: middle; white-space: nowrap; }
 .adm-trans-action-btns { display: flex; gap: 10px; margin-bottom: 16px; }
 .adm-trans-btn { height: 52px; padding: 0 28px; border-radius: 5px; font-size: 16px; font-family: 'Supreme', sans-serif; cursor: pointer; }
 .adm-trans-btn-active { background: #272727; border: 1px solid #d0ee52; color: #ffffff; font-weight: 700; }
