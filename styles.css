@@ -3101,7 +3101,7 @@ body {
 .adm-docs-result-title { font-size: 16px; font-weight: 700; color: #fff; font-family: 'Supreme', sans-serif; }
 .adm-docs-result-back { background: none; border: 1px solid #444; border-radius: 5px; color: #8b8b8b; font-size: 14px; font-family: 'Supreme', sans-serif; cursor: pointer; padding: 6px 16px; }
 .adm-docs-result-back:hover { color: #fff; border-color: #666; }
-.adm-docs-result-bottom { margin-top: 14px; }
+.adm-docs-result-bottom { margin-top: 14px; display: flex; gap: 12px; flex-wrap: wrap; }
 
 /* Docs image OCR state (split-screen) */
 .adm-docs-img-layout { display: flex; gap: 30px; }
