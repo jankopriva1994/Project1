@@ -1501,7 +1501,7 @@ body {
 
 /* ===================== CENY PAGE ===================== */
 .ceny-page {
-  min-height: 2553px;
+  min-height: 2200px;
 }
 
 /* Nav overrides */
@@ -1512,7 +1512,7 @@ body {
 .ceny-wave {
   position: absolute;
   left: 0;
-  top: 1390px;
+  top: 1200px;
   width: 1680px;
   height: 946px;
   mix-blend-mode: screen;
@@ -1922,27 +1922,27 @@ body {
 }
 
 /* Footer overrides – ceny page */
-.ceny-page .footer-logo               { top: 2192px; left: 228px; }
-.ceny-page .footer-desc               { top: 2256px; left: 228px; }
-.ceny-page .footer-col-services-header { top: 2192px; left: 744px; }
-.ceny-page .footer-col-services-link1  { top: 2229px; left: 744px; }
-.ceny-page .footer-col-services-link2  { top: 2265px; left: 744px; }
-.ceny-page .footer-col-services-link3  { top: 2301px; left: 744px; }
-.ceny-page .footer-col-services-link4  { top: 2337px; left: 744px; }
-.ceny-page .footer-col-info-header    { top: 2192px; left: 951px; }
-.ceny-page .footer-col-info-link1     { top: 2229px; left: 951px; }
-.ceny-page .footer-col-info-link2     { top: 2265px; left: 951px; }
-.ceny-page .footer-col-info-link3     { top: 2301px; left: 951px; }
-.ceny-page .footer-col-info-link4     { top: 2337px; left: 951px; }
-.ceny-page .footer-col-support-header { top: 2192px; left: 1191px; }
-.ceny-page .footer-col-support-link1  { top: 2229px; left: 1191px; }
-.ceny-page .footer-col-support-link2  { top: 2265px; left: 1191px; }
-.ceny-page .footer-col-support-link3  { top: 2301px; left: 1191px; }
-.ceny-page .social-link-insta         { top: 2384px; left: 228px; }
-.ceny-page .social-link-fb            { top: 2384px; left: 337px; }
-.ceny-page .footer-line               { top: 2448px; left: 228px; width: 1224px; }
-.ceny-page .footer-copyright          { top: 2479px; left: 228px; }
-.ceny-page .footer-privacy            { top: 2479px; left: 1138px; }
+.ceny-page .footer-logo               { top: 1840px; left: 228px; }
+.ceny-page .footer-desc               { top: 1904px; left: 228px; }
+.ceny-page .footer-col-services-header { top: 1840px; left: 744px; }
+.ceny-page .footer-col-services-link1  { top: 1877px; left: 744px; }
+.ceny-page .footer-col-services-link2  { top: 1913px; left: 744px; }
+.ceny-page .footer-col-services-link3  { top: 1949px; left: 744px; }
+.ceny-page .footer-col-services-link4  { top: 1985px; left: 744px; }
+.ceny-page .footer-col-info-header    { top: 1840px; left: 951px; }
+.ceny-page .footer-col-info-link1     { top: 1877px; left: 951px; }
+.ceny-page .footer-col-info-link2     { top: 1913px; left: 951px; }
+.ceny-page .footer-col-info-link3     { top: 1949px; left: 951px; }
+.ceny-page .footer-col-info-link4     { top: 1985px; left: 951px; }
+.ceny-page .footer-col-support-header { top: 1840px; left: 1191px; }
+.ceny-page .footer-col-support-link1  { top: 1877px; left: 1191px; }
+.ceny-page .footer-col-support-link2  { top: 1913px; left: 1191px; }
+.ceny-page .footer-col-support-link3  { top: 1949px; left: 1191px; }
+.ceny-page .social-link-insta         { top: 2032px; left: 228px; }
+.ceny-page .social-link-fb            { top: 2032px; left: 337px; }
+.ceny-page .footer-line               { top: 2096px; left: 228px; width: 1224px; }
+.ceny-page .footer-copyright          { top: 2127px; left: 228px; }
+.ceny-page .footer-privacy            { top: 2127px; left: 1138px; }
 
 /* ===================== O NÁS PAGE ===================== */
 .onas-page { min-height: 2110px; }

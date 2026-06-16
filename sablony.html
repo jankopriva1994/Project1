@@ -251,8 +251,11 @@
     function repositionFooter() {
       if (!page) return;
       var cardsBottom = cardsEl.offsetTop + cardsEl.offsetHeight;
-      // Wave extends to ~1871px, newsletter must start below it
-      var base = Math.max(cardsBottom + 80, 1900);
+      var base = cardsBottom + 80;
+
+      // Move wave so it starts 350px before newsletter (decorative bg)
+      var waveEl = page.querySelector('.sabl-wave');
+      if (waveEl) waveEl.style.top = Math.max(base - 350, 500) + 'px';
 
       FOOTER_CLASSES.forEach(function (cls) {
         var el = page.querySelector('.' + cls);
@@ -264,7 +267,7 @@
         if (o.width) el.style.width = o.width;
       });
 
-      page.style.minHeight = (base + 870) + 'px';
+      page.style.minHeight = (base + 840) + 'px';
     }
 
     async function load() {
