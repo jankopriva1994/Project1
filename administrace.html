@@ -2382,5 +2382,19 @@
   })();
   </script>
 
+  <script>
+  (function () {
+    var widget = document.querySelector('.adm-words-widget');
+    var page   = document.querySelector('.page');
+    if (!widget || !page) return;
+    function align() {
+      var left = page.getBoundingClientRect().left;
+      widget.style.left = Math.max(8, left + 56) + 'px';
+    }
+    align();
+    window.addEventListener('resize', align);
+  })();
+  </script>
+
 </body>
 </html>
