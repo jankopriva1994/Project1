@@ -301,7 +301,7 @@
         <h2 class="cms-h2">Žádosti o tokeny za recenzi</h2>
         <p class="cms-sub">Uživatelé, kteří zanechali recenzi na Google a žádají o 5 000 tokenů.</p>
         <table class="cms-table" id="reviewTable">
-          <thead><tr><th>E-mail</th><th>Jméno</th><th>Datum žádosti</th><th>Stav</th><th></th></tr></thead>
+          <thead><tr><th>E-mail</th><th>Účet – jméno</th><th>Jméno na Google recenzi</th><th>Datum</th><th>Stav</th><th></th></tr></thead>
           <tbody id="reviewBody"></tbody>
         </table>
       </section>
@@ -1099,6 +1099,7 @@
           var tr = document.createElement('tr');
           tr.innerHTML = '<td>' + (profile.email || '–') + '</td>'
             + '<td>' + (profile.full_name || '–') + '</td>'
+            + '<td><strong style="color:#d0ee52">' + (r.reviewer_name || '–') + '</strong></td>'
             + '<td style="color:#666;font-size:13px">' + fmtDate(r.created_at) + '</td>'
             + '<td>' + statusBadge + '</td>'
             + '<td>' + actions + '</td>';

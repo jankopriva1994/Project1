@@ -239,23 +239,41 @@ router.delete('/team/:id', requireAuth, async (req, res) => {
 
 // ── POST /api/user/review-request ─────────────────────────────
 router.post('/review-request', requireAuth, async (req, res) => {
-  // Check if user already submitted
-  const { data: existing } = await supabase
+  const { reviewer_name } = req.body;
+  if (!reviewer_name || !reviewer_name.trim()) {
+    return res.status(400).json({ error: 'Zadej jméno z Google recenze.' });
+  }
+  const name = reviewer_name.trim();
+
+  // Check if this user already submitted
+  const { data: byUser } = await supabase
     .from('review_requests')
     .select('id, status')
     .eq('user_id', req.user.id)
     .maybeSingle();
 
-  if (existing) {
-    const msg = existing.status === 'approved'
+  if (byUser) {
+    const msg = byUser.status === 'approved'
       ? 'Tokeny již byly přidány, děkujeme za recenzi!'
       : 'Vaše žádost již čeká na schválení.';
     return res.status(400).json({ error: msg });
   }
 
+  // Check if this reviewer name was already approved (catches multi-account abuse)
+  const { data: byName } = await supabase
+    .from('review_requests')
+    .select('id')
+    .ilike('reviewer_name', name)
+    .eq('status', 'approved')
+    .maybeSingle();
+
+  if (byName) {
+    return res.status(400).json({ error: 'Toto jméno bylo již dříve odměněno.' });
+  }
+
   const { error } = await supabase
     .from('review_requests')
-    .insert({ user_id: req.user.id, status: 'pending' });
+    .insert({ user_id: req.user.id, reviewer_name: name, status: 'pending' });
 
   if (error) return res.status(500).json({ error: error.message });
   res.json({ success: true });
