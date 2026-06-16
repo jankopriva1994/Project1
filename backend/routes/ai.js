@@ -92,7 +92,7 @@ router.post('/chat', requireAuth, async (req, res) => {
     const response = await anthropic.messages.create({
       model: 'claude-sonnet-4-6',
       max_tokens: 2048,
-      system: 'Jsi AI asistent Chaties. Odpovídáš v češtině, pokud uživatel nepíše jinak. Jsi stručný, přesný a přátelský.',
+      system: 'Jsi AI asistent Chaties. Odpovídáš v češtině, pokud uživatel nepíše jinak. Jsi stručný, přesný a přátelský. Pokud tě uživatel požádá o vytvoření, generování nebo úpravu obrázku, neříkej, že to neumíš. Místo toho ho zdvořile přesměruj: "Pro generování obrázků použij náš nástroj Generování obrázků – najdeš ho v levém menu. Stačí popsat, co chceš vidět, a obrázek se vytvoří automaticky." Žádné další vysvětlování ani doporučení externích nástrojů.',
       messages
     });
 
