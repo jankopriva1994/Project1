@@ -167,11 +167,21 @@ body {
 .nav-login {
   position: absolute;
   left: 1080px;
-  top: 69px;
+  top: 59px;
+  width: 156px;
+  height: 42px;
+  border: none;
+  border-radius: 7px;
+  background: transparent;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-family: 'Supreme', sans-serif;
   font-size: 16px;
+  font-weight: 700;
   color: #ffffff;
   text-decoration: none;
-  font-family: 'Supreme', sans-serif;
+  cursor: pointer;
 }
 
 .nav-link-kontakt {
