@@ -314,23 +314,47 @@ router.post('/image', requireAuth, async (req, res) => {
   if (!prompt) return res.status(400).json({ error: 'Chybí popis obrázku' });
 
   const effectiveId = await getEffectiveUserId(req.user.id);
-  const check = await deductTokens(effectiveId, 100, `Obrázek: ${prompt.slice(0, 50)}`);
-  if (!check.ok) return res.status(402).json({ error: check.error });
+
+  // Check balance first, deduct only after successful generation
+  const { data: profile } = await supabase
+    .from('profiles')
+    .select('tokens_balance')
+    .eq('id', effectiveId)
+    .single();
+
+  if (!profile || profile.tokens_balance < 100) {
+    return res.status(402).json({ error: 'Nedostatek tokenů' });
+  }
 
   try {
+    const allowed = ['256x256', '512x512', '1024x1024'];
+    const dall2Size = allowed.includes(size) ? size : '1024x1024';
+
     const response = await openai.images.generate({
-      model: 'dall-e-3',
+      model: 'dall-e-2',
       prompt,
       n: 1,
-      size,
-      quality: 'standard'
+      size: dall2Size
     });
 
     const imageUrl = response.data[0].url;
 
+    // Deduct tokens only after success
+    await supabase
+      .from('profiles')
+      .update({ tokens_balance: profile.tokens_balance - 100 })
+      .eq('id', effectiveId);
+
+    await supabase.from('token_transactions').insert({
+      user_id: effectiveId,
+      amount: -100,
+      type: 'usage',
+      description: `Obrázek: ${prompt.slice(0, 50)}`
+    });
+
     await saveHistory(req.user.id, 'image', prompt.slice(0, 80), imageUrl, 100);
 
-    res.json({ image_url: imageUrl });
+    res.json({ image_url: imageUrl, tokens_remaining: profile.tokens_balance - 100 });
   } catch (err) {
     console.error('Image error:', err);
     const msg = err?.error?.message || err?.message || 'Chyba při generování obrázku';
