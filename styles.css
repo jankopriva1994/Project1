@@ -2833,7 +2833,7 @@ body {
 .adm-nav-tokens { top: 555px; }
 
 /* Words widget */
-.adm-words-widget { position: absolute; left: 56px; top: 640px; width: 170px; height: 75px; background: #272727; border-radius: 8px; display: flex; flex-direction: column; justify-content: center; padding: 0 16px; box-sizing: border-box; }
+.adm-words-widget { position: fixed; left: 56px; bottom: 32px; width: 170px; height: 75px; background: #272727; border-radius: 8px; display: flex; flex-direction: column; justify-content: center; padding: 0 16px; box-sizing: border-box; z-index: 100; }
 .adm-words-label { font-size: 13px; font-weight: 700; color: #ffffff; font-family: 'Supreme', sans-serif; text-decoration: underline; cursor: pointer; }
 .adm-words-value { font-size: 13px; color: #ffffff; font-family: 'Supreme', sans-serif; margin-top: 4px; }
 
