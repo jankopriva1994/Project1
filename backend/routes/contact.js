@@ -1,8 +1,34 @@
 const express = require('express');
-const router  = express.Router();
+const router  = require('express').Router();
 const supabase = require('../lib/supabase');
+const https = require('https');
 
-// POST /api/contact – uložení kontaktní zprávy (bez autentizace)
+function sendMailViaPhp(to, subject, html) {
+  const mailerUrl = process.env.MAILER_URL || 'https://chaties.cz/mailer.php';
+  const secret    = process.env.MAILER_SECRET || 'chaties-mailer-2026';
+  const payload   = JSON.stringify({ to, subject, html, secret, from: 'noreply@chaties.cz' });
+  return new Promise((resolve, reject) => {
+    const url = new URL(mailerUrl);
+    const req = https.request({
+      hostname: url.hostname, path: url.pathname, method: 'POST',
+      headers: { 'Content-Type': 'application/json', 'Content-Length': Buffer.byteLength(payload) },
+      timeout: 15000
+    }, (res) => {
+      let data = '';
+      res.on('data', chunk => data += chunk);
+      res.on('end', () => {
+        try { const j = JSON.parse(data); j.success ? resolve(j) : reject(new Error(j.error)); }
+        catch (e) { reject(new Error('Invalid mailer response')); }
+      });
+    });
+    req.on('timeout', () => { req.destroy(); reject(new Error('Timeout')); });
+    req.on('error', reject);
+    req.write(payload);
+    req.end();
+  });
+}
+
+// POST /api/contact
 router.post('/', async (req, res) => {
   const { name, email, subject, message } = req.body;
 
@@ -18,6 +44,18 @@ router.post('/', async (req, res) => {
     console.error('Contact insert error:', error);
     return res.status(500).json({ error: 'Zprávu se nepodařilo uložit.' });
   }
+
+  // Odeslat notifikaci na podpora@chaties.cz
+  const html = `
+    <h2>Nová zpráva z kontaktního formuláře</h2>
+    <p><strong>Jméno:</strong> ${name}</p>
+    <p><strong>E-mail:</strong> <a href="mailto:${email}">${email}</a></p>
+    <p><strong>Předmět:</strong> ${subject || '–'}</p>
+    <hr>
+    <p>${message.replace(/\n/g, '<br>')}</p>
+  `;
+  sendMailViaPhp('podpora@chaties.cz', `Kontakt: ${subject || name}`, html)
+    .catch(e => console.error('Contact mail error:', e.message));
 
   res.json({ success: true });
 });
