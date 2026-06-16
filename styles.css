@@ -2501,7 +2501,7 @@ body {
   left: 257px;
   top: 213px;
   width: 696px;
-  height: 764px;
+  height: 573px;
   object-fit: cover;
   border-radius: 12px;
 }
@@ -2744,17 +2744,17 @@ body {
 
 /* ==================== REGISTRACE PAGE ==================== */
 .reg-heading  { top: 213px; }
-.reg-subtext  { top: 279px; }
-.reg-input-fname   { left: 1039px; top: 341px; width: 187px; }
-.reg-input-lname   { left: 1236px; top: 341px; width: 187px; }
-.reg-input-email   { left: 1039px; top: 395px; width: 384px; }
-.reg-select-phone  { left: 1039px; top: 449px; width:  91px; }
-.reg-input-phone   { left: 1139px; top: 449px; width: 284px; }
-.reg-input-pass    { left: 1039px; top: 503px; width: 384px; }
-#reg-eye           { position: absolute; left: 1389px; top: 515px; }
-.reg-input-pass2   { left: 1039px; top: 557px; width: 384px; }
-#reg-eye2          { position: absolute; left: 1389px; top: 569px; }
-.reg-pass-hint     { position:absolute; left:1039px; top:612px; font-size:12px; color:#888; font-family:Supreme,sans-serif; margin:0; }
+.reg-subtext  { top: 317px; }
+.reg-input-fname   { left: 1039px; top: 379px; width: 187px; }
+.reg-input-lname   { left: 1236px; top: 379px; width: 187px; }
+.reg-input-email   { left: 1039px; top: 433px; width: 384px; }
+.reg-select-phone  { left: 1039px; top: 487px; width:  91px; }
+.reg-input-phone   { left: 1139px; top: 487px; width: 284px; }
+.reg-input-pass    { left: 1039px; top: 541px; width: 384px; }
+#reg-eye           { position: absolute; left: 1389px; top: 553px; }
+.reg-input-pass2   { left: 1039px; top: 595px; width: 384px; }
+#reg-eye2          { position: absolute; left: 1389px; top: 607px; }
+.reg-pass-hint     { position:absolute; left:1039px; top:650px; font-size:12px; color:#888; font-family:Supreme,sans-serif; margin:0; }
 
 .auth-error {
   position: absolute;
@@ -2770,13 +2770,13 @@ body {
   display: none;
   line-height: 1.5;
 }
-.reg-error { left: 1039px; top: 644px; }
+.reg-error { left: 1039px; top: 682px; }
 
-.reg-checkbox      { left: 1039px; top: 636px; }
-.reg-btn           { left: 1039px; top: 698px; }
-.reg-divider       { left: 1039px; top: 786px; }
-.reg-social-google { left: 1039px; top: 828px; }
-.reg-social-apple  { left: 1237px; top: 828px; }
+.reg-checkbox      { left: 1039px; top: 674px; }
+.reg-btn           { left: 1039px; top: 736px; }
+.reg-divider       { left: 1039px; top: 824px; }
+.reg-social-google { left: 1039px; top: 866px; }
+.reg-social-apple  { left: 1237px; top: 866px; }
 
 /* ==================== PRIHLASENI PAGE ==================== */
 .pri-heading  { top: 213px; }
