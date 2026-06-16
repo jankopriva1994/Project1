@@ -2802,8 +2802,8 @@ body {
 
 /* Topbar */
 .adm-logo { position: absolute; left: 56px; top: 37px; }
-.adm-promo-title { position: absolute; left: 240px; top: 43px; font-size: 18px; font-weight: 700; color: #d0ee52; font-family: 'Supreme', sans-serif; margin: 0; }
-.adm-promo-sub { position: absolute; left: 240px; top: 69px; font-size: 13px; color: #ffffff; font-family: 'Supreme', sans-serif; margin: 0; }
+.adm-promo-title { position: absolute; left: 294px; top: 43px; font-size: 18px; font-weight: 700; color: #d0ee52; font-family: 'Supreme', sans-serif; margin: 0; }
+.adm-promo-sub { position: absolute; left: 294px; top: 69px; font-size: 13px; color: #ffffff; font-family: 'Supreme', sans-serif; margin: 0; }
 .adm-promo-link { color: #d0ee52; font-weight: 700; text-decoration: underline; }
 .adm-promo-sep { color: #555; margin: 0 6px; }
 .adm-account-wrap { position: absolute; left: 1231px; top: 52px; display: flex; align-items: center; gap: 14px; }
