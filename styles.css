@@ -2310,133 +2310,106 @@ body {
   font-family: 'Supreme', sans-serif;
 }
 
-/* ---- Filter pills ---- */
-.sabl-pill {
+/* ---- Dynamic filter pills (sablony page) ---- */
+.sabl-filters-wrap {
   position: absolute;
+  left: 228px;
+  top: 602px;
+  width: 1224px;
+  display: flex;
+  flex-wrap: wrap;
+  gap: 10px;
+}
+
+.sabl-dyn-pill {
   height: 52px;
   background: #272727;
   border-radius: 5px;
   display: flex;
   align-items: center;
-  padding-left: 41px;
+  padding: 0 24px;
   font-size: 16px;
   color: #ffffff;
   font-family: 'Supreme', sans-serif;
   cursor: pointer;
+  border: 1px solid transparent;
+  white-space: nowrap;
 }
 
-.sabl-pill-active {
-  border: 1px solid #d0ee52;
+.sabl-dyn-pill-active {
+  border-color: #d0ee52;
 }
 
-/* Row 1 pills */
-.sabl-pill-blog    { left: 228px; top: 602px; width: 113px; }
-.sabl-pill-reklamy { left: 351px; top: 602px; width: 142px; }
-.sabl-pill-web     { left: 503px; top: 602px; width: 114px; }
-.sabl-pill-obsah   { left: 627px; top: 602px; width: 126px; }
-.sabl-pill-email   { left: 763px; top: 602px; width: 121px; }
-.sabl-pill-video   { left: 894px; top: 602px; width: 121px; }
-
-/* Row 2 pills */
-.sabl-pill-social    { left: 228px; top: 664px; width: 166px; }
-.sabl-pill-aigrafika { left: 404px; top: 664px; width: 149px; }
-.sabl-pill-seo       { left: 563px; top: 664px; width: 111px; }
-.sabl-pill-reality   { left: 684px; top: 664px; width: 130px; }
-
-/* ---- Template cards ---- */
-.sabl-card {
+/* ---- Dynamic template cards (sablony page) ---- */
+.sabl-cards-wrap {
   position: absolute;
+  left: 228px;
+  top: 680px;
+  width: 1224px;
+  display: flex;
+  flex-wrap: wrap;
+  gap: 24px;
+}
+
+.sabl-dyn-card {
   width: 275px;
-  height: 173px;
+  min-height: 173px;
   background: #202020;
   border-radius: 5px;
+  padding: 21px 25px 24px;
+  box-sizing: border-box;
+  cursor: pointer;
+  position: relative;
 }
 
-.sabl-card-r1c1 { left: 228px;  top: 766px; }
-.sabl-card-r1c2 { left: 528px;  top: 766px; }
-.sabl-card-r1c3 { left: 828px;  top: 766px; }
-.sabl-card-r1c4 { left: 1130px; top: 766px; }
-.sabl-card-r2c1 { left: 228px;  top: 964px; }
+.sabl-dyn-card:hover {
+  background: #2a2a2a;
+}
 
-/* Card title */
-.sabl-card-title {
+.sabl-dyn-star {
   position: absolute;
+  top: 21px;
+  right: 20px;
+}
+
+.sabl-dyn-title {
+  display: block;
   font-size: 20px;
   color: #d0ee52;
   font-family: 'Supreme', sans-serif;
   font-weight: 400;
-  line-height: normal;
+  line-height: 1.3;
+  padding-right: 28px;
 }
 
-/* Card body */
-.sabl-card-body {
-  position: absolute;
+.sabl-dyn-desc {
+  margin: 16px 0 0;
   font-size: 16px;
   color: #ffffff;
   font-family: 'Supreme', sans-serif;
   font-weight: 400;
-  line-height: normal;
+  line-height: 1.5;
 }
 
-/* Star icon */
-.sabl-star {
-  position: absolute;
-  width: 16px;
-  height: 15px;
-  display: block;
-  background: url('https://www.figma.com/api/mcp/asset/128701d8-ba44-485e-876d-69a6770f64f9') no-repeat center/contain;
+/* Loading dots */
+.sabl-loading {
+  display: flex;
+  gap: 8px;
+  padding: 40px 0;
 }
-
-/* Card title positions (card_left+25, card_top+21) */
-.sabl-r1c1-t { left: 253px;  top: 787px; }
-.sabl-r1c2-t { left: 553px;  top: 787px; }
-.sabl-r1c3-t { left: 853px;  top: 787px; }
-.sabl-r1c4-t { left: 1155px; top: 787px; }
-.sabl-r2c1-t { left: 253px;  top: 985px; }
-
-/* Card body positions (card_left+25, card_top+86) */
-.sabl-r1c1-b { left: 253px;  top: 852px; }
-.sabl-r1c2-b { left: 553px;  top: 852px; }
-.sabl-r1c3-b { left: 853px;  top: 852px; }
-.sabl-r1c4-b { left: 1155px; top: 852px; }
-.sabl-r2c1-b { left: 253px;  top: 1050px; }
-
-/* Star positions (card_left+235, card_top+28) */
-.sabl-r1c1-s { left: 463px;  top: 794px; }
-.sabl-r1c2-s { left: 765px;  top: 794px; }
-.sabl-r1c3-s { left: 1067px; top: 794px; }
-.sabl-r1c4-s { left: 1369px; top: 794px; }
-.sabl-r2c1-s { left: 463px;  top: 992px; }
-
-/* Newsletter overrides – sablony page */
-.sablony-page .newsletter-chip    { top: 1791px; left: 766px; }
-.sablony-page .newsletter-heading { top: 1837px; }
-.sablony-page .newsletter-subtext { top: 1986px; }
-.sablony-page .newsletter-input   { top: 2057px; }
-.sablony-page .newsletter-btn     { top: 2057px; }
-
-/* Footer overrides – sablony page */
-.sablony-page .footer-logo               { top: 2291px; left: 228px; }
-.sablony-page .footer-desc               { top: 2355px; left: 228px; }
-.sablony-page .footer-col-services-header { top: 2291px; left: 744px; }
-.sablony-page .footer-col-services-link1  { top: 2328px; left: 744px; }
-.sablony-page .footer-col-services-link2  { top: 2364px; left: 744px; }
-.sablony-page .footer-col-services-link3  { top: 2400px; left: 744px; }
-.sablony-page .footer-col-services-link4  { top: 2436px; left: 744px; }
-.sablony-page .footer-col-info-header    { top: 2291px; left: 951px; }
-.sablony-page .footer-col-info-link1     { top: 2328px; left: 951px; }
-.sablony-page .footer-col-info-link2     { top: 2364px; left: 951px; }
-.sablony-page .footer-col-info-link3     { top: 2400px; left: 951px; }
-.sablony-page .footer-col-info-link4     { top: 2436px; left: 951px; }
-.sablony-page .footer-col-support-header { top: 2291px; left: 1191px; }
-.sablony-page .footer-col-support-link1  { top: 2328px; left: 1191px; }
-.sablony-page .footer-col-support-link2  { top: 2364px; left: 1191px; }
-.sablony-page .footer-col-support-link3  { top: 2400px; left: 1191px; }
-.sablony-page .social-link-insta         { top: 2483px; left: 228px; }
-.sablony-page .social-link-fb            { top: 2483px; left: 337px; }
-.sablony-page .footer-line               { top: 2546px; left: 228px; width: 1224px; }
-.sablony-page .footer-copyright          { top: 2577px; left: 228px; }
-.sablony-page .footer-privacy            { top: 2577px; left: 1138px; }
+.sabl-loading span {
+  width: 8px;
+  height: 8px;
+  border-radius: 50%;
+  background: #d0ee52;
+  animation: sablDot 1.2s infinite;
+}
+.sabl-loading span:nth-child(2) { animation-delay: .2s; }
+.sabl-loading span:nth-child(3) { animation-delay: .4s; }
+@keyframes sablDot {
+  0%,80%,100% { opacity: .2; }
+  40%         { opacity: 1; }
+}
 
 /* ===================== BLOG DETAIL PAGE ===================== */
 .blog-detail-page {

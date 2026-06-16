@@ -368,6 +368,27 @@ router.post('/image', requireAuth, async (req, res) => {
   }
 });
 
+// ── GET /api/ai/public/templates (no auth – public sablony page) ──
+router.get('/public/templates', async (req, res) => {
+  const { data, error } = await supabase
+    .from('templates')
+    .select('id, slug, name, description, category, sort_order')
+    .eq('is_active', true)
+    .order('sort_order');
+  if (error) return res.status(500).json({ error: error.message });
+  res.json(data);
+});
+
+// ── GET /api/ai/public/categories (no auth – public sablony page) ──
+router.get('/public/categories', async (req, res) => {
+  const { data, error } = await supabase
+    .from('template_categories')
+    .select('id, name, sort_order')
+    .order('sort_order');
+  if (error) return res.status(500).json({ error: error.message });
+  res.json(data);
+});
+
 // ── GET /api/ai/templates ──────────────────────────────────────
 router.get('/templates', requireAuth, async (req, res) => {
   const { data, error } = await supabase

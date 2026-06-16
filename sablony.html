@@ -59,55 +59,15 @@
       vytvoří profesionální obsah za pár sekund.
     </p>
 
-    <!-- ==================== FILTER PILLS – ROW 1 ==================== -->
-    <div class="sabl-pill sabl-pill-blog">Blog</div>
-    <div class="sabl-pill sabl-pill-reklamy sabl-pill-active">Reklamy</div>
-    <div class="sabl-pill sabl-pill-web">Web</div>
-    <div class="sabl-pill sabl-pill-obsah">Obsah</div>
-    <div class="sabl-pill sabl-pill-email">Email</div>
-    <div class="sabl-pill sabl-pill-video">Video</div>
+    <!-- ==================== FILTER PILLS (dynamic) ==================== -->
+    <div class="sabl-filters-wrap" id="sablFilters"></div>
 
-    <!-- ==================== FILTER PILLS – ROW 2 ==================== -->
-    <div class="sabl-pill sabl-pill-social">Sociální sítě</div>
-    <div class="sabl-pill sabl-pill-aigrafika">AI grafika</div>
-    <div class="sabl-pill sabl-pill-seo">SEO</div>
-    <div class="sabl-pill sabl-pill-reality">Reality</div>
+    <!-- ==================== TEMPLATE CARDS (dynamic) ==================== -->
+    <div class="sabl-cards-wrap" id="sablCards">
+      <div class="sabl-loading"><span></span><span></span><span></span></div>
+    </div>
 
-    <!-- ==================== TEMPLATE CARDS – ROW 1 ==================== -->
-
-    <!-- Card 1: Google vyhledávací reklama -->
-    <div class="sabl-card sabl-card-r1c1"></div>
-    <span class="sabl-card-title sabl-r1c1-t">Google vyhledávací<br>reklama</span>
-    <span class="sabl-card-body sabl-r1c1-b">Šablona, která vám napíše<br>3 nadpisy a 1 popis pro vaši<br>vyhledávací reklamu na Google.</span>
-    <span class="sabl-star sabl-r1c1-s"></span>
-
-    <!-- Card 2: Reklama na Facebooku -->
-    <div class="sabl-card sabl-card-r1c2"></div>
-    <span class="sabl-card-title sabl-r1c2-t">Reklama<br>na Facebooku</span>
-    <span class="sabl-card-body sabl-r1c2-b">Šablona, která Vám pomůže<br>napsat text a nadpis pro reklamu<br>na Facebooku.</span>
-    <span class="sabl-star sabl-r1c2-s"></span>
-
-    <!-- Card 3: Sklik vyhledávací reklama -->
-    <div class="sabl-card sabl-card-r1c3"></div>
-    <span class="sabl-card-title sabl-r1c3-t">Sklik vyhledávací<br>reklama</span>
-    <span class="sabl-card-body sabl-r1c3-b">Šablona, která vám napíše<br>3 nadpisy a 1 popis pro vaši<br>vyhledávací reklamu na Sklik.</span>
-    <span class="sabl-star sabl-r1c3-s"></span>
-
-    <!-- Card 4: Populární Youtube reklama -->
-    <div class="sabl-card sabl-card-r1c4"></div>
-    <span class="sabl-card-title sabl-r1c4-t">Populární<br>Youtube reklama</span>
-    <span class="sabl-card-body sabl-r1c4-b">Šablona, která vám vytvoří scénář<br>pro poutavou video reklamu<br>na Youtube.</span>
-    <span class="sabl-star sabl-r1c4-s"></span>
-
-    <!-- ==================== TEMPLATE CARDS – ROW 2 ==================== -->
-
-    <!-- Card 5: Témata pro váš prodejní webinář -->
-    <div class="sabl-card sabl-card-r2c1"></div>
-    <span class="sabl-card-title sabl-r2c1-t">Témata pro váš<br>prodejní webinář</span>
-    <span class="sabl-card-body sabl-r2c1-b">Šablona, která vytvoří seznam<br>10x nápadů pro prodejní webinář,<br>který přiláká vaše zákazníky.</span>
-    <span class="sabl-star sabl-r2c1-s"></span>
-
-    <!-- ==================== NEWSLETTER CTA SECTION ==================== -->
+        <!-- ==================== NEWSLETTER CTA SECTION ==================== -->
     <div class="newsletter-chip">CHATIES NEWSLETTER</div>
 
     <h2 class="newsletter-heading">
@@ -196,6 +156,150 @@
       if (cta)   { cta.href = 'administrace.html'; cta.innerHTML = 'Vstup do <span class="accent" style="margin-left:4px;">členské sekce</span>'; }
       if (login) login.style.display = 'none';
     } catch (e) {}
+  })();
+  </script>
+  <script>
+  (function () {
+    var API = 'https://project1-production-1b0b.up.railway.app';
+    var filtersEl = document.getElementById('sablFilters');
+    var cardsEl   = document.getElementById('sablCards');
+    var page      = document.querySelector('.page');
+    var allTemplates = [];
+    var activeCat = null;
+
+    var STAR_SVG = '<svg width="16" height="15" viewBox="0 0 24 24" fill="none"><path d="M12 2l3.09 6.26L22 9.27l-5 4.87 1.18 6.88L12 17.77l-6.18 3.25L7 14.14 2 9.27l6.91-1.01L12 2z" stroke="#d0ee52" stroke-width="1.5" stroke-linejoin="round"/></svg>';
+
+    function renderCards(cat) {
+      var list = cat ? allTemplates.filter(function (t) { return (t.category || 'Ostatní') === cat; }) : allTemplates;
+      if (!list.length) {
+        cardsEl.innerHTML = '<p style="color:#888;font-size:16px;font-family:Supreme,sans-serif">Žádné šablony v této kategorii.</p>';
+      } else {
+        cardsEl.innerHTML = '';
+        list.forEach(function (t) {
+          var card = document.createElement('div');
+          card.className = 'sabl-dyn-card';
+          card.innerHTML = '<div class="sabl-dyn-star">' + STAR_SVG + '</div>'
+            + '<span class="sabl-dyn-title">' + escHtml(t.name) + '</span>'
+            + '<p class="sabl-dyn-desc">' + escHtml(t.description || '') + '</p>';
+          card.addEventListener('click', function () {
+            window.location.href = 'prihlaseni.html';
+          });
+          cardsEl.appendChild(card);
+        });
+      }
+      repositionFooter();
+    }
+
+    function renderPills(categories) {
+      filtersEl.innerHTML = '';
+      categories.forEach(function (cat, i) {
+        var btn = document.createElement('div');
+        btn.className = 'sabl-dyn-pill' + (i === 0 ? ' sabl-dyn-pill-active' : '');
+        btn.textContent = cat;
+        btn.addEventListener('click', function () {
+          activeCat = cat;
+          filtersEl.querySelectorAll('.sabl-dyn-pill').forEach(function (b) { b.classList.remove('sabl-dyn-pill-active'); });
+          btn.classList.add('sabl-dyn-pill-active');
+          renderCards(cat);
+        });
+        filtersEl.appendChild(btn);
+      });
+    }
+
+    function escHtml(s) {
+      return s.replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;');
+    }
+
+    var FOOTER_CLASSES = [
+      'newsletter-chip','newsletter-heading','newsletter-subtext','newsletter-input','newsletter-btn',
+      'footer-logo','footer-desc',
+      'footer-col-services-header','footer-col-services-link1','footer-col-services-link2','footer-col-services-link3','footer-col-services-link4',
+      'footer-col-info-header','footer-col-info-link1','footer-col-info-link2','footer-col-info-link3','footer-col-info-link4',
+      'footer-col-support-header','footer-col-support-link1','footer-col-support-link2','footer-col-support-link3',
+      'social-link-insta','social-link-fb','footer-line','footer-copyright','footer-privacy'
+    ];
+
+    var FOOTER_OFFSETS = {
+      'newsletter-chip':    { dTop: 0,    left: null },
+      'newsletter-heading': { dTop: 46,   left: null },
+      'newsletter-subtext': { dTop: 195,  left: null },
+      'newsletter-input':   { dTop: 266,  left: null },
+      'newsletter-btn':     { dTop: 266,  left: null },
+      'footer-logo':               { dTop: 500,  left: '228px' },
+      'footer-desc':               { dTop: 564,  left: '228px' },
+      'footer-col-services-header':{ dTop: 500 },
+      'footer-col-services-link1': { dTop: 537 },
+      'footer-col-services-link2': { dTop: 573 },
+      'footer-col-services-link3': { dTop: 609 },
+      'footer-col-services-link4': { dTop: 645 },
+      'footer-col-info-header':    { dTop: 500 },
+      'footer-col-info-link1':     { dTop: 537 },
+      'footer-col-info-link2':     { dTop: 573 },
+      'footer-col-info-link3':     { dTop: 609 },
+      'footer-col-info-link4':     { dTop: 645 },
+      'footer-col-support-header': { dTop: 500 },
+      'footer-col-support-link1':  { dTop: 537 },
+      'footer-col-support-link2':  { dTop: 573 },
+      'footer-col-support-link3':  { dTop: 609 },
+      'social-link-insta':   { dTop: 695, left: '228px' },
+      'social-link-fb':      { dTop: 695, left: '337px' },
+      'footer-line':         { dTop: 758, left: '228px', width: '1224px' },
+      'footer-copyright':    { dTop: 789, left: '228px' },
+      'footer-privacy':      { dTop: 789, left: '1109px' },
+    };
+
+    function repositionFooter() {
+      if (!page) return;
+      var cardsBottom = cardsEl.offsetTop + cardsEl.offsetHeight;
+      var base = cardsBottom + 80;
+
+      FOOTER_CLASSES.forEach(function (cls) {
+        var el = page.querySelector('.' + cls);
+        if (!el) return;
+        var o = FOOTER_OFFSETS[cls];
+        if (!o) return;
+        el.style.top = (base + o.dTop) + 'px';
+        if (o.left)  el.style.left  = o.left;
+        if (o.width) el.style.width = o.width;
+      });
+
+      page.style.minHeight = (base + 830) + 'px';
+    }
+
+    async function load() {
+      try {
+        var [catsRes, tmplRes] = await Promise.all([
+          fetch(API + '/api/ai/public/categories'),
+          fetch(API + '/api/ai/public/templates')
+        ]);
+        var cats     = catsRes.ok  ? await catsRes.json()  : [];
+        var tmpls    = tmplRes.ok  ? await tmplRes.json()  : [];
+
+        allTemplates = tmpls;
+
+        var catNames = cats.map(function (c) { return c.name; });
+        tmpls.forEach(function (t) {
+          var c = t.category || 'Ostatní';
+          if (catNames.indexOf(c) === -1) catNames.push(c);
+        });
+
+        if (!catNames.length) {
+          cardsEl.innerHTML = '<p style="color:#888;font-size:16px;font-family:Supreme,sans-serif">Zatím nejsou k dispozici žádné šablony.</p>';
+          repositionFooter();
+          return;
+        }
+
+        activeCat = catNames[0];
+        renderPills(catNames);
+        renderCards(activeCat);
+      } catch (e) {
+        cardsEl.innerHTML = '<p style="color:#ff5555;font-size:16px;font-family:Supreme,sans-serif">Nepodařilo se načíst šablony.</p>';
+        repositionFooter();
+      }
+    }
+
+    load();
+    window.addEventListener('resize', repositionFooter);
   })();
   </script>
 </body>
