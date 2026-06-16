@@ -251,7 +251,8 @@
     function repositionFooter() {
       if (!page) return;
       var cardsBottom = cardsEl.offsetTop + cardsEl.offsetHeight;
-      var base = cardsBottom + 80;
+      // Wave extends to ~1871px, newsletter must start below it
+      var base = Math.max(cardsBottom + 80, 1900);
 
       FOOTER_CLASSES.forEach(function (cls) {
         var el = page.querySelector('.' + cls);
@@ -263,7 +264,7 @@
         if (o.width) el.style.width = o.width;
       });
 
-      page.style.minHeight = (base + 830) + 'px';
+      page.style.minHeight = (base + 870) + 'px';
     }
 
     async function load() {
@@ -274,6 +275,7 @@
         ]);
         var cats     = catsRes.ok  ? await catsRes.json()  : [];
         var tmpls    = tmplRes.ok  ? await tmplRes.json()  : [];
+        console.log('[Sablony] cats:', cats.length, 'tmpls:', tmpls.length, tmpls.map(function(t){return t.category;}));
 
         allTemplates = tmpls;
 
