@@ -1,2 +1,18 @@
-DirectoryIndex index.html
 Options -Indexes
+DirectoryIndex index.html
+
+RewriteEngine On
+
+# /index.html → /
+RewriteCond %{THE_REQUEST} \s/+index\.html[\s?] [NC]
+RewriteRule ^index\.html$ / [R=301,NE,L]
+
+# /stranka.html → /stranka
+RewriteCond %{THE_REQUEST} \s/+(.+?)\.html[\s?] [NC]
+RewriteRule ^ /%1 [R=301,NE,L]
+
+# /stranka → servíruj /stranka.html
+RewriteCond %{REQUEST_FILENAME} !-f
+RewriteCond %{REQUEST_FILENAME} !-d
+RewriteCond %{REQUEST_FILENAME}\.html -f
+RewriteRule ^(.+)$ $1.html [L]
