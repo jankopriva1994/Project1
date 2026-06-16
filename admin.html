@@ -159,6 +159,7 @@
       <div class="cms-nav-item" data-tab="blog">Blog</div>
       <div class="cms-nav-item" data-tab="content">Texty webu</div>
       <div class="cms-nav-item" data-tab="users">Uživatelé</div>
+      <div class="cms-nav-item" data-tab="reviews">Recenze</div>
     </nav>
 
     <!-- MAIN -->
@@ -293,6 +294,16 @@
         <p class="cms-sub">Editujte klíčové texty zobrazené na veřejném webu.</p>
         <div class="cb-page-tabs" id="contentPageTabs"></div>
         <div id="contentList"></div>
+      </section>
+
+      <!-- ── RECENZE ── -->
+      <section class="cms-section" id="sec-reviews">
+        <h2 class="cms-h2">Žádosti o tokeny za recenzi</h2>
+        <p class="cms-sub">Uživatelé, kteří zanechali recenzi na Google a žádají o 5 000 tokenů.</p>
+        <table class="cms-table" id="reviewTable">
+          <thead><tr><th>E-mail</th><th>Jméno</th><th>Datum žádosti</th><th>Stav</th><th></th></tr></thead>
+          <tbody id="reviewBody"></tbody>
+        </table>
       </section>
 
       <!-- ── UŽIVATELÉ ── -->
@@ -446,6 +457,7 @@
       loadPosts();
       loadContent();
       loadUsers();
+      loadReviews();
     }
 
     // ── CATEGORIES ────────────────────────────────────────────
@@ -1062,6 +1074,58 @@
         return (u.email || '').toLowerCase().includes(q) || (u.full_name || '').toLowerCase().includes(q);
       }));
     });
+
+    // ── REVIEW REQUESTS ───────────────────────────────────────
+    async function loadReviews() {
+      try {
+        var list = await apiFetch('/api/admin/review-requests');
+        var tbody = document.getElementById('reviewBody');
+        tbody.innerHTML = '';
+        if (!list.length) {
+          tbody.innerHTML = '<tr><td colspan="5" style="color:#555;padding:16px">Žádné žádosti</td></tr>';
+          return;
+        }
+        list.forEach(function (r) {
+          var profile = r.profiles || {};
+          var statusBadge = r.status === 'approved'
+            ? '<span class="badge badge-green">Schváleno</span>'
+            : r.status === 'rejected'
+            ? '<span class="badge badge-gray">Zamítnuto</span>'
+            : '<span class="badge" style="background:#2a1f00;color:#f0a500">Čeká</span>';
+          var actions = r.status === 'pending'
+            ? '<button class="btn-primary rev-approve" data-id="' + r.id + '" style="padding:5px 14px;font-size:12px">+5000 ✓</button>'
+            + ' <button class="btn-danger rev-reject" data-id="' + r.id + '" style="padding:5px 10px;font-size:12px">Zamítnout</button>'
+            : '–';
+          var tr = document.createElement('tr');
+          tr.innerHTML = '<td>' + (profile.email || '–') + '</td>'
+            + '<td>' + (profile.full_name || '–') + '</td>'
+            + '<td style="color:#666;font-size:13px">' + fmtDate(r.created_at) + '</td>'
+            + '<td>' + statusBadge + '</td>'
+            + '<td>' + actions + '</td>';
+          tbody.appendChild(tr);
+        });
+        tbody.querySelectorAll('.rev-approve').forEach(function (btn) {
+          btn.addEventListener('click', async function () {
+            if (!confirm('Schválit žádost a přidat 5 000 tokenů?')) return;
+            try {
+              await apiFetch('/api/admin/review-requests/' + btn.dataset.id + '/approve', { method: 'PUT' });
+              loadReviews();
+            } catch (e) { alert(e.message); }
+          });
+        });
+        tbody.querySelectorAll('.rev-reject').forEach(function (btn) {
+          btn.addEventListener('click', async function () {
+            if (!confirm('Zamítnout žádost?')) return;
+            try {
+              await apiFetch('/api/admin/review-requests/' + btn.dataset.id + '/reject', { method: 'PUT' });
+              loadReviews();
+            } catch (e) { alert(e.message); }
+          });
+        });
+      } catch (e) {
+        document.getElementById('reviewBody').innerHTML = '<tr><td colspan="5" style="color:#ff5555;padding:16px">Chyba: ' + e.message + '</td></tr>';
+      }
+    }
 
     if (sessionStorage.getItem('cms_access_ok') === '1') init();
   })();

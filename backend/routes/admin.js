@@ -200,4 +200,60 @@ router.put('/users/:id/admin', auth, async (req, res) => {
   res.json(data);
 });
 
+// ── REVIEW REQUESTS ────────────────────────────────────────────
+
+router.get('/review-requests', auth, async (req, res) => {
+  const { data, error } = await supabase
+    .from('review_requests')
+    .select('id, status, created_at, user_id, profiles(email, full_name, tokens_balance)')
+    .order('created_at', { ascending: false });
+  if (error) return res.status(500).json({ error: error.message });
+  res.json(data);
+});
+
+router.put('/review-requests/:id/approve', auth, async (req, res) => {
+  const REWARD = 5000;
+
+  const { data: req_ } = await supabase
+    .from('review_requests')
+    .select('id, status, user_id')
+    .eq('id', req.params.id)
+    .single();
+
+  if (!req_) return res.status(404).json({ error: 'Žádost nenalezena' });
+  if (req_.status === 'approved') return res.status(400).json({ error: 'Již schváleno' });
+
+  const { data: profile } = await supabase
+    .from('profiles')
+    .select('tokens_balance')
+    .eq('id', req_.user_id)
+    .single();
+
+  await supabase.from('profiles')
+    .update({ tokens_balance: (profile?.tokens_balance || 0) + REWARD })
+    .eq('id', req_.user_id);
+
+  await supabase.from('token_transactions').insert({
+    user_id: req_.user_id,
+    amount: REWARD,
+    type: 'bonus',
+    description: 'Bonus za recenzi na Google'
+  });
+
+  await supabase.from('review_requests')
+    .update({ status: 'approved' })
+    .eq('id', req.params.id);
+
+  res.json({ success: true, tokens_added: REWARD });
+});
+
+router.put('/review-requests/:id/reject', auth, async (req, res) => {
+  const { error } = await supabase
+    .from('review_requests')
+    .update({ status: 'rejected' })
+    .eq('id', req.params.id);
+  if (error) return res.status(500).json({ error: error.message });
+  res.json({ success: true });
+});
+
 module.exports = router;

@@ -237,4 +237,28 @@ router.delete('/team/:id', requireAuth, async (req, res) => {
   res.json({ success: true });
 });
 
+// ── POST /api/user/review-request ─────────────────────────────
+router.post('/review-request', requireAuth, async (req, res) => {
+  // Check if user already submitted
+  const { data: existing } = await supabase
+    .from('review_requests')
+    .select('id, status')
+    .eq('user_id', req.user.id)
+    .maybeSingle();
+
+  if (existing) {
+    const msg = existing.status === 'approved'
+      ? 'Tokeny již byly přidány, děkujeme za recenzi!'
+      : 'Vaše žádost již čeká na schválení.';
+    return res.status(400).json({ error: msg });
+  }
+
+  const { error } = await supabase
+    .from('review_requests')
+    .insert({ user_id: req.user.id, status: 'pending' });
+
+  if (error) return res.status(500).json({ error: error.message });
+  res.json({ success: true });
+});
+
 module.exports = router;

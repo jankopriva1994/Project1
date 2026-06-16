@@ -27,8 +27,22 @@
     <img class="adm-logo" src="assets/img/logo.svg" alt="Chaties" width="160" height="44" data-panel="dashboard" style="cursor:pointer" />
 
     <!-- Promo -->
-    <p class="adm-promo-title">Získej 10 000 kreditů zdarma!</p>
-    <p class="adm-promo-sub">Stačí přidat recenzi o Chaties na Google a kredity vám zdarma přidáme na účet! <a href="#" class="adm-promo-link">Klikni zde</a></p>
+    <p class="adm-promo-title">Získej 5 000 tokenů zdarma!</p>
+    <p class="adm-promo-sub">Stačí přidat recenzi o Chaties na Google a tokeny vám přidáme na účet!
+      <a href="https://g.page/r/YOUR_GOOGLE_REVIEW_LINK/review" target="_blank" class="adm-promo-link" id="promoReviewLink">Napsat recenzi</a>
+      <span class="adm-promo-sep">·</span>
+      <a href="#" class="adm-promo-link" id="promoClaimBtn">Zanechal jsem recenzi →</a>
+    </p>
+    <!-- Promo claim modal -->
+    <div id="promoClaimOverlay" style="display:none;position:fixed;inset:0;background:rgba(0,0,0,.6);z-index:9999;align-items:center;justify-content:center">
+      <div style="background:#161616;border:1px solid #2a2a2a;border-radius:12px;padding:32px;max-width:420px;width:90%;text-align:center">
+        <p style="font-size:18px;font-weight:700;color:#fff;margin:0 0 10px">Děkujeme za recenzi! 🎉</p>
+        <p style="font-size:14px;color:#888;margin:0 0 24px">Vaše žádost bude ověřena a 5 000 tokenů přidáme na váš účet do 24 hodin.</p>
+        <button id="promoClaimConfirm" style="background:#d0ee52;color:#000;border:none;padding:10px 28px;border-radius:8px;font-size:15px;font-weight:700;cursor:pointer;width:100%">Odeslat žádost o tokeny</button>
+        <button id="promoClaimClose" style="background:none;border:none;color:#666;font-size:13px;cursor:pointer;margin-top:12px;display:block;width:100%">Zrušit</button>
+        <p id="promoClaimMsg" style="margin-top:12px;font-size:13px"></p>
+      </div>
+    </div>
 
     <!-- Account + logout -->
     <div class="adm-account-wrap">
@@ -1984,6 +1998,43 @@
       // Logout
       var logoutEl = document.getElementById('adm-logout');
       if (logoutEl) logoutEl.addEventListener('click', function (e) { e.preventDefault(); logout(); });
+
+      // ── Promo: recenze za tokeny ───────────────────────────
+      var promoClaimBtn     = document.getElementById('promoClaimBtn');
+      var promoClaimOverlay = document.getElementById('promoClaimOverlay');
+      var promoClaimConfirm = document.getElementById('promoClaimConfirm');
+      var promoClaimClose   = document.getElementById('promoClaimClose');
+      var promoClaimMsg     = document.getElementById('promoClaimMsg');
+
+      if (promoClaimBtn) {
+        promoClaimBtn.addEventListener('click', function (e) {
+          e.preventDefault();
+          promoClaimOverlay.style.display = 'flex';
+        });
+      }
+      if (promoClaimClose) {
+        promoClaimClose.addEventListener('click', function () {
+          promoClaimOverlay.style.display = 'none';
+          promoClaimMsg.textContent = '';
+        });
+      }
+      if (promoClaimConfirm) {
+        promoClaimConfirm.addEventListener('click', async function () {
+          promoClaimConfirm.disabled = true;
+          promoClaimConfirm.textContent = 'Odesílám…';
+          try {
+            await apiFetch('/api/user/review-request', { method: 'POST' });
+            promoClaimMsg.style.color = '#a0d060';
+            promoClaimMsg.textContent = 'Žádost odeslána! Tokeny přidáme do 24 hodin.';
+            promoClaimConfirm.style.display = 'none';
+          } catch (e) {
+            promoClaimMsg.style.color = '#ff5555';
+            promoClaimMsg.textContent = e.message || 'Chyba, zkuste to znovu.';
+            promoClaimConfirm.disabled = false;
+            promoClaimConfirm.textContent = 'Odeslat žádost o tokeny';
+          }
+        });
+      }
 
       // Dokončení pozvánky po potvrzení emailu
       var pendingInvite = localStorage.getItem('pendingInvite');
