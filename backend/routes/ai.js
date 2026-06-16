@@ -333,7 +333,8 @@ router.post('/image', requireAuth, async (req, res) => {
     res.json({ image_url: imageUrl });
   } catch (err) {
     console.error('Image error:', err);
-    res.status(500).json({ error: 'Chyba při generování obrázku' });
+    const msg = err?.error?.message || err?.message || 'Chyba při generování obrázku';
+    res.status(500).json({ error: msg });
   }
 });
 
