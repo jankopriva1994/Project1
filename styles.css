@@ -2499,7 +2499,7 @@ body {
 .auth-img {
   position: absolute;
   left: 257px;
-  top: 251px;
+  top: 213px;
   width: 696px;
   height: 764px;
   object-fit: cover;
@@ -2743,7 +2743,7 @@ body {
 }
 
 /* ==================== REGISTRACE PAGE ==================== */
-.reg-heading  { top: 187px; }
+.reg-heading  { top: 213px; }
 .reg-subtext  { top: 279px; }
 .reg-input-fname   { left: 1039px; top: 341px; width: 187px; }
 .reg-input-lname   { left: 1236px; top: 341px; width: 187px; }
