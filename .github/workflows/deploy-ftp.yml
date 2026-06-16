@@ -26,3 +26,5 @@ jobs:
             **/backend/**
             **/.github/**
             .claude/**
+          include: |
+            .htaccess
