@@ -74,6 +74,10 @@
       <input  class="ktk-input ktk-input-email"   type="email" placeholder="E-mailová adresa *" autocomplete="email" required />
       <input  class="ktk-input ktk-input-subject" type="text"  placeholder="Předmět" autocomplete="off" />
       <textarea class="ktk-textarea"              placeholder="Vaše zpráva *" required></textarea>
+      <div class="ktk-gdpr-row">
+        <input type="checkbox" id="ktk-gdpr" class="ktk-gdpr-check" required />
+        <label for="ktk-gdpr" class="ktk-gdpr-label">Souhlasím se <a href="obchodni-podminky.html" class="ktk-gdpr-link">zpracováním osobních údajů</a> za účelem odpovědi na můj dotaz.</label>
+      </div>
       <button class="ktk-submit" id="ktk-submit">Odeslat zprávu</button>
       <p class="ktk-msg" id="ktk-msg"></p>
     </div>
@@ -157,9 +161,15 @@
       var subject = document.querySelector('.ktk-input-subject').value.trim();
       var body    = document.querySelector('.ktk-textarea').value.trim();
 
+      var gdpr = document.getElementById('ktk-gdpr').checked;
       if (!name || !email || !body) {
         msg.style.color = '#ff5555';
-        msg.textContent = 'Vyplňte prosím jméno, e-mail a zprávu.';
+        msg.textContent = 'Vyplňte prosím e-mail a zprávu.';
+        return;
+      }
+      if (!gdpr) {
+        msg.style.color = '#ff5555';
+        msg.textContent = 'Potvrďte prosím souhlas se zpracováním osobních údajů.';
         return;
       }
 

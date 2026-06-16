@@ -2210,6 +2210,11 @@ body {
 .ktk-submit:hover { background: #c0de42; }
 .ktk-submit:disabled { opacity: .6; cursor: not-allowed; }
 
+.ktk-gdpr-row { display: flex; align-items: flex-start; gap: 10px; margin-top: 12px; }
+.ktk-gdpr-check { width: 16px; height: 16px; flex-shrink: 0; margin-top: 2px; accent-color: #d0ee52; cursor: pointer; }
+.ktk-gdpr-label { font-size: 12px; color: #888; font-family: 'Supreme', sans-serif; line-height: 1.4; cursor: pointer; }
+.ktk-gdpr-link { color: #d0ee52; text-decoration: underline; }
+
 .ktk-msg {
   margin-top: 10px;
   font-size: 14px;
