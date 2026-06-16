@@ -327,17 +327,23 @@ router.post('/image', requireAuth, async (req, res) => {
   }
 
   try {
-    const allowed = ['256x256', '512x512', '1024x1024'];
-    const dall2Size = allowed.includes(size) ? size : '1024x1024';
+    // gpt-image-1 supports: 1024x1024, 1536x1024 (landscape), 1024x1536 (portrait)
+    const sizeMap = {
+      '1024x1024': '1024x1024',
+      '1024x1792': '1024x1536',
+      '1792x1024': '1536x1024'
+    };
+    const imgSize = sizeMap[size] || '1024x1024';
 
     const response = await openai.images.generate({
-      model: 'dall-e-2',
+      model: 'gpt-image-1',
       prompt,
       n: 1,
-      size: dall2Size
+      size: imgSize
     });
 
-    const imageUrl = response.data[0].url;
+    const b64 = response.data[0].b64_json;
+    const imageDataUrl = `data:image/png;base64,${b64}`;
 
     // Deduct tokens only after success
     await supabase
@@ -352,9 +358,9 @@ router.post('/image', requireAuth, async (req, res) => {
       description: `Obrázek: ${prompt.slice(0, 50)}`
     });
 
-    await saveHistory(req.user.id, 'image', prompt.slice(0, 80), imageUrl, 100);
+    await saveHistory(req.user.id, 'image', prompt.slice(0, 80), 'generated', 100);
 
-    res.json({ image_url: imageUrl, tokens_remaining: profile.tokens_balance - 100 });
+    res.json({ image_url: imageDataUrl, tokens_remaining: profile.tokens_balance - 100 });
   } catch (err) {
     console.error('Image error:', err);
     const msg = err?.error?.message || err?.message || 'Chyba při generování obrázku';
