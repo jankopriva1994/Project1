@@ -173,52 +173,38 @@
     <!-- PANEL 2: GENEROVÁNÍ OBRÁZKŮ -->
     <div class="adm-panel adm-panel-images" data-panel-id="images">
 
-      <h2 class="adm-img-heading">Generování obrázků</h2>
-      <p class="adm-img-sub">Zde si můžete vytvořit realistické postavy, obličeje, zvířata, nebo třeba krajiny, předměty a mnoho dalšího.</p>
-
-      <!-- Style cards -->
-      <div class="adm-style-cards">
-        <div class="adm-style-card adm-style-card-vision">
-          <span class="adm-style-badge">Nejpoužívanější</span>
-          <span class="adm-style-name">Vision</span>
-        </div>
-        <div class="adm-style-card adm-style-card-creative">
-          <span class="adm-style-name">Creative</span>
-        </div>
-        <div class="adm-style-card adm-style-card-art">
-          <span class="adm-style-name">Art</span>
-        </div>
+      <!-- Generated images gallery -->
+      <div class="adm-img-gallery" id="imgGallery">
+        <span class="adm-img-gallery-empty">Popište obrázek níže a stiskněte Generovat...</span>
       </div>
 
-      <!-- Aspect ratio -->
-      <p class="adm-ratio-label">Poměr stran</p>
-      <div class="adm-ratio-btns">
-        <button class="adm-ratio-btn">
-          <div class="adm-ratio-preview" style="width:38px;height:38px;"></div>
-          <span class="adm-ratio-text">Čtverec<br>1:1</span>
-        </button>
-        <button class="adm-ratio-btn">
-          <div class="adm-ratio-preview" style="width:24px;height:38px;"></div>
-          <span class="adm-ratio-text">Na výšku<br>9:16</span>
-        </button>
-        <button class="adm-ratio-btn adm-ratio-active">
-          <div class="adm-ratio-preview" style="width:40px;height:24px;"></div>
-          <span class="adm-ratio-text">Na šířku<br>16:9</span>
-        </button>
-        <button class="adm-ratio-btn">
-          <div class="adm-ratio-preview" style="width:50px;height:22px;"></div>
-          <span class="adm-ratio-text">Na šířku<br>21:9</span>
-        </button>
-      </div>
+      <!-- Bottom controls -->
+      <div class="adm-img-bottom-wrap">
 
-      <!-- Prompt -->
-      <p class="adm-img-prompt-label">Zde popište obrázek</p>
-      <textarea class="adm-img-textarea" placeholder="Černo-žluté auto se psem na střeše..."></textarea>
+        <p class="adm-ratio-label">Poměr stran</p>
+        <div class="adm-ratio-btns">
+          <button class="adm-ratio-btn adm-ratio-active" data-size="1024x1024">
+            <div class="adm-ratio-preview" style="width:38px;height:38px;"></div>
+            <span class="adm-ratio-text">Čtverec<br>1:1</span>
+          </button>
+          <button class="adm-ratio-btn" data-size="1024x1792">
+            <div class="adm-ratio-preview" style="width:24px;height:38px;"></div>
+            <span class="adm-ratio-text">Na výšku<br>9:16</span>
+          </button>
+          <button class="adm-ratio-btn" data-size="1792x1024">
+            <div class="adm-ratio-preview" style="width:40px;height:24px;"></div>
+            <span class="adm-ratio-text">Na šířku<br>16:9</span>
+          </button>
+        </div>
 
-      <!-- Bottom row -->
-      <div class="adm-img-bottom">
-        <span class="adm-img-word-count">150 slov</span>
-        <button class="adm-generate-btn">Generovat</button>
+        <div class="adm-img-input-wrap">
+          <textarea class="adm-img-textarea" id="imgPrompt" placeholder="Černo-žluté auto se psem na střeše..."></textarea>
+          <button class="adm-img-send" id="imgGenerateBtn">
+            <svg width="18" height="18" viewBox="0 0 24 24" fill="none"><path d="M12 19V5M5 12l7-7 7 7" stroke="#d0ee52" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"/></svg>
+          </button>
+        </div>
+        <p class="adm-img-cost-note">1 obrázek = 100 tokenů</p>
+
       </div>
 
     </div><!-- /adm-panel-images -->
@@ -1166,6 +1152,75 @@
     sendBtn.addEventListener('click', send);
     textarea.addEventListener('keydown', function (e) {
       if (e.key === 'Enter' && !e.shiftKey) { e.preventDefault(); send(); }
+    });
+  })();
+
+  // ── Image generation ───────────────────────────────────────────
+  (function () {
+    var gallery    = document.getElementById('imgGallery');
+    var promptEl   = document.getElementById('imgPrompt');
+    var generateBtn = document.getElementById('imgGenerateBtn');
+    var selectedSize = '1024x1024';
+
+    // Aspect ratio selection
+    document.querySelectorAll('.adm-ratio-btn').forEach(function (btn) {
+      btn.addEventListener('click', function () {
+        document.querySelectorAll('.adm-ratio-btn').forEach(function (b) { b.classList.remove('adm-ratio-active'); });
+        btn.classList.add('adm-ratio-active');
+        selectedSize = btn.getAttribute('data-size');
+      });
+    });
+
+    function generate() {
+      var prompt = promptEl.value.trim();
+      if (!prompt) return;
+
+      // Remove empty state
+      var emptyEl = gallery.querySelector('.adm-img-gallery-empty');
+      if (emptyEl) emptyEl.remove();
+
+      // Skeleton
+      var skeleton = document.createElement('div');
+      skeleton.className = 'adm-img-skeleton';
+      skeleton.innerHTML = '<svg width="40" height="40" viewBox="0 0 24 24" fill="none"><path d="M21 19H3a1 1 0 0 1-1-1V6a1 1 0 0 1 1-1h18a1 1 0 0 1 1 1v12a1 1 0 0 1-1 1z" stroke="#505050" stroke-width="1.5"/><circle cx="8.5" cy="10.5" r="1.5" stroke="#505050" stroke-width="1.5"/><path d="M21 15l-5-5L5 19" stroke="#505050" stroke-width="1.5" stroke-linecap="round"/></svg>';
+      gallery.insertBefore(skeleton, gallery.firstChild);
+      gallery.scrollTop = 0;
+      generateBtn.disabled = true;
+
+      apiFetch('/api/ai/image', {
+        method: 'POST',
+        body: JSON.stringify({ prompt: prompt, size: selectedSize })
+      }).then(function (data) {
+        skeleton.remove();
+        var item = document.createElement('div');
+        item.className = 'adm-img-gallery-item';
+        var img = document.createElement('img');
+        img.src = data.image_url;
+        img.alt = prompt;
+        var dlLink = document.createElement('a');
+        dlLink.className = 'adm-img-download';
+        dlLink.href = data.image_url;
+        dlLink.target = '_blank';
+        dlLink.download = 'chaties-image.png';
+        dlLink.innerHTML = '<svg width="13" height="13" viewBox="0 0 24 24" fill="none"><path d="M12 3v13M6 11l6 6 6-6" stroke="#fff" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/><path d="M4 20h16" stroke="#fff" stroke-width="2" stroke-linecap="round"/></svg> Stáhnout';
+        item.appendChild(img);
+        item.appendChild(dlLink);
+        gallery.insertBefore(item, gallery.firstChild);
+        if (data.tokens_remaining !== undefined) updateTokenDisplay(data.tokens_remaining);
+      }).catch(function (err) {
+        skeleton.remove();
+        var errDiv = document.createElement('div');
+        errDiv.style.cssText = 'color:#ff5555;font-size:14px;font-family:Supreme,sans-serif;padding:16px;';
+        errDiv.textContent = 'Chyba: ' + (err.message || 'Generování selhalo.');
+        gallery.insertBefore(errDiv, gallery.firstChild);
+      }).finally(function () {
+        generateBtn.disabled = false;
+      });
+    }
+
+    generateBtn.addEventListener('click', generate);
+    promptEl.addEventListener('keydown', function (e) {
+      if (e.key === 'Enter' && !e.shiftKey) { e.preventDefault(); generate(); }
     });
   })();
   </script>
