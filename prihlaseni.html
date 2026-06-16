@@ -55,6 +55,7 @@
 
     <input id="pri-email" class="auth-input pri-input-email" type="email" placeholder="E-mail" />
     <input id="pri-pass" class="auth-input auth-input-lock pri-input-pass" type="password" placeholder="Heslo" />
+    <button type="button" id="pri-eye" onclick="var i=document.getElementById('pri-pass');i.type=i.type==='password'?'text':'password';this.querySelector('svg').style.opacity=i.type==='text'?'1':'0.4'" style="position:absolute;background:none;border:none;cursor:pointer;padding:0;display:flex;align-items:center;"><svg width="20" height="20" viewBox="0 0 24 24" fill="none" style="opacity:0.4"><path d="M1 12s4-8 11-8 11 8 11 8-4 8-11 8-11-8-11-8z" stroke="#fff" stroke-width="1.5"/><circle cx="12" cy="12" r="3" stroke="#fff" stroke-width="1.5"/></svg></button>
 
     <a href="zapomenuteheslo.html" class="auth-forgot pri-forgot">Zapomenuté heslo?</a>
 

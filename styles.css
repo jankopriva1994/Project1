@@ -2746,7 +2746,9 @@ body {
 .reg-select-phone  { left: 1039px; top: 579px; width:  91px; }
 .reg-input-phone   { left: 1139px; top: 579px; width: 284px; }
 .reg-input-pass    { left: 1039px; top: 633px; width: 384px; }
+#reg-eye           { position: absolute; left: 1389px; top: 645px; }
 .reg-input-pass2   { left: 1039px; top: 687px; width: 384px; }
+#reg-eye2          { position: absolute; left: 1389px; top: 699px; }
 .reg-pass-hint     { position:absolute; left:1039px; top:742px; font-size:12px; color:#888; font-family:Supreme,sans-serif; margin:0; }
 
 .auth-error {
@@ -2776,6 +2778,7 @@ body {
 .pri-subtext  { top: 477px; }
 .pri-input-email   { left: 1039px; top: 540px; width: 384px; }
 .pri-input-pass    { left: 1039px; top: 597px; width: 384px; }
+#pri-eye           { position: absolute; left: 1389px; top: 609px; }
 .pri-forgot        { left: 1039px; top: 654px; }
 .pri-captcha       { left: 1039px; top: 678px; }
 .pri-btn           { left: 1039px; top: 783px; }
