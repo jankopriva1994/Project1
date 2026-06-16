@@ -1073,11 +1073,7 @@
 
     document.getElementById('exportCsvBtn').addEventListener('click', function () {
       if (!allUsers.length) return;
-      var rows = [['E-mail', 'Jméno', 'Plán', 'Tokeny', 'Registrace']];
-      allUsers.forEach(function (u) {
-        rows.push([u.email, u.full_name || '', u.plan || '', u.tokens_balance || 0, u.created_at ? new Date(u.created_at).toLocaleDateString('cs-CZ') : '']);
-      });
-      var csv = rows.map(function (r) { return r.map(function (v) { return '"' + String(v).replace(/"/g, '""') + '"'; }).join(','); }).join('\n');
+      var csv = allUsers.map(function (u) { return u.email || ''; }).filter(Boolean).join('\n');
       var blob = new Blob(['﻿' + csv], { type: 'text/csv;charset=utf-8;' });
       var a = document.createElement('a');
       a.href = URL.createObjectURL(blob);
