@@ -669,9 +669,7 @@
       <p class="adm-tmpl-sub">Vyberte si z několika šablon, které Vám pomohou vytvořit prodejní popisek k vašemu produktu, chytlavý titulek k youtube nebo tiktok videu, několik témat k chystanému článku a nebo taky vám napíšou slohovou práci.</p>
 
       <!-- Filter pills – rendered dynamically from API -->
-      <div class="adm-filter-row" id="adm-tmpl-filter-row" style="flex-wrap:wrap;margin-bottom:28px">
-        <p style="color:#555;font-size:14px">Načítám…</p>
-      </div>
+      <div class="adm-filter-row" id="adm-tmpl-filter-row" style="flex-wrap:wrap;margin-bottom:28px"></div>
 
       <!-- Template cards – rendered dynamically from API -->
       <div class="adm-tmpl-cards" id="adm-tmpl-cards-dynamic"></div>
@@ -982,6 +980,7 @@
           setNavActive(null);
         }
         if (panelId === 'docs') loadDocsPanel();
+        if (panelId === 'templates' && typeof window.loadTemplatesFromAPI === 'function') window.loadTemplatesFromAPI();
       });
     });
 
