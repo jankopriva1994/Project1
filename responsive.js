@@ -1011,11 +1011,18 @@
     function syncFilters() {
       var pills = desktopFiltersEl ? qsa('.sabl-dyn-pill', desktopFiltersEl) : [];
       if (!pills.length) return;
-      var html = '<option value="">Všechny kategorie</option>';
+      // Build select options from pills
+      var html = '';
       pills.forEach(function (p) {
         html += '<option value="' + p.textContent + '">' + p.textContent + '</option>';
       });
       mobileSelect.innerHTML = html;
+      // Auto-select and trigger first category once
+      if (!mobileSelect._autoSelected) {
+        mobileSelect._autoSelected = true;
+        mobileSelect.value = pills[0].textContent;
+        pills[0].click();
+      }
     }
 
     function syncCards() {
@@ -1023,10 +1030,7 @@
       if (!desktopCardsEl) return;
       var cards = qsa('.sabl-dyn-card', desktopCardsEl);
       mobileCards.innerHTML = '';
-      if (!cards.length) {
-        mobileCards.innerHTML = '<p class="rsabl-empty">Načítám šablony…</p>';
-        return;
-      }
+      if (!cards.length) return;
       cards.forEach(function (c) {
         var clone = c.cloneNode(true);
         clone.addEventListener('click', function () { window.location.href = 'prihlaseni.html'; });
