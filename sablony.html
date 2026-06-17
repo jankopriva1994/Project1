@@ -256,13 +256,14 @@
       if (!page) return;
       var cardsBottom = cardsEl.offsetTop + cardsEl.offsetHeight;
 
-      // Wave starts 200px before cards end (same as onas: wave = content_end - 200)
+      // Wave starts 200px before cards end
       var waveEl = page.querySelector('.sabl-wave');
       var waveTop = Math.max(cardsBottom - 200, 500);
       if (waveEl) waveEl.style.top = waveTop + 'px';
 
-      // Newsletter/footer start 40px below the bottom of the wave image (946px tall)
-      var base = waveTop + 946 + 40;
+      // Newsletter/footer start 80px below the bottom of the wave image (use actual height)
+      var waveH = (waveEl && waveEl.offsetHeight > 50) ? waveEl.offsetHeight : 400;
+      var base = waveTop + waveH + 80;
 
       FOOTER_CLASSES.forEach(function (cls) {
         var el = page.querySelector('.' + cls);
