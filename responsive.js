@@ -204,6 +204,23 @@
       grid.appendChild(item);
     });
 
+    // Hide original absolutely-positioned elements (now replaced by the grid)
+    var hideSelectors = [
+      '.benefit-c1-r1-title','.benefit-c1-r1-text',
+      '.benefit-c2-r1-title','.benefit-c2-r1-text',
+      '.benefit-c1-r2-title','.benefit-c1-r2-text',
+      '.benefit-c2-r2-title','.benefit-c2-r2-text',
+      '.benefit-c1-r3-title','.benefit-c1-r3-text',
+      '.benefit-c2-r3-title','.benefit-c2-r3-text',
+      '.benefits-div-c1-r1','.benefits-div-c1-r2','.benefits-div-c1-r3',
+      '.benefits-div-c2-r1','.benefits-div-c2-r2','.benefits-div-c2-r3',
+      '.benefits-divider-left','.benefits-divider-right'
+    ];
+    hideSelectors.forEach(function (sel) {
+      var el = qs(sel);
+      if (el) el.style.display = 'none';
+    });
+
     // Insert after benefits-cta
     var cta = qs('.benefits-cta');
     if (cta && cta.parentNode) {
