@@ -3318,7 +3318,40 @@
   top: auto !important;
   margin: 0 !important;
   display: block !important;
-  border-radius: 5px !important;
+  background: #1e1f26 !important;
+  border: 1px solid rgba(255,255,255,0.12) !important;
+  border-radius: 8px !important;
+  color: #ffffff !important;
+  font-size: 15px !important;
+  font-family: 'Supreme', sans-serif !important;
+  padding: 0 16px !important;
+  outline: none !important;
+  -webkit-appearance: none !important;
+}
+
+.rktk-form input,
+.rktk-form .ktk-input {
+  height: 52px !important;
+}
+
+.rktk-form textarea,
+.rktk-form .ktk-textarea {
+  height: 130px !important;
+  padding: 14px 16px !important;
+  resize: none !important;
+  line-height: 1.5 !important;
+}
+
+.rktk-form input::placeholder,
+.rktk-form textarea::placeholder,
+.rktk-form .ktk-input::placeholder,
+.rktk-form .ktk-textarea::placeholder {
+  color: rgba(255,255,255,0.38) !important;
+}
+
+.rktk-form input:focus,
+.rktk-form textarea:focus {
+  border-color: rgba(208,238,82,0.5) !important;
 }
 .rktk-form .ktk-gdpr-row {
   position: static !important;
@@ -3380,7 +3413,7 @@
   background: #d0ee52 !important;
   color: #0d0e11 !important;
   border: none !important;
-  border-radius: 5px !important;
+  border-radius: 8px !important;
   font-weight: 700 !important;
   cursor: pointer !important;
   width: auto !important;
