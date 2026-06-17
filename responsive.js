@@ -834,11 +834,14 @@
 
     // Wave image
     if (waveImgSrc) {
+      var waveWrap = document.createElement('div');
+      waveWrap.className = 'r-mobile-wave-wrap';
       var waveImg = document.createElement('img');
       waveImg.src = waveImgSrc;
       waveImg.alt = '';
-      waveImg.className = 'rktk-mobile-wave';
-      wrapper.appendChild(waveImg);
+      waveImg.className = 'r-mobile-wave-img';
+      waveWrap.appendChild(waveImg);
+      wrapper.appendChild(waveWrap);
     }
 
     // Footer
@@ -994,8 +997,14 @@
     wrapper.appendChild(mobileCardsWrap);
 
     if (waveImgSrc) {
-      var waveImg = el('img', { src: waveImgSrc, alt: '', className: 'rsabl-wave' });
-      wrapper.appendChild(waveImg);
+      var waveWrap2 = document.createElement('div');
+      waveWrap2.className = 'r-mobile-wave-wrap';
+      var waveImg2 = document.createElement('img');
+      waveImg2.src = waveImgSrc;
+      waveImg2.alt = '';
+      waveImg2.className = 'r-mobile-wave-img';
+      waveWrap2.appendChild(waveImg2);
+      wrapper.appendChild(waveWrap2);
     }
 
     footerDiv.innerHTML = mobileFooterHtml();

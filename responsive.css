@@ -3380,13 +3380,21 @@
   font-size: 14px !important;
 }
 
-/* Wave image in mobile kontakt */
-.rktk-mobile-wave {
-  display: block;
-  width: 100%;
-  height: auto;
-  mix-blend-mode: screen;
+/* Shared wave wrap — same sizing as homepage wave */
+.r-mobile-wave-wrap {
+  position: relative;
+  height: 240px;
   margin-top: 48px;
+  overflow: hidden;
+  pointer-events: none;
+}
+.r-mobile-wave-img {
+  position: absolute;
+  width: 840px;
+  left: calc(50% - 420px);
+  top: 0;
+  mix-blend-mode: screen;
+  display: block;
   pointer-events: none;
 }
 
@@ -3589,14 +3597,6 @@
   color: #8b8b8b;
   text-align: center;
   padding: 20px 0;
-}
-.rsabl-wave {
-  display: block;
-  width: 100%;
-  height: auto;
-  mix-blend-mode: screen;
-  margin-top: 48px;
-  pointer-events: none;
 }
 .r-sablony-mobile .rim-footer {
   margin-top: 0;
