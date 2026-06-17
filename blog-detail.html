@@ -46,23 +46,14 @@
     <div class="nav-separator"></div>
 
     <!-- ==================== ARTICLE TITLE ==================== -->
-    <h1 class="bdetail-title">
-      <span class="accent">Máme nový vzhled</span> webových stránek<br>
-      a administrace
-    </h1>
+    <h1 class="bdetail-title" style="visibility:hidden"></h1>
 
     <!-- ==================== ARTICLE BODY ==================== -->
-    <div class="bdetail-article">
-
-      <p>Chaties.cz prošlo kompletním redesignem – nový vizuální styl, přehlednější navigace a modernizovaná administrace. Vše bylo navrženo tak, aby práce s AI byla ještě rychlejší a příjemnější. Od spuštění platformy uplynul více než rok plný zpětné vazby od uživatelů.</p>
-
-      <p>Nový design vychází z principů čistoty a přehlednosti. Každý prvek má své místo a účel. Žádné zbytečné rušivé elementy – jen to, co potřebujete k práci. Zákaznická administrace dostala zcela novou strukturu s rychlým přístupem ke všem AI nástrojům.</p>
-
+    <div class="bdetail-article" style="visibility:hidden">
       <a href="blog.html" class="bdetail-back">
         <svg class="bdetail-back-arrow" width="16" height="16" viewBox="0 0 24 24" fill="none"><path d="M19 12H5M12 19l-7-7 7-7" stroke="#d0ee52" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg>
         <span class="bdetail-back-text">Zpátky na výpis článků</span>
       </a>
-
     </div>
 
     <!-- ==================== FOOTER ==================== -->
@@ -191,15 +182,26 @@
       .then(function (post) {
         var titleEl   = document.querySelector('.bdetail-title');
         var articleEl = document.querySelector('.bdetail-article');
-        if (titleEl)   titleEl.textContent = post.title;
-        if (articleEl && post.content) {
-          var backLink = articleEl.querySelector('.bdetail-back');
-          articleEl.innerHTML = post.content;
-          if (backLink) articleEl.appendChild(backLink);
+        if (titleEl) {
+          titleEl.textContent = post.title;
+          titleEl.style.visibility = 'visible';
+        }
+        if (articleEl) {
+          if (post.content) {
+            var backLink = articleEl.querySelector('.bdetail-back');
+            articleEl.innerHTML = post.content;
+            if (backLink) articleEl.appendChild(backLink);
+          }
+          articleEl.style.visibility = 'visible';
         }
         document.title = post.title + ' – Chaties AI';
       })
-      .catch(function () {});
+      .catch(function () {
+        var titleEl = document.querySelector('.bdetail-title');
+        var articleEl = document.querySelector('.bdetail-article');
+        if (titleEl) titleEl.style.visibility = 'visible';
+        if (articleEl) articleEl.style.visibility = 'visible';
+      });
   })();
   </script>
 </body>
