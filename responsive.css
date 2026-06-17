@@ -63,7 +63,7 @@
     gap: 5px;
     position: fixed;
     right: 16px;
-    top: 14px;
+    top: 12px;
     width: 36px;
     height: 36px;
     cursor: pointer;
@@ -3068,14 +3068,14 @@
 /* Mobile nav logo */
 .r-nav-logo-link {
   position: fixed;
-  top: 14px;
+  top: 12px;
   left: 16px;
   z-index: 10001;
   display: block;
   line-height: 0;
 }
 .r-nav-logo-img {
-  height: 32px;
+  height: 36px;
   width: auto;
 }
 .r-nav-bg {

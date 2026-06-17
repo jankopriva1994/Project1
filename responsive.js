@@ -1136,7 +1136,7 @@
     wrapper.className = 'r-ceny-mobile';
     wrapper.innerHTML =
       '<section class="rceny-hero">' +
-        '<h1 class="rceny-heading">' + (titleEl ? titleEl.innerHTML : '') + '</h1>' +
+        '<h1 class="rceny-heading">' + (titleEl ? titleEl.innerHTML.replace('</span>', '</span><br>') : '') + '</h1>' +
         '<p class="rceny-subtitle">' + (subtitleEl ? subtitleEl.textContent.trim() : '') + '</p>' +
       '</section>' +
       (bannerEl ? '<div class="rceny-banner">' + bannerEl.innerHTML + '</div>' : '') +
