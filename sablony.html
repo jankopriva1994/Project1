@@ -255,12 +255,14 @@
     function repositionFooter() {
       if (!page) return;
       var cardsBottom = cardsEl.offsetTop + cardsEl.offsetHeight;
-      var base = cardsBottom + 80;
 
       // Wave starts 200px before cards end (same as onas: wave = content_end - 200)
       var waveEl = page.querySelector('.sabl-wave');
       var waveTop = Math.max(cardsBottom - 200, 500);
       if (waveEl) waveEl.style.top = waveTop + 'px';
+
+      // Newsletter/footer start 40px below the bottom of the wave image (946px tall)
+      var base = waveTop + 946 + 40;
 
       FOOTER_CLASSES.forEach(function (cls) {
         var el = page.querySelector('.' + cls);
