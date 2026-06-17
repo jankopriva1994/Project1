@@ -80,7 +80,7 @@
     var ctaEl = qs('.nav-cta');
     var ctaHref = ctaEl ? ctaEl.getAttribute('href') : 'registrace.html';
     var ctaBtn = el('a', { href: ctaHref, className: 'r-nav-cta-btn' });
-    ctaBtn.innerHTML = 'Vyzkoušej <span class="rim-accent">Chaties</span> zdarma';
+    ctaBtn.textContent = 'Vyzkoušej Chaties zdarma';
     drawer.appendChild(ctaBtn);
 
     // Login button (border style)
@@ -96,18 +96,17 @@
     podporaHead.textContent = 'Podpora';
     drawer.appendChild(podporaHead);
 
-    var emailEl = qs('.footer-col-support-link2');
-    var phoneEl = qs('.footer-col-support-link3');
-    if (emailEl) {
-      var emailA = el('a', { href: emailEl.getAttribute('href'), className: 'r-nav-support-link' });
-      emailA.textContent = emailEl.textContent.trim();
-      drawer.appendChild(emailA);
-    }
-    if (phoneEl) {
-      var phoneA = el('a', { href: phoneEl.getAttribute('href'), className: 'r-nav-support-link' });
-      phoneA.textContent = phoneEl.textContent.trim();
-      drawer.appendChild(phoneA);
-    }
+    var supportLinks = [
+      qs('.footer-col-support-link1'),
+      qs('.footer-col-support-link2'),
+      qs('.footer-col-support-link3')
+    ];
+    supportLinks.forEach(function (s) {
+      if (!s) return;
+      var a = el('a', { href: s.getAttribute('href'), className: 'r-nav-support-link' });
+      a.textContent = s.textContent.trim();
+      drawer.appendChild(a);
+    });
 
     // Social links
     var socials = el('div', { className: 'r-nav-socials' });
