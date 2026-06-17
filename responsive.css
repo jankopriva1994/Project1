@@ -2837,11 +2837,12 @@
   text-transform: uppercase;
   margin-bottom: 16px;
 }
+
 .rim-ai-heading {
   font-family: 'Supreme', sans-serif;
   font-weight: 700;
   font-size: 30px;
-  line-height: 37px;
+  line-height: 39px;
   margin: 0 0 16px;
   color: #ffffff;
 }
