@@ -103,6 +103,12 @@
       });
     });
 
+    // Logo (visible on mobile alongside hamburger)
+    var logoLink = el('a', { href: 'index.html', className: 'r-nav-logo-link' });
+    var logoImg  = el('img', { src: 'assets/img/logo.svg', alt: 'Chaties', className: 'r-nav-logo-img' });
+    logoLink.appendChild(logoImg);
+    document.body.appendChild(logoLink);
+
     document.body.appendChild(burger);
     document.body.appendChild(drawer);
   }
@@ -463,6 +469,7 @@
     if (!qs('.hero-headline')) return;
 
     var featImgSrc       = (qs('.features-img-small')     || {}).src || '';
+    var waveImgSrc       = (qs('.hero-wave')               || {}).src || '';
     var logoE15Src       = (qs('.logo-e15')               || {}).src || '';
     var logoAktualneSrc  = (qs('.logo-aktualne')          || {}).src || '';
     var logoPodnikatelSrc= (qs('.logo-podnikatel-left')   || {}).src || '';
@@ -483,6 +490,10 @@
           'Vyzkoušej <span class="rim-accent">Chaties</span> zdarma' +
         '</a>' +
       '</section>' +
+
+      '<div class="rim-wave-wrap">' +
+        '<img class="rim-hero-wave" src="' + waveImgSrc + '" alt="" />' +
+      '</div>' +
 
       '<section class="rim-features">' +
         '<h2 class="rim-features-heading">' +
@@ -586,7 +597,7 @@
             '<span class="rim-blog-cat">Blog</span>' +
             '<div class="rim-blog-title-row">' +
               '<span class="rim-blog-title"><span class="rim-accent">Máme nový vzhled</span> webových stránek a administrace</span>' +
-              '<span class="rim-blog-arrow">→</span>' +
+              '<svg class="rim-blog-arrow" width="22" height="22" viewBox="0 0 24 24" fill="none"><path d="M7 17L17 7M17 7H7M17 7V17" stroke="white" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg>' +
             '</div>' +
           '</div>' +
         '</div>' +
@@ -596,7 +607,7 @@
             '<span class="rim-blog-cat">Features</span>' +
             '<div class="rim-blog-title-row">' +
               '<span class="rim-blog-title"><span class="rim-accent">Přidána nová funkce</span> – převádění obrázků do textů</span>' +
-              '<span class="rim-blog-arrow">→</span>' +
+              '<svg class="rim-blog-arrow" width="22" height="22" viewBox="0 0 24 24" fill="none"><path d="M7 17L17 7M17 7H7M17 7V17" stroke="white" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg>' +
             '</div>' +
           '</div>' +
         '</div>' +
