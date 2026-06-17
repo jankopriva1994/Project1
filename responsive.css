@@ -3333,24 +3333,49 @@
   margin: 0 !important;
 }
 
-.rktk-form .ktk-gdpr-label {
-  flex: 1;
-  min-width: 0;
-  word-break: break-word;
-  white-space: normal !important;
-}
 .rktk-form .ktk-gdpr-row {
   width: 100%;
   box-sizing: border-box;
 }
 
+/* GDPR text + button side-by-side row */
+.rktk-gdpr-btn-row {
+  display: flex;
+  align-items: center;
+  gap: 14px;
+}
+.rktk-gdpr-btn-row .ktk-gdpr-row {
+  flex: 1;
+  position: static !important;
+  left: auto !important;
+  top: auto !important;
+  width: auto !important;
+  display: block !important;
+  margin: 0 !important;
+}
+.rktk-gdpr-btn-row .ktk-gdpr-label {
+  font-size: 13px !important;
+  color: #8b8b8b !important;
+  line-height: 1.5 !important;
+  white-space: normal !important;
+}
+.rktk-gdpr-btn-row .ktk-gdpr-link {
+  color: #d0ee52;
+}
+
 /* Green submit button in mobile kontakt */
-.rktk-form .ktk-submit {
+.rktk-form .ktk-submit,
+.rktk-gdpr-btn-row .ktk-submit {
   background: #d0ee52 !important;
   color: #0d0e11 !important;
   border: none !important;
   font-weight: 700 !important;
   cursor: pointer !important;
+  width: auto !important;
+  flex-shrink: 0;
+  white-space: nowrap;
+  padding: 14px 18px !important;
+  font-size: 14px !important;
 }
 
 /* Wave image in mobile kontakt */

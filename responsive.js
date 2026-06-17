@@ -807,6 +807,29 @@
     // Form
     if (formClone) {
       formClone.className = 'rktk-form';
+
+      // Remove checkbox from GDPR row — replace with plain text + side-by-side layout
+      var gdprRow = formClone.querySelector('.ktk-gdpr-row');
+      var submitBtn = formClone.querySelector('.ktk-submit');
+      if (gdprRow && submitBtn) {
+        // Remove the checkbox input
+        var chk = gdprRow.querySelector('input[type="checkbox"]');
+        if (chk) chk.parentNode.removeChild(chk);
+        // Change label text to Figma version
+        var lbl = gdprRow.querySelector('.ktk-gdpr-label');
+        if (lbl) {
+          lbl.innerHTML = 'Odesláním této zprávy souhlasím se <a href="obchodni-podminky.html" class="ktk-gdpr-link">zpracováním osobních údajů</a> za účelem odpovědi na můj dotaz.';
+        }
+        // Wrap GDPR text + button in a row
+        var gdprBtnRow = document.createElement('div');
+        gdprBtnRow.className = 'rktk-gdpr-btn-row';
+        gdprRow.parentNode.removeChild(gdprRow);
+        submitBtn.parentNode.removeChild(submitBtn);
+        gdprBtnRow.appendChild(gdprRow);
+        gdprBtnRow.appendChild(submitBtn);
+        formClone.appendChild(gdprBtnRow);
+      }
+
       wrapper.appendChild(formClone);
     }
 
