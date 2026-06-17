@@ -11,4 +11,8 @@ Disallow: /admin.html
 Disallow: /js/
 Disallow: /backend/
 
+# Dynamická sitemap včetně blog článků (primární)
+Sitemap: https://project1-production-bfde.up.railway.app/sitemap.xml
+
+# Statická sitemap – veřejné stránky (záloha)
 Sitemap: https://chaties.cz/sitemap.xml
