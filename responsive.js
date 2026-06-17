@@ -103,6 +103,10 @@
       });
     });
 
+    // Nav background bar
+    var navBg = el('div', { className: 'r-nav-bg' });
+    document.body.appendChild(navBg);
+
     // Logo (visible on mobile alongside hamburger)
     var logoLink = el('a', { href: 'index.html', className: 'r-nav-logo-link' });
     var logoImg  = el('img', { src: 'assets/img/logo.svg', alt: 'Chaties', className: 'r-nav-logo-img' });
