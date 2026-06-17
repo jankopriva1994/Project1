@@ -3150,10 +3150,10 @@
 }
 .rblog-card-img {
   display: block;
-  width: 357px;
+  width: 100%;
   height: 226px;
   object-fit: cover;
-  margin: 0 auto;
+  border-radius: 8px;
 }
 .rblog-card-body {
   padding: 12px 0 0;
