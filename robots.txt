@@ -1,0 +1,13 @@
+User-agent: *
+Allow: /
+
+Disallow: /administrace.html
+Disallow: /prihlaseni.html
+Disallow: /registrace.html
+Disallow: /zapomenuteheslo.html
+Disallow: /nove-heslo.html
+Disallow: /gate.html
+Disallow: /js/
+Disallow: /backend/
+
+Sitemap: https://chaties.cz/sitemap.xml
