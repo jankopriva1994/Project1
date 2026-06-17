@@ -2994,8 +2994,8 @@
 
 /* FOOTER */
 .rim-footer {
-  margin-top: 80px;
-  padding: 40px 18px 24px;
+  margin-top: 12px;
+  padding: 80px 18px 24px;
   border-top: 1px solid rgba(255,255,255,0.1);
   background: #0d0e11;
 }
