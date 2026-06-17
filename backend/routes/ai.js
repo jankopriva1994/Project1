@@ -358,7 +358,7 @@ router.post('/image', requireAuth, async (req, res) => {
       description: `Obrázek: ${prompt.slice(0, 50)}`
     });
 
-    await saveHistory(req.user.id, 'image', prompt.slice(0, 80), 'generated', 100);
+    await saveHistory(req.user.id, 'image', prompt.slice(0, 80), imageDataUrl, 100, { size: imgSize });
 
     res.json({ image_url: imageDataUrl, tokens_remaining: profile.tokens_balance - 100 });
   } catch (err) {

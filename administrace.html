@@ -838,9 +838,12 @@
 
     <!-- PANEL: HISTORIE -->
     <div class="adm-panel adm-panel-history" data-panel-id="history">
-      <div class="adm-placeholder">
-        <p class="adm-placeholder-title">Historie</p>
-        <p class="adm-placeholder-sub">Zde najdete historii svých vygenerovaných obsahů.</p>
+      <div class="adm-hist-header">
+        <h2 class="adm-hist-title">Historie</h2>
+        <p class="adm-hist-sub">Vaše vygenerované obsahy. Obrázky se uchovávají 14 dní.</p>
+      </div>
+      <div class="adm-hist-list" id="histList">
+        <div class="adm-hist-loading">Načítám historii…</div>
       </div>
     </div><!-- /adm-panel-history -->
 
@@ -884,6 +887,71 @@
       var navKey = navAliases[panelId] || panelId;
       var navEl = document.querySelector('.adm-nav-item[data-panel="' + navKey + '"]');
       setNavActive(navEl || null);
+      if (panelId === 'history') loadHistoryPanel();
+    }
+
+    // ── History panel ───────────────────────────────────────────
+    var histLoaded = false;
+    async function loadHistoryPanel() {
+      if (histLoaded) return;
+      histLoaded = true;
+      var list = document.getElementById('histList');
+      if (!list) return;
+
+      var TYPE_ICONS = {
+        chat:      '<svg width="16" height="16" viewBox="0 0 24 24" fill="none"><path d="M21 15a2 2 0 0 1-2 2H7l-4 4V5a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2z" stroke="currentColor" stroke-width="1.5" stroke-linejoin="round"/></svg>',
+        template:  '<svg width="16" height="16" viewBox="0 0 24 24" fill="none"><rect x="3" y="3" width="18" height="18" rx="2" stroke="currentColor" stroke-width="1.5"/><path d="M3 9h18M9 21V9" stroke="currentColor" stroke-width="1.5"/></svg>',
+        translate: '<svg width="16" height="16" viewBox="0 0 24 24" fill="none"><path d="M3 5h12M9 3v2m-3 4c0 2.5 2 4.5 4 6M9 11c0 2 1.5 3.5 3 4.5M21 21l-3-6-3 6M15.5 17h5" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg>',
+        image:     '<svg width="16" height="16" viewBox="0 0 24 24" fill="none"><rect x="3" y="3" width="18" height="18" rx="2" stroke="currentColor" stroke-width="1.5"/><circle cx="8.5" cy="8.5" r="1.5" stroke="currentColor" stroke-width="1.5"/><path d="M21 15l-5-5L5 21" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg>',
+        document:  '<svg width="16" height="16" viewBox="0 0 24 24" fill="none"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z" stroke="currentColor" stroke-width="1.5" stroke-linejoin="round"/><path d="M14 2v6h6M16 13H8M16 17H8M10 9H8" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"/></svg>'
+      };
+      var TYPE_LABELS = { chat: 'Chat', template: 'Šablona', translate: 'Překlad', image: 'Obrázek', document: 'Dokument' };
+
+      var items;
+      try { items = await apiFetch('/api/user/history'); } catch(e) {
+        list.innerHTML = '<p class="adm-hist-error">Nepodařilo se načíst historii.</p>';
+        return;
+      }
+
+      if (!items || !items.length) {
+        list.innerHTML = '<p class="adm-hist-empty">Zatím žádná historie. Začněte generovat!</p>';
+        return;
+      }
+
+      list.innerHTML = '';
+      items.forEach(function(item) {
+        var date = new Date(item.created_at);
+        var dateStr = date.toLocaleDateString('cs-CZ', { day:'numeric', month:'long', year:'numeric' })
+          + ' ' + date.toLocaleTimeString('cs-CZ', { hour:'2-digit', minute:'2-digit' });
+        var icon = TYPE_ICONS[item.type] || TYPE_ICONS.document;
+        var label = TYPE_LABELS[item.type] || item.type;
+
+        var row = document.createElement('div');
+        row.className = 'adm-hist-item adm-hist-type-' + item.type;
+
+        var isImage = item.type === 'image' && item.content && item.content.startsWith('data:image');
+
+        row.innerHTML =
+          '<div class="adm-hist-item-icon">' + icon + '</div>' +
+          '<div class="adm-hist-item-body">' +
+            '<div class="adm-hist-item-meta">' +
+              '<span class="adm-hist-item-type">' + label + '</span>' +
+              '<span class="adm-hist-item-date">' + dateStr + '</span>' +
+              '<span class="adm-hist-item-tokens">−' + (item.tokens_used || 0) + ' tokenů</span>' +
+            '</div>' +
+            '<p class="adm-hist-item-title">' + (item.title || '').replace(/</g,'&lt;') + '</p>' +
+            (isImage
+              ? '<img class="adm-hist-img-thumb" src="' + item.content + '" alt="' + (item.title||'').replace(/"/g,'') + '" />'
+              : (item.content && item.content !== 'generated'
+                  ? '<div class="adm-hist-item-preview">' + (item.type === 'template' || item.type === 'translate' || item.type === 'document'
+                      ? item.content.replace(/<[^>]+>/g,'').slice(0, 200) + (item.content.length > 200 ? '…' : '')
+                      : (item.content||'').replace(/</g,'&lt;').slice(0, 200) + (item.content.length > 200 ? '…' : ''))
+                    + '</div>'
+                  : '')) +
+          '</div>';
+
+        list.appendChild(row);
+      });
     }
 
     // ── Docs panel: načti dokumenty ze serveru ──────────────────

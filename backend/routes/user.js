@@ -79,12 +79,21 @@ router.patch('/profile', requireAuth, async (req, res) => {
 
 // GET /api/user/history
 router.get('/history', requireAuth, async (req, res) => {
+  // Auto-delete image history older than 14 days
+  const cutoff = new Date(Date.now() - 14 * 24 * 60 * 60 * 1000).toISOString();
+  await supabase
+    .from('history')
+    .delete()
+    .eq('user_id', req.user.id)
+    .eq('type', 'image')
+    .lt('created_at', cutoff);
+
   const { data, error } = await supabase
     .from('history')
     .select('*')
     .eq('user_id', req.user.id)
     .order('created_at', { ascending: false })
-    .limit(50);
+    .limit(100);
   if (error) return res.status(500).json({ error: error.message });
   res.json(data);
 });
