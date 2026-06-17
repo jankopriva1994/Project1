@@ -3201,6 +3201,16 @@
 }
 .rbdetail-article {
   padding: 30px 18px 0;
+  color: #ffffff;
+}
+#rbdetailBody, #rbdetailBody p, #rbdetailBody div,
+#rbdetailBody span, #rbdetailBody li {
+  font-size: 16px;
+  font-weight: 400;
+  line-height: 28px;
+  color: #ffffff;
+  margin-bottom: 16px;
+  font-family: 'Supreme', sans-serif;
 }
 .rbdetail-title {
   font-size: 30px;
