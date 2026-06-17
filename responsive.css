@@ -3308,6 +3308,7 @@
   top: auto !important;
   margin: 0 !important;
   display: block !important;
+  border-radius: 5px !important;
 }
 .rktk-form .ktk-gdpr-row {
   position: static !important;
@@ -3369,6 +3370,7 @@
   background: #d0ee52 !important;
   color: #0d0e11 !important;
   border: none !important;
+  border-radius: 5px !important;
   font-weight: 700 !important;
   cursor: pointer !important;
   width: auto !important;
