@@ -180,5 +180,27 @@
   })();
   </script>
   <script src="responsive.js?v=17"></script>
+  <script>
+  (function () {
+    var API = 'https://project1-production-bfde.up.railway.app';
+    var slug = new URLSearchParams(location.search).get('slug');
+    if (!slug) return;
+
+    fetch(API + '/api/blog/posts/' + encodeURIComponent(slug))
+      .then(function (r) { if (!r.ok) throw new Error(); return r.json(); })
+      .then(function (post) {
+        var titleEl   = document.querySelector('.bdetail-title');
+        var articleEl = document.querySelector('.bdetail-article');
+        if (titleEl)   titleEl.textContent = post.title;
+        if (articleEl && post.content) {
+          var backLink = articleEl.querySelector('.bdetail-back');
+          articleEl.innerHTML = post.content;
+          if (backLink) articleEl.appendChild(backLink);
+        }
+        document.title = post.title + ' – Chaties AI';
+      })
+      .catch(function () {});
+  })();
+  </script>
 </body>
 </html>

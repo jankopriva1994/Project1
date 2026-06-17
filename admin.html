@@ -266,6 +266,8 @@
           <input type="hidden" id="postId" />
           <div class="form-row"><label>Titulek</label><input type="text" id="postTitle" /></div>
           <div class="form-row"><label>Slug (URL)</label><input type="text" id="postSlug" /></div>
+          <div class="form-row"><label>Kategorie <span style="color:#555;font-weight:400;font-size:12px">– např. Blog, Features, Update</span></label><input type="text" id="postCategory" placeholder="Blog" /></div>
+          <div class="form-row"><label>URL obrázku <span style="color:#555;font-weight:400;font-size:12px">– náhledový obrázek článku (volitelné)</span></label><input type="url" id="postCoverImage" placeholder="https://..." /></div>
           <div class="form-row"><label>Perex (krátký popis)</label><textarea id="postExcerpt" style="min-height:70px"></textarea></div>
           <div class="form-row"><label>Obsah (HTML)</label><textarea id="postContent" class="tall"></textarea></div>
           <div class="form-row">
@@ -710,6 +712,8 @@
         document.getElementById('postId').value = '';
         document.getElementById('postTitle').value = '';
         document.getElementById('postSlug').value = '';
+        document.getElementById('postCategory').value = '';
+        document.getElementById('postCoverImage').value = '';
         document.getElementById('postExcerpt').value = '';
         document.getElementById('postContent').value = '';
         document.getElementById('postPublished').classList.remove('on');
@@ -729,6 +733,8 @@
       document.getElementById('postId').value = p.id;
       document.getElementById('postTitle').value = p.title;
       document.getElementById('postSlug').value = p.slug;
+      document.getElementById('postCategory').value = p.category || '';
+      document.getElementById('postCoverImage').value = p.cover_image || '';
       document.getElementById('postExcerpt').value = p.excerpt || '';
       document.getElementById('postContent').value = p.content || '';
       if (p.is_published) document.getElementById('postPublished').classList.add('on');
@@ -744,6 +750,8 @@
       var body = {
         title:        document.getElementById('postTitle').value,
         slug:         document.getElementById('postSlug').value,
+        category:     document.getElementById('postCategory').value,
+        cover_image:  document.getElementById('postCoverImage').value,
         excerpt:      document.getElementById('postExcerpt').value,
         content:      document.getElementById('postContent').value,
         is_published: document.getElementById('postPublished').classList.contains('on')

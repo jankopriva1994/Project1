@@ -106,14 +106,14 @@ router.delete('/templates/:id', auth, async (req, res) => {
 router.get('/posts', auth, async (req, res) => {
   const { data, error } = await supabase
     .from('posts')
-    .select('id, title, slug, excerpt, is_published, published_at, created_at')
+    .select('id, title, slug, excerpt, category, cover_image, is_published, published_at, created_at')
     .order('created_at', { ascending: false });
   if (error) return res.status(500).json({ error: error.message });
   res.json(data);
 });
 
 router.post('/posts', auth, async (req, res) => {
-  const { title, excerpt, content, is_published } = req.body;
+  const { title, excerpt, content, category, cover_image, is_published } = req.body;
   if (!title) return res.status(400).json({ error: 'Chybí titulek' });
   const slug = title.toLowerCase()
     .replace(/[áäà]/g, 'a').replace(/[éě]/g, 'e').replace(/[íï]/g, 'i')
@@ -124,7 +124,7 @@ router.post('/posts', auth, async (req, res) => {
   const { data, error } = await supabase
     .from('posts')
     .insert({
-      title, slug, excerpt, content,
+      title, slug, excerpt, content, category: category || null, cover_image: cover_image || null,
       is_published: !!is_published,
       published_at: is_published ? new Date().toISOString() : null
     })
@@ -135,13 +135,13 @@ router.post('/posts', auth, async (req, res) => {
 });
 
 router.put('/posts/:id', auth, async (req, res) => {
-  const { title, slug, excerpt, content, is_published } = req.body;
+  const { title, slug, excerpt, content, category, cover_image, is_published } = req.body;
   const { data: existing } = await supabase.from('posts').select('is_published').eq('id', req.params.id).single();
   const nowPublished = is_published && existing && !existing.is_published;
   const { data, error } = await supabase
     .from('posts')
     .update({
-      title, slug, excerpt, content, is_published,
+      title, slug, excerpt, content, category: category || null, cover_image: cover_image || null, is_published,
       published_at: nowPublished ? new Date().toISOString() : undefined,
       updated_at: new Date().toISOString()
     })
