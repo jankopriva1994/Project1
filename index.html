@@ -12,7 +12,14 @@
   <meta property="og:title" content="Chaties – AI nástroje pro tvorbu obsahu" />
   <meta property="og:description" content="Nejrychlejší česká AI platforma. Generujte obsah, překlady a obrázky během vteřin." />
   <meta property="og:site_name" content="Chaties.cz" />
+  <meta property="og:image" content="https://chaties.cz/assets/img/og-image.jpg" />
+  <meta name="twitter:card" content="summary_large_image" />
+  <meta name="twitter:title" content="Chaties – AI nástroje pro tvorbu obsahu" />
+  <meta name="twitter:description" content="Nejrychlejší česká AI platforma. Generujte obsah, překlady a obrázky během vteřin." />
+  <meta name="twitter:image" content="https://chaties.cz/assets/img/og-image.jpg" />
   <meta name="robots" content="index, follow" />
+  <link rel="preload" href="assets/fonts/Supreme-Regular.woff" as="font" type="font/woff" crossorigin />
+  <link rel="preload" href="assets/fonts/Supreme-Bold.woff" as="font" type="font/woff" crossorigin />
   <link rel="stylesheet" href="styles.css?v=91" />
   <link rel="stylesheet" href="responsive.css?v=19" />
   <!-- Google Analytics -->
@@ -23,9 +30,47 @@
     gtag("js", new Date());
     gtag("config", "G-Z675BBJZF3");
   </script>
+  <script type="application/ld+json">
+  {
+    "@context": "https://schema.org",
+    "@graph": [
+      {
+        "@type": "Organization",
+        "@id": "https://chaties.cz/#organization",
+        "name": "Chaties AI",
+        "url": "https://chaties.cz/",
+        "logo": {
+          "@type": "ImageObject",
+          "url": "https://chaties.cz/assets/img/logo.svg"
+        },
+        "contactPoint": {
+          "@type": "ContactPoint",
+          "email": "podpora@chaties.cz",
+          "contactType": "customer support",
+          "availableLanguage": "Czech"
+        },
+        "sameAs": []
+      },
+      {
+        "@type": "WebSite",
+        "@id": "https://chaties.cz/#website",
+        "url": "https://chaties.cz/",
+        "name": "Chaties.cz",
+        "description": "Nejrychlejší česká AI platforma pro tvorbu obsahu",
+        "publisher": { "@id": "https://chaties.cz/#organization" },
+        "potentialAction": {
+          "@type": "SearchAction",
+          "target": "https://chaties.cz/blog.html?q={search_term_string}",
+          "query-input": "required name=search_term_string"
+        },
+        "inLanguage": "cs"
+      }
+    ]
+  }
+  </script>
 </head>
 <body>
-  
+
   <div class="page">
 
     <!-- ==================== NAVBAR ==================== -->
@@ -84,38 +129,46 @@
       class="features-img-large"
       src="https://www.figma.com/api/mcp/asset/b1215607-035f-4e7a-9b2d-aa768d45e5cc"
       alt="Feature screenshot"
+      loading="lazy"
     />
 
     <img
       class="features-img-small"
       src="https://www.figma.com/api/mcp/asset/b1215607-035f-4e7a-9b2d-aa768d45e5cc"
       alt="Feature screenshot small"
+      loading="lazy"
     />
 
     <!-- ==================== MEDIA LOGOS ==================== -->
     <img class="logo-zive-left"
       src="https://www.figma.com/api/mcp/asset/8b680703-189f-44a8-bfe6-190c0f47b920"
       alt="Živě logo"
+      loading="lazy"
     />
     <img class="logo-podnikatel-left"
       src="https://www.figma.com/api/mcp/asset/02c4ac4f-d6e4-4a2b-ae12-0723d94a9068"
       alt="Podnikatel logo"
+      loading="lazy"
     />
     <img class="logo-e15"
       src="https://www.figma.com/api/mcp/asset/319c265c-0174-4827-85aa-b8b2c5c0d6f8"
       alt="e15 logo"
+      loading="lazy"
     />
     <img class="logo-aktualne"
       src="https://www.figma.com/api/mcp/asset/70d0fe57-8154-4283-90d0-7e5a13f73873"
       alt="Aktuálně logo"
+      loading="lazy"
     />
     <img class="logo-zive-right"
       src="https://www.figma.com/api/mcp/asset/8b680703-189f-44a8-bfe6-190c0f47b920"
       alt="Živě logo"
+      loading="lazy"
     />
     <img class="logo-podnikatel-right"
       src="https://www.figma.com/api/mcp/asset/02c4ac4f-d6e4-4a2b-ae12-0723d94a9068"
       alt="Podnikatel logo"
+      loading="lazy"
     />
 
     <!-- ==================== BENEFITS SECTION ==================== -->
@@ -262,7 +315,7 @@
 
     <!-- ==================== FOOTER ==================== -->
 
-    <img class="footer-logo" src="assets/img/logo.svg" alt="Chaties" />
+    <img class="footer-logo" src="assets/img/logo.svg" alt="Chaties" loading="lazy" />
 
     <p class="footer-desc">
       <span class="accent">Chaties.cz</span> patří mezi špičku v AI službách v Česku. <span class="accent">Pomáháme firmám růst díky chytrým technologiím,</span> které šetří čas, zvyšují efektivitu a otevírají nové možnosti.
