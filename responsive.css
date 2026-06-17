@@ -2885,16 +2885,16 @@
 }
 .rim-blog-card {
   margin-top: 40px;
+  overflow: hidden;
 }
 .rim-blog-card + .rim-blog-card {
   margin-top: 32px;
 }
 .rim-blog-img {
   display: block;
-  width: 357px;
+  width: 100%;
   height: 220px;
   object-fit: cover;
-  margin: 0 auto;
 }
 .rim-blog-card-body {
   padding: 16px 18px 0;
