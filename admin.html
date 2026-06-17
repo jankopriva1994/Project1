@@ -260,6 +260,7 @@
         <h2 class="cms-h2">Blog</h2>
         <p class="cms-sub">Psaní a správa blogových článků.</p>
         <button class="btn-primary" id="postNewBtn">+ Nový článek</button>
+        <button class="btn-danger" id="postDeleteAllBtn" style="margin-left:12px">Smazat vše</button>
 
         <div id="postForm" class="cms-form" style="display:none">
           <h3 id="postFormTitle">Nový článek</h3>
@@ -744,6 +745,17 @@
 
     document.getElementById('postNewBtn').addEventListener('click', function () { openPostForm(true); });
     document.getElementById('postCancel').addEventListener('click', closePostForm);
+
+    document.getElementById('postDeleteAllBtn').addEventListener('click', async function () {
+      if (!posts.length) { alert('Žádné články k smazání.'); return; }
+      if (!confirm('Smazat VŠECHNY články (' + posts.length + ')? Tato akce je nevratná.')) return;
+      try {
+        for (var i = 0; i < posts.length; i++) {
+          await apiFetch('/api/admin/posts/' + posts[i].id, { method: 'DELETE' });
+        }
+        await loadPosts();
+      } catch(e) { alert('Chyba při mazání: ' + e.message); }
+    });
 
     document.getElementById('postSave').addEventListener('click', async function () {
       var id = document.getElementById('postId').value;

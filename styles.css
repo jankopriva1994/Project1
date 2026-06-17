@@ -987,38 +987,18 @@ body {
   line-height: 27px;
 }
 
-.blog-arrow-1 {
+/* Transparent clickable overlays over homepage blog cards */
+.blog-card-link {
   position: absolute;
-  left: 581px;
-  top: 4863px;
-  width: 23px;
-  height: 23px;
-  transform: rotate(-45deg);
+  top: 4577px;
+  width: 373px;
+  height: 340px;
+  z-index: 5;
   display: block;
-  object-fit: contain;
 }
-
-.blog-arrow-2 {
-  position: absolute;
-  left: 1007px;
-  top: 4863px;
-  width: 23px;
-  height: 23px;
-  transform: rotate(-45deg);
-  display: block;
-  object-fit: contain;
-}
-
-.blog-arrow-3 {
-  position: absolute;
-  left: 1432px;
-  top: 4863px;
-  width: 23px;
-  height: 23px;
-  transform: rotate(-45deg);
-  display: block;
-  object-fit: contain;
-}
+.blog-card-link-1 { left: 228px; }
+.blog-card-link-2 { left: 654px; }
+.blog-card-link-3 { left: 1079px; }
 
 /* ===================== NEWSLETTER CTA SECTION ===================== */
 .newsletter-chip {

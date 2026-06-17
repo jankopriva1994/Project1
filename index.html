@@ -214,42 +214,24 @@
     />
 
     <!-- Blog images -->
-    <img loading="lazy" class="blog-img-1"
-      src="https://www.figma.com/api/mcp/asset/b3e3d85a-d8f8-4637-abf7-bfca8bd364e6"
-      alt="Blog image 1"
-    />
-    <img loading="lazy" class="blog-img-2"
-      src="https://www.figma.com/api/mcp/asset/3f75d4ec-d383-45a1-a76c-bb55cac34dca"
-      alt="Blog image 2"
-    />
-    <img loading="lazy" class="blog-img-3"
-      src="https://www.figma.com/api/mcp/asset/0e14d8d7-6c83-40e4-a35b-081ec32122dd"
-      alt="Blog image 3"
-    />
+    <img loading="lazy" class="blog-img-1" src="" alt="Blog image 1" />
+    <img loading="lazy" class="blog-img-2" src="" alt="Blog image 2" />
+    <img loading="lazy" class="blog-img-3" src="" alt="Blog image 3" />
 
     <!-- Blog categories -->
-    <span class="blog-cat-1">Blog</span>
-    <span class="blog-cat-2">Features</span>
-    <span class="blog-cat-3">Update</span>
+    <span class="blog-cat-1"></span>
+    <span class="blog-cat-2"></span>
+    <span class="blog-cat-3"></span>
 
     <!-- Blog titles -->
-    <span class="blog-title-1">Máme nový vzhled webových stránek<br>a administrace</span>
-    <img class="blog-arrow-1"
-      src="https://www.figma.com/api/mcp/asset/52c8e77c-f53c-4652-bdc2-003a621da093"
-      alt="Arrow"
-    />
+    <span class="blog-title-1"></span>
+    <span class="blog-title-2"></span>
+    <span class="blog-title-3"></span>
 
-    <span class="blog-title-2">Přidaná nová funkce – převádění<br>obrázků do textů</span>
-    <img class="blog-arrow-2"
-      src="https://www.figma.com/api/mcp/asset/52c8e77c-f53c-4652-bdc2-003a621da093"
-      alt="Arrow"
-    />
-
-    <span class="blog-title-3">Vyšla nová verze zákaznické<br>administrace – Ver. 2.0</span>
-    <img class="blog-arrow-3"
-      src="https://www.figma.com/api/mcp/asset/52c8e77c-f53c-4652-bdc2-003a621da093"
-      alt="Arrow"
-    />
+    <!-- Transparent link overlays over each blog card -->
+    <a href="blog-detail.html" class="blog-card-link blog-card-link-1" id="blogLink1"></a>
+    <a href="blog-detail.html" class="blog-card-link blog-card-link-2" id="blogLink2"></a>
+    <a href="blog-detail.html" class="blog-card-link blog-card-link-3" id="blogLink3"></a>
 
     <!-- ==================== NEWSLETTER CTA SECTION ==================== -->
     <div class="newsletter-chip">CHATIES NEWSLETTER</div>
@@ -443,5 +425,41 @@
     })();
   </script>
   <script src="responsive.js?v=17"></script>
+  <script>
+  (function () {
+    var API = 'https://project1-production-bfde.up.railway.app';
+    var PLACEHOLDER = "data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='373' height='226'%3E%3Cdefs%3E%3ClinearGradient id='g' x1='0' y1='0' x2='1' y2='1'%3E%3Cstop offset='0' stop-color='%231a1b2e'/%3E%3Cstop offset='1' stop-color='%2316213e'/%3E%3C/linearGradient%3E%3C/defs%3E%3Crect width='373' height='226' fill='url(%23g)'/%3E%3C/svg%3E";
+
+    fetch(API + '/api/blog/posts')
+      .then(function (r) { return r.json(); })
+      .then(function (posts) {
+        if (!Array.isArray(posts) || !posts.length) return;
+        var slots = [1, 2, 3];
+        slots.forEach(function (n) {
+          var post = posts[n - 1];
+          if (!post) {
+            var imgEl = document.querySelector('.blog-img-' + n);
+            var catEl = document.querySelector('.blog-cat-' + n);
+            var ttlEl = document.querySelector('.blog-title-' + n);
+            var lnkEl = document.getElementById('blogLink' + n);
+            if (imgEl) imgEl.style.display = 'none';
+            if (catEl) catEl.style.display = 'none';
+            if (ttlEl) ttlEl.style.display = 'none';
+            if (lnkEl) lnkEl.style.display = 'none';
+            return;
+          }
+          var imgEl = document.querySelector('.blog-img-' + n);
+          var catEl = document.querySelector('.blog-cat-' + n);
+          var ttlEl = document.querySelector('.blog-title-' + n);
+          var lnkEl = document.getElementById('blogLink' + n);
+          if (imgEl) imgEl.src = post.cover_image || PLACEHOLDER;
+          if (catEl) catEl.textContent = post.category || 'Blog';
+          if (ttlEl) ttlEl.textContent = post.title;
+          if (lnkEl) lnkEl.href = 'blog-detail.html?slug=' + encodeURIComponent(post.slug);
+        });
+      })
+      .catch(function () {});
+  })();
+  </script>
 </body>
 </html>
