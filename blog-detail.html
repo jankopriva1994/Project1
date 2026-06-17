@@ -5,15 +5,20 @@
   
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <title>Blog – Chaties AI</title>
-  <meta name="description" content="Článek z blogu Chaties.cz – aktuální informace o umělé inteligenci." />
+  <meta name="description" content="Přečtěte si nejnovější článek z blogu Chaties.cz. Aktuální informace o umělé inteligenci, AI trendech a tipech pro tvorbu obsahu v češtině." />
   <link rel="canonical" href="https://chaties.cz/blog-detail.html" />
   <meta property="og:type" content="article" />
   <meta property="og:site_name" content="Chaties.cz" />
   <meta property="og:image" content="https://chaties.cz/assets/img/og-image.jpg" />
+  <meta property="og:url" content="" />
+  <meta property="og:title" content="" />
+  <meta property="og:description" content="" />
   <meta name="twitter:card" content="summary_large_image" />
   <meta name="twitter:title" content="Blog – Chaties AI" />
   <meta name="twitter:description" content="Článek z blogu Chaties.cz – aktuální informace o umělé inteligenci." />
   <meta name="twitter:image" content="https://chaties.cz/assets/img/og-image.jpg" />
+  <script type="application/ld+json" id="ld-article"></script>
+  <script type="application/ld+json" id="ld-breadcrumb"></script>
   <meta name="robots" content="index, follow" />
   <link rel="preload" href="assets/fonts/Supreme-Regular.woff" as="font" type="font/woff" crossorigin />
   <link rel="preload" href="assets/fonts/Supreme-Bold.woff" as="font" type="font/woff" crossorigin />
@@ -33,6 +38,7 @@
   <div class="page blog-detail-page">
 
     <!-- ==================== NAVBAR ==================== -->
+    <header>
     <a href="index.html" class="nav-logo-link"><img class="nav-logo" src="assets/img/logo.svg" alt="Chaties" /></a>
 
     <div class="nav-ai-wrap">
@@ -56,7 +62,10 @@
     <a href="registrace.html" class="nav-cta">Vyzkoušej <span class="accent" style="margin-left:4px;">Chaties</span>&nbsp;zdarma</a>
 
     <div class="nav-separator"></div>
+    </header>
 
+    <main>
+    <article>
     <!-- ==================== ARTICLE TITLE ==================== -->
     <h1 class="bdetail-title" style="visibility:hidden"></h1>
 
@@ -67,8 +76,11 @@
         <span class="bdetail-back-text">Zpátky na výpis článků</span>
       </a>
     </div>
+    </article>
+    </main>
 
     <!-- ==================== FOOTER ==================== -->
+    <footer>
     <img class="footer-logo" src="assets/img/logo.svg" alt="Chaties" loading="lazy" />
 
     <p class="footer-desc">
@@ -111,6 +123,7 @@
     <div class="footer-line"></div>
     <span class="footer-copyright">© 2025 Chaties AI software. All rights reserved</span>
     <a href="#" class="footer-privacy">Zásady ochrany osobních údajů</a>
+    </footer>
 
   </div><!-- /.page -->
 
@@ -185,40 +198,90 @@
   </script>
   <script src="responsive.js?v=19"></script>
   <script>
-  (function () {
-    var API = 'https://project1-production-bfde.up.railway.app';
-    var slug = new URLSearchParams(location.search).get('slug');
-    if (!slug) return;
+(function () {
+  var API  = 'https://project1-production-bfde.up.railway.app';
+  var slug = new URLSearchParams(location.search).get('slug');
+  if (!slug) return;
 
-    fetch(API + '/api/blog/posts/' + encodeURIComponent(slug))
-      .then(function (r) { if (!r.ok) throw new Error(); return r.json(); })
-      .then(function (post) {
-        var titleEl   = document.querySelector('.bdetail-title');
-        var articleEl = document.querySelector('.bdetail-article');
-        if (titleEl) {
-          titleEl.textContent = post.title;
-          titleEl.style.visibility = 'visible';
+  fetch(API + '/api/blog/posts/' + encodeURIComponent(slug))
+    .then(function (r) { if (!r.ok) throw new Error(); return r.json(); })
+    .then(function (post) {
+      var titleEl   = document.querySelector('.bdetail-title');
+      var articleEl = document.querySelector('.bdetail-article');
+
+      if (titleEl) {
+        titleEl.textContent = post.title;
+        titleEl.style.visibility = 'visible';
+      }
+      if (articleEl) {
+        if (post.content) {
+          var backLink = articleEl.querySelector('.bdetail-back');
+          articleEl.innerHTML = post.content;
+          if (backLink) articleEl.appendChild(backLink);
         }
-        if (articleEl) {
-          if (post.content) {
-            var backLink = articleEl.querySelector('.bdetail-back');
-            articleEl.innerHTML = post.content;
-            if (backLink) articleEl.appendChild(backLink);
-          }
-          articleEl.style.visibility = 'visible';
-        }
-        document.title = post.title + ' – Chaties AI';
-        if (window._bdetailReposition) window._bdetailReposition();
-        // Re-apply zoom compensation after content changes page height
-        if (window.dispatchEvent) window.dispatchEvent(new Event('resize'));
-      })
-      .catch(function () {
-        var titleEl = document.querySelector('.bdetail-title');
-        var articleEl = document.querySelector('.bdetail-article');
-        if (titleEl) titleEl.style.visibility = 'visible';
-        if (articleEl) articleEl.style.visibility = 'visible';
-      });
-  })();
-  </script>
+        articleEl.style.visibility = 'visible';
+      }
+
+      // --- Dynamic SEO ---
+      var canonicalUrl = 'https://chaties.cz/blog-detail.html?slug=' + encodeURIComponent(slug);
+      var rawText = (post.content || '').replace(/<[^>]+>/g, '').replace(/\s+/g, ' ').trim();
+      var excerpt = post.excerpt || (rawText.length > 155 ? rawText.substring(0, 152) + '…' : rawText);
+
+      document.title = post.title + ' – Chaties AI';
+
+      var q = function(sel) { return document.querySelector(sel); };
+      var setAttr = function(sel, attr, val) { var el = q(sel); if (el && val) el.setAttribute(attr, val); };
+
+      setAttr('meta[name="description"]',         'content', excerpt);
+      setAttr('link[rel="canonical"]',             'href',    canonicalUrl);
+      setAttr('meta[property="og:url"]',           'content', canonicalUrl);
+      setAttr('meta[property="og:title"]',         'content', post.title);
+      setAttr('meta[property="og:description"]',   'content', excerpt);
+      setAttr('meta[name="twitter:title"]',        'content', post.title);
+      setAttr('meta[name="twitter:description"]',  'content', excerpt);
+
+      var ldArticle = document.getElementById('ld-article');
+      if (ldArticle) {
+        ldArticle.textContent = JSON.stringify({
+          '@context': 'https://schema.org',
+          '@type': 'Article',
+          'headline': post.title,
+          'description': excerpt,
+          'url': canonicalUrl,
+          'datePublished': post.created_at || '',
+          'dateModified': post.updated_at || post.created_at || '',
+          'author': { '@type': 'Organization', 'name': 'Chaties AI', '@id': 'https://chaties.cz/#organization' },
+          'publisher': {
+            '@type': 'Organization', 'name': 'Chaties AI', '@id': 'https://chaties.cz/#organization',
+            'logo': { '@type': 'ImageObject', 'url': 'https://chaties.cz/assets/img/logo.svg' }
+          },
+          'mainEntityOfPage': { '@type': 'WebPage', '@id': canonicalUrl }
+        });
+      }
+
+      var ldBreadcrumb = document.getElementById('ld-breadcrumb');
+      if (ldBreadcrumb) {
+        ldBreadcrumb.textContent = JSON.stringify({
+          '@context': 'https://schema.org',
+          '@type': 'BreadcrumbList',
+          'itemListElement': [
+            { '@type': 'ListItem', 'position': 1, 'name': 'Domů', 'item': 'https://chaties.cz/' },
+            { '@type': 'ListItem', 'position': 2, 'name': 'Blog', 'item': 'https://chaties.cz/blog.html' },
+            { '@type': 'ListItem', 'position': 3, 'name': post.title, 'item': canonicalUrl }
+          ]
+        });
+      }
+
+      if (window._bdetailReposition) window._bdetailReposition();
+      if (window.dispatchEvent) window.dispatchEvent(new Event('resize'));
+    })
+    .catch(function () {
+      var titleEl   = document.querySelector('.bdetail-title');
+      var articleEl = document.querySelector('.bdetail-article');
+      if (titleEl)   titleEl.style.visibility   = 'visible';
+      if (articleEl) articleEl.style.visibility = 'visible';
+    });
+})();
+</script>
 </body>
 </html>
