@@ -513,7 +513,7 @@
 
       '<section class="rim-benefits">' +
         '<h2 class="rim-benefits-heading">' +
-          'Chci rozjet <span class="rim-accent">svůj business naplno!</span>' +
+          'Chci rozjet svůj<br><span class="rim-accent">business naplno!</span>' +
         '</h2>' +
         '<p class="rim-benefits-desc">' +
           'Naše AI služby ti pomohou nejen ušetřit čas, ale především zefektivnit tvé podnikání. Ať už jsi freelancer, firma nebo start-up, AI dokáže přinést výsledky, které by jinak zabraly hodiny práce.' +
