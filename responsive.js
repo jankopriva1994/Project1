@@ -53,21 +53,21 @@
     // Nav drawer
     var drawer = el('nav', { className: 'r-nav-drawer' });
 
-    // Collect nav links from the page
+    // Drawer heading
+    var drawerHead = el('div', { className: 'r-nav-drawer-head',
+      innerHTML: '<p class="r-nav-drawer-title"><span class="rim-accent">Nejlepší česká</span><br>AI aplikace zdarma!</p>'
+    });
+    drawer.appendChild(drawerHead);
+
+    // Nav links
     var navItems = [
-      { href: 'index.html',     text: 'AI služby',  cls: 'r-nav-active' },
+      { href: 'index.html',     text: 'Domů',     cls: 'r-nav-active' },
       { href: 'sablony.html',   text: 'Šablony' },
       { href: 'ceny.html',      text: 'Ceny' },
       { href: 'onas.html',      text: 'O nás' },
       { href: 'blog.html',      text: 'Vše o AI' },
       { href: 'kontakt.html',   text: 'Kontakt' },
     ];
-
-    // Detect login link presence
-    var loginEl = qs('.nav-login');
-    if (loginEl) {
-      navItems.push({ href: 'prihlaseni.html', text: 'Přihlásit se' });
-    }
 
     navItems.forEach(function (item) {
       var a = el('a', { href: item.href });
@@ -76,13 +76,52 @@
       drawer.appendChild(a);
     });
 
-    // CTA button
+    // CTA button (green fill)
     var ctaEl = qs('.nav-cta');
     var ctaHref = ctaEl ? ctaEl.getAttribute('href') : 'registrace.html';
-    var ctaInner = ctaEl ? ctaEl.innerHTML : 'Vyzkoušej Chaties zdarma';
     var ctaBtn = el('a', { href: ctaHref, className: 'r-nav-cta-btn' });
-    ctaBtn.innerHTML = ctaInner;
+    ctaBtn.innerHTML = 'Vyzkoušej <span class="rim-accent">Chaties</span> zdarma';
     drawer.appendChild(ctaBtn);
+
+    // Login button (border style)
+    var loginEl = qs('.nav-login');
+    if (loginEl) {
+      var loginBtn = el('a', { href: 'prihlaseni.html', className: 'r-nav-login-btn' });
+      loginBtn.textContent = 'Přihlásit se';
+      drawer.appendChild(loginBtn);
+    }
+
+    // Podpora section
+    var podporaHead = el('span', { className: 'r-nav-support-hdr' });
+    podporaHead.textContent = 'Podpora';
+    drawer.appendChild(podporaHead);
+
+    var emailEl = qs('.footer-col-support-link2');
+    var phoneEl = qs('.footer-col-support-link3');
+    if (emailEl) {
+      var emailA = el('a', { href: emailEl.getAttribute('href'), className: 'r-nav-support-link' });
+      emailA.textContent = emailEl.textContent.trim();
+      drawer.appendChild(emailA);
+    }
+    if (phoneEl) {
+      var phoneA = el('a', { href: phoneEl.getAttribute('href'), className: 'r-nav-support-link' });
+      phoneA.textContent = phoneEl.textContent.trim();
+      drawer.appendChild(phoneA);
+    }
+
+    // Social links
+    var socials = el('div', { className: 'r-nav-socials' });
+    var instaEl2 = qs('.social-link-insta');
+    var fbEl2    = qs('.social-link-fb');
+    if (instaEl2) {
+      var ia = el('a', { href: instaEl2.getAttribute('href') || '#', className: 'r-nav-social-link', innerHTML: instaEl2.innerHTML });
+      socials.appendChild(ia);
+    }
+    if (fbEl2) {
+      var fa = el('a', { href: fbEl2.getAttribute('href') || '#', className: 'r-nav-social-link', innerHTML: fbEl2.innerHTML });
+      socials.appendChild(fa);
+    }
+    drawer.appendChild(socials);
 
     // Toggle logic
     var isOpen = false;
@@ -93,7 +132,7 @@
       document.body.style.overflow = isOpen ? 'hidden' : '';
     });
 
-    // Close on link click
+    // Close on nav link click
     qsa('a', drawer).forEach(function (a) {
       a.addEventListener('click', function () {
         isOpen = false;
@@ -740,6 +779,7 @@
     var emailRow     = qs('.ktk-support-email')  ? qs('.ktk-support-email').cloneNode(true)  : null;
     var phoneRow     = qs('.ktk-support-phone')  ? qs('.ktk-support-phone').cloneNode(true)  : null;
     var hoursRow     = qs('.ktk-support-hours')  ? qs('.ktk-support-hours').cloneNode(true)  : null;
+    var waveImgSrc   = (qs('.ktk-wave') || {}).src || '';
 
     page.style.display = 'none';
 
@@ -751,7 +791,7 @@
         '<h1 class="rktk-heading">' +
           '<span class="rim-accent">Máte dotazy</span> nebo<br>' +
           'potřebujete poradit<br>' +
-          's chaties?' +
+          's AI Chaties?' +
         '</h1>' +
         '<p class="rktk-support-label">Zákaznická podpora</p>' +
       '</section>';
@@ -768,6 +808,15 @@
     if (formClone) {
       formClone.className = 'rktk-form';
       wrapper.appendChild(formClone);
+    }
+
+    // Wave image
+    if (waveImgSrc) {
+      var waveImg = document.createElement('img');
+      waveImg.src = waveImgSrc;
+      waveImg.alt = '';
+      waveImg.className = 'rktk-mobile-wave';
+      wrapper.appendChild(waveImg);
     }
 
     // Footer
@@ -870,11 +919,128 @@
   }
 
 
+  /* --------------------------------------------------------
+     SABLONY – MOBILE
+  -------------------------------------------------------- */
+  function buildSablonyMobile() {
+    if (!qs('.sabl-heading')) return;
+    var page = qs('.page');
+    if (!page) return;
+    if (qs('.r-sablony-mobile')) return;
+
+    var headingEl  = qs('.sabl-heading');
+    var subtitleEl = qs('.sabl-subtitle');
+    var waveImgSrc = (qs('.sabl-wave') || {}).src || '';
+
+    page.style.display = 'none';
+
+    var wrapper = document.createElement('div');
+    wrapper.className = 'r-sablony-mobile';
+
+    wrapper.innerHTML =
+      '<section class="rsabl-hero">' +
+        '<h1 class="rsabl-heading">' + (headingEl ? headingEl.innerHTML : '') + '</h1>' +
+        '<p class="rsabl-subtitle">' + (subtitleEl ? subtitleEl.textContent.trim() : '') + '</p>' +
+      '</section>' +
+      '<div class="rsabl-filters-wrap">' +
+        '<select class="rsabl-filter-select" id="rsablFilterSelect"><option value="">Všechny kategorie</option></select>' +
+      '</div>' +
+      '<div class="rsabl-cards-wrap" id="rsablCards"></div>' +
+      (waveImgSrc ? '<img class="rsabl-wave" src="' + waveImgSrc + '" alt="" />' : '');
+
+    // Append footer
+    var footerDiv = document.createElement('div');
+    footerDiv.innerHTML = mobileFooterHtml();
+    wrapper.appendChild(document.createRange().createContextualFragment(wrapper.innerHTML));
+    wrapper.innerHTML = '';
+
+    var heroSection = el('section', { className: 'rsabl-hero',
+      innerHTML: '<h1 class="rsabl-heading">' + (headingEl ? headingEl.innerHTML : '') + '</h1>' +
+                 '<p class="rsabl-subtitle">' + (subtitleEl ? subtitleEl.textContent.trim() : '') + '</p>'
+    });
+    wrapper.appendChild(heroSection);
+
+    var filtersWrap = el('div', { className: 'rsabl-filters-wrap' });
+    var filterSelect = el('select', { className: 'rsabl-filter-select', id: 'rsablFilterSelect' });
+    var defaultOpt = el('option', { value: '' });
+    defaultOpt.textContent = 'Všechny kategorie';
+    filterSelect.appendChild(defaultOpt);
+    filtersWrap.appendChild(filterSelect);
+    wrapper.appendChild(filtersWrap);
+
+    var mobileCardsWrap = el('div', { className: 'rsabl-cards-wrap', id: 'rsablCards' });
+    wrapper.appendChild(mobileCardsWrap);
+
+    if (waveImgSrc) {
+      var waveImg = el('img', { src: waveImgSrc, alt: '', className: 'rsabl-wave' });
+      wrapper.appendChild(waveImg);
+    }
+
+    footerDiv.innerHTML = mobileFooterHtml();
+    wrapper.appendChild(footerDiv.firstChild);
+
+    document.body.appendChild(wrapper);
+
+    // Sync desktop filter pills → mobile select
+    var desktopFiltersEl = document.getElementById('sablFilters');
+    var mobileSelect     = document.getElementById('rsablFilterSelect');
+    var mobileCards      = document.getElementById('rsablCards');
+
+    function syncFilters() {
+      var pills = desktopFiltersEl ? qsa('.sabl-dyn-pill', desktopFiltersEl) : [];
+      if (!pills.length) return;
+      var html = '<option value="">Všechny kategorie</option>';
+      pills.forEach(function (p) {
+        html += '<option value="' + p.textContent + '">' + p.textContent + '</option>';
+      });
+      mobileSelect.innerHTML = html;
+    }
+
+    function syncCards() {
+      var desktopCardsEl = document.getElementById('sablCards');
+      if (!desktopCardsEl) return;
+      var cards = qsa('.sabl-dyn-card', desktopCardsEl);
+      mobileCards.innerHTML = '';
+      if (!cards.length) {
+        mobileCards.innerHTML = '<p class="rsabl-empty">Načítám šablony…</p>';
+        return;
+      }
+      cards.forEach(function (c) {
+        var clone = c.cloneNode(true);
+        clone.addEventListener('click', function () { window.location.href = 'prihlaseni.html'; });
+        mobileCards.appendChild(clone);
+      });
+    }
+
+    if (desktopFiltersEl) {
+      var fObs = new MutationObserver(syncFilters);
+      fObs.observe(desktopFiltersEl, { childList: true, subtree: true });
+    }
+
+    var desktopCardsEl = document.getElementById('sablCards');
+    if (desktopCardsEl) {
+      var cObs = new MutationObserver(syncCards);
+      cObs.observe(desktopCardsEl, { childList: true, subtree: true });
+    }
+
+    mobileSelect.addEventListener('change', function () {
+      var val = this.value;
+      if (!desktopFiltersEl) return;
+      var pills = qsa('.sabl-dyn-pill', desktopFiltersEl);
+      pills.forEach(function (p) {
+        if ((!val && p === pills[0]) || p.textContent === val) {
+          p.click();
+        }
+      });
+    });
+  }
+
   function init() {
     injectSpacer();
     injectNav();
     buildIndexMobile();
     buildKontaktMobile();
+    buildSablonyMobile();
     buildBlogMobile();
     buildBlogDetailMobile();
     injectFooter();
