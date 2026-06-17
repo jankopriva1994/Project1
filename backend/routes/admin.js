@@ -121,33 +121,23 @@ router.post('/posts', auth, async (req, res) => {
     .replace(/[šs]/g, 's').replace(/[žz]/g, 'z').replace(/[ďd]/g, 'd')
     .replace(/[ťt]/g, 't').replace(/[ňn]/g, 'n').replace(/[ř]/g, 'r')
     .replace(/\s+/g, '-').replace(/[^a-z0-9-]/g, '').substring(0, 80);
-  const { data, error } = await supabase
-    .from('posts')
-    .insert({
-      title, slug, excerpt, content, category: category || null, cover_image: cover_image || null,
-      is_published: !!is_published,
-      published_at: is_published ? new Date().toISOString() : null
-    })
-    .select()
-    .single();
+  const { data, error } = await supabase.rpc('cms_insert_post', {
+    p_title: title, p_slug: slug, p_excerpt: excerpt || null,
+    p_content: content || null, p_category: category || null,
+    p_cover_image: cover_image || null, p_is_published: !!is_published
+  });
   if (error) return res.status(500).json({ error: error.message });
   res.json(data);
 });
 
 router.put('/posts/:id', auth, async (req, res) => {
   const { title, slug, excerpt, content, category, cover_image, is_published } = req.body;
-  const { data: existing } = await supabase.from('posts').select('is_published').eq('id', req.params.id).single();
-  const nowPublished = is_published && existing && !existing.is_published;
-  const { data, error } = await supabase
-    .from('posts')
-    .update({
-      title, slug, excerpt, content, category: category || null, cover_image: cover_image || null, is_published,
-      published_at: nowPublished ? new Date().toISOString() : undefined,
-      updated_at: new Date().toISOString()
-    })
-    .eq('id', req.params.id)
-    .select()
-    .single();
+  const { data, error } = await supabase.rpc('cms_update_post', {
+    p_id: req.params.id, p_title: title, p_slug: slug,
+    p_excerpt: excerpt || null, p_content: content || null,
+    p_category: category || null, p_cover_image: cover_image || null,
+    p_is_published: !!is_published
+  });
   if (error) return res.status(500).json({ error: error.message });
   res.json(data);
 });
