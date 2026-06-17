@@ -564,22 +564,22 @@
       '<section class="rim-ai-services">' +
         '<div class="rim-ai-item">' +
           '<span class="rim-ai-pill">AI CHAT</span>' +
-          '<h3 class="rim-ai-heading"><span class="rim-accent">Chytrý společník,</span><br>který nikdy nespí</h3>' +
+          '<h3 class="rim-ai-heading"><span class="rim-accent">Chytrý společník,</span>který nikdy nespí</h3>' +
           '<p class="rim-ai-desc">Objevte kouzlo chytré konverzace! Naše AI Chaties jsou připraveni kdykoli pomoci, pobavit, poradit nebo inspirovat. Osobní asistenti, kreativní společníci i odborní poradci – vše v jednom chatu, 24/7. Přidejte se k revoluci komunikace ještě dnes!</p>' +
         '</div>' +
         '<div class="rim-ai-item">' +
           '<span class="rim-ai-pill">AI PŘEKLADAČ</span>' +
-          '<h3 class="rim-ai-heading"><span class="rim-accent">Překládejte bez hranic,</span><br>rychle a přesně</h3>' +
+          '<h3 class="rim-ai-heading"><span class="rim-accent">Překládejte bez hranic,</span>rychle a přesně</h3>' +
           '<p class="rim-ai-desc">AI překladač zvládá desítky jazyků v reálném čase. Ať překládáte e-maily, dokumenty nebo celé weby – výsledek je přirozený, přesný a okamžitý. Žádné zpoždění, žádné jazykové bariéry.</p>' +
         '</div>' +
         '<div class="rim-ai-item">' +
           '<span class="rim-ai-pill">AI GENEROVÁNÍ OBRÁZKŮ</span>' +
-          '<h3 class="rim-ai-heading"><span class="rim-accent">Z textu na obrázek</span><br>za pár sekund</h3>' +
+          '<h3 class="rim-ai-heading"><span class="rim-accent">Z textu na obrázek</span>za pár sekund</h3>' +
           '<p class="rim-ai-desc">Popište, co si představujete, a AI to za vás nakreslí. Unikátní ilustrace, produktové fotografie nebo grafické podklady pro sociální sítě – generujte desítky originálních obrázků na jeden klik.</p>' +
         '</div>' +
         '<div class="rim-ai-item">' +
           '<span class="rim-ai-pill">AI DOKUMENTY</span>' +
-          '<h3 class="rim-ai-heading"><span class="rim-accent">Dokumenty hotové</span><br>za minuty, ne hodiny</h3>' +
+          '<h3 class="rim-ai-heading"><span class="rim-accent">Dokumenty hotové</span>za minuty, ne hodiny</h3>' +
           '<p class="rim-ai-desc">Vytvářejte, shrnujte a upravujte dokumenty s pomocí AI. Zprávy, smlouvy, prezentace nebo školní práce – AI Dokumenty vám ušetří hodiny práce každý den a výsledky budou vždy profesionální.</p>' +
         '</div>' +
       '</section>' +
