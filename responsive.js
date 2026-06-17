@@ -457,11 +457,218 @@
   }
 
   /* --------------------------------------------------------
+     MOBILE INDEX PAGE (buildIndexMobile)
+  -------------------------------------------------------- */
+  function buildIndexMobile() {
+    if (!qs('.hero-headline')) return;
+
+    var featImgSrc       = (qs('.features-img-small')     || {}).src || '';
+    var logoE15Src       = (qs('.logo-e15')               || {}).src || '';
+    var logoAktualneSrc  = (qs('.logo-aktualne')          || {}).src || '';
+    var logoPodnikatelSrc= (qs('.logo-podnikatel-left')   || {}).src || '';
+    var blogImg1Src      = (qs('.blog-img-1')             || {}).src || '';
+    var blogImg2Src      = (qs('.blog-img-2')             || {}).src || '';
+
+    qs('.page').style.display = 'none';
+
+    var html =
+      '<section class="rim-hero">' +
+        '<h1 class="rim-hero-heading">' +
+          'Tvořte obsah <span class="rim-accent">s nejrychlejší umělou inteligencí</span> na pár kliknutí' +
+        '</h1>' +
+        '<p class="rim-hero-sub">' +
+          '<strong><span class="rim-accent">Chaties.cz</span></strong> je nejrychlejší kompletní platforma s umělou inteligencí, generujte obsah na své sociální sítě, marketingové kampaně, pracovní e-maily nebo školní práce.' +
+        '</p>' +
+        '<a href="registrace.html" class="rim-cta-btn">' +
+          'Vyzkoušej <span class="rim-accent">Chaties</span> zdarma' +
+        '</a>' +
+      '</section>' +
+
+      '<section class="rim-features">' +
+        '<h2 class="rim-features-heading">' +
+          '<span class="rim-accent">Unikátní nástroj,</span> pro správu vaší kampaní, psaní článků a chytlavých popisků' +
+        '</h2>' +
+        '<p class="rim-features-sub">' +
+          '<strong><span class="rim-accent">Chaties.cz</span></strong> je nejrychlejší kompletní platforma' +
+        '</p>' +
+        '<img class="rim-features-img" src="' + featImgSrc + '" alt="Feature screenshot" />' +
+      '</section>' +
+
+      '<div class="rim-logos">' +
+        '<img class="rim-logo-item" src="' + logoE15Src + '" alt="e15" />' +
+        '<img class="rim-logo-item" src="' + logoAktualneSrc + '" alt="Aktuálně" />' +
+        '<img class="rim-logo-item" src="' + logoPodnikatelSrc + '" alt="Podnikatel" />' +
+      '</div>' +
+
+      '<section class="rim-benefits">' +
+        '<h2 class="rim-benefits-heading">' +
+          'Chci rozjet <span class="rim-accent">svůj business naplno!</span>' +
+        '</h2>' +
+        '<p class="rim-benefits-desc">' +
+          'Naše AI služby ti pomohou nejen ušetřit čas, ale především zefektivnit tvé podnikání. Ať už jsi freelancer, firma nebo start-up, AI dokáže přinést výsledky, které by jinak zabraly hodiny práce.' +
+        '</p>' +
+        '<a href="registrace.html" class="rim-cta-btn">' +
+          'Vyzkoušej <span class="rim-accent">Chaties</span> zdarma' +
+        '</a>' +
+      '</section>' +
+
+      '<div class="rim-benefits-grid">' +
+        '<div class="rim-bg-item">' +
+          '<span class="rim-bg-title">Obsah, který konvertuje</span>' +
+          '<span class="rim-bg-text">Tvořte obsah, který Vám vydělá peníze</span>' +
+        '</div>' +
+        '<div class="rim-bg-item">' +
+          '<span class="rim-bg-title">Ušetřete čas i peníze</span>' +
+          '<span class="rim-bg-text">Bez grafika, bez překladatele, prostě hned</span>' +
+        '</div>' +
+        '<div class="rim-bg-item">' +
+          '<span class="rim-bg-title">Vše na jednom místě</span>' +
+          '<span class="rim-bg-text">AI chat, obrázky, překlady, dokumenty</span>' +
+        '</div>' +
+        '<div class="rim-bg-item">' +
+          '<span class="rim-bg-title">Stále nové funkce</span>' +
+          '<span class="rim-bg-text">Chaties se neustále vyvíjí, abyste měli vždy přístup k nejnovějším AI technologiím</span>' +
+        '</div>' +
+        '<div class="rim-bg-item">' +
+          '<span class="rim-bg-title">AI podnikání</span>' +
+          '<span class="rim-bg-text">AI nástroje, které zrychlí, zjednoduší a zefektivní vaše podnikání</span>' +
+        '</div>' +
+        '<div class="rim-bg-item">' +
+          '<span class="rim-bg-title">Pro práci i zábavu</span>' +
+          '<span class="rim-bg-text">Univerzální pomocník pro každého</span>' +
+        '</div>' +
+      '</div>' +
+
+      '<div class="rim-divider"></div>' +
+
+      '<section class="rim-nl-intro">' +
+        '<h2 class="rim-nl-intro-heading">' +
+          '<span class="rim-accent">Chceš být první</span>, kdo se dozví o chystaných novinkách?' +
+        '</h2>' +
+        '<p class="rim-nl-intro-sub">' +
+          '<span class="rim-accent">Přihlaš svůj odběr</span> a buď mezi prvními, kdo bude vědět o chystaných novinkách.' +
+        '</p>' +
+      '</section>' +
+
+      '<section class="rim-ai-services">' +
+        '<div class="rim-ai-item">' +
+          '<span class="rim-ai-pill">AI CHAT</span>' +
+          '<h3 class="rim-ai-heading"><span class="rim-accent">Chytrý společník,</span> který nikdy nespí</h3>' +
+          '<p class="rim-ai-desc">Objevte kouzlo chytré konverzace! Naše AI Chaties jsou připraveni kdykoli pomoci, pobavit, poradit nebo inspirovat. Osobní asistenti, kreativní společníci i odborní poradci – vše v jednom chatu, 24/7. Přidejte se k revoluci komunikace ještě dnes!</p>' +
+        '</div>' +
+        '<div class="rim-ai-item">' +
+          '<span class="rim-ai-pill">AI PŘEKLADAČ</span>' +
+          '<h3 class="rim-ai-heading"><span class="rim-accent">Překládejte bez hranic,</span> rychle a přesně</h3>' +
+          '<p class="rim-ai-desc">AI překladač zvládá desítky jazyků v reálném čase. Ať překládáte e-maily, dokumenty nebo celé weby – výsledek je přirozený, přesný a okamžitý. Žádné zpoždění, žádné jazykové bariéry.</p>' +
+        '</div>' +
+        '<div class="rim-ai-item">' +
+          '<span class="rim-ai-pill">AI GENEROVÁNÍ OBRÁZKŮ</span>' +
+          '<h3 class="rim-ai-heading"><span class="rim-accent">Z textu na obrázek</span> za pár sekund</h3>' +
+          '<p class="rim-ai-desc">Popište, co si představujete, a AI to za vás nakreslí. Unikátní ilustrace, produktové fotografie nebo grafické podklady pro sociální sítě – generujte desítky originálních obrázků na jeden klik.</p>' +
+        '</div>' +
+        '<div class="rim-ai-item">' +
+          '<span class="rim-ai-pill">AI DOKUMENTY</span>' +
+          '<h3 class="rim-ai-heading"><span class="rim-accent">Dokumenty hotové</span> za minuty, ne hodiny</h3>' +
+          '<p class="rim-ai-desc">Vytvářejte, shrnujte a upravujte dokumenty s pomocí AI. Zprávy, smlouvy, prezentace nebo školní práce – AI Dokumenty vám ušetří hodiny práce každý den a výsledky budou vždy profesionální.</p>' +
+        '</div>' +
+      '</section>' +
+
+      '<div class="rim-divider"></div>' +
+
+      '<section class="rim-blog">' +
+        '<h2 class="rim-blog-heading">' +
+          '<span class="rim-accent">Aktuální informace,</span> Blog, features a další.' +
+        '</h2>' +
+        '<p class="rim-blog-sub">Zde najdete nejaktuálnější informace ze světa AI a chaties.cz</p>' +
+        '<div class="rim-blog-card">' +
+          '<img class="rim-blog-img" src="' + blogImg1Src + '" alt="Blog 1" />' +
+          '<div class="rim-blog-card-body">' +
+            '<span class="rim-blog-cat">Blog</span>' +
+            '<div class="rim-blog-title-row">' +
+              '<span class="rim-blog-title"><span class="rim-accent">Máme nový vzhled</span> webových stránek a administrace</span>' +
+              '<span class="rim-blog-arrow">→</span>' +
+            '</div>' +
+          '</div>' +
+        '</div>' +
+        '<div class="rim-blog-card">' +
+          '<img class="rim-blog-img" src="' + blogImg2Src + '" alt="Blog 2" />' +
+          '<div class="rim-blog-card-body">' +
+            '<span class="rim-blog-cat">Features</span>' +
+            '<div class="rim-blog-title-row">' +
+              '<span class="rim-blog-title"><span class="rim-accent">Přidána nová funkce</span> – převádění obrázků do textů</span>' +
+              '<span class="rim-blog-arrow">→</span>' +
+            '</div>' +
+          '</div>' +
+        '</div>' +
+        '<a href="blog.html" class="rim-blog-all">Všechny články</a>' +
+      '</section>' +
+
+      '<section class="rim-newsletter">' +
+        '<h2 class="rim-nl-heading">' +
+          '<span class="rim-accent">Chceš být první</span>, kdo se dozví o chystaných novinkách?' +
+        '</h2>' +
+        '<p class="rim-nl-sub">' +
+          '<span class="rim-accent">Přihlaš svůj odběr</span> a buď mezi prvními, kdo bude vědět o chystaných novinkách.' +
+        '</p>' +
+        '<input class="newsletter-input rim-nl-input" type="email" placeholder="Emailová adresa" />' +
+        '<button class="newsletter-btn rim-nl-btn">Odebírat</button>' +
+      '</section>' +
+
+      '<footer class="rim-footer">' +
+        '<img class="rim-footer-logo" src="assets/img/logo.svg" alt="Chaties" />' +
+        '<p class="rim-footer-desc">' +
+          '<span class="rim-accent">Chaties.cz</span> patří mezi špičku v AI službách v Česku. <span class="rim-accent">Pomáháme firmám růst díky chytrým technologiím,</span> které šetří čas, zvyšují efektivitu a otevírají nové možnosti.' +
+        '</p>' +
+        '<div class="rim-footer-cols">' +
+          '<div class="rim-footer-col">' +
+            '<span class="rim-footer-col-hdr">Služby</span>' +
+            '<a href="#">Generování obrázků</a>' +
+            '<a href="#">AI Překladač</a>' +
+            '<a href="#">Překlady dokumentů</a>' +
+            '<a href="#">AI Chat</a>' +
+          '</div>' +
+          '<div class="rim-footer-col">' +
+            '<span class="rim-footer-col-hdr">Důležité informace</span>' +
+            '<a href="#">O nás</a>' +
+            '<a href="#">Kontakt</a>' +
+            '<a href="#">Obchodní podmínky</a>' +
+            '<a href="#">Blog</a>' +
+          '</div>' +
+          '<div class="rim-footer-col">' +
+            '<span class="rim-footer-col-hdr">Podpora</span>' +
+            '<a href="mailto:marketing@chaties.cz">marketing@chaties.cz</a>' +
+            '<a href="mailto:podpora@chaties.cz">podpora@chaties.cz</a>' +
+          '</div>' +
+        '</div>' +
+        '<div class="rim-footer-socials">' +
+          '<a href="#" class="rim-social">' +
+            '<svg width="20" height="20" viewBox="0 0 24 24" fill="none"><rect x="2" y="2" width="20" height="20" rx="5" stroke="white" stroke-width="1.5"/><circle cx="12" cy="12" r="4" stroke="white" stroke-width="1.5"/><circle cx="17.5" cy="6.5" r="1.2" fill="white"/></svg>' +
+            'Instagram' +
+          '</a>' +
+          '<a href="#" class="rim-social">' +
+            '<svg width="20" height="20" viewBox="0 0 24 24" fill="none"><rect x="2" y="2" width="20" height="20" rx="5" stroke="white" stroke-width="1.5"/><path d="M13 8h2V6h-2a3 3 0 0 0-3 3v1H8v2h2v6h2v-6h2l.5-2H12V9a1 1 0 0 1 1-1z" fill="white"/></svg>' +
+            'Facebook' +
+          '</a>' +
+        '</div>' +
+        '<div class="rim-footer-bottom">' +
+          '<span>© 2026 Chaties AI software. All rights reserved</span>' +
+          '<a href="#">Zásady ochrany osobních údajů</a>' +
+        '</div>' +
+      '</footer>';
+
+    var wrapper = document.createElement('div');
+    wrapper.className = 'r-index-mobile';
+    wrapper.innerHTML = html;
+    document.body.appendChild(wrapper);
+  }
+
+  /* --------------------------------------------------------
      INIT
   -------------------------------------------------------- */
   function init() {
     injectSpacer();
     injectNav();
+    buildIndexMobile();
     injectFooter();
     injectBenefitsGrid();
     injectIndexBlogCards();
