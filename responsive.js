@@ -1313,7 +1313,7 @@
     if (!page) return;
     if (qs('.r-registrace-mobile')) return;
 
-    var waveImgSrc = (qs('.auth-img') || {}).src || '';
+    var waveImgSrc = 'assets/img/auth_wave.png';
     page.style.display = 'none';
 
     var wrapper = document.createElement('div');
@@ -1388,7 +1388,7 @@
     if (!page) return;
     if (qs('.r-prihlaseni-mobile')) return;
 
-    var waveImgSrc = (qs('.auth-img') || {}).src || '';
+    var waveImgSrc = 'assets/img/auth_wave.png';
     page.style.display = 'none';
 
     var wrapper = document.createElement('div');
@@ -1444,10 +1444,7 @@
     if (!page) return;
     if (qs('.r-zapomenuteheslo-mobile')) return;
 
-    var waveImgSrc = (qs('.auth-img') || {}).src || '';
-    if (!waveImgSrc || waveImgSrc.indexOf('figma.com') !== -1) {
-      waveImgSrc = 'assets/img/auth-prihlaseni.jpg';
-    }
+    var waveImgSrc = 'assets/img/auth_wave.png';
     page.style.display = 'none';
 
     var wrapper = document.createElement('div');
