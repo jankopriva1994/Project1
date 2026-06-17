@@ -1110,9 +1110,9 @@
     planData.forEach(function(p, i) {
       plansHtml +=
         '<div class="rceny-plan-group">' +
-          (p.popular ? '<p class="rceny-popular-badge">Populární</p>' : '') +
           '<p class="rceny-plan-tokens">' + p.tokens + '</p>' +
           '<div class="rceny-plan-card' + (p.popular ? ' rceny-plan-popular' : '') + '">' +
+            (p.popular ? '<div class="rceny-popular-banner">★ NEJPOPULÁRNĚJŠÍ ★</div>' : '') +
             '<div class="rceny-plan-price">' +
               '<span class="rceny-price-amount" data-monthly="' + p.priceMonthly + '" data-annual="' + p.priceAnnual + '">' + p.priceMonthly + '</span>' +
               '<span class="rceny-price-sep"> /</span><span class="rceny-price-unit">měsíc</span>' +
