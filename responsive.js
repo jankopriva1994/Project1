@@ -1099,28 +1099,32 @@
       };
     });
 
-    var features2 = qsa('.ceny-ftp2');
+    // Features from plan 4 (most complete — matches Figma values)
+    var features4 = qsa('.ceny-ftp4');
 
     page.style.display = 'none';
 
-    var cardsHtml = '';
+    // Build plan groups — each plan wrapped in its own div for proper spacing
     var planKeys = ['starter', 'popular', 'pro', 'enterprise'];
+    var plansHtml = '';
     planData.forEach(function(p, i) {
-      if (p.popular) cardsHtml += '<p class="rceny-popular-badge">Populární</p>';
-      cardsHtml +=
-        '<p class="rceny-plan-tokens">' + p.tokens + '</p>' +
-        '<div class="rceny-plan-card' + (p.popular ? ' rceny-plan-popular' : '') + '">' +
-          '<div class="rceny-plan-price">' +
-            '<span class="rceny-price-amount" data-monthly="' + p.priceMonthly + '" data-annual="' + p.priceAnnual + '">' + p.priceMonthly + '</span>' +
-            '<span class="rceny-price-sep">/</span><span class="rceny-price-unit">měsíc</span>' +
+      plansHtml +=
+        '<div class="rceny-plan-group">' +
+          (p.popular ? '<p class="rceny-popular-badge">Populární</p>' : '') +
+          '<p class="rceny-plan-tokens">' + p.tokens + '</p>' +
+          '<div class="rceny-plan-card' + (p.popular ? ' rceny-plan-popular' : '') + '">' +
+            '<div class="rceny-plan-price">' +
+              '<span class="rceny-price-amount" data-monthly="' + p.priceMonthly + '" data-annual="' + p.priceAnnual + '">' + p.priceMonthly + '</span>' +
+              '<span class="rceny-price-sep"> /</span><span class="rceny-price-unit">měsíc</span>' +
+            '</div>' +
+            '<p class="rceny-plan-note" data-monthly="' + p.noteMonthly + '" data-annual="' + p.noteAnnual + '">' + p.noteMonthly + '</p>' +
+            '<button class="rceny-plan-cta" data-plan="' + planKeys[i] + '">Chci to zkusit!</button>' +
           '</div>' +
-          '<p class="rceny-plan-note" data-monthly="' + p.noteMonthly + '" data-annual="' + p.noteAnnual + '">' + p.noteMonthly + '</p>' +
-          '<button class="rceny-plan-cta" data-plan="' + planKeys[i] + '">Chci to zkusit!</button>' +
         '</div>';
     });
 
     var featHtml = '';
-    features2.forEach(function(ft) {
+    features4.forEach(function(ft) {
       featHtml +=
         '<li class="rceny-feature-item">' +
           '<svg width="14" height="14" viewBox="0 0 24 24" fill="none" style="flex-shrink:0;margin-top:3px"><path d="M5 13l4 4L19 7" stroke="#d0ee52" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"/></svg>' +
@@ -1153,7 +1157,7 @@
           '</span>' +
         '</div>' +
       '</div>' +
-      '<div class="rceny-plans">' + cardsHtml + '</div>' +
+      '<div class="rceny-plans">' + plansHtml + '</div>' +
       (featHtml ?
         '<section class="rceny-features">' +
           '<h2 class="rceny-features-heading">Co všechno máte<br><span class="rceny-fh-white">v našich tarifech?</span></h2>' +
@@ -1275,37 +1279,5 @@
   } else {
     init();
   }
-
-  /* --------------------------------------------------------
-     SOCIAL PROOF WRAPPER for ceny page
-  -------------------------------------------------------- */
-  document.addEventListener('DOMContentLoaded', function () {
-    if (window.innerWidth >= 1024) return;
-
-    var avatars = qsa('.ceny-avatar');
-    var stars   = qs('.ceny-stars');
-    var score   = qs('.ceny-score');
-    var customers = qs('.ceny-customers');
-
-    if (!avatars.length && !stars) return;
-
-    var wrap = el('div', { className: 'ceny-social-proof-wrap' });
-    var avatarWrap = el('div', { style: 'display:flex;align-items:center;gap:-8px;' });
-    avatars.forEach(function (a) {
-      var clone = a.cloneNode(true);
-      clone.style.cssText = 'width:32px;height:32px;border-radius:50%;object-fit:cover;border:2px solid #0d0e11;margin-right:-8px;display:inline-block;';
-      avatarWrap.appendChild(clone);
-    });
-
-    wrap.appendChild(avatarWrap);
-    if (stars)   { var s = stars.cloneNode(true);   s.style.cssText = 'display:inline-block;height:18px;'; wrap.appendChild(s); }
-    if (score)   { var sc = el('span', { style: 'font-size:14px;font-weight:700;color:#fff;', innerHTML: score.innerHTML }); wrap.appendChild(sc); }
-    if (customers) { var cu = el('span', { style: 'font-size:13px;color:#8b8b8b;', innerHTML: customers.innerHTML }); wrap.appendChild(cu); }
-
-    var toggle = qs('.ceny-toggle');
-    if (toggle && toggle.parentNode) {
-      toggle.parentNode.insertBefore(wrap, toggle);
-    }
-  });
 
 })();
