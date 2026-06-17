@@ -29,22 +29,9 @@
 
     <!-- Promo -->
     <p class="adm-promo-title">Získej 5 000 tokenů zdarma!</p>
-    <p class="adm-promo-sub">Stačí přidat recenzi o Chaties na Google a tokeny vám přidáme na účet!
-      <a href="https://g.page/r/CVFWMl6KqnFgEBI/review" target="_blank" class="adm-promo-link" id="promoReviewLink">Napsat recenzi</a>
-      <span class="adm-promo-sep">·</span>
-      <a href="#" class="adm-promo-link" id="promoClaimBtn">Zanechal jsem recenzi →</a>
+    <p class="adm-promo-sub" id="promoBar">Stačí přidat recenzi o Chaties na Google a tokeny vám přidáme na účet!
+      <a href="#" class="adm-promo-link" id="promoReviewLink">Napsat recenzi</a>
     </p>
-    <!-- Promo claim modal -->
-    <div id="promoClaimOverlay" style="display:none;position:fixed;inset:0;background:rgba(0,0,0,.6);z-index:9999;align-items:center;justify-content:center">
-      <div style="background:#161616;border:1px solid #2a2a2a;border-radius:12px;padding:32px;max-width:420px;width:90%;text-align:center">
-        <p style="font-size:18px;font-weight:700;color:#fff;margin:0 0 8px">Získat 5 000 tokenů</p>
-        <p style="font-size:13px;color:#888;margin:0 0 20px">Zadej jméno, pod kterým jsi napsal/a recenzi na Google (jak se zobrazuje v recenzi). Použijeme ho k ověření.</p>
-        <input id="promoReviewerName" type="text" placeholder="Jméno z Google recenze, např. Jan Novák" style="width:100%;background:#1e1e1e;border:1px solid #333;border-radius:8px;color:#fff;padding:10px 14px;font-size:14px;font-family:inherit;margin-bottom:16px;box-sizing:border-box" />
-        <button id="promoClaimConfirm" style="background:#d0ee52;color:#000;border:none;padding:10px 28px;border-radius:8px;font-size:15px;font-weight:700;cursor:pointer;width:100%">Odeslat žádost</button>
-        <button id="promoClaimClose" style="background:none;border:none;color:#666;font-size:13px;cursor:pointer;margin-top:12px;display:block;width:100%">Zrušit</button>
-        <p id="promoClaimMsg" style="margin-top:12px;font-size:13px"></p>
-      </div>
-    </div>
 
     <!-- Account + logout -->
     <div class="adm-account-wrap">
@@ -2056,48 +2043,23 @@
       if (logoutEl) logoutEl.addEventListener('click', function (e) { e.preventDefault(); logout(); });
 
       // ── Promo: recenze za tokeny ───────────────────────────
-      var promoClaimBtn     = document.getElementById('promoClaimBtn');
-      var promoClaimOverlay = document.getElementById('promoClaimOverlay');
-      var promoClaimConfirm = document.getElementById('promoClaimConfirm');
-      var promoClaimClose   = document.getElementById('promoClaimClose');
-      var promoClaimMsg     = document.getElementById('promoClaimMsg');
+      var promoReviewLink = document.getElementById('promoReviewLink');
+      var promoBar        = document.getElementById('promoBar');
 
-      if (promoClaimBtn) {
-        promoClaimBtn.addEventListener('click', function (e) {
+      if (promoReviewLink) {
+        promoReviewLink.addEventListener('click', async function (e) {
           e.preventDefault();
-          promoClaimOverlay.style.display = 'flex';
-        });
-      }
-      if (promoClaimClose) {
-        promoClaimClose.addEventListener('click', function () {
-          promoClaimOverlay.style.display = 'none';
-          promoClaimMsg.textContent = '';
-        });
-      }
-      if (promoClaimConfirm) {
-        promoClaimConfirm.addEventListener('click', async function () {
-          var reviewerName = document.getElementById('promoReviewerName').value.trim();
-          if (!reviewerName) {
-            promoClaimMsg.style.color = '#ff5555';
-            promoClaimMsg.textContent = 'Zadej prosím jméno z Google recenze.';
-            return;
-          }
-          promoClaimConfirm.disabled = true;
-          promoClaimConfirm.textContent = 'Odesílám…';
+          window.open('https://g.page/r/CVFWMl6KqnFgEBI/review', '_blank');
           try {
-            await apiFetch('/api/user/review-request', { method: 'POST', body: JSON.stringify({ reviewer_name: reviewerName }) });
-            promoClaimMsg.style.color = '#a0d060';
-            promoClaimMsg.textContent = 'Žádost odeslána! Tokeny přidáme do 24 hodin.';
-            promoClaimConfirm.style.display = 'none';
+            var prof = await apiFetch('/api/user/profile');
+            var name = (prof.full_name || prof.email || 'Uživatel').trim();
+            await apiFetch('/api/user/review-request', { method: 'POST', body: JSON.stringify({ reviewer_name: name }) });
+            if (promoBar) promoBar.innerHTML = '<span style="color:#d0ee52;font-weight:600">&#10003; Žádost o tokeny byla odeslána! Tokeny přidáme do 24 hodin po ověření recenze.</span>';
           } catch (e) {
-            promoClaimMsg.style.color = '#ff5555';
-            promoClaimMsg.textContent = e.message || 'Chyba, zkuste to znovu.';
-            promoClaimConfirm.disabled = false;
-            promoClaimConfirm.textContent = 'Odeslat žádost';
+            // Already submitted or other error — silently ignore
           }
         });
       }
-
       // Dokončení pozvánky po potvrzení emailu
       var pendingInvite = localStorage.getItem('pendingInvite');
       if (pendingInvite) {
