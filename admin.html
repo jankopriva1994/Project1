@@ -90,6 +90,18 @@
     .user-admin-btn { background: none; border: 1px solid #333; color: #888; padding: 4px 10px; border-radius: 5px; font-size: 12px; cursor: pointer; }
     .user-admin-btn.is-admin { border-color: #d0ee52; color: #d0ee52; }
 
+    /* IMAGE UPLOAD */
+    .img-upload-area { border: 2px dashed #2e2e2e; border-radius: 8px; padding: 16px; cursor: pointer; transition: border-color .2s; }
+    .img-upload-area:hover { border-color: #d0ee52; }
+    .img-upload-area.has-img { border-style: solid; border-color: #3a3a3a; }
+    .img-upload-preview { width: 100%; max-height: 180px; object-fit: cover; border-radius: 6px; display: block; margin-bottom: 10px; }
+    .img-upload-row { display: flex; gap: 8px; align-items: center; }
+    .img-upload-btn { background: #222; border: 1px solid #333; color: #ccc; padding: 7px 14px; border-radius: 6px; font-size: 13px; cursor: pointer; font-family: inherit; }
+    .img-upload-btn:hover { border-color: #d0ee52; color: #d0ee52; }
+    .img-upload-status { font-size: 12px; color: #666; }
+    .img-upload-clear { background: none; border: none; color: #555; font-size: 18px; cursor: pointer; padding: 0 4px; line-height: 1; }
+    .img-upload-clear:hover { color: #ff5555; }
+
     /* SEARCH */
     .cms-search { background: #1a1a1a; border: 1px solid #2a2a2a; border-radius: 7px; color: #e0e0e0; padding: 8px 12px; font-size: 14px; width: 280px; margin-bottom: 16px; }
     .cms-search:focus { outline: none; border-color: #d0ee52; }
@@ -268,7 +280,19 @@
           <div class="form-row"><label>Titulek</label><input type="text" id="postTitle" /></div>
           <div class="form-row"><label>Slug (URL)</label><input type="text" id="postSlug" /></div>
           <div class="form-row"><label>Kategorie <span style="color:#555;font-weight:400;font-size:12px">– např. Blog, Features, Update</span></label><input type="text" id="postCategory" placeholder="Blog" /></div>
-          <div class="form-row"><label>URL obrázku <span style="color:#555;font-weight:400;font-size:12px">– náhledový obrázek článku (volitelné)</span></label><input type="url" id="postCoverImage" placeholder="https://..." /></div>
+          <div class="form-row">
+            <label>Náhledový obrázek <span style="color:#555;font-weight:400;font-size:12px">– klikni nebo přetáhni soubor (JPG, PNG, WebP)</span></label>
+            <input type="hidden" id="postCoverImage" />
+            <input type="file" id="postCoverFile" accept="image/jpeg,image/png,image/webp,image/gif" style="display:none" />
+            <div class="img-upload-area" id="imgUploadArea">
+              <img id="imgUploadPreview" class="img-upload-preview" src="" alt="" style="display:none" />
+              <div class="img-upload-row">
+                <button type="button" class="img-upload-btn" id="imgUploadPickBtn">📁 Vybrat soubor</button>
+                <span class="img-upload-status" id="imgUploadStatus">Žádný obrázek</span>
+                <button type="button" class="img-upload-clear" id="imgUploadClear" title="Odebrat obrázek" style="display:none">×</button>
+              </div>
+            </div>
+          </div>
           <div class="form-row"><label>Perex (krátký popis)</label><textarea id="postExcerpt" style="min-height:70px"></textarea></div>
           <div class="form-row"><label>Obsah (HTML)</label><textarea id="postContent" class="tall"></textarea></div>
           <div class="form-row">
@@ -681,6 +705,95 @@
       } catch(e) { showMsg(document.getElementById('tmplMsg'), e.message, false); }
     });
 
+    // ── IMAGE UPLOAD ──────────────────────────────────────────
+    function clearCoverImage() {
+      document.getElementById('postCoverImage').value = '';
+      document.getElementById('postCoverFile').value = '';
+      document.getElementById('imgUploadPreview').style.display = 'none';
+      document.getElementById('imgUploadPreview').src = '';
+      document.getElementById('imgUploadStatus').textContent = 'Žádný obrázek';
+      document.getElementById('imgUploadClear').style.display = 'none';
+      document.getElementById('imgUploadArea').classList.remove('has-img');
+    }
+
+    function setCoverImageUrl(url) {
+      document.getElementById('postCoverImage').value = url;
+      if (url) {
+        document.getElementById('imgUploadPreview').src = url;
+        document.getElementById('imgUploadPreview').style.display = 'block';
+        document.getElementById('imgUploadStatus').textContent = 'Obrázek nastaven';
+        document.getElementById('imgUploadClear').style.display = '';
+        document.getElementById('imgUploadArea').classList.add('has-img');
+      } else {
+        clearCoverImage();
+      }
+    }
+
+    document.getElementById('imgUploadPickBtn').addEventListener('click', function () {
+      document.getElementById('postCoverFile').click();
+    });
+
+    document.getElementById('imgUploadArea').addEventListener('click', function (e) {
+      if (e.target === this || e.target === document.getElementById('imgUploadPreview')) {
+        document.getElementById('postCoverFile').click();
+      }
+    });
+
+    document.getElementById('imgUploadArea').addEventListener('dragover', function (e) {
+      e.preventDefault();
+      this.style.borderColor = '#d0ee52';
+    });
+    document.getElementById('imgUploadArea').addEventListener('dragleave', function () {
+      this.style.borderColor = '';
+    });
+    document.getElementById('imgUploadArea').addEventListener('drop', function (e) {
+      e.preventDefault();
+      this.style.borderColor = '';
+      var file = e.dataTransfer.files[0];
+      if (file) uploadImageFile(file);
+    });
+
+    document.getElementById('postCoverFile').addEventListener('change', function () {
+      var file = this.files[0];
+      if (file) uploadImageFile(file);
+    });
+
+    document.getElementById('imgUploadClear').addEventListener('click', function (e) {
+      e.stopPropagation();
+      clearCoverImage();
+    });
+
+    function uploadImageFile(file) {
+      var statusEl = document.getElementById('imgUploadStatus');
+      statusEl.textContent = 'Nahrávám…';
+      document.getElementById('imgUploadPickBtn').disabled = true;
+
+      var reader = new FileReader();
+      reader.onload = function (e) {
+        var dataUrl = e.target.result;
+        var base64 = dataUrl.split(',')[1];
+        fetch(API_BASE + '/api/admin/upload', {
+          method: 'POST',
+          headers: { 'Content-Type': 'application/json', 'X-CMS-Key': _cmsKey || '' },
+          body: JSON.stringify({ base64: base64, filename: file.name, mimeType: file.type })
+        })
+        .then(function (r) { return r.json(); })
+        .then(function (data) {
+          document.getElementById('imgUploadPickBtn').disabled = false;
+          if (data.url) {
+            setCoverImageUrl(data.url);
+          } else {
+            statusEl.textContent = 'Chyba: ' + (data.error || 'Neznámá chyba');
+          }
+        })
+        .catch(function (err) {
+          document.getElementById('imgUploadPickBtn').disabled = false;
+          statusEl.textContent = 'Chyba připojení';
+        });
+      };
+      reader.readAsDataURL(file);
+    }
+
     // ── BLOG ─────────────────────────────────────────────────
     var posts = [];
 
@@ -714,7 +827,7 @@
         document.getElementById('postTitle').value = '';
         document.getElementById('postSlug').value = '';
         document.getElementById('postCategory').value = '';
-        document.getElementById('postCoverImage').value = '';
+        clearCoverImage();
         document.getElementById('postExcerpt').value = '';
         document.getElementById('postContent').value = '';
         document.getElementById('postPublished').classList.remove('on');
@@ -735,7 +848,7 @@
       document.getElementById('postTitle').value = p.title;
       document.getElementById('postSlug').value = p.slug;
       document.getElementById('postCategory').value = p.category || '';
-      document.getElementById('postCoverImage').value = p.cover_image || '';
+      setCoverImageUrl(p.cover_image || '');
       document.getElementById('postExcerpt').value = p.excerpt || '';
       document.getElementById('postContent').value = p.content || '';
       if (p.is_published) document.getElementById('postPublished').classList.add('on');

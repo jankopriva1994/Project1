@@ -158,6 +158,25 @@ router.delete('/posts/:id', auth, async (req, res) => {
   res.json({ success: true });
 });
 
+// ── IMAGE UPLOAD ────────────────────────────────────────────
+
+router.post('/upload', auth, async (req, res) => {
+  const { base64, filename, mimeType } = req.body;
+  if (!base64 || !filename) return res.status(400).json({ error: 'Chybí data' });
+  const allowed = ['image/jpeg', 'image/png', 'image/webp', 'image/gif'];
+  const mime = mimeType || 'image/jpeg';
+  if (!allowed.includes(mime)) return res.status(400).json({ error: 'Nepodporovaný formát obrázku' });
+  const buffer = Buffer.from(base64, 'base64');
+  const ext = filename.split('.').pop().toLowerCase().replace(/[^a-z0-9]/g, '') || 'jpg';
+  const safeName = Date.now() + '-' + Math.random().toString(36).slice(2) + '.' + ext;
+  const { error: upErr } = await supabase.storage
+    .from('blog-images')
+    .upload(safeName, buffer, { contentType: mime, upsert: false });
+  if (upErr) return res.status(500).json({ error: upErr.message });
+  const { data: urlData } = supabase.storage.from('blog-images').getPublicUrl(safeName);
+  res.json({ url: urlData.publicUrl });
+});
+
 // ── CONTENT BLOCKS ─────────────────────────────────────────
 
 router.get('/content', auth, async (req, res) => {
