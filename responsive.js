@@ -678,12 +678,153 @@
   }
 
   /* --------------------------------------------------------
-     INIT
+     SHARED MOBILE FOOTER HTML
   -------------------------------------------------------- */
+  function mobileFooterHtml() {
+    return (
+      '<footer class="rim-footer">' +
+        '<img class="rim-footer-logo" src="assets/img/logo.svg" alt="Chaties" />' +
+        '<p class="rim-footer-desc">' +
+          '<span class="rim-accent">Chaties.cz</span> patří mezi špičku v AI službách v Česku. <span class="rim-accent">Pomáháme firmám růst díky chytrým technologiím,</span> které šetří čas, zvyšují efektivitu a otevírají nové možnosti.' +
+        '</p>' +
+        '<div class="rim-footer-cols">' +
+          '<div class="rim-footer-col">' +
+            '<span class="rim-footer-col-hdr">Služby</span>' +
+            '<a href="#">Generování obrázků</a>' +
+            '<a href="#">AI Překladač</a>' +
+            '<a href="#">Překlady dokumentů</a>' +
+            '<a href="#">AI Chat</a>' +
+          '</div>' +
+          '<div class="rim-footer-col">' +
+            '<span class="rim-footer-col-hdr">Důležité informace</span>' +
+            '<a href="onas.html">O nás</a>' +
+            '<a href="kontakt.html">Kontakt</a>' +
+            '<a href="#">Obchodní podmínky</a>' +
+            '<a href="blog.html">Blog</a>' +
+          '</div>' +
+          '<div class="rim-footer-col">' +
+            '<span class="rim-footer-col-hdr">Podpora</span>' +
+            '<a href="mailto:marketing@chaties.cz">marketing@chaties.cz</a>' +
+            '<a href="mailto:podpora@chaties.cz">podpora@chaties.cz</a>' +
+          '</div>' +
+        '</div>' +
+        '<div class="rim-footer-socials">' +
+          '<a href="#" class="rim-social">' +
+            '<svg width="20" height="20" viewBox="0 0 24 24" fill="none"><rect x="2" y="2" width="20" height="20" rx="5" stroke="white" stroke-width="1.5"/><circle cx="12" cy="12" r="4" stroke="white" stroke-width="1.5"/><circle cx="17.5" cy="6.5" r="1.2" fill="white"/></svg>' +
+            'Instagram' +
+          '</a>' +
+          '<a href="#" class="rim-social">' +
+            '<svg width="20" height="20" viewBox="0 0 24 24" fill="none"><rect x="2" y="2" width="20" height="20" rx="5" stroke="white" stroke-width="1.5"/><path d="M13 8h2V6h-2a3 3 0 0 0-3 3v1H8v2h2v6h2v-6h2l.5-2H12V9a1 1 0 0 1 1-1z" fill="white"/></svg>' +
+            'Facebook' +
+          '</a>' +
+        '</div>' +
+        '<div class="rim-footer-bottom">' +
+          '<span>© 2026 Chaties AI software. All rights reserved</span>' +
+          '<a href="#">Zásady ochrany osobních údajů</a>' +
+        '</div>' +
+      '</footer>'
+    );
+  }
+
+  /* --------------------------------------------------------
+     BLOG LISTING – MOBILE
+  -------------------------------------------------------- */
+  function buildBlogMobile() {
+    if (!qs('.blist-heading')) return;
+    var page = qs('.page');
+    if (!page) return;
+    if (qs('.r-blog-mobile')) return;
+
+    // Extract cards from desktop before hiding page
+    var desktopCards = qsa('.blist-card');
+    var cardsHtml = '';
+    desktopCards.forEach(function(card) {
+      var img   = qs('.blist-card-img', card);
+      var cat   = qs('.blist-card-cat', card);
+      var title = qs('.blist-card-title', card);
+      var href  = card.getAttribute('href') || 'blog-detail.html';
+      var imgSrc   = img   ? img.src : '';
+      var catText  = cat   ? cat.textContent.trim() : '';
+      var titleHtml = title ? title.innerHTML.replace(/<br\s*\/?>/gi, ' ') : '';
+
+      cardsHtml +=
+        '<a class="rblog-card" href="' + href + '">' +
+          '<img class="rblog-card-img" src="' + imgSrc + '" alt="" />' +
+          '<div class="rblog-card-body">' +
+            '<span class="rblog-card-cat">' + catText + '</span>' +
+            '<div class="rblog-card-title-row">' +
+              '<span class="rblog-card-title">' + titleHtml + '</span>' +
+              '<svg class="rblog-card-arrow" width="22" height="22" viewBox="0 0 24 24" fill="none"><path d="M7 17L17 7M17 7H7M17 7V17" stroke="white" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg>' +
+            '</div>' +
+          '</div>' +
+        '</a>';
+    });
+
+    page.style.display = 'none';
+
+    var html =
+      '<section class="rblog-hero">' +
+        '<h1 class="rblog-heading">Aktuální informace,<br>blog, features a další</h1>' +
+        '<p class="rblog-sub">Zde najdete nejaktuálnější informace ze světa AI a chaties.cz</p>' +
+      '</section>' +
+      '<div class="rblog-cards">' + cardsHtml + '</div>' +
+      '<a class="rblog-more" href="#">Další články</a>' +
+      mobileFooterHtml();
+
+    var wrapper = document.createElement('div');
+    wrapper.className = 'r-blog-mobile';
+    wrapper.innerHTML = html;
+    document.body.appendChild(wrapper);
+  }
+
+  /* --------------------------------------------------------
+     BLOG DETAIL – MOBILE
+  -------------------------------------------------------- */
+  function buildBlogDetailMobile() {
+    if (!qs('.bdetail-title')) return;
+    var page = qs('.page');
+    if (!page) return;
+    if (qs('.r-blog-detail-mobile')) return;
+
+    // Extract title & body from desktop
+    var titleEl   = qs('.bdetail-title');
+    var articleEl = qs('.bdetail-article');
+    var titleHtml = titleEl ? titleEl.innerHTML : '';
+
+    // Extract only <p> tags from article (skip the back link)
+    var bodyHtml = '';
+    if (articleEl) {
+      var paras = qsa('p', articleEl);
+      paras.forEach(function(p) { bodyHtml += '<p class="rbdetail-para">' + p.innerHTML + '</p>'; });
+    }
+
+    page.style.display = 'none';
+
+    var html =
+      '<article class="rbdetail-article">' +
+        '<h1 class="rbdetail-title">' + titleHtml + '</h1>' +
+        bodyHtml +
+        '<a class="rbdetail-back" href="blog.html">' +
+          '<svg width="16" height="16" viewBox="0 0 24 24" fill="none"><path d="M19 12H5M5 12L12 19M5 12L12 5" stroke="#d0ee52" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg>' +
+          'Zpátky na výpis článků' +
+        '</a>' +
+      '</article>' +
+      '<div class="rbdetail-separator"></div>' +
+      mobileFooterHtml();
+
+    var wrapper = document.createElement('div');
+    wrapper.className = 'r-blog-detail-mobile';
+    wrapper.innerHTML = html;
+    document.body.appendChild(wrapper);
+  }
+
+
   function init() {
     injectSpacer();
     injectNav();
     buildIndexMobile();
+    buildBlogMobile();
+    buildBlogDetailMobile();
     injectFooter();
     injectBenefitsGrid();
     injectIndexBlogCards();

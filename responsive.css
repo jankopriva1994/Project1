@@ -3105,3 +3105,134 @@
   pointer-events: none;
   display: block;
 }
+
+/* ============================================================
+   MOBILE BLOG LISTING (r-blog-mobile)
+   ============================================================ */
+.r-blog-mobile {
+  background: #0d0e11;
+  min-height: 100vh;
+  padding-top: 70px;
+  font-family: 'Supreme', sans-serif;
+}
+.rblog-hero {
+  padding: 30px 18px 0;
+  text-align: center;
+}
+.rblog-heading {
+  font-size: 30px;
+  font-weight: 700;
+  line-height: 37px;
+  color: #ffffff;
+  margin: 0 0 20px;
+}
+.rblog-sub {
+  font-size: 16px;
+  font-weight: 400;
+  line-height: 24px;
+  color: #ffffff;
+  margin: 0;
+}
+.rblog-cards {
+  padding: 30px 18px 0;
+  display: flex;
+  flex-direction: column;
+  gap: 36px;
+}
+.rblog-card {
+  display: block;
+  text-decoration: none;
+  color: #ffffff;
+}
+.rblog-card-img {
+  display: block;
+  width: 357px;
+  height: 226px;
+  object-fit: cover;
+  margin: 0 auto;
+}
+.rblog-card-body {
+  padding: 12px 0 0;
+}
+.rblog-card-cat {
+  display: block;
+  font-size: 16px;
+  font-weight: 700;
+  color: #d0ee52;
+  line-height: 1;
+  margin-bottom: 8px;
+}
+.rblog-card-title-row {
+  display: flex;
+  align-items: flex-start;
+  justify-content: space-between;
+  gap: 8px;
+}
+.rblog-card-title {
+  font-size: 20px;
+  font-weight: 400;
+  line-height: 28px;
+  color: #ffffff;
+  flex: 1;
+}
+.rblog-card-arrow {
+  flex-shrink: 0;
+  margin-top: 4px;
+}
+.rblog-more {
+  display: block;
+  text-align: center;
+  font-size: 16px;
+  font-weight: 700;
+  color: #d0ee52;
+  text-decoration: underline;
+  margin: 40px 0 0;
+  padding-bottom: 60px;
+}
+
+/* ============================================================
+   MOBILE BLOG DETAIL (r-blog-detail-mobile)
+   ============================================================ */
+.r-blog-detail-mobile {
+  background: #0d0e11;
+  min-height: 100vh;
+  padding-top: 70px;
+  font-family: 'Supreme', sans-serif;
+}
+.rbdetail-article {
+  padding: 30px 18px 0;
+}
+.rbdetail-title {
+  font-size: 30px;
+  font-weight: 700;
+  line-height: 37px;
+  color: #ffffff;
+  margin: 0 0 28px;
+  width: 341px;
+}
+.rbdetail-title .accent {
+  color: #d0ee52;
+}
+.rbdetail-para {
+  font-size: 16px;
+  font-weight: 400;
+  line-height: 24px;
+  color: #ffffff;
+  margin: 0 0 20px;
+  width: 326px;
+}
+.rbdetail-back {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  font-size: 16px;
+  font-weight: 700;
+  color: #d0ee52;
+  text-decoration: none;
+  margin-top: 20px;
+}
+.rbdetail-separator {
+  height: 1px;
+  background: rgba(255,255,255,0.12);
+  margin: 40px 18px 0;
+}
