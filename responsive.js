@@ -633,26 +633,7 @@
           '<span class="rim-accent">Aktuální informace,</span> Blog, features a další.' +
         '</h2>' +
         '<p class="rim-blog-sub">Zde najdete nejaktuálnější informace ze světa AI a chaties.cz</p>' +
-        '<div class="rim-blog-card">' +
-          '<img class="rim-blog-img" src="' + blogImg1Src + '" alt="Blog 1" />' +
-          '<div class="rim-blog-card-body">' +
-            '<span class="rim-blog-cat">Blog</span>' +
-            '<div class="rim-blog-title-row">' +
-              '<span class="rim-blog-title"><span class="rim-accent">Máme nový vzhled</span> webových stránek a administrace</span>' +
-              '<svg class="rim-blog-arrow" width="22" height="22" viewBox="0 0 24 24" fill="none"><path d="M7 17L17 7M17 7H7M17 7V17" stroke="white" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg>' +
-            '</div>' +
-          '</div>' +
-        '</div>' +
-        '<div class="rim-blog-card">' +
-          '<img class="rim-blog-img" src="' + blogImg2Src + '" alt="Blog 2" />' +
-          '<div class="rim-blog-card-body">' +
-            '<span class="rim-blog-cat">Features</span>' +
-            '<div class="rim-blog-title-row">' +
-              '<span class="rim-blog-title"><span class="rim-accent">Přidána nová funkce</span> – převádění obrázků do textů</span>' +
-              '<svg class="rim-blog-arrow" width="22" height="22" viewBox="0 0 24 24" fill="none"><path d="M7 17L17 7M17 7H7M17 7V17" stroke="white" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg>' +
-            '</div>' +
-          '</div>' +
-        '</div>' +
+        '<div id="rimBlogCards"></div>' +
         '<a href="blog.html" class="rim-blog-all">Všechny články</a>' +
       '</section>' +
 
@@ -713,6 +694,31 @@
     wrapper.className = 'r-index-mobile';
     wrapper.innerHTML = html;
     document.body.appendChild(wrapper);
+
+    var BLOG_API = 'https://project1-production-bfde.up.railway.app';
+    var BLOG_PH  = "data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='373' height='226'%3E%3Crect width='373' height='226' fill='%231a1b2e'/%3E%3C/svg%3E";
+    fetch(BLOG_API + '/api/blog/posts')
+      .then(function(r) { return r.json(); })
+      .then(function(posts) {
+        var container = document.getElementById('rimBlogCards');
+        if (!container || !Array.isArray(posts)) return;
+        var out = '';
+        posts.slice(0, 2).forEach(function(post) {
+          out +=
+            '<a class="rim-blog-card" href="blog-detail.html?slug=' + encodeURIComponent(post.slug) + '" style="text-decoration:none;display:block">' +
+              '<img class="rim-blog-img" src="' + (post.cover_image || BLOG_PH) + '" alt="" />' +
+              '<div class="rim-blog-card-body">' +
+                '<span class="rim-blog-cat">' + (post.category || 'Blog') + '</span>' +
+                '<div class="rim-blog-title-row">' +
+                  '<span class="rim-blog-title">' + post.title + '</span>' +
+                  '<svg class="rim-blog-arrow" width="22" height="22" viewBox="0 0 24 24" fill="none"><path d="M7 17L17 7M17 7H7M17 7V17" stroke="white" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg>' +
+                '</div>' +
+              '</div>' +
+            '</a>';
+        });
+        container.innerHTML = out;
+      })
+      .catch(function() {});
   }
 
   /* --------------------------------------------------------
@@ -861,31 +867,6 @@
     if (!page) return;
     if (qs('.r-blog-mobile')) return;
 
-    // Extract cards from desktop before hiding page
-    var desktopCards = qsa('.blist-card');
-    var cardsHtml = '';
-    desktopCards.forEach(function(card) {
-      var img   = qs('.blist-card-img', card);
-      var cat   = qs('.blist-card-cat', card);
-      var title = qs('.blist-card-title', card);
-      var href  = card.getAttribute('href') || 'blog-detail.html';
-      var imgSrc   = img   ? img.src : '';
-      var catText  = cat   ? cat.textContent.trim() : '';
-      var titleHtml = title ? title.innerHTML.replace(/<br\s*\/?>/gi, ' ') : '';
-
-      cardsHtml +=
-        '<a class="rblog-card" href="' + href + '">' +
-          '<img class="rblog-card-img" src="' + imgSrc + '" alt="" />' +
-          '<div class="rblog-card-body">' +
-            '<span class="rblog-card-cat">' + catText + '</span>' +
-            '<div class="rblog-card-title-row">' +
-              '<span class="rblog-card-title">' + titleHtml + '</span>' +
-              '<svg class="rblog-card-arrow" width="22" height="22" viewBox="0 0 24 24" fill="none"><path d="M7 17L17 7M17 7H7M17 7V17" stroke="white" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg>' +
-            '</div>' +
-          '</div>' +
-        '</a>';
-    });
-
     page.style.display = 'none';
 
     var html =
@@ -893,14 +874,38 @@
         '<h1 class="rblog-heading">Aktuální informace,<br>blog, features a další</h1>' +
         '<p class="rblog-sub">Zde najdete nejaktuálnější informace<br>ze světa AI a chaties.cz</p>' +
       '</section>' +
-      '<div class="rblog-cards">' + cardsHtml + '</div>' +
-      '<a class="rblog-more" href="#">Další články</a>' +
+      '<div class="rblog-cards" id="rblogCardsList"></div>' +
       mobileFooterHtml();
 
     var wrapper = document.createElement('div');
     wrapper.className = 'r-blog-mobile';
     wrapper.innerHTML = html;
     document.body.appendChild(wrapper);
+
+    var API = 'https://project1-production-bfde.up.railway.app';
+    var PH  = "data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='373' height='226'%3E%3Crect width='373' height='226' fill='%231a1b2e'/%3E%3C/svg%3E";
+    fetch(API + '/api/blog/posts')
+      .then(function(r) { return r.json(); })
+      .then(function(posts) {
+        var container = document.getElementById('rblogCardsList');
+        if (!container || !Array.isArray(posts)) return;
+        var out = '';
+        posts.forEach(function(post) {
+          out +=
+            '<a class="rblog-card" href="blog-detail.html?slug=' + encodeURIComponent(post.slug) + '">' +
+              '<img class="rblog-card-img" src="' + (post.cover_image || PH) + '" alt="" />' +
+              '<div class="rblog-card-body">' +
+                '<span class="rblog-card-cat">' + (post.category || 'Blog') + '</span>' +
+                '<div class="rblog-card-title-row">' +
+                  '<span class="rblog-card-title">' + post.title + '</span>' +
+                  '<svg class="rblog-card-arrow" width="22" height="22" viewBox="0 0 24 24" fill="none"><path d="M7 17L17 7M17 7H7M17 7V17" stroke="white" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg>' +
+                '</div>' +
+              '</div>' +
+            '</a>';
+        });
+        container.innerHTML = out;
+      })
+      .catch(function() {});
   }
 
   /* --------------------------------------------------------
@@ -912,24 +917,12 @@
     if (!page) return;
     if (qs('.r-blog-detail-mobile')) return;
 
-    // Extract title & body from desktop
-    var titleEl   = qs('.bdetail-title');
-    var articleEl = qs('.bdetail-article');
-    var titleHtml = titleEl ? titleEl.innerHTML : '';
-
-    // Extract only <p> tags from article (skip the back link)
-    var bodyHtml = '';
-    if (articleEl) {
-      var paras = qsa('p', articleEl);
-      paras.forEach(function(p) { bodyHtml += '<p class="rbdetail-para">' + p.innerHTML + '</p>'; });
-    }
-
     page.style.display = 'none';
 
     var html =
       '<article class="rbdetail-article">' +
-        '<h1 class="rbdetail-title">' + titleHtml + '</h1>' +
-        bodyHtml +
+        '<h1 class="rbdetail-title" id="rbdetailTitle"></h1>' +
+        '<div id="rbdetailBody"></div>' +
         '<a class="rbdetail-back" href="blog.html">' +
           '<svg width="16" height="16" viewBox="0 0 24 24" fill="none"><path d="M19 12H5M5 12L12 19M5 12L12 5" stroke="#d0ee52" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg>' +
           'Zpátky na výpis článků' +
@@ -941,6 +934,19 @@
     wrapper.className = 'r-blog-detail-mobile';
     wrapper.innerHTML = html;
     document.body.appendChild(wrapper);
+
+    var slug = new URLSearchParams(location.search).get('slug');
+    if (!slug) return;
+    var API = 'https://project1-production-bfde.up.railway.app';
+    fetch(API + '/api/blog/posts/' + encodeURIComponent(slug))
+      .then(function(r) { return r.json(); })
+      .then(function(post) {
+        var titleEl = document.getElementById('rbdetailTitle');
+        var bodyEl  = document.getElementById('rbdetailBody');
+        if (titleEl) titleEl.textContent = post.title || '';
+        if (bodyEl)  bodyEl.innerHTML    = post.content || '';
+      })
+      .catch(function() {});
   }
 
 
