@@ -220,32 +220,35 @@
     ];
 
     var FOOTER_OFFSETS = {
+      // base = cardsBottom + 80; wave = cardsBottom - 200
+      // footer-logo = wave + 766 = cardsBottom + 566 = base + 486
+      // all other offsets from onas (wave+N → base + N - 200 - 80)
       'newsletter-chip':    { dTop: 0,    left: null },
       'newsletter-heading': { dTop: 46,   left: null },
       'newsletter-subtext': { dTop: 195,  left: null },
       'newsletter-input':   { dTop: 266,  left: null },
       'newsletter-btn':     { dTop: 266,  left: null },
-      'footer-logo':               { dTop: 500,  left: '228px' },
-      'footer-desc':               { dTop: 564,  left: '228px' },
-      'footer-col-services-header':{ dTop: 500 },
-      'footer-col-services-link1': { dTop: 537 },
-      'footer-col-services-link2': { dTop: 573 },
-      'footer-col-services-link3': { dTop: 609 },
-      'footer-col-services-link4': { dTop: 645 },
-      'footer-col-info-header':    { dTop: 500 },
-      'footer-col-info-link1':     { dTop: 537 },
-      'footer-col-info-link2':     { dTop: 573 },
-      'footer-col-info-link3':     { dTop: 609 },
-      'footer-col-info-link4':     { dTop: 645 },
-      'footer-col-support-header': { dTop: 500 },
-      'footer-col-support-link1':  { dTop: 537 },
-      'footer-col-support-link2':  { dTop: 573 },
-      'footer-col-support-link3':  { dTop: 609 },
-      'social-link-insta':   { dTop: 695, left: '228px' },
-      'social-link-fb':      { dTop: 695, left: '337px' },
-      'footer-line':         { dTop: 758, left: '228px', width: '1224px' },
-      'footer-copyright':    { dTop: 789, left: '228px' },
-      'footer-privacy':      { dTop: 789, left: '1109px' },
+      'footer-logo':               { dTop: 486,  left: '228px' },
+      'footer-desc':               { dTop: 550,  left: '228px' },
+      'footer-col-services-header':{ dTop: 486 },
+      'footer-col-services-link1': { dTop: 523 },
+      'footer-col-services-link2': { dTop: 559 },
+      'footer-col-services-link3': { dTop: 595 },
+      'footer-col-services-link4': { dTop: 631 },
+      'footer-col-info-header':    { dTop: 486 },
+      'footer-col-info-link1':     { dTop: 523 },
+      'footer-col-info-link2':     { dTop: 559 },
+      'footer-col-info-link3':     { dTop: 595 },
+      'footer-col-info-link4':     { dTop: 631 },
+      'footer-col-support-header': { dTop: 486 },
+      'footer-col-support-link1':  { dTop: 523 },
+      'footer-col-support-link2':  { dTop: 559 },
+      'footer-col-support-link3':  { dTop: 595 },
+      'social-link-insta':   { dTop: 678, left: '228px' },
+      'social-link-fb':      { dTop: 678, left: '337px' },
+      'footer-line':         { dTop: 741, left: '228px', width: '1224px' },
+      'footer-copyright':    { dTop: 772, left: '228px' },
+      'footer-privacy':      { dTop: 772, left: '1109px' },
     };
 
     function repositionFooter() {
@@ -253,9 +256,10 @@
       var cardsBottom = cardsEl.offsetTop + cardsEl.offsetHeight;
       var base = cardsBottom + 80;
 
-      // Move wave so it starts 350px before newsletter (decorative bg)
+      // Wave starts 200px before cards end (same as onas: wave = content_end - 200)
       var waveEl = page.querySelector('.sabl-wave');
-      if (waveEl) waveEl.style.top = Math.max(base - 350, 500) + 'px';
+      var waveTop = Math.max(cardsBottom - 200, 500);
+      if (waveEl) waveEl.style.top = waveTop + 'px';
 
       FOOTER_CLASSES.forEach(function (cls) {
         var el = page.querySelector('.' + cls);
@@ -267,7 +271,7 @@
         if (o.width) el.style.width = o.width;
       });
 
-      page.style.minHeight = (base + 840) + 'px';
+      page.style.minHeight = (base + 830) + 'px';
     }
 
     async function load() {
