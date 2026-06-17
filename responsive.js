@@ -1070,6 +1070,187 @@
     });
   }
 
+  /* --------------------------------------------------------
+     CENY – MOBILE (full page)
+  -------------------------------------------------------- */
+  function buildCenyMobile() {
+    if (!qs('.ceny-title')) return;
+    var page = qs('.page');
+    if (!page) return;
+    if (qs('.r-ceny-mobile')) return;
+
+    var waveImgSrc  = (qs('.ceny-wave')  || {}).src || 'assets/img/auth_wave.png';
+    var starsImgSrc = (qs('.ceny-stars') || {}).src || '';
+    var titleEl     = qs('.ceny-title');
+    var subtitleEl  = qs('.ceny-subtitle');
+    var bannerEl    = qs('.ceny-banner-text');
+
+    var planData = [1, 2, 3, 4].map(function(n) {
+      var priceAmtEl = qs('.ceny-plan-price-p' + n + ' .ceny-price-amount');
+      var noteEl     = qs('.ceny-plan-note-p' + n);
+      var labelEl    = qs('.ceny-plan-label-p' + n);
+      return {
+        tokens:       labelEl    ? labelEl.innerHTML : '',
+        priceMonthly: priceAmtEl ? (priceAmtEl.getAttribute('data-monthly') || priceAmtEl.textContent) : '',
+        priceAnnual:  priceAmtEl ? (priceAmtEl.getAttribute('data-annual')  || '') : '',
+        noteMonthly:  noteEl     ? (noteEl.getAttribute('data-monthly') || noteEl.textContent) : '',
+        noteAnnual:   noteEl     ? (noteEl.getAttribute('data-annual')  || '') : '',
+        popular:      n === 2
+      };
+    });
+
+    var features2 = qsa('.ceny-ftp2');
+
+    page.style.display = 'none';
+
+    var cardsHtml = '';
+    var planKeys = ['starter', 'popular', 'pro', 'enterprise'];
+    planData.forEach(function(p, i) {
+      if (p.popular) cardsHtml += '<p class="rceny-popular-badge">Populární</p>';
+      cardsHtml +=
+        '<p class="rceny-plan-tokens">' + p.tokens + '</p>' +
+        '<div class="rceny-plan-card' + (p.popular ? ' rceny-plan-popular' : '') + '">' +
+          '<div class="rceny-plan-price">' +
+            '<span class="rceny-price-amount" data-monthly="' + p.priceMonthly + '" data-annual="' + p.priceAnnual + '">' + p.priceMonthly + '</span>' +
+            '<span class="rceny-price-sep">/</span><span class="rceny-price-unit">měsíc</span>' +
+          '</div>' +
+          '<p class="rceny-plan-note" data-monthly="' + p.noteMonthly + '" data-annual="' + p.noteAnnual + '">' + p.noteMonthly + '</p>' +
+          '<button class="rceny-plan-cta" data-plan="' + planKeys[i] + '">Chci to zkusit!</button>' +
+        '</div>';
+    });
+
+    var featHtml = '';
+    features2.forEach(function(ft) {
+      featHtml +=
+        '<li class="rceny-feature-item">' +
+          '<svg width="14" height="14" viewBox="0 0 24 24" fill="none" style="flex-shrink:0;margin-top:3px"><path d="M5 13l4 4L19 7" stroke="#d0ee52" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"/></svg>' +
+          ft.innerHTML +
+        '</li>';
+    });
+
+    var wrapper = document.createElement('div');
+    wrapper.className = 'r-ceny-mobile';
+    wrapper.innerHTML =
+      '<section class="rceny-hero">' +
+        '<h1 class="rceny-heading">' + (titleEl ? titleEl.innerHTML : '') + '</h1>' +
+        '<p class="rceny-subtitle">' + (subtitleEl ? subtitleEl.textContent.trim() : '') + '</p>' +
+      '</section>' +
+      (bannerEl ? '<div class="rceny-banner">' + bannerEl.innerHTML + '</div>' : '') +
+      '<div class="rceny-social-proof">' +
+        '<div class="rceny-stars-row">' +
+          (starsImgSrc ? '<img class="rceny-stars-img" src="' + starsImgSrc + '" alt="★★★★☆" />' : '') +
+          '<span class="rceny-score">5.0</span>' +
+        '</div>' +
+        '<span class="rceny-customers">Od 4,000 zákazníků</span>' +
+      '</div>' +
+      '<div class="rceny-toggle-wrap">' +
+        '<div class="rceny-toggle" id="rcenyToggle">' +
+          '<div class="rceny-pill"></div>' +
+          '<span class="rceny-toggle-monthly">Měsíčně</span>' +
+          '<span class="rceny-toggle-annual">' +
+            '<span class="rceny-toggle-annual-label">Roční platba</span>' +
+            '<span class="rceny-toggle-annual-save">Ušetři 15%</span>' +
+          '</span>' +
+        '</div>' +
+      '</div>' +
+      '<div class="rceny-plans">' + cardsHtml + '</div>' +
+      (featHtml ?
+        '<section class="rceny-features">' +
+          '<h2 class="rceny-features-heading">Co všechno máte<br><span class="rceny-fh-white">v našich tarifech?</span></h2>' +
+          '<ul class="rceny-features-list">' + featHtml + '</ul>' +
+        '</section>'
+      : '');
+
+    if (waveImgSrc) {
+      var waveWrap = document.createElement('div');
+      waveWrap.className = 'r-mobile-wave-wrap';
+      var waveImg = document.createElement('img');
+      waveImg.src = waveImgSrc; waveImg.alt = ''; waveImg.className = 'r-mobile-wave-img';
+      waveWrap.appendChild(waveImg);
+      wrapper.appendChild(waveWrap);
+    }
+
+    var footerDiv = document.createElement('div');
+    footerDiv.innerHTML = mobileFooterHtml();
+    wrapper.appendChild(footerDiv.firstChild);
+
+    document.body.appendChild(wrapper);
+
+    // Toggle
+    var mToggle = document.getElementById('rcenyToggle');
+    if (mToggle) {
+      mToggle.addEventListener('click', function() {
+        var annual = mToggle.classList.toggle('annual-active');
+        qsa('.rceny-price-amount', wrapper).forEach(function(a) {
+          a.textContent = annual ? (a.getAttribute('data-annual') || a.textContent) : a.getAttribute('data-monthly');
+        });
+        qsa('.rceny-plan-note', wrapper).forEach(function(n) {
+          n.textContent = annual ? (n.getAttribute('data-annual') || n.textContent) : n.getAttribute('data-monthly');
+        });
+      });
+    }
+
+    qsa('.rceny-plan-cta', wrapper).forEach(function(btn) {
+      btn.addEventListener('click', function() { window.location.href = 'registrace.html'; });
+    });
+  }
+
+  /* --------------------------------------------------------
+     ONAS – MOBILE (full page)
+  -------------------------------------------------------- */
+  function buildOnasMobile() {
+    if (!qs('.onas-heading')) return;
+    var page = qs('.page');
+    if (!page) return;
+    if (qs('.r-onas-mobile')) return;
+
+    var waveImgSrc = (qs('.onas-wave') || {}).src || 'assets/img/auth_wave.png';
+    var headingEl  = qs('.onas-heading');
+    var textEl     = qs('.onas-text');
+    var values     = qsa('.onas-value');
+
+    page.style.display = 'none';
+
+    var wrapper = document.createElement('div');
+    wrapper.className = 'r-onas-mobile';
+    wrapper.innerHTML =
+      '<section class="ronas-hero">' +
+        '<h1 class="ronas-heading">' + (headingEl ? headingEl.innerHTML : '') + '</h1>' +
+        '<p class="ronas-text">' + (textEl ? textEl.textContent.trim().replace(/\s+/g, ' ') : '') + '</p>' +
+      '</section>';
+
+    var valuesWrap = el('div', { className: 'ronas-values' });
+    values.forEach(function(v) {
+      var iconEl  = qs('.onas-value-icon', v);
+      var titleEl = qs('.onas-value-title', v);
+      var descEl  = qs('.onas-value-desc', v);
+
+      var item   = el('div', { className: 'ronas-value-item' });
+      var header = el('div', { className: 'ronas-value-header' });
+      if (iconEl) header.appendChild(el('div', { className: 'ronas-value-icon-wrap', innerHTML: iconEl.innerHTML }));
+      if (titleEl) header.appendChild(el('h3', { className: 'ronas-value-title', innerHTML: titleEl.innerHTML }));
+      item.appendChild(header);
+      if (descEl) item.appendChild(el('p', { className: 'ronas-value-desc', innerHTML: descEl.innerHTML }));
+      valuesWrap.appendChild(item);
+    });
+    wrapper.appendChild(valuesWrap);
+
+    if (waveImgSrc) {
+      var waveWrap = document.createElement('div');
+      waveWrap.className = 'r-mobile-wave-wrap';
+      var waveImg = document.createElement('img');
+      waveImg.src = waveImgSrc; waveImg.alt = ''; waveImg.className = 'r-mobile-wave-img';
+      waveWrap.appendChild(waveImg);
+      wrapper.appendChild(waveWrap);
+    }
+
+    var footerDiv = document.createElement('div');
+    footerDiv.innerHTML = mobileFooterHtml();
+    wrapper.appendChild(footerDiv.firstChild);
+
+    document.body.appendChild(wrapper);
+  }
+
   function init() {
     injectSpacer();
     injectNav();
@@ -1078,13 +1259,15 @@
     buildSablonyMobile();
     buildBlogMobile();
     buildBlogDetailMobile();
+    buildCenyMobile();
+    buildOnasMobile();
     injectFooter();
     injectBenefitsGrid();
     injectIndexBlogCards();
     injectTabsWrap();
     injectBlogListGrid();
-    injectPlanCards();
-    injectValuesGrid();
+    if (!qs('.r-ceny-mobile')) injectPlanCards();
+    if (!qs('.r-onas-mobile')) injectValuesGrid();
   }
 
   if (document.readyState === 'loading') {
