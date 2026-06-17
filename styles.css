@@ -1328,12 +1328,7 @@ body {
 }
 
 .blist-separator {
-  position: absolute;
-  left: 228px;
-  top: 437px;
-  width: 1224px;
-  height: 1px;
-  background: #333333;
+  display: none;
 }
 
 /* Article cards */
