@@ -3872,9 +3872,9 @@
   background: transparent;
 }
 
-/* Wave on auth pages — same parameters as homepage */
+/* Wave on auth pages */
 .r-auth-mobile .r-mobile-wave-wrap {
   height: 240px;
-  margin-top: -60px;
+  margin-top: -22px;
   overflow: hidden;
 }
