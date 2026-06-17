@@ -2402,7 +2402,7 @@ body {
 .bdetail-back {
   display: flex;
   align-items: center;
-  gap: 10px;
+  gap: 8px;
   text-decoration: none;
   margin-top: 36px;
 }
@@ -2410,8 +2410,7 @@ body {
 .bdetail-back-arrow {
   width: 16px;
   height: 16px;
-  transform: rotate(180deg);
-  object-fit: contain;
+  flex-shrink: 0;
   display: block;
 }
 
@@ -2454,7 +2453,7 @@ body {
   font-weight: 400;
   color: #ffffff;
   font-family: 'Supreme', sans-serif;
-  line-height: 35px;
+  line-height: 24px;
   margin-bottom: 12px;
 }
 
