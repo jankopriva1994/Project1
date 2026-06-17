@@ -1261,6 +1261,222 @@
     document.body.appendChild(wrapper);
   }
 
+  /* --------------------------------------------------------
+     AUTH SHARED SVG ICONS
+  -------------------------------------------------------- */
+  var AUTH_GOOGLE_SVG = '<svg width="18" height="18" viewBox="0 0 18 18" fill="none" xmlns="http://www.w3.org/2000/svg"><path d="M17.64 9.2c0-.637-.057-1.251-.164-1.84H9v3.481h4.844c-.209 1.125-.843 2.078-1.796 2.716v2.259h2.908C16.658 13.676 17.64 11.668 17.64 9.2z" fill="#4285F4"/><path d="M9 18c2.43 0 4.467-.806 5.956-2.184l-2.908-2.259c-.806.54-1.837.86-3.048.86-2.344 0-4.328-1.584-5.036-3.711H.957v2.332A8.997 8.997 0 0 0 9 18z" fill="#34A853"/><path d="M3.964 10.706A5.41 5.41 0 0 1 3.682 9c0-.593.102-1.17.282-1.706V4.962H.957A9.003 9.003 0 0 0 0 9c0 1.452.348 2.826.957 4.038l3.007-2.332z" fill="#FBBC05"/><path d="M9 3.58c1.321 0 2.508.454 3.44 1.345l2.582-2.58C13.463.891 11.426 0 9 0A8.997 8.997 0 0 0 .957 4.962L3.964 7.294A5.354 5.354 0 0 1 9 3.58z" fill="#EA4335"/></svg>';
+  var AUTH_APPLE_SVG  = '<svg width="16" height="19" viewBox="0 0 16 19" fill="white" xmlns="http://www.w3.org/2000/svg"><path d="M13.173 10.035c-.02-2.045 1.675-3.024 1.75-3.074C13.884 5.1 11.8 4.847 11.04 4.826c-1.63-.167-3.197.966-4.025.966-.842 0-2.135-.948-3.51-.92C1.88 4.9.349 5.956-.418 7.55c-1.565 2.72-.402 6.74 1.12 8.942.741 1.072 1.625 2.275 2.783 2.232 1.122-.046 1.543-.725 2.895-.725 1.34 0 1.72.725 2.896.703 1.206-.021 1.969-1.088 2.703-2.163.856-1.236 1.208-2.44 1.227-2.503-.026-.01-2.35-.902-2.374-3.001h-.659zM10.15 3.175C10.74 2.45 11.145 1.44 11.03.43c-.873.04-1.943.585-2.569 1.294-.561.635-1.047 1.661-.913 2.64.97.076 1.963-.5 2.602-1.189z"/></svg>';
+  var AUTH_EYE_SVG    = '<svg width="20" height="20" viewBox="0 0 24 24" fill="none" style="opacity:0.4"><path d="M1 12s4-8 11-8 11 8 11 8-4 8-11 8-11-8-11-8z" stroke="#fff" stroke-width="1.5"/><circle cx="12" cy="12" r="3" stroke="#fff" stroke-width="1.5"/></svg>';
+
+  function rauthSocialRow(dividerText) {
+    return (
+      '<div class="rauth-divider-wrap">' +
+        '<div class="rauth-divider-line"></div>' +
+        '<span class="rauth-divider-text">' + dividerText + '</span>' +
+        '<div class="rauth-divider-line"></div>' +
+      '</div>' +
+      '<div class="rauth-social-row">' +
+        '<a href="#" class="rauth-social-btn rauth-google">' + AUTH_GOOGLE_SVG + '<span>Google</span></a>' +
+        '<a href="#" class="rauth-social-btn rauth-apple">' + AUTH_APPLE_SVG  + '<span>Apple</span></a>' +
+      '</div>'
+    );
+  }
+
+  function rauthSyncDesktop(dErrId, mErrId, dBtnId, mBtnId) {
+    var dErr = document.getElementById(dErrId);
+    var mErr = document.getElementById(mErrId);
+    var dBtn = document.getElementById(dBtnId);
+    var mBtn = document.getElementById(mBtnId);
+    if (dErr && mErr) {
+      new MutationObserver(function () {
+        mErr.innerHTML        = dErr.innerHTML;
+        mErr.style.display    = dErr.style.display    || '';
+        mErr.style.color      = dErr.style.color      || '';
+        mErr.style.background = dErr.style.background || '';
+        mErr.style.border     = dErr.style.border     || '';
+      }).observe(dErr, { childList: true, characterData: true, subtree: true, attributes: true });
+    }
+    if (dBtn && mBtn) {
+      new MutationObserver(function () {
+        mBtn.textContent = dBtn.textContent;
+        mBtn.disabled    = dBtn.disabled;
+      }).observe(dBtn, { childList: true, characterData: true, subtree: true, attributes: true });
+    }
+  }
+
+  /* --------------------------------------------------------
+     REGISTRACE – MOBILE
+  -------------------------------------------------------- */
+  function buildRegistraceMobile() {
+    if (!qs('.registrace-page')) return;
+    var page = qs('.page');
+    if (!page) return;
+    if (qs('.r-registrace-mobile')) return;
+
+    var waveImgSrc = (qs('.auth-img') || {}).src || '';
+    page.style.display = 'none';
+
+    var wrapper = document.createElement('div');
+    wrapper.className = 'r-registrace-mobile r-auth-mobile';
+    wrapper.innerHTML =
+      '<section class="rauth-hero">' +
+        '<h1 class="rauth-title"><span class="rim-accent">Zaregistrujte se</span><br>ZDARMA!</h1>' +
+        '<p class="rauth-sub">Už máte svůj účet? <a href="prihlaseni.html" class="rauth-link">Přihlaste se</a></p>' +
+      '</section>' +
+      '<div class="rauth-form">' +
+        '<input id="m-reg-fname" class="rauth-input" type="text" placeholder="Jméno*" />' +
+        '<input id="m-reg-lname" class="rauth-input" type="text" placeholder="Příjmení" />' +
+        '<div class="rauth-field-gap"></div>' +
+        '<input id="m-reg-email" class="rauth-input" type="email" placeholder="E-mail*" />' +
+        '<input id="m-reg-phone" class="rauth-input" type="tel" placeholder="Telefon" />' +
+        '<div class="rauth-field-gap"></div>' +
+        '<div class="rauth-pass-wrap">' +
+          '<input id="m-reg-pass" class="rauth-input" type="password" placeholder="Heslo*" />' +
+          '<button type="button" class="rauth-eye" id="m-reg-eye">' + AUTH_EYE_SVG + '</button>' +
+        '</div>' +
+        '<div class="rauth-pass-wrap">' +
+          '<input id="m-reg-pass2" class="rauth-input" type="password" placeholder="Heslo znovu*" />' +
+          '<button type="button" class="rauth-eye" id="m-reg-eye2">' + AUTH_EYE_SVG + '</button>' +
+        '</div>' +
+        '<div class="rauth-checkbox-row">' +
+          '<input type="checkbox" id="m-reg-gdpr" class="rauth-checkbox" />' +
+          '<label for="m-reg-gdpr" class="rauth-checkbox-label">Odesláním této zprávy souhlasím se <a href="#" class="rauth-link">zpracováním osobních údajů</a> za účelem odpovědi na můj dotaz.</label>' +
+        '</div>' +
+        '<p id="m-reg-error" class="rauth-error"></p>' +
+        '<button id="m-reg-btn" class="rauth-btn">Registrovat se zdarma</button>' +
+        rauthSocialRow('Nebo se zaregistruje přes') +
+      '</div>' +
+      (waveImgSrc ? '<div class="r-mobile-wave-wrap"><img class="r-mobile-wave-img" src="' + waveImgSrc + '" alt="" /></div>' : '') +
+      mobileFooterHtml();
+
+    document.body.appendChild(wrapper);
+
+    document.getElementById('m-reg-eye').addEventListener('click', function () {
+      var inp = document.getElementById('m-reg-pass');
+      var isText = inp.type === 'text';
+      inp.type = isText ? 'password' : 'text';
+      this.querySelector('svg').style.opacity = isText ? '0.4' : '1';
+    });
+    document.getElementById('m-reg-eye2').addEventListener('click', function () {
+      var inp = document.getElementById('m-reg-pass2');
+      var isText = inp.type === 'text';
+      inp.type = isText ? 'password' : 'text';
+      this.querySelector('svg').style.opacity = isText ? '0.4' : '1';
+    });
+
+    document.getElementById('m-reg-btn').addEventListener('click', function () {
+      var v = function (id) { var e = document.getElementById(id); return e ? e.value : ''; };
+      document.getElementById('reg-fname').value = v('m-reg-fname');
+      document.getElementById('reg-lname').value = v('m-reg-lname');
+      document.getElementById('reg-email').value = v('m-reg-email');
+      document.getElementById('reg-pass').value  = v('m-reg-pass');
+      document.getElementById('reg-pass2').value = v('m-reg-pass2');
+      var gdprEl = document.getElementById('m-reg-gdpr');
+      if (gdprEl) document.getElementById('reg-gdpr').checked = gdprEl.checked;
+      document.getElementById('reg-btn').click();
+    });
+
+    rauthSyncDesktop('reg-error', 'm-reg-error', 'reg-btn', 'm-reg-btn');
+  }
+
+  /* --------------------------------------------------------
+     PRIHLASENI – MOBILE
+  -------------------------------------------------------- */
+  function buildPrihlaseniMobile() {
+    if (!qs('.prihlaseni-page')) return;
+    var page = qs('.page');
+    if (!page) return;
+    if (qs('.r-prihlaseni-mobile')) return;
+
+    var waveImgSrc = (qs('.auth-img') || {}).src || '';
+    page.style.display = 'none';
+
+    var wrapper = document.createElement('div');
+    wrapper.className = 'r-prihlaseni-mobile r-auth-mobile';
+    wrapper.innerHTML =
+      '<section class="rauth-hero">' +
+        '<h1 class="rauth-title"><span class="rim-accent">Přihlaste se</span> a vytvářejte neuvěřitelné kreativy</h1>' +
+        '<p class="rauth-sub">Ještě nemáte svůj účet? <a href="registrace.html" class="rauth-link">Zaregistrujte se ZDARMA</a></p>' +
+      '</section>' +
+      '<div class="rauth-form">' +
+        '<input id="m-pri-email" class="rauth-input" type="email" placeholder="E-mail" />' +
+        '<div class="rauth-pass-wrap">' +
+          '<input id="m-pri-pass" class="rauth-input" type="password" placeholder="Heslo" />' +
+          '<button type="button" class="rauth-eye" id="m-pri-eye">' + AUTH_EYE_SVG + '</button>' +
+        '</div>' +
+        '<a href="zapomenuteheslo.html" class="rauth-forgot">Zapomenuté heslo?</a>' +
+        '<p id="m-pri-error" class="rauth-error"></p>' +
+        '<button id="m-pri-btn" class="rauth-btn">Přihlásit se a začít vytvářet</button>' +
+        rauthSocialRow('Nebo se přihlaste přes') +
+      '</div>' +
+      (waveImgSrc ? '<div class="r-mobile-wave-wrap"><img class="r-mobile-wave-img" src="' + waveImgSrc + '" alt="" /></div>' : '') +
+      mobileFooterHtml();
+
+    document.body.appendChild(wrapper);
+
+    document.getElementById('m-pri-eye').addEventListener('click', function () {
+      var inp = document.getElementById('m-pri-pass');
+      var isText = inp.type === 'text';
+      inp.type = isText ? 'password' : 'text';
+      this.querySelector('svg').style.opacity = isText ? '0.4' : '1';
+    });
+
+    document.getElementById('m-pri-btn').addEventListener('click', function () {
+      var v = function (id) { var e = document.getElementById(id); return e ? e.value : ''; };
+      document.getElementById('pri-email').value = v('m-pri-email');
+      document.getElementById('pri-pass').value  = v('m-pri-pass');
+      document.getElementById('pri-btn').click();
+    });
+
+    document.getElementById('m-pri-pass').addEventListener('keydown', function (e) {
+      if (e.key === 'Enter') document.getElementById('m-pri-btn').click();
+    });
+
+    rauthSyncDesktop('pri-error', 'm-pri-error', 'pri-btn', 'm-pri-btn');
+  }
+
+  /* --------------------------------------------------------
+     ZAPOMENUTEHESLO – MOBILE
+  -------------------------------------------------------- */
+  function buildZapomenuteHesloMobile() {
+    if (!qs('.zapomenuteheslo-page')) return;
+    var page = qs('.page');
+    if (!page) return;
+    if (qs('.r-zapomenuteheslo-mobile')) return;
+
+    var waveImgSrc = (qs('.auth-img') || {}).src || '';
+    if (!waveImgSrc || waveImgSrc.indexOf('figma.com') !== -1) {
+      waveImgSrc = 'assets/img/auth-prihlaseni.jpg';
+    }
+    page.style.display = 'none';
+
+    var wrapper = document.createElement('div');
+    wrapper.className = 'r-zapomenuteheslo-mobile r-auth-mobile';
+    wrapper.innerHTML =
+      '<section class="rauth-hero">' +
+        '<h1 class="rauth-title rauth-title-all-green">Zapomněli jste<br>své heslo?</h1>' +
+        '<p class="rauth-sub">Pro obnovení hesla stačí vyplnit e-mail, na který' +
+          ' následně <strong>obdržíte odkaz pro vytvoření nového hesla.</strong></p>' +
+      '</section>' +
+      '<div class="rauth-form">' +
+        '<input id="m-zap-email" class="rauth-input" type="email" placeholder="E-mail" />' +
+        '<p id="m-zap-msg" class="rauth-error"></p>' +
+        '<button id="m-zap-btn" class="rauth-btn">Odeslat odkaz pro obnovu hesla</button>' +
+      '</div>' +
+      (waveImgSrc ? '<div class="r-mobile-wave-wrap"><img class="r-mobile-wave-img" src="' + waveImgSrc + '" alt="" /></div>' : '') +
+      mobileFooterHtml();
+
+    document.body.appendChild(wrapper);
+
+    document.getElementById('m-zap-btn').addEventListener('click', function () {
+      var zapInp = qs('.zap-input-email');
+      if (zapInp) zapInp.value = document.getElementById('m-zap-email').value;
+      document.getElementById('zap-btn').click();
+    });
+
+    rauthSyncDesktop('zap-msg', 'm-zap-msg', 'zap-btn', 'm-zap-btn');
+  }
+
   function init() {
     injectSpacer();
     injectNav();
@@ -1271,6 +1487,9 @@
     buildBlogDetailMobile();
     buildCenyMobile();
     buildOnasMobile();
+    buildRegistraceMobile();
+    buildPrihlaseniMobile();
+    buildZapomenuteHesloMobile();
     injectFooter();
     injectBenefitsGrid();
     injectIndexBlogCards();
