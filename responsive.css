@@ -2891,9 +2891,10 @@
 }
 .rim-blog-img {
   display: block;
-  width: 100%;
+  width: 357px;
   height: 220px;
   object-fit: cover;
+  margin: 0 auto;
 }
 .rim-blog-card-body {
   padding: 16px 18px 0;
