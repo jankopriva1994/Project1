@@ -765,7 +765,7 @@
     var html =
       '<section class="rblog-hero">' +
         '<h1 class="rblog-heading">Aktuální informace,<br>blog, features a další</h1>' +
-        '<p class="rblog-sub">Zde najdete nejaktuálnější informace ze světa AI a chaties.cz</p>' +
+        '<p class="rblog-sub">Zde najdete nejaktuálnější informace<br>ze světa AI a chaties.cz</p>' +
       '</section>' +
       '<div class="rblog-cards">' + cardsHtml + '</div>' +
       '<a class="rblog-more" href="#">Další články</a>' +
