@@ -245,7 +245,7 @@ body {
 .hero-wave {
   position: absolute;
   left: 0;
-  top: 370px;
+  top: 630px;
   width: 1680px;
   height: auto;
   mix-blend-mode: screen;
@@ -1512,9 +1512,8 @@ body {
   left: 0;
   top: 1300px;
   width: 1680px;
-  height: 946px;
+  height: auto;
   mix-blend-mode: screen;
-  object-fit: cover;
   display: block;
   pointer-events: none;
 }
@@ -2082,8 +2081,7 @@ body {
   left: 0;
   top: 1000px;
   width: 1680px;
-  height: 946px;
-  object-fit: cover;
+  height: auto;
   pointer-events: none;
   mix-blend-mode: screen;
   opacity: .7;
@@ -2237,8 +2235,7 @@ body {
   left: 0;
   top: 639px;
   width: 1680px;
-  height: 946px;
-  object-fit: cover;
+  height: auto;
   mix-blend-mode: screen;
   pointer-events: none;
 }
@@ -2277,9 +2274,8 @@ body {
   left: 0;
   top: 925px;
   width: 1680px;
-  height: 946px;
+  height: auto;
   mix-blend-mode: screen;
-  object-fit: cover;
   display: block;
   pointer-events: none;
 }
