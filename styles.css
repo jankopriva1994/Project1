@@ -2400,11 +2400,11 @@ body {
 }
 
 .bdetail-back {
-  display: inline-flex;
+  display: flex;
   align-items: center;
   gap: 10px;
   text-decoration: none;
-  margin-top: 28px;
+  margin-top: 36px;
 }
 
 .bdetail-back-arrow {
@@ -2439,15 +2439,30 @@ body {
   left: 228px;
   top: 340px;
   width: 900px;
+  color: #ffffff;
+  font-family: 'Supreme', sans-serif;
 }
 
-.bdetail-article p {
+.bdetail-article p,
+.bdetail-article div,
+.bdetail-article span,
+.bdetail-article li,
+.bdetail-article h1,
+.bdetail-article h2,
+.bdetail-article h3 {
   font-size: 16px;
   font-weight: 400;
   color: #ffffff;
   font-family: 'Supreme', sans-serif;
   line-height: 35px;
   margin-bottom: 12px;
+}
+
+.bdetail-article h1,
+.bdetail-article h2,
+.bdetail-article h3 {
+  font-weight: 700;
+  margin-top: 24px;
 }
 
 /* Footer overrides – blog detail page (tops set by JS based on article height) */
