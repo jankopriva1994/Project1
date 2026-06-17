@@ -1645,27 +1645,45 @@ body {
 .ceny-toggle-monthly {
   position: absolute;
   left: 5px;
-  top: 12px;
+  top: 0;
   width: 140px;
+  height: 66px;
   text-align: center;
+  display: flex;
+  align-items: center;
+  justify-content: center;
   font-size: 16px;
   font-weight: 700;
   color: #0d0e11;
   font-family: 'Supreme', sans-serif;
-  line-height: 42px;
 }
 
 .ceny-toggle-annual {
   position: absolute;
   left: 136px;
-  top: 12px;
+  top: 0;
   width: 140px;
+  height: 66px;
   text-align: center;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  gap: 2px;
+}
+.ceny-toggle-annual-label {
   font-size: 16px;
   font-weight: 700;
   color: #ffffff;
   font-family: 'Supreme', sans-serif;
-  line-height: 42px;
+  line-height: 1.2;
+}
+.ceny-toggle-annual-save {
+  font-size: 12px;
+  font-weight: 700;
+  color: #d0ee52;
+  font-family: 'Supreme', sans-serif;
+  line-height: 1.2;
 }
 
 /* Toggle annual-active state */
@@ -1675,7 +1693,10 @@ body {
 .ceny-toggle.annual-active .ceny-toggle-monthly {
   color: #ffffff;
 }
-.ceny-toggle.annual-active .ceny-toggle-annual {
+.ceny-toggle.annual-active .ceny-toggle-annual-label {
+  color: #0d0e11;
+}
+.ceny-toggle.annual-active .ceny-toggle-annual-save {
   color: #0d0e11;
 }
 .ceny-toggle-monthly,
