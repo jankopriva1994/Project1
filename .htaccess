@@ -8,7 +8,7 @@ DirectoryIndex index.html
   Header set Expires 0
 </FilesMatch>
 
-<FilesMatch "^(responsive\.js|responsive\.css)$">
+<FilesMatch "^(responsive\.js|responsive\.css|styles\.css)$">
   Header set Cache-Control "no-cache, no-store, must-revalidate"
   Header set Pragma "no-cache"
   Header set Expires 0
