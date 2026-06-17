@@ -727,6 +727,58 @@
   }
 
   /* --------------------------------------------------------
+     KONTAKT – MOBILE
+  -------------------------------------------------------- */
+  function buildKontaktMobile() {
+    if (!qs('.ktk-heading')) return;
+    var page = qs('.page');
+    if (!page) return;
+    if (qs('.r-kontakt-mobile')) return;
+
+    // Clone form and support rows from desktop before hiding
+    var formClone    = qs('.ktk-form-box') ? qs('.ktk-form-box').cloneNode(true) : null;
+    var emailRow     = qs('.ktk-support-email')  ? qs('.ktk-support-email').cloneNode(true)  : null;
+    var phoneRow     = qs('.ktk-support-phone')  ? qs('.ktk-support-phone').cloneNode(true)  : null;
+    var hoursRow     = qs('.ktk-support-hours')  ? qs('.ktk-support-hours').cloneNode(true)  : null;
+
+    page.style.display = 'none';
+
+    var wrapper = document.createElement('div');
+    wrapper.className = 'r-kontakt-mobile';
+
+    wrapper.innerHTML =
+      '<section class="rktk-hero">' +
+        '<h1 class="rktk-heading">' +
+          '<span class="rim-accent">Máte dotazy</span> nebo<br>' +
+          'potřebujete poradit<br>' +
+          's chaties?' +
+        '</h1>' +
+        '<p class="rktk-support-label">Zákaznická podpora</p>' +
+      '</section>';
+
+    // Support rows
+    var supportWrap = document.createElement('div');
+    supportWrap.className = 'rktk-support';
+    if (emailRow) { emailRow.className = 'rktk-row'; supportWrap.appendChild(emailRow); }
+    if (phoneRow) { phoneRow.className = 'rktk-row'; supportWrap.appendChild(phoneRow); }
+    if (hoursRow) { hoursRow.className = 'rktk-row'; supportWrap.appendChild(hoursRow); }
+    wrapper.appendChild(supportWrap);
+
+    // Form
+    if (formClone) {
+      formClone.className = 'rktk-form';
+      wrapper.appendChild(formClone);
+    }
+
+    // Footer
+    var footerDiv = document.createElement('div');
+    footerDiv.innerHTML = mobileFooterHtml();
+    wrapper.appendChild(footerDiv.firstChild);
+
+    document.body.appendChild(wrapper);
+  }
+
+  /* --------------------------------------------------------
      BLOG LISTING – MOBILE
   -------------------------------------------------------- */
   function buildBlogMobile() {
@@ -822,6 +874,7 @@
     injectSpacer();
     injectNav();
     buildIndexMobile();
+    buildKontaktMobile();
     buildBlogMobile();
     buildBlogDetailMobile();
     injectFooter();

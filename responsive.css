@@ -3239,3 +3239,96 @@
 .r-blog-detail-mobile .rim-footer {
   margin-top: 80px;
 }
+
+/* ============================================================
+   MOBILE KONTAKT (r-kontakt-mobile)
+   ============================================================ */
+.r-kontakt-mobile {
+  background: #0d0e11;
+  min-height: 100vh;
+  padding-top: 70px;
+  font-family: 'Supreme', sans-serif;
+}
+.rktk-hero {
+  padding: 30px 18px 0;
+}
+.rktk-heading {
+  font-size: 30px;
+  font-weight: 700;
+  line-height: 37px;
+  color: #ffffff;
+  margin: 0 0 32px;
+}
+.rktk-support-label {
+  font-size: 16px;
+  font-weight: 700;
+  color: #d0ee52;
+  margin: 0 0 16px;
+}
+.rktk-support {
+  padding: 0 18px;
+  display: flex;
+  flex-direction: column;
+  gap: 14px;
+  margin-bottom: 36px;
+}
+.rktk-row {
+  display: flex !important;
+  align-items: center;
+  gap: 12px;
+  font-size: 16px;
+  color: #ffffff;
+  position: static !important;
+  left: auto !important;
+  top: auto !important;
+  width: auto !important;
+}
+.rktk-row a {
+  color: #ffffff;
+  text-decoration: none;
+}
+.rktk-form {
+  margin: 0 18px;
+  display: flex;
+  flex-direction: column;
+  gap: 14px;
+  position: static !important;
+  left: auto !important;
+  top: auto !important;
+  width: auto !important;
+}
+.rktk-form input,
+.rktk-form textarea,
+.rktk-form .ktk-input,
+.rktk-form .ktk-textarea {
+  width: 100% !important;
+  box-sizing: border-box !important;
+  position: static !important;
+  left: auto !important;
+  top: auto !important;
+  margin: 0 !important;
+  display: block !important;
+}
+.rktk-form .ktk-gdpr-row {
+  position: static !important;
+  left: auto !important;
+  top: auto !important;
+  width: auto !important;
+  display: flex !important;
+  align-items: flex-start;
+  gap: 10px;
+}
+.rktk-form .ktk-submit {
+  position: static !important;
+  left: auto !important;
+  top: auto !important;
+  width: 100% !important;
+  display: block !important;
+  margin: 0 !important;
+}
+.rktk-form .ktk-msg {
+  position: static !important;
+  left: auto !important;
+  top: auto !important;
+  margin: 0 !important;
+}
