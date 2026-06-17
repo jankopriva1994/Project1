@@ -3878,3 +3878,7 @@
   margin-top: -22px;
   overflow: hidden;
 }
+
+.r-auth-mobile .rim-footer {
+  border-top: none;
+}
