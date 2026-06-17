@@ -197,6 +197,8 @@
         }
         document.title = post.title + ' – Chaties AI';
         if (window._bdetailReposition) window._bdetailReposition();
+        // Re-apply zoom compensation after content changes page height
+        if (window.dispatchEvent) window.dispatchEvent(new Event('resize'));
       })
       .catch(function () {
         var titleEl = document.querySelector('.bdetail-title');
