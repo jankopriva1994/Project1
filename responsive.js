@@ -809,7 +809,6 @@
           'Zpátky na výpis článků' +
         '</a>' +
       '</article>' +
-      '<div class="rbdetail-separator"></div>' +
       mobileFooterHtml();
 
     var wrapper = document.createElement('div');
