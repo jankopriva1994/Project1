@@ -247,9 +247,8 @@ body {
   left: 0;
   top: 370px;
   width: 1680px;
-  height: 946px;
+  height: auto;
   mix-blend-mode: screen;
-  object-fit: cover;
   display: block;
 }
 
