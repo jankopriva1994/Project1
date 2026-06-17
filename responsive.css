@@ -3871,3 +3871,10 @@
   font-family: 'Supreme', sans-serif;
   background: transparent;
 }
+
+/* Wave on auth pages — same parameters as homepage */
+.r-auth-mobile .r-mobile-wave-wrap {
+  height: 240px;
+  margin-top: -60px;
+  overflow: hidden;
+}
