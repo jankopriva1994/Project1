@@ -31,8 +31,8 @@
     gtag("config", "G-Z675BBJZF3");
   </script>
 </head>
-<body>
-  
+<body class="blog-loading">
+
   <div class="page blog-list-page">
 
     <!-- ==================== NAVBAR ==================== -->
@@ -253,8 +253,9 @@
           if (catEl)   catEl.textContent = post.category || 'Blog';
           if (titleEl) titleEl.textContent = post.title;
         });
+        document.body.classList.remove('blog-loading');
       })
-      .catch(function () {});
+      .catch(function () { document.body.classList.remove('blog-loading'); });
   })();
   </script>
 </body>

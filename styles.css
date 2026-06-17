@@ -3188,3 +3188,8 @@ body {
 .adm-tmpl-copy-btn:hover { color: #fff; border-color: #666; }
 
 /* Škálování řeší JS v chaties.js – page.style.zoom = vw/1680 */
+
+/* ── Anti-flash: skryj CMS elementy dokud API neodpoví ── */
+body.cms-loading [data-cms-key] { visibility: hidden; }
+/* ── Anti-flash: skryj blog karty dokud API neodpoví ── */
+body.blog-loading .blist-card  { visibility: hidden; }

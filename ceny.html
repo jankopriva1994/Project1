@@ -31,8 +31,8 @@
     gtag("config", "G-Z675BBJZF3");
   </script>
 </head>
-<body>
-  
+<body class="cms-loading">
+
   <div class="page ceny-page">
 
     <!-- ==================== NAVBAR ==================== -->
@@ -279,8 +279,9 @@
               if (na) { noteEl.dataset.annual  = na; if (isAnnual)  noteEl.textContent = na; }
             }
           });
+          document.body.classList.remove('cms-loading');
         })
-        .catch(function () {}); // silently fail – show default HTML content
+        .catch(function () { document.body.classList.remove('cms-loading'); }); // silently fail – show default HTML content
     })();
   </script>
   <script>
