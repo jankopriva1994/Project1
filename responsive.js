@@ -1326,10 +1326,8 @@
       '<div class="rauth-form">' +
         '<input id="m-reg-fname" class="rauth-input" type="text" placeholder="Jméno*" />' +
         '<input id="m-reg-lname" class="rauth-input" type="text" placeholder="Příjmení" />' +
-        '<div class="rauth-field-gap"></div>' +
         '<input id="m-reg-email" class="rauth-input" type="email" placeholder="E-mail*" />' +
         '<input id="m-reg-phone" class="rauth-input" type="tel" placeholder="Telefon" />' +
-        '<div class="rauth-field-gap"></div>' +
         '<div class="rauth-pass-wrap">' +
           '<input id="m-reg-pass" class="rauth-input" type="password" placeholder="Heslo*" />' +
           '<button type="button" class="rauth-eye" id="m-reg-eye">' + AUTH_EYE_SVG + '</button>' +
@@ -1337,10 +1335,6 @@
         '<div class="rauth-pass-wrap">' +
           '<input id="m-reg-pass2" class="rauth-input" type="password" placeholder="Heslo znovu*" />' +
           '<button type="button" class="rauth-eye" id="m-reg-eye2">' + AUTH_EYE_SVG + '</button>' +
-        '</div>' +
-        '<div class="rauth-checkbox-row">' +
-          '<input type="checkbox" id="m-reg-gdpr" class="rauth-checkbox" />' +
-          '<label for="m-reg-gdpr" class="rauth-checkbox-label">Odesláním této zprávy souhlasím se <a href="#" class="rauth-link">zpracováním osobních údajů</a> za účelem odpovědi na můj dotaz.</label>' +
         '</div>' +
         '<p id="m-reg-error" class="rauth-error"></p>' +
         '<button id="m-reg-btn" class="rauth-btn">Registrovat se zdarma</button>' +
@@ -1371,8 +1365,7 @@
       document.getElementById('reg-email').value = v('m-reg-email');
       document.getElementById('reg-pass').value  = v('m-reg-pass');
       document.getElementById('reg-pass2').value = v('m-reg-pass2');
-      var gdprEl = document.getElementById('m-reg-gdpr');
-      if (gdprEl) document.getElementById('reg-gdpr').checked = gdprEl.checked;
+      document.getElementById('reg-gdpr').checked = true;
       document.getElementById('reg-btn').click();
     });
 
