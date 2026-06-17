@@ -3642,8 +3642,9 @@
 .rceny-features { padding: 40px 26px 0; }
 .rceny-features-heading { font-size: 30px; font-weight: 700; color: #d0ee52; font-family: 'Supreme', sans-serif; line-height: 1.2; margin: 0 0 24px; text-align: center; }
 .rceny-fh-white { color: #ffffff; }
-.rceny-features-list { list-style: none; margin: 0; padding: 0; display: flex; flex-direction: column; gap: 10px; }
-.rceny-feature-item { display: flex; align-items: flex-start; gap: 10px; font-size: 16px; color: #ffffff; font-family: 'Supreme', sans-serif; line-height: 1.5; }
+.rceny-features-list { list-style: none; margin: 0; padding: 0; display: flex; flex-direction: column; align-items: center; gap: 10px; }
+.rceny-feature-item { display: flex; align-items: center; gap: 10px; font-size: 16px; color: #ffffff; font-family: 'Supreme', sans-serif; line-height: 1.5; }
+.rceny-feature-item .accent { color: #d0ee52; }
 .r-ceny-mobile .rim-footer { margin-top: 0; border-top: none; }
 
 /* ========================================================
