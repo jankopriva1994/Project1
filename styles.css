@@ -24,7 +24,7 @@
 }
 
 html {
-  background: #181818;
+  background: #0d0e11;
   min-height: 100%;
 }
 
@@ -2774,6 +2774,7 @@ body {
 .zap-btn         { left: 1039px; top: 693px; }
 
 /* ===================== ADMIN PAGE ===================== */
+.adm-body { background: #181818; }
 .adm-page { min-height: 935px; overflow: visible; }
 
 /* Topbar */
