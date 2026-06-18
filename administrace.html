@@ -2492,6 +2492,11 @@
     var realtimeChannel   = null;
     var lastSaveTime      = 0;
 
+    /* ── In-memory cache ──────────────────────────────── */
+    var notebooksCache   = null;        // array | null
+    var notesCache       = {};          // { [notebookId]: array }
+    var noteContentCache = {};          // { [noteId]: { title, content, updated_at, updated_by_name } }
+
     /* ── DOM refs ─────────────────────────────────────── */
     var nbList      = document.getElementById('admNotebookList');
     var noteList    = document.getElementById('admNoteList');
@@ -2519,13 +2524,25 @@
     }
 
     /* ── Notebooks ────────────────────────────────────── */
-    async function loadNotebooks() {
-      nbList.innerHTML = '<div class="adm-notes-loading">Načítám…</div>';
-      var nbs;
-      try { nbs = await apiFetch('/api/notes/notebooks'); } catch(e) { nbList.innerHTML = '<div class="adm-notes-hint">Chyba načítání</div>'; return; }
+    function renderNotebookList(nbs) {
       nbList.innerHTML = '';
       if (!nbs.length) { nbList.innerHTML = '<div class="adm-notes-hint">Žádné záložky</div>'; return; }
       nbs.forEach(function (nb) { nbList.appendChild(renderNotebook(nb)); });
+    }
+
+    async function loadNotebooks() {
+      if (notebooksCache) {
+        renderNotebookList(notebooksCache);
+      } else {
+        nbList.innerHTML = '<div class="adm-notes-loading">Načítám…</div>';
+      }
+      var nbs;
+      try { nbs = await apiFetch('/api/notes/notebooks'); } catch(e) {
+        if (!notebooksCache) nbList.innerHTML = '<div class="adm-notes-hint">Chyba načítání</div>';
+        return;
+      }
+      notebooksCache = nbs;
+      renderNotebookList(nbs);
     }
 
     function renderNotebook(nb) {
@@ -2611,13 +2628,25 @@
     }
 
     /* ── Notes list ───────────────────────────────────── */
-    async function loadNotes(notebookId) {
-      noteList.innerHTML = '<div class="adm-notes-loading">Načítám…</div>';
-      var notes;
-      try { notes = await apiFetch('/api/notes?notebook_id=' + notebookId); } catch(e) { noteList.innerHTML = '<div class="adm-notes-hint">Chyba</div>'; return; }
+    function renderNoteList(notes) {
       noteList.innerHTML = '';
       if (!notes.length) { noteList.innerHTML = '<div class="adm-notes-hint">Žádné poznámky</div>'; return; }
       notes.forEach(function (n) { noteList.appendChild(renderNote(n)); });
+    }
+
+    async function loadNotes(notebookId) {
+      if (notesCache[notebookId]) {
+        renderNoteList(notesCache[notebookId]);
+      } else {
+        noteList.innerHTML = '<div class="adm-notes-loading">Načítám…</div>';
+      }
+      var notes;
+      try { notes = await apiFetch('/api/notes?notebook_id=' + notebookId); } catch(e) {
+        if (!notesCache[notebookId]) noteList.innerHTML = '<div class="adm-notes-hint">Chyba</div>';
+        return;
+      }
+      notesCache[notebookId] = notes;
+      renderNoteList(notes);
     }
 
     function renderNote(n) {
@@ -2653,6 +2682,15 @@
       currentNoteId = null;
     }
 
+    function fillEditor(note) {
+      titleInp.value  = note.title || '';
+      contentTA.value = note.content || '';
+      setStatus('Uloženo');
+      lastEdit.textContent = note.updated_by_name && note.updated_at
+        ? 'Upravil/a ' + note.updated_by_name + ' · ' + fmtDate(note.updated_at)
+        : '';
+    }
+
     async function openNote(id) {
       currentNoteId = id;
       document.querySelectorAll('.adm-notes-note-item').forEach(function (el) {
@@ -2660,17 +2698,19 @@
       });
       editorEmpty.style.display = 'none';
       editorBody.style.display  = 'flex';
+
+      if (noteContentCache[id]) {
+        fillEditor(noteContentCache[id]);
+        return;
+      }
+
       titleInp.value = '';
       contentTA.value = '';
       setStatus('Načítám…');
       var note;
       try { note = await apiFetch('/api/notes/' + id); } catch(e) { setStatus('Chyba', true); return; }
-      titleInp.value   = note.title || '';
-      contentTA.value  = note.content || '';
-      setStatus('Uloženo');
-      if (note.updated_by_name && note.updated_at) {
-        lastEdit.textContent = 'Upravil/a ' + note.updated_by_name + ' · ' + fmtDate(note.updated_at);
-      }
+      noteContentCache[id] = note;
+      fillEditor(note);
     }
 
     function scheduleSave() {
@@ -2689,6 +2729,12 @@
           body: JSON.stringify({ title, content })
         });
         lastSaveTime = Date.now();
+        noteContentCache[currentNoteId] = { title: title, content: content, updated_at: updated.updated_at, updated_by_name: updated.updated_by_name };
+        if (currentNotebookId && notesCache[currentNotebookId]) {
+          notesCache[currentNotebookId].forEach(function (n) {
+            if (n.id === currentNoteId) { n.title = title; n.updated_at = updated.updated_at; n.updated_by_name = updated.updated_by_name; }
+          });
+        }
         setStatus('Uloženo');
         if (updated.updated_by_name && updated.updated_at) {
           lastEdit.textContent = 'Upravil/a ' + updated.updated_by_name + ' · ' + fmtDate(updated.updated_at);
@@ -2749,6 +2795,8 @@
         var note = await apiFetch('/api/notes', { method: 'POST', body: JSON.stringify({ notebook_id: currentNotebookId, title: 'Nová poznámka' }) });
         tempEl.dataset.id = note.id;
         currentNoteId = note.id;
+        noteContentCache[note.id] = { title: 'Nová poznámka', content: '', updated_at: note.updated_at, updated_by_name: note.updated_by_name };
+        if (notesCache[currentNotebookId]) notesCache[currentNotebookId].unshift({ id: note.id, title: 'Nová poznámka', updated_at: note.updated_at, updated_by_name: note.updated_by_name });
         setStatus('Uloženo');
       } catch(e) { tempEl.remove(); showEditorEmpty(); setStatus('Chyba', true); }
     });
@@ -2758,6 +2806,10 @@
       var el = noteList.querySelector('[data-id="' + id + '"]');
       if (el) el.remove();
       if (currentNoteId === id) showEditorEmpty();
+      delete noteContentCache[id];
+      if (currentNotebookId && notesCache[currentNotebookId]) {
+        notesCache[currentNotebookId] = notesCache[currentNotebookId].filter(function (n) { return n.id !== id; });
+      }
       try { await apiFetch('/api/notes/' + id, { method: 'DELETE' }); } catch(e) {}
       if (!noteList.children.length) noteList.innerHTML = '<div class="adm-notes-hint">Žádné poznámky</div>';
     }
@@ -2770,9 +2822,13 @@
         .on('postgres_changes', { event: '*', schema: 'public', table: 'notes' }, function (payload) {
           if (!currentNotebookId) return;
           var isOwnSave = (Date.now() - lastSaveTime) < 2500;
-          if (!isOwnSave) loadNotes(currentNotebookId);
+          if (!isOwnSave) {
+            delete notesCache[currentNotebookId];
+            loadNotes(currentNotebookId);
+          }
           var changed = payload.new || payload.old;
           if (changed && changed.id === currentNoteId && payload.eventType === 'UPDATE' && !isOwnSave) {
+            delete noteContentCache[currentNoteId];
             openNote(currentNoteId);
           }
         })
@@ -2783,6 +2839,7 @@
       supabase
         .channel('notebooks-realtime')
         .on('postgres_changes', { event: '*', schema: 'public', table: 'note_notebooks' }, function () {
+          notebooksCache = null;
           loadNotebooks();
         })
         .subscribe();
