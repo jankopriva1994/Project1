@@ -252,40 +252,50 @@
   <script>
     // CMS content loader – fetches texts from backend and patches the page
     (function () {
+      var CACHE_KEY = 'chaties-cms-v1';
       var API = 'https://project1-production-bfde.up.railway.app';
+
+      function applyBlocks(blocks) {
+        var map = {};
+        blocks.forEach(function (b) { map[b.key] = b.value; });
+
+        document.querySelectorAll('[data-cms-key]').forEach(function (el) {
+          var key = el.getAttribute('data-cms-key');
+          if (map[key] != null) el.innerHTML = map[key];
+        });
+
+        var isAnnual = document.querySelector('.ceny-toggle').classList.contains('annual-active');
+        [1, 2, 3, 4].forEach(function (p) {
+          var priceEl = document.querySelector('.ceny-plan-price-p' + p + ' .ceny-price-amount');
+          if (priceEl) {
+            var m = map['ceny_p' + p + '_price_monthly'];
+            var a = map['ceny_p' + p + '_price_annual'];
+            if (m) { priceEl.dataset.monthly = m; if (!isAnnual) priceEl.textContent = m; }
+            if (a) { priceEl.dataset.annual  = a; if (isAnnual)  priceEl.textContent = a; }
+          }
+          var noteEl = document.querySelector('.ceny-plan-note-p' + p);
+          if (noteEl) {
+            var nm = map['ceny_p' + p + '_note_monthly'];
+            var na = map['ceny_p' + p + '_note_annual'];
+            if (nm) { noteEl.dataset.monthly = nm; if (!isAnnual) noteEl.textContent = nm; }
+            if (na) { noteEl.dataset.annual  = na; if (isAnnual)  noteEl.textContent = na; }
+          }
+        });
+      }
+
+      var cached = localStorage.getItem(CACHE_KEY);
+      if (cached) {
+        try { applyBlocks(JSON.parse(cached)); document.body.classList.remove('cms-loading'); } catch(e) {}
+      }
+
       fetch(API + '/api/content')
         .then(function (r) { return r.json(); })
         .then(function (blocks) {
-          var map = {};
-          blocks.forEach(function (b) { map[b.key] = b.value; });
-
-          // Simple innerHTML replacements via data-cms-key
-          document.querySelectorAll('[data-cms-key]').forEach(function (el) {
-            var key = el.getAttribute('data-cms-key');
-            if (map[key] != null) el.innerHTML = map[key];
-          });
-
-          // Prices – update data attributes + current display
-          var isAnnual = document.querySelector('.ceny-toggle').classList.contains('annual-active');
-          [1, 2, 3, 4].forEach(function (p) {
-            var priceEl = document.querySelector('.ceny-plan-price-p' + p + ' .ceny-price-amount');
-            if (priceEl) {
-              var m = map['ceny_p' + p + '_price_monthly'];
-              var a = map['ceny_p' + p + '_price_annual'];
-              if (m) { priceEl.dataset.monthly = m; if (!isAnnual) priceEl.textContent = m; }
-              if (a) { priceEl.dataset.annual  = a; if (isAnnual)  priceEl.textContent = a; }
-            }
-            var noteEl = document.querySelector('.ceny-plan-note-p' + p);
-            if (noteEl) {
-              var nm = map['ceny_p' + p + '_note_monthly'];
-              var na = map['ceny_p' + p + '_note_annual'];
-              if (nm) { noteEl.dataset.monthly = nm; if (!isAnnual) noteEl.textContent = nm; }
-              if (na) { noteEl.dataset.annual  = na; if (isAnnual)  noteEl.textContent = na; }
-            }
-          });
+          localStorage.setItem(CACHE_KEY, JSON.stringify(blocks));
+          applyBlocks(blocks);
           document.body.classList.remove('cms-loading');
         })
-        .catch(function () { document.body.classList.remove('cms-loading'); }); // silently fail – show default HTML content
+        .catch(function () { document.body.classList.remove('cms-loading'); });
     })();
   </script>
   <script>

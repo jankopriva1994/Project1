@@ -386,15 +386,28 @@
   <script>
     // CMS content loader
     (function () {
-      fetch('https://project1-production-bfde.up.railway.app/api/content')
+      var CACHE_KEY = 'chaties-cms-v1';
+      var API = 'https://project1-production-bfde.up.railway.app';
+
+      function applyBlocks(blocks) {
+        var map = {};
+        blocks.forEach(function (b) { map[b.key] = b.value; });
+        document.querySelectorAll('[data-cms-key]').forEach(function (el) {
+          var key = el.getAttribute('data-cms-key');
+          if (map[key] != null) el.innerHTML = map[key];
+        });
+      }
+
+      var cached = localStorage.getItem(CACHE_KEY);
+      if (cached) {
+        try { applyBlocks(JSON.parse(cached)); document.body.classList.remove('cms-loading'); } catch(e) {}
+      }
+
+      fetch(API + '/api/content')
         .then(function (r) { return r.json(); })
         .then(function (blocks) {
-          var map = {};
-          blocks.forEach(function (b) { map[b.key] = b.value; });
-          document.querySelectorAll('[data-cms-key]').forEach(function (el) {
-            var key = el.getAttribute('data-cms-key');
-            if (map[key] != null) el.innerHTML = map[key];
-          });
+          localStorage.setItem(CACHE_KEY, JSON.stringify(blocks));
+          applyBlocks(blocks);
           document.body.classList.remove('cms-loading');
         })
         .catch(function () { document.body.classList.remove('cms-loading'); });
