@@ -96,30 +96,28 @@
     podporaHead.textContent = 'Podpora';
     drawer.appendChild(podporaHead);
 
-    var supportLinks = [
-      qs('.footer-col-support-link1'),
-      qs('.footer-col-support-link2'),
-      qs('.footer-col-support-link3')
+    var supportData = [
+      { el: qs('.footer-col-support-link1'), href: 'mailto:marketing@chaties.cz', text: 'marketing@chaties.cz' },
+      { el: qs('.footer-col-support-link2'), href: 'mailto:podpora@chaties.cz',   text: 'podpora@chaties.cz'  }
     ];
-    supportLinks.forEach(function (s) {
-      if (!s) return;
-      var a = el('a', { href: s.getAttribute('href'), className: 'r-nav-support-link' });
-      a.textContent = s.textContent.trim();
+    supportData.forEach(function (s) {
+      var href = s.el ? s.el.getAttribute('href') : s.href;
+      var text = s.el ? s.el.textContent.trim() : s.text;
+      var a = el('a', { href: href, className: 'r-nav-support-link' });
+      a.textContent = text;
       drawer.appendChild(a);
     });
 
     // Social links
+    var INSTA_SVG = '<svg width="20" height="20" viewBox="0 0 24 24" fill="none"><rect x="2" y="2" width="20" height="20" rx="5" stroke="white" stroke-width="1.5"/><circle cx="12" cy="12" r="4" stroke="white" stroke-width="1.5"/><circle cx="17.5" cy="6.5" r="1.2" fill="white"/></svg><span class="social-text-insta">Instagram</span>';
+    var FB_SVG    = '<svg width="20" height="20" viewBox="0 0 24 24" fill="none"><rect x="2" y="2" width="20" height="20" rx="5" stroke="white" stroke-width="1.5"/><path d="M13 8h2V6h-2a3 3 0 0 0-3 3v1H8v2h2v6h2v-6h2l.5-2H12V9a1 1 0 0 1 1-1z" fill="white"/></svg><span class="social-text-fb">Facebook</span>';
     var socials = el('div', { className: 'r-nav-socials' });
     var instaEl2 = qs('.social-link-insta');
     var fbEl2    = qs('.social-link-fb');
-    if (instaEl2) {
-      var ia = el('a', { href: instaEl2.getAttribute('href') || '#', className: 'r-nav-social-link', innerHTML: instaEl2.innerHTML });
-      socials.appendChild(ia);
-    }
-    if (fbEl2) {
-      var fa = el('a', { href: fbEl2.getAttribute('href') || '#', className: 'r-nav-social-link', innerHTML: fbEl2.innerHTML });
-      socials.appendChild(fa);
-    }
+    var ia = el('a', { href: instaEl2 ? (instaEl2.getAttribute('href') || '#') : '#', className: 'r-nav-social-link', innerHTML: instaEl2 ? instaEl2.innerHTML : INSTA_SVG });
+    var fa = el('a', { href: fbEl2    ? (fbEl2.getAttribute('href')    || '#') : '#', className: 'r-nav-social-link', innerHTML: fbEl2    ? fbEl2.innerHTML    : FB_SVG    });
+    socials.appendChild(ia);
+    socials.appendChild(fa);
     drawer.appendChild(socials);
 
     // Toggle logic
