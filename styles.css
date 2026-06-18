@@ -3266,20 +3266,25 @@ body.blog-loading .blist-card  { visibility: hidden; }
 .adm-notes-nb-list {
   flex: 1;
   overflow-y: auto;
-  padding: 8px 0;
+  padding: 10px 12px;
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
 }
 .adm-notes-nb-item {
   display: flex;
   align-items: center;
-  gap: 8px;
-  padding: 20px 14px;
+  gap: 10px;
+  padding: 14px 16px;
   cursor: pointer;
-  border-radius: 0;
-  transition: background 0.12s;
+  border-radius: 10px;
+  border: 1px solid rgba(255,255,255,0.08);
+  background: rgba(255,255,255,0.03);
+  transition: background 0.12s, border-color 0.12s;
   position: relative;
 }
-.adm-notes-nb-item:hover { background: rgba(255,255,255,0.05); }
-.adm-notes-nb-item.active { background: rgba(208,238,82,0.08); border-left: 3px solid #d0ee52; padding-left: 11px; }
+.adm-notes-nb-item:hover { background: rgba(255,255,255,0.06); border-color: rgba(255,255,255,0.14); }
+.adm-notes-nb-item.active { background: rgba(208,238,82,0.07); border-color: #d0ee52; }
 .adm-notes-nb-icon { color: #8b8b8b; flex-shrink: 0; display: flex; }
 .adm-notes-nb-item.active .adm-notes-nb-icon { color: #d0ee52; }
 .adm-notes-nb-name {
@@ -3291,7 +3296,7 @@ body.blog-loading .blist-card  { visibility: hidden; }
   overflow: hidden;
   text-overflow: ellipsis;
 }
-.adm-notes-nb-item.active .adm-notes-nb-name { color: #ffffff; }
+.adm-notes-nb-item.active .adm-notes-nb-name { color: #ffffff; font-weight: 600; }
 .adm-notes-nb-actions {
   display: none;
   gap: 4px;
@@ -3329,17 +3334,22 @@ body.blog-loading .blist-card  { visibility: hidden; }
 .adm-notes-note-list {
   flex: 1;
   overflow-y: auto;
-  padding: 8px 0;
+  padding: 10px 12px;
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
 }
 .adm-notes-note-item {
-  padding: 11px 14px;
+  padding: 14px 16px;
   cursor: pointer;
-  border-bottom: 1px solid rgba(255,255,255,0.04);
+  border-radius: 10px;
+  border: 1px solid rgba(255,255,255,0.08);
+  background: rgba(255,255,255,0.03);
   position: relative;
-  transition: background 0.12s;
+  transition: background 0.12s, border-color 0.12s;
 }
-.adm-notes-note-item:hover { background: rgba(255,255,255,0.05); }
-.adm-notes-note-item.active { background: rgba(208,238,82,0.08); border-left: 3px solid #d0ee52; padding-left: 11px; }
+.adm-notes-note-item:hover { background: rgba(255,255,255,0.06); border-color: rgba(255,255,255,0.14); }
+.adm-notes-note-item.active { background: rgba(208,238,82,0.07); border-color: #d0ee52; }
 .adm-notes-note-title {
   font-family: 'Supreme', sans-serif;
   font-size: 16px;
