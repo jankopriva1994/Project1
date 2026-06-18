@@ -438,15 +438,22 @@
       var desc      = document.querySelector('.ai-chat-desc');
       var img       = document.querySelector('.ai-chat-img');
 
+      var fadeEls = [heading, desc, img];
+      fadeEls.forEach(function (el) { el.style.transition = 'opacity 0.18s ease'; });
+
       function activateTab(tab) {
         activeBg.style.left  = tab.bgLeft + 'px';
         activeBg.style.width = tab.bgWidth + 'px';
         tabs.forEach(function (t) {
           t.el.style.color = t === tab ? '#ffffff' : '#d0ee52';
         });
-        heading.innerHTML  = tab.heading;
-        desc.textContent   = tab.desc;
-        img.src            = tab.img;
+        fadeEls.forEach(function (el) { el.style.opacity = '0'; });
+        setTimeout(function () {
+          heading.innerHTML = tab.heading;
+          desc.textContent  = tab.desc;
+          img.src           = tab.img;
+          fadeEls.forEach(function (el) { el.style.opacity = '1'; });
+        }, 180);
       }
 
       tabs.forEach(function (tab) {
