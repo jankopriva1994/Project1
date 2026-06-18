@@ -451,6 +451,7 @@
 
       tabs.forEach(function (tab) {
         tab.el.addEventListener('click', function () { activateTab(tab); });
+        var preload = new Image(); preload.src = tab.img;
       });
     })();
 
