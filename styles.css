@@ -3236,7 +3236,7 @@ body.blog-loading .blist-card  { visibility: hidden; }
 }
 .adm-notes-col-title {
   font-family: 'Supreme', sans-serif;
-  font-size: 13px;
+  font-size: 16px;
   font-weight: 700;
   color: #ffffff;
   letter-spacing: 0.02em;
@@ -3467,7 +3467,7 @@ body.blog-loading .blist-card  { visibility: hidden; }
 /* Hints and loading */
 .adm-notes-hint, .adm-notes-loading {
   font-family: 'Supreme', sans-serif;
-  font-size: 13px;
+  font-size: 16px;
   color: #555;
   padding: 20px 16px;
   text-align: center;
