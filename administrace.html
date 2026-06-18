@@ -710,7 +710,12 @@
           </div>
           <div class="adm-notes-editor-content" id="admEditorContent" style="display:none">
             <input class="adm-notes-title-input" id="admNoteTitle" type="text" placeholder="Název poznámky…" />
-            <textarea class="adm-notes-textarea" id="admNoteContent" placeholder="Začněte psát…"></textarea>
+            <div class="adm-notes-toolbar" id="admNotesToolbar">
+              <button class="adm-notes-tb-btn" data-cmd="bold" title="Tučně (Ctrl+B)"><strong>B</strong></button>
+              <button class="adm-notes-tb-btn" data-cmd="italic" title="Kurzíva (Ctrl+I)"><em>I</em></button>
+              <button class="adm-notes-tb-btn" data-cmd="underline" title="Podtržení (Ctrl+U)"><span style="text-decoration:underline">U</span></button>
+            </div>
+            <div class="adm-notes-editor-body" id="admNoteContent" contenteditable="true" data-placeholder="Začněte psát…"></div>
             <div class="adm-notes-status-bar">
               <span id="admNoteSaveStatus">Uloženo</span>
               <span id="admNoteLastEdit"></span>
@@ -2510,9 +2515,30 @@
     var editorEmpty = document.getElementById('admEditorEmpty');
     var editorBody  = document.getElementById('admEditorContent');
     var titleInp    = document.getElementById('admNoteTitle');
-    var contentTA   = document.getElementById('admNoteContent');
+    var contentTA   = document.getElementById('admNoteContent');  // contenteditable div
     var saveStatus  = document.getElementById('admNoteSaveStatus');
     var lastEdit    = document.getElementById('admNoteLastEdit');
+
+    /* ── Toolbar ──────────────────────────────────────── */
+    document.querySelectorAll('.adm-notes-tb-btn').forEach(function (btn) {
+      btn.addEventListener('mousedown', function (e) {
+        e.preventDefault();
+        document.execCommand(btn.dataset.cmd, false, null);
+        updateToolbarState();
+        contentTA.focus();
+      });
+    });
+
+    function updateToolbarState() {
+      ['bold', 'italic', 'underline'].forEach(function (cmd) {
+        var btn = document.querySelector('.adm-notes-tb-btn[data-cmd="' + cmd + '"]');
+        if (btn) btn.classList.toggle('adm-tb-active', document.queryCommandState(cmd));
+      });
+    }
+
+    contentTA.addEventListener('keyup', updateToolbarState);
+    contentTA.addEventListener('mouseup', updateToolbarState);
+    contentTA.addEventListener('selectionchange', updateToolbarState);
 
     /* ── Helpers ──────────────────────────────────────── */
     function fmtDate(iso) {
@@ -2687,8 +2713,8 @@
     }
 
     function fillEditor(note) {
-      titleInp.value  = note.title || '';
-      contentTA.value = note.content || '';
+      titleInp.value       = note.title || '';
+      contentTA.innerHTML  = note.content || '';
       setStatus('Uloženo');
       lastEdit.textContent = note.updated_by_name && note.updated_at
         ? 'Upravil/a ' + note.updated_by_name + ' · ' + fmtDate(note.updated_at)
@@ -2708,8 +2734,8 @@
         return;
       }
 
-      titleInp.value = '';
-      contentTA.value = '';
+      titleInp.value      = '';
+      contentTA.innerHTML = '';
       setStatus('Načítám…');
       var note;
       try { note = await apiFetch('/api/notes/' + id); } catch(e) { setStatus('Chyba', true); return; }
@@ -2726,7 +2752,7 @@
     async function saveCurrentNote() {
       if (!currentNoteId) return;
       var title   = titleInp.value;
-      var content = contentTA.value;
+      var content = contentTA.innerHTML;
       try {
         var updated = await apiFetch('/api/notes/' + currentNoteId, {
           method: 'PATCH',
@@ -2749,7 +2775,7 @@
     }
 
     titleInp.addEventListener('input', scheduleSave);
-    contentTA.addEventListener('input', scheduleSave);
+    contentTA.addEventListener('input', function () { scheduleSave(); updateToolbarState(); });
 
     /* ── Create ───────────────────────────────────────── */
     addNbBtn.addEventListener('click', function () {
@@ -2791,8 +2817,8 @@
       currentNoteId = tempId;
       editorEmpty.style.display = 'none';
       editorBody.style.display  = 'flex';
-      titleInp.value  = 'Nová poznámka';
-      contentTA.value = '';
+      titleInp.value      = 'Nová poznámka';
+      contentTA.innerHTML = '';
       setStatus('Ukládám…');
       document.querySelectorAll('.adm-notes-note-item').forEach(function(el) { el.classList.toggle('active', el.dataset.id === tempId); });
       try {
