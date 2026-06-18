@@ -74,37 +74,54 @@ async function saveHistory(userId, type, title, content, tokensUsed, metadata = 
   });
 }
 
+const SYSTEM_PROMPT = 'Jsi AI asistent Chaties. Odpovídáš v češtině, pokud uživatel nepíše jinak. Jsi stručný, přesný a přátelský. Pokud tě uživatel požádá o vytvoření, generování nebo úpravu obrázku, neříkej, že to neumíš. Místo toho ho zdvořile přesměruj: "Pro generování obrázků použij náš nástroj Generování obrázků – najdeš ho v levém menu. Stačí popsat, co chceš vidět, a obrázek se vytvoří automaticky." Žádné další vysvětlování ani doporučení externích nástrojů.';
+
 // ── POST /api/ai/chat ──────────────────────────────────────────
 router.post('/chat', requireAuth, async (req, res) => {
-  const { message, history = [] } = req.body;
+  const { message, history = [], model = 'claude-sonnet-4-6', provider = 'anthropic' } = req.body;
   if (!message) return res.status(400).json({ error: 'Chybí zpráva' });
 
   const effectiveId = await getEffectiveUserId(req.user.id);
-  const check = await deductTokens(effectiveId, 10, `Chat: ${message.slice(0, 50)}`);
+  const check = await deductTokens(effectiveId, 10, `Chat (${model}): ${message.slice(0, 50)}`);
   if (!check.ok) return res.status(402).json({ error: check.error });
 
   try {
-    const messages = [
-      ...history.map(m => ({ role: m.role, content: m.content })),
-      { role: 'user', content: message }
-    ];
+    let reply, tokensUsed;
 
-    const response = await anthropic.messages.create({
-      model: 'claude-sonnet-4-6',
-      max_tokens: 2048,
-      system: 'Jsi AI asistent Chaties. Odpovídáš v češtině, pokud uživatel nepíše jinak. Jsi stručný, přesný a přátelský. Pokud tě uživatel požádá o vytvoření, generování nebo úpravu obrázku, neříkej, že to neumíš. Místo toho ho zdvořile přesměruj: "Pro generování obrázků použij náš nástroj Generování obrázků – najdeš ho v levém menu. Stačí popsat, co chceš vidět, a obrázek se vytvoří automaticky." Žádné další vysvětlování ani doporučení externích nástrojů.',
-      messages
-    });
+    if (provider === 'openai') {
+      const oaiMessages = [
+        { role: 'system', content: SYSTEM_PROMPT },
+        ...history.map(m => ({ role: m.role, content: m.content })),
+        { role: 'user', content: message }
+      ];
+      const response = await openai.chat.completions.create({
+        model,
+        max_tokens: 2048,
+        messages: oaiMessages
+      });
+      reply      = response.choices[0].message.content;
+      tokensUsed = response.usage.prompt_tokens + response.usage.completion_tokens;
+    } else {
+      const anthropicMessages = [
+        ...history.map(m => ({ role: m.role, content: m.content })),
+        { role: 'user', content: message }
+      ];
+      const response = await anthropic.messages.create({
+        model,
+        max_tokens: 2048,
+        system: SYSTEM_PROMPT,
+        messages: anthropicMessages
+      });
+      reply      = response.content[0].text;
+      tokensUsed = response.usage.input_tokens + response.usage.output_tokens;
+    }
 
-    const reply = response.content[0].text;
-    const tokensUsed = response.usage.input_tokens + response.usage.output_tokens;
-
-    await saveHistory(req.user.id, 'chat', message.slice(0, 80), reply, tokensUsed);
+    await saveHistory(req.user.id, 'chat', message.slice(0, 80), reply, tokensUsed, { model });
 
     res.json({ reply, tokens_used: tokensUsed });
   } catch (err) {
     console.error('Chat error:', err);
-    res.status(500).json({ error: 'Chyba při generování odpovědi' });
+    res.status(500).json({ error: 'Chyba při generování odpovědi: ' + (err.message || '') });
   }
 });
 
