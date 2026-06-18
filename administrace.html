@@ -2490,6 +2490,7 @@
     var currentNoteId     = null;
     var saveTimer         = null;
     var realtimeChannel   = null;
+    var lastSaveTime      = 0;
 
     /* ── DOM refs ─────────────────────────────────────── */
     var nbList      = document.getElementById('admNotebookList');
@@ -2687,11 +2688,11 @@
           method: 'PATCH',
           body: JSON.stringify({ title, content })
         });
+        lastSaveTime = Date.now();
         setStatus('Uloženo');
         if (updated.updated_by_name && updated.updated_at) {
           lastEdit.textContent = 'Upravil/a ' + updated.updated_by_name + ' · ' + fmtDate(updated.updated_at);
         }
-        // Update note item title in list
         var listItem = noteList.querySelector('[data-id="' + currentNoteId + '"] .adm-notes-note-title');
         if (listItem) listItem.textContent = title || 'Bez názvu';
       } catch(e) { setStatus('Chyba uložení', true); }
@@ -2701,28 +2702,64 @@
     contentTA.addEventListener('input', scheduleSave);
 
     /* ── Create ───────────────────────────────────────── */
-    addNbBtn.addEventListener('click', async function () {
-      var name = prompt('Název záložky:');
-      if (!name || !name.trim()) return;
-      try { await apiFetch('/api/notes/notebooks', { method: 'POST', body: JSON.stringify({ name: name.trim() }) }); }
-      catch(e) { return; }
-      await loadNotebooks();
+    addNbBtn.addEventListener('click', function () {
+      if (nbList.querySelector('.adm-notes-new-nb-row')) return;
+      var row = document.createElement('div');
+      row.className = 'adm-notes-nb-item adm-notes-new-nb-row';
+      var inp = document.createElement('input');
+      inp.className = 'adm-notes-rename-inp';
+      inp.style.width = '100%';
+      inp.placeholder = 'Název záložky…';
+      row.appendChild(inp);
+      nbList.insertBefore(row, nbList.firstChild);
+      inp.focus();
+
+      async function commit() {
+        var name = inp.value.trim();
+        row.remove();
+        if (!name) return;
+        var tempNb = { id: 'temp-' + Date.now(), name: name };
+        var tempEl = renderNotebook(tempNb);
+        nbList.appendChild(tempEl);
+        try {
+          var nb = await apiFetch('/api/notes/notebooks', { method: 'POST', body: JSON.stringify({ name: name }) });
+          tempEl.dataset.id = nb.id;
+          tempNb.id = nb.id;
+        } catch(e) { tempEl.remove(); }
+      }
+      inp.addEventListener('blur', commit);
+      inp.addEventListener('keydown', function(e) { if (e.key === 'Enter') inp.blur(); if (e.key === 'Escape') row.remove(); });
     });
 
     addNoteBtn.addEventListener('click', async function () {
       if (!currentNotebookId) return;
-      var note;
-      try { note = await apiFetch('/api/notes', { method: 'POST', body: JSON.stringify({ notebook_id: currentNotebookId, title: 'Nová poznámka' }) }); }
-      catch(e) { return; }
-      await loadNotes(currentNotebookId);
-      openNote(note.id);
+      var tempId = 'temp-' + Date.now();
+      var tempNote = { id: tempId, title: 'Nová poznámka', updated_at: new Date().toISOString(), updated_by_name: '' };
+      var tempEl = renderNote(tempNote);
+      if (noteList.querySelector('.adm-notes-hint')) noteList.innerHTML = '';
+      noteList.insertBefore(tempEl, noteList.firstChild);
+      currentNoteId = tempId;
+      editorEmpty.style.display = 'none';
+      editorBody.style.display  = 'flex';
+      titleInp.value  = 'Nová poznámka';
+      contentTA.value = '';
+      setStatus('Ukládám…');
+      document.querySelectorAll('.adm-notes-note-item').forEach(function(el) { el.classList.toggle('active', el.dataset.id === tempId); });
+      try {
+        var note = await apiFetch('/api/notes', { method: 'POST', body: JSON.stringify({ notebook_id: currentNotebookId, title: 'Nová poznámka' }) });
+        tempEl.dataset.id = note.id;
+        currentNoteId = note.id;
+        setStatus('Uloženo');
+      } catch(e) { tempEl.remove(); showEditorEmpty(); setStatus('Chyba', true); }
     });
 
     async function deleteNote(id) {
       if (!confirm('Smazat tuto poznámku?')) return;
-      try { await apiFetch('/api/notes/' + id, { method: 'DELETE' }); } catch(e) { return; }
+      var el = noteList.querySelector('[data-id="' + id + '"]');
+      if (el) el.remove();
       if (currentNoteId === id) showEditorEmpty();
-      loadNotes(currentNotebookId);
+      try { await apiFetch('/api/notes/' + id, { method: 'DELETE' }); } catch(e) {}
+      if (!noteList.children.length) noteList.innerHTML = '<div class="adm-notes-hint">Žádné poznámky</div>';
     }
 
     /* ── Realtime ─────────────────────────────────────── */
@@ -2732,13 +2769,11 @@
         .channel('notes-realtime')
         .on('postgres_changes', { event: '*', schema: 'public', table: 'notes' }, function (payload) {
           if (!currentNotebookId) return;
-          // Refresh notes list
-          loadNotes(currentNotebookId);
-          // If another user edited the current note, reload it
+          var isOwnSave = (Date.now() - lastSaveTime) < 2500;
+          if (!isOwnSave) loadNotes(currentNotebookId);
           var changed = payload.new || payload.old;
-          if (changed && changed.id === currentNoteId && payload.eventType === 'UPDATE') {
-            // Only update if we're not currently saving
-            if (saveStatus && saveStatus.textContent === 'Uloženo') openNote(currentNoteId);
+          if (changed && changed.id === currentNoteId && payload.eventType === 'UPDATE' && !isOwnSave) {
+            openNote(currentNoteId);
           }
         })
         .subscribe();

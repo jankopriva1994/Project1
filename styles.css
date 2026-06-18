@@ -3196,6 +3196,9 @@ body.cms-loading [data-cms-key] { visibility: hidden; }
 body.blog-loading .blist-card  { visibility: hidden; }
 
 /* ===================== NOTES PANEL ===================== */
+/* Force Supreme on every element inside notes */
+.adm-notes-layout, .adm-notes-layout * { font-family: 'Supreme', sans-serif; }
+
 .adm-notes-layout {
   display: flex;
   height: calc(100vh - 80px);
@@ -3241,17 +3244,20 @@ body.blog-loading .blist-card  { visibility: hidden; }
 
 /* + button */
 .adm-notes-add-btn {
-  width: 28px; height: 28px;
-  background: rgba(208,238,82,0.1);
-  border: 1px solid rgba(208,238,82,0.3);
+  width: 26px; height: 26px;
+  background: #d0ee52;
+  border: none;
   border-radius: 6px;
-  color: #d0ee52;
+  color: #0d0e11;
+  font-size: 18px;
+  font-weight: 700;
+  line-height: 1;
   cursor: pointer;
   display: flex; align-items: center; justify-content: center;
   flex-shrink: 0;
-  transition: background 0.15s;
+  transition: opacity 0.15s;
 }
-.adm-notes-add-btn:hover { background: rgba(208,238,82,0.2); }
+.adm-notes-add-btn:hover { opacity: 0.85; }
 
 /* Notebook list */
 .adm-notes-nb-list {
@@ -3263,7 +3269,7 @@ body.blog-loading .blist-card  { visibility: hidden; }
   display: flex;
   align-items: center;
   gap: 8px;
-  padding: 9px 14px;
+  padding: 20px 14px;
   cursor: pointer;
   border-radius: 0;
   transition: background 0.12s;
