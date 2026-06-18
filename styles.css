@@ -2792,7 +2792,7 @@ body {
 /* Sidebar labels */
 .adm-sidebar-label { position: absolute; left: 56px; font-size: 16px; font-weight: 700; color: #d0ee52; font-family: 'Supreme', sans-serif; }
 .adm-sidebar-services { top: 185px; }
-.adm-sidebar-other { top: 473px; }
+.adm-sidebar-other { top: 518px; }
 
 /* Nav items */
 .adm-nav-item { position: absolute; left: 56px; display: flex; align-items: center; gap: 12px; font-size: 16px; font-weight: 400; color: #8b8b8b; text-decoration: none; font-family: 'Supreme', sans-serif; white-space: nowrap; cursor: pointer; }
@@ -2803,10 +2803,11 @@ body {
 .adm-nav-translator { top: 312px; }
 .adm-nav-docs { top: 357px; }
 .adm-nav-templates { top: 402px; }
-.adm-sidebar-divider { position: absolute; left: 56px; top: 447px; width: 152px; height: 1px; background: #333333; }
-.adm-nav-history { top: 510px; }
-.adm-nav-support { top: 555px; }
-.adm-nav-tokens { top: 555px; }
+.adm-nav-notes     { top: 447px; }
+.adm-sidebar-divider { position: absolute; left: 56px; top: 492px; width: 152px; height: 1px; background: #333333; }
+.adm-nav-history { top: 555px; }
+.adm-nav-support { top: 600px; }
+.adm-nav-tokens { top: 600px; }
 
 /* Words widget */
 .adm-words-widget { position: fixed; left: 56px; bottom: 32px; width: 170px; height: 75px; background: #272727; border-radius: 8px; display: flex; flex-direction: column; justify-content: center; padding: 0 16px; box-sizing: border-box; z-index: 100; }
