@@ -22,9 +22,15 @@
   <meta name="twitter:description" content="Nejrychlejší česká AI platforma. Generujte obsah, překlady a obrázky během vteřin." />
   <meta name="twitter:image" content="https://chaties.cz/assets/img/og-image.jpg" />
   <meta name="robots" content="index, follow" />
+  <!-- Preconnect / DNS-prefetch -->
+  <link rel="preconnect" href="https://project1-production-bfde.up.railway.app">
+  <link rel="dns-prefetch" href="https://project1-production-bfde.up.railway.app">
+  <link rel="preconnect" href="https://cdn.jsdelivr.net" crossorigin>
+  <link rel="dns-prefetch" href="https://cdn.jsdelivr.net">
+  <link rel="dns-prefetch" href="https://www.googletagmanager.com">
   <link rel="preload" href="assets/fonts/Supreme-Regular.woff" as="font" type="font/woff" crossorigin />
   <link rel="preload" href="assets/fonts/Supreme-Bold.woff" as="font" type="font/woff" crossorigin />
-  <link rel="stylesheet" href="styles.css?v=91" />
+  <link rel="stylesheet" href="styles.css?v=92" />
   <link rel="stylesheet" href="responsive.css?v=19" />
   <!-- Google Analytics -->
   <script async src="https://www.googletagmanager.com/gtag/js?id=G-Z675BBJZF3"></script>
@@ -102,8 +108,10 @@
     <div class="nav-separator"></div>
 
     <!-- ==================== HERO ==================== -->
+    <!-- Na mobilu je hero-wave skryta (display:none v responsive.css) – srcset zabrání stažení 326 KB PNG -->
     <picture>
-      <img class="hero-wave" src="assets/img/auth_wave.png?v=2" alt="" />
+      <source media="(min-width: 1024px)" srcset="assets/img/auth_wave.png?v=2">
+      <img class="hero-wave" src="data:image/gif;base64,R0lGODlhAQABAIAAAAAAAP///yH5BAEAAAAALAAAAAABAAEAAAIBRAA7" alt="" width="1" height="1">
     </picture>
 
     <h1 class="hero-headline" data-cms-key="home_hero_title" style="opacity:0;transform:translateY(70px)">
@@ -257,6 +265,7 @@
       class="ai-chat-img"
       src="assets/img/tab-chat.jpg"
       alt="Chat AI"
+      loading="lazy"
     />
 
     <div class="ai-chat-separator"></div>
@@ -368,11 +377,12 @@
 
   </div><!-- /.page -->
 
-  <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2/dist/umd/supabase.min.js"></script>
-  <script src="js/chaties.js?v=2"></script>
+  <!-- defer: stáhnou se paralelně, nezdržují parsování HTML -->
+  <script defer src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2/dist/umd/supabase.min.js"></script>
+  <script defer src="js/chaties.js?v=2"></script>
   <script>
-    // Dynamic navbar CTA
-    (async function () {
+    // Dynamic navbar CTA – čeká na defer skripty (DOMContentLoaded jde až po nich)
+    document.addEventListener('DOMContentLoaded', async function () {
       try {
         var user = await getUser();
         var cta   = document.querySelector('.nav-cta');
@@ -381,7 +391,7 @@
         if (cta)   { cta.href = 'administrace.html'; cta.innerHTML = 'Vstup do <span class="accent" style="margin-left:4px;">členské sekce</span>'; }
         if (login) login.style.display = 'none';
       } catch (e) {}
-    })();
+    });
   </script>
   <script>
     // CMS content loader

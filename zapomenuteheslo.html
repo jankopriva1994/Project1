@@ -11,6 +11,12 @@
   <meta name="description" content="Obnovte své heslo k účtu Chaties.cz." />
   <link rel="canonical" href="https://chaties.cz/zapomenuteheslo.html" />
   <meta name="robots" content="noindex, follow" />
+  <!-- Preconnect / DNS-prefetch -->
+  <link rel="preconnect" href="https://project1-production-bfde.up.railway.app">
+  <link rel="dns-prefetch" href="https://project1-production-bfde.up.railway.app">
+  <link rel="preconnect" href="https://cdn.jsdelivr.net" crossorigin>
+  <link rel="dns-prefetch" href="https://cdn.jsdelivr.net">
+  <link rel="dns-prefetch" href="https://www.googletagmanager.com">
   <link rel="preload" href="assets/fonts/Supreme-Regular.woff" as="font" type="font/woff" crossorigin />
   <link rel="preload" href="assets/fonts/Supreme-Bold.woff" as="font" type="font/woff" crossorigin />
   <link rel="stylesheet" href="styles.css?v=33" />
@@ -68,8 +74,8 @@
 
   </div><!-- /.page -->
 
-  <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2/dist/umd/supabase.min.js"></script>
-  <script src="js/chaties.js?v=2"></script>
+  <script defer src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2/dist/umd/supabase.min.js"></script>
+  <script defer src="js/chaties.js?v=2"></script>
   <script>
   (function () {
     var btn = document.getElementById('zap-btn');
