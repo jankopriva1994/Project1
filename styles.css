@@ -3284,7 +3284,7 @@ body.blog-loading .blist-card  { visibility: hidden; }
 .adm-notes-nb-item.active .adm-notes-nb-icon { color: #d0ee52; }
 .adm-notes-nb-name {
   font-family: 'Supreme', sans-serif;
-  font-size: 13px;
+  font-size: 16px;
   color: #cccccc;
   flex: 1;
   white-space: nowrap;
@@ -3342,7 +3342,7 @@ body.blog-loading .blist-card  { visibility: hidden; }
 .adm-notes-note-item.active { background: rgba(208,238,82,0.08); border-left: 3px solid #d0ee52; padding-left: 11px; }
 .adm-notes-note-title {
   font-family: 'Supreme', sans-serif;
-  font-size: 13px;
+  font-size: 16px;
   font-weight: 600;
   color: #ffffff;
   white-space: nowrap;
@@ -3352,7 +3352,7 @@ body.blog-loading .blist-card  { visibility: hidden; }
 }
 .adm-notes-note-meta {
   font-family: 'Supreme', sans-serif;
-  font-size: 11px;
+  font-size: 13px;
   color: #8b8b8b;
   white-space: nowrap;
   overflow: hidden;
