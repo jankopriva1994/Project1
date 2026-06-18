@@ -9,7 +9,7 @@
   <link rel="manifest" href="/site.webmanifest" />
   <meta name="robots" content="noindex,nofollow" />
   <title>Administrace – Chaties AI</title>
-  <link rel="stylesheet" href="styles.css?v=96" />
+  <link rel="stylesheet" href="styles.css?v=97" />
   <style>body { overflow: hidden; }</style>
   <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2/dist/umd/supabase.min.js"></script>
   <script src="https://cdnjs.cloudflare.com/ajax/libs/mammoth/1.6.0/mammoth.browser.min.js"></script>
@@ -87,6 +87,12 @@
     <a href="#" class="adm-nav-item adm-nav-templates" data-panel="templates">
       <svg width="20" height="20" viewBox="0 0 24 24" fill="none"><path d="M13 2L3 14h9l-1 8 10-12h-9l1-8z" stroke="currentColor" stroke-width="1.5"/></svg>
       Šablony
+    </a>
+
+    <!-- Nav: Poznámky -->
+    <a href="#" class="adm-nav-item adm-nav-notes" data-panel="notes">
+      <svg width="20" height="20" viewBox="0 0 24 24" fill="none"><path d="M11 4H4a2 2 0 0 0-2 2v14a2 2 0 0 0 2 2h14a2 2 0 0 0 2-2v-7" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"/><path d="M18.5 2.5a2.121 2.121 0 0 1 3 3L12 15l-4 1 1-4 9.5-9.5z" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg>
+      Poznámky
     </a>
 
     <!-- Sidebar divider -->
@@ -668,6 +674,52 @@
 
     </div><!-- /adm-panel-templates -->
 
+    <!-- PANEL: POZNÁMKY -->
+    <div class="adm-panel adm-panel-notes" data-panel-id="notes">
+      <div class="adm-notes-layout">
+
+        <!-- Column 1: Záložky (notebooks) -->
+        <div class="adm-notes-col adm-notes-col-nb">
+          <div class="adm-notes-col-hdr">
+            <span class="adm-notes-col-title">Záložky</span>
+            <button class="adm-notes-add-btn" id="admAddNotebook" title="Nová záložka">
+              <svg width="16" height="16" viewBox="0 0 24 24" fill="none"><path d="M12 5v14M5 12h14" stroke="currentColor" stroke-width="2" stroke-linecap="round"/></svg>
+            </button>
+          </div>
+          <div class="adm-notes-nb-list" id="admNotebookList"></div>
+        </div>
+
+        <!-- Column 2: Poznámky v záložce -->
+        <div class="adm-notes-col adm-notes-col-list" id="admNotesListCol">
+          <div class="adm-notes-col-hdr">
+            <span class="adm-notes-col-title" id="admNotesColTitle">Vyberte záložku</span>
+            <button class="adm-notes-add-btn" id="admAddNote" title="Nová poznámka" style="display:none">
+              <svg width="16" height="16" viewBox="0 0 24 24" fill="none"><path d="M12 5v14M5 12h14" stroke="currentColor" stroke-width="2" stroke-linecap="round"/></svg>
+            </button>
+          </div>
+          <div class="adm-notes-note-list" id="admNoteList">
+            <div class="adm-notes-hint">← Vyberte záložku</div>
+          </div>
+        </div>
+
+        <!-- Column 3: Editor -->
+        <div class="adm-notes-col adm-notes-col-editor" id="admNoteEditor">
+          <div class="adm-notes-editor-empty" id="admEditorEmpty">
+            <svg width="44" height="44" viewBox="0 0 24 24" fill="none"><path d="M11 4H4a2 2 0 0 0-2 2v14a2 2 0 0 0 2 2h14a2 2 0 0 0 2-2v-7" stroke="#444" stroke-width="1.5"/><path d="M18.5 2.5a2.121 2.121 0 0 1 3 3L12 15l-4 1 1-4 9.5-9.5z" stroke="#444" stroke-width="1.5"/></svg>
+            <p>Vyberte poznámku nebo vytvořte novou</p>
+          </div>
+          <div class="adm-notes-editor-content" id="admEditorContent" style="display:none">
+            <input class="adm-notes-title-input" id="admNoteTitle" type="text" placeholder="Název poznámky…" />
+            <textarea class="adm-notes-textarea" id="admNoteContent" placeholder="Začněte psát…"></textarea>
+            <div class="adm-notes-status-bar">
+              <span id="admNoteSaveStatus">Uloženo</span>
+              <span id="admNoteLastEdit"></span>
+            </div>
+          </div>
+        </div>
+
+      </div>
+    </div><!-- /adm-panel-notes -->
 
     <!-- PANEL 6b: TEMPLATE DETAIL -->
     <div class="adm-panel adm-panel-tmpl-detail" data-panel-id="tmpl-detail">
@@ -2428,6 +2480,296 @@
     }
     align();
     window.addEventListener('resize', align);
+  })();
+  </script>
+
+  <!-- ==================== NOTES MODULE ==================== -->
+  <script>
+  (function () {
+    var currentNotebookId = null;
+    var currentNoteId     = null;
+    var saveTimer         = null;
+    var realtimeChannel   = null;
+
+    /* ── DOM refs ─────────────────────────────────────── */
+    var nbList      = document.getElementById('admNotebookList');
+    var noteList    = document.getElementById('admNoteList');
+    var colTitle    = document.getElementById('admNotesColTitle');
+    var addNbBtn    = document.getElementById('admAddNotebook');
+    var addNoteBtn  = document.getElementById('admAddNote');
+    var editorEmpty = document.getElementById('admEditorEmpty');
+    var editorBody  = document.getElementById('admEditorContent');
+    var titleInp    = document.getElementById('admNoteTitle');
+    var contentTA   = document.getElementById('admNoteContent');
+    var saveStatus  = document.getElementById('admNoteSaveStatus');
+    var lastEdit    = document.getElementById('admNoteLastEdit');
+
+    /* ── Helpers ──────────────────────────────────────── */
+    function fmtDate(iso) {
+      if (!iso) return '';
+      var d = new Date(iso);
+      return d.toLocaleDateString('cs-CZ') + ' ' + d.toLocaleTimeString('cs-CZ', { hour: '2-digit', minute: '2-digit' });
+    }
+
+    function setStatus(txt, err) {
+      if (!saveStatus) return;
+      saveStatus.textContent = txt;
+      saveStatus.style.color = err ? '#ff5555' : '#8b8b8b';
+    }
+
+    /* ── Notebooks ────────────────────────────────────── */
+    async function loadNotebooks() {
+      nbList.innerHTML = '<div class="adm-notes-loading">Načítám…</div>';
+      var nbs;
+      try { nbs = await apiFetch('/api/notes/notebooks'); } catch(e) { nbList.innerHTML = '<div class="adm-notes-hint">Chyba načítání</div>'; return; }
+      nbList.innerHTML = '';
+      if (!nbs.length) { nbList.innerHTML = '<div class="adm-notes-hint">Žádné záložky</div>'; return; }
+      nbs.forEach(function (nb) { nbList.appendChild(renderNotebook(nb)); });
+    }
+
+    function renderNotebook(nb) {
+      var item = document.createElement('div');
+      item.className = 'adm-notes-nb-item' + (nb.id === currentNotebookId ? ' active' : '');
+      item.dataset.id = nb.id;
+
+      var icon = document.createElement('span');
+      icon.className = 'adm-notes-nb-icon';
+      icon.innerHTML = '<svg width="15" height="15" viewBox="0 0 24 24" fill="none"><path d="M2 4a2 2 0 0 1 2-2h16a2 2 0 0 1 2 2v16a2 2 0 0 1-2 2H4a2 2 0 0 1-2-2V4z" stroke="currentColor" stroke-width="1.5"/><path d="M8 2v20M8 7h6M8 11h6" stroke="currentColor" stroke-width="1.3"/></svg>';
+
+      var name = document.createElement('span');
+      name.className = 'adm-notes-nb-name';
+      name.textContent = nb.name;
+
+      var actions = document.createElement('span');
+      actions.className = 'adm-notes-nb-actions';
+
+      var renBtn = document.createElement('button');
+      renBtn.className = 'adm-notes-icon-btn';
+      renBtn.title = 'Přejmenovat';
+      renBtn.innerHTML = '<svg width="13" height="13" viewBox="0 0 24 24" fill="none"><path d="M11 4H4a2 2 0 0 0-2 2v14a2 2 0 0 0 2 2h14a2 2 0 0 0 2-2v-7" stroke="currentColor" stroke-width="1.5"/><path d="M18.5 2.5a2.121 2.121 0 0 1 3 3L12 15l-4 1 1-4 9.5-9.5z" stroke="currentColor" stroke-width="1.5"/></svg>';
+      renBtn.onclick = function (e) { e.stopPropagation(); startRenameNotebook(nb, item, name); };
+
+      var delBtn = document.createElement('button');
+      delBtn.className = 'adm-notes-icon-btn adm-notes-icon-del';
+      delBtn.title = 'Smazat záložku';
+      delBtn.innerHTML = '<svg width="13" height="13" viewBox="0 0 24 24" fill="none"><polyline points="3 6 5 6 21 6" stroke="currentColor" stroke-width="1.5"/><path d="M19 6l-1 14H6L5 6" stroke="currentColor" stroke-width="1.5"/><path d="M10 11v6M14 11v6M9 6V4h6v2" stroke="currentColor" stroke-width="1.5"/></svg>';
+      delBtn.onclick = function (e) { e.stopPropagation(); deleteNotebook(nb.id); };
+
+      actions.appendChild(renBtn);
+      actions.appendChild(delBtn);
+      item.appendChild(icon);
+      item.appendChild(name);
+      item.appendChild(actions);
+      item.addEventListener('click', function () { selectNotebook(nb.id, nb.name); });
+      return item;
+    }
+
+    function startRenameNotebook(nb, item, nameEl) {
+      var inp = document.createElement('input');
+      inp.className = 'adm-notes-rename-inp';
+      inp.value = nb.name;
+      nameEl.replaceWith(inp);
+      inp.focus(); inp.select();
+      async function commit() {
+        var val = inp.value.trim();
+        if (!val || val === nb.name) { inp.replaceWith(nameEl); return; }
+        try {
+          var updated = await apiFetch('/api/notes/notebooks/' + nb.id, { method: 'PATCH', body: JSON.stringify({ name: val }) });
+          nb.name = updated.name;
+          nameEl.textContent = updated.name;
+        } catch(e) {}
+        inp.replaceWith(nameEl);
+      }
+      inp.addEventListener('blur', commit);
+      inp.addEventListener('keydown', function (e) { if (e.key === 'Enter') inp.blur(); if (e.key === 'Escape') { inp.value = nb.name; inp.blur(); } });
+    }
+
+    async function deleteNotebook(id) {
+      if (!confirm('Smazat záložku a všechny její poznámky?')) return;
+      try { await apiFetch('/api/notes/notebooks/' + id, { method: 'DELETE' }); } catch(e) { return; }
+      if (currentNotebookId === id) {
+        currentNotebookId = null; currentNoteId = null;
+        noteList.innerHTML = '<div class="adm-notes-hint">← Vyberte záložku</div>';
+        colTitle.textContent = 'Vyberte záložku';
+        addNoteBtn.style.display = 'none';
+        showEditorEmpty();
+      }
+      loadNotebooks();
+    }
+
+    async function selectNotebook(id, name) {
+      currentNotebookId = id;
+      currentNoteId = null;
+      colTitle.textContent = name;
+      addNoteBtn.style.display = 'flex';
+      showEditorEmpty();
+      document.querySelectorAll('.adm-notes-nb-item').forEach(function (el) {
+        el.classList.toggle('active', el.dataset.id === id);
+      });
+      await loadNotes(id);
+    }
+
+    /* ── Notes list ───────────────────────────────────── */
+    async function loadNotes(notebookId) {
+      noteList.innerHTML = '<div class="adm-notes-loading">Načítám…</div>';
+      var notes;
+      try { notes = await apiFetch('/api/notes?notebook_id=' + notebookId); } catch(e) { noteList.innerHTML = '<div class="adm-notes-hint">Chyba</div>'; return; }
+      noteList.innerHTML = '';
+      if (!notes.length) { noteList.innerHTML = '<div class="adm-notes-hint">Žádné poznámky</div>'; return; }
+      notes.forEach(function (n) { noteList.appendChild(renderNote(n)); });
+    }
+
+    function renderNote(n) {
+      var item = document.createElement('div');
+      item.className = 'adm-notes-note-item' + (n.id === currentNoteId ? ' active' : '');
+      item.dataset.id = n.id;
+
+      var title = document.createElement('div');
+      title.className = 'adm-notes-note-title';
+      title.textContent = n.title || 'Bez názvu';
+
+      var meta = document.createElement('div');
+      meta.className = 'adm-notes-note-meta';
+      meta.textContent = fmtDate(n.updated_at) + (n.updated_by_name ? ' · ' + n.updated_by_name : '');
+
+      var del = document.createElement('button');
+      del.className = 'adm-notes-icon-btn adm-notes-icon-del adm-notes-note-del';
+      del.title = 'Smazat';
+      del.innerHTML = '<svg width="13" height="13" viewBox="0 0 24 24" fill="none"><polyline points="3 6 5 6 21 6" stroke="currentColor" stroke-width="1.5"/><path d="M19 6l-1 14H6L5 6M10 11v6M14 11v6M9 6V4h6v2" stroke="currentColor" stroke-width="1.5"/></svg>';
+      del.onclick = function (e) { e.stopPropagation(); deleteNote(n.id); };
+
+      item.appendChild(title);
+      item.appendChild(meta);
+      item.appendChild(del);
+      item.addEventListener('click', function () { openNote(n.id); });
+      return item;
+    }
+
+    /* ── Note editor ──────────────────────────────────── */
+    function showEditorEmpty() {
+      editorEmpty.style.display = 'flex';
+      editorBody.style.display  = 'none';
+      currentNoteId = null;
+    }
+
+    async function openNote(id) {
+      currentNoteId = id;
+      document.querySelectorAll('.adm-notes-note-item').forEach(function (el) {
+        el.classList.toggle('active', el.dataset.id === id);
+      });
+      editorEmpty.style.display = 'none';
+      editorBody.style.display  = 'flex';
+      titleInp.value = '';
+      contentTA.value = '';
+      setStatus('Načítám…');
+      var note;
+      try { note = await apiFetch('/api/notes/' + id); } catch(e) { setStatus('Chyba', true); return; }
+      titleInp.value   = note.title || '';
+      contentTA.value  = note.content || '';
+      setStatus('Uloženo');
+      if (note.updated_by_name && note.updated_at) {
+        lastEdit.textContent = 'Upravil/a ' + note.updated_by_name + ' · ' + fmtDate(note.updated_at);
+      }
+    }
+
+    function scheduleSave() {
+      setStatus('Ukládám…');
+      clearTimeout(saveTimer);
+      saveTimer = setTimeout(saveCurrentNote, 1000);
+    }
+
+    async function saveCurrentNote() {
+      if (!currentNoteId) return;
+      var title   = titleInp.value;
+      var content = contentTA.value;
+      try {
+        var updated = await apiFetch('/api/notes/' + currentNoteId, {
+          method: 'PATCH',
+          body: JSON.stringify({ title, content })
+        });
+        setStatus('Uloženo');
+        if (updated.updated_by_name && updated.updated_at) {
+          lastEdit.textContent = 'Upravil/a ' + updated.updated_by_name + ' · ' + fmtDate(updated.updated_at);
+        }
+        // Update note item title in list
+        var listItem = noteList.querySelector('[data-id="' + currentNoteId + '"] .adm-notes-note-title');
+        if (listItem) listItem.textContent = title || 'Bez názvu';
+      } catch(e) { setStatus('Chyba uložení', true); }
+    }
+
+    titleInp.addEventListener('input', scheduleSave);
+    contentTA.addEventListener('input', scheduleSave);
+
+    /* ── Create ───────────────────────────────────────── */
+    addNbBtn.addEventListener('click', async function () {
+      var name = prompt('Název záložky:');
+      if (!name || !name.trim()) return;
+      try { await apiFetch('/api/notes/notebooks', { method: 'POST', body: JSON.stringify({ name: name.trim() }) }); }
+      catch(e) { return; }
+      await loadNotebooks();
+    });
+
+    addNoteBtn.addEventListener('click', async function () {
+      if (!currentNotebookId) return;
+      var note;
+      try { note = await apiFetch('/api/notes', { method: 'POST', body: JSON.stringify({ notebook_id: currentNotebookId, title: 'Nová poznámka' }) }); }
+      catch(e) { return; }
+      await loadNotes(currentNotebookId);
+      openNote(note.id);
+    });
+
+    async function deleteNote(id) {
+      if (!confirm('Smazat tuto poznámku?')) return;
+      try { await apiFetch('/api/notes/' + id, { method: 'DELETE' }); } catch(e) { return; }
+      if (currentNoteId === id) showEditorEmpty();
+      loadNotes(currentNotebookId);
+    }
+
+    /* ── Realtime ─────────────────────────────────────── */
+    function subscribeRealtime() {
+      if (realtimeChannel) supabase.removeChannel(realtimeChannel);
+      realtimeChannel = supabase
+        .channel('notes-realtime')
+        .on('postgres_changes', { event: '*', schema: 'public', table: 'notes' }, function (payload) {
+          if (!currentNotebookId) return;
+          // Refresh notes list
+          loadNotes(currentNotebookId);
+          // If another user edited the current note, reload it
+          var changed = payload.new || payload.old;
+          if (changed && changed.id === currentNoteId && payload.eventType === 'UPDATE') {
+            // Only update if we're not currently saving
+            if (saveStatus && saveStatus.textContent === 'Uloženo') openNote(currentNoteId);
+          }
+        })
+        .subscribe();
+    }
+
+    function subscribeNotebooksRealtime() {
+      supabase
+        .channel('notebooks-realtime')
+        .on('postgres_changes', { event: '*', schema: 'public', table: 'note_notebooks' }, function () {
+          loadNotebooks();
+        })
+        .subscribe();
+    }
+
+    /* ── Init ─────────────────────────────────────────── */
+    document.querySelectorAll('[data-panel]').forEach(function (el) {
+      el.addEventListener('click', function () {
+        if (el.getAttribute('data-panel') === 'notes') {
+          loadNotebooks();
+          subscribeRealtime();
+          subscribeNotebooksRealtime();
+        }
+      });
+    });
+
+    // Init if notes panel is already active on load
+    if (sessionStorage.getItem('adm_panel') === 'notes') {
+      loadNotebooks();
+      subscribeRealtime();
+      subscribeNotebooksRealtime();
+    }
   })();
   </script>
 

@@ -3915,3 +3915,21 @@
 .r-auth-mobile .rim-footer {
   border-top: none;
 }
+
+/* ===================== NOTES – MOBILE ===================== */
+@media (max-width: 1023px) {
+  .adm-notes-layout {
+    flex-direction: column;
+    height: auto;
+  }
+  .adm-notes-col { border-right: none; border-bottom: 1px solid rgba(255,255,255,0.07); }
+  .adm-notes-col:last-child { border-bottom: none; }
+  .adm-notes-col-nb   { width: 100%; }
+  .adm-notes-col-list { width: 100%; }
+  .adm-notes-col-editor { min-height: 60vh; }
+  .adm-notes-nb-actions { display: flex; }
+  .adm-notes-note-del { display: flex; }
+  .adm-notes-title-input { font-size: 16px; padding: 14px 16px 12px; }
+  .adm-notes-textarea { padding: 12px 16px; font-size: 14px; }
+  .adm-notes-status-bar { padding: 8px 16px; }
+}

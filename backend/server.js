@@ -39,6 +39,7 @@ app.use('/api/blog',      require('./routes/blog'));
 app.use('/api/content',   require('./routes/content'));
 app.use('/api/contact',   require('./routes/contact'));
 app.use('/api/documents', require('./routes/documents'));
+app.use('/api/notes',     require('./routes/notes'));
 
 // Dynamická sitemap – musí být před 404 handlerem
 app.use('/sitemap.xml', require('./routes/sitemap'));
