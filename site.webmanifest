@@ -1,0 +1,21 @@
+{
+  "name": "Chaties AI",
+  "short_name": "Chaties",
+  "description": "AI platforma pro tvorbu obsahu",
+  "start_url": "/",
+  "display": "standalone",
+  "background_color": "#0d0e11",
+  "theme_color": "#d0ee52",
+  "icons": [
+    {
+      "src": "/favicon-192x192.png",
+      "sizes": "192x192",
+      "type": "image/png"
+    },
+    {
+      "src": "/apple-touch-icon.png",
+      "sizes": "180x180",
+      "type": "image/png"
+    }
+  ]
+}
