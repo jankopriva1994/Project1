@@ -133,15 +133,16 @@ router.post('/chat', requireAuth, async (req, res) => {
         prevMessages.push({ role: 'assistant', content: reply });
         const totalTokens = (existing.tokens_used || 0) + tokensUsed;
 
-        await supabase.from('history').update({
+        const { error: updErr } = await supabase.from('history').update({
           content: reply,
           tokens_used: totalTokens,
           metadata: { ...existing.metadata, messages: prevMessages, model }
         }).eq('id', conversationId).eq('user_id', req.user.id);
+        if (updErr) console.error('History update error:', updErr);
       }
     } else {
-      // Nová konverzace – vytvoř záznam s celou historií v metadata
-      const { data: newRecord } = await supabase.from('history').insert({
+      // Nová konverzace – vlož, pak fetch ID
+      const insertPayload = {
         user_id: req.user.id,
         type: 'chat',
         title: message.slice(0, 80),
@@ -154,8 +155,23 @@ router.post('/chat', requireAuth, async (req, res) => {
             { role: 'assistant', content: reply }
           ]
         }
-      }).select('id').single();
-      historyId = newRecord?.id || null;
+      };
+
+      const { error: insErr } = await supabase.from('history').insert(insertPayload);
+      if (insErr) {
+        console.error('History insert error:', insErr);
+      } else {
+        // Získej ID naposledy vloženého záznamu tohoto uživatele
+        const { data: last } = await supabase
+          .from('history')
+          .select('id')
+          .eq('user_id', req.user.id)
+          .eq('type', 'chat')
+          .order('created_at', { ascending: false })
+          .limit(1)
+          .maybeSingle();
+        historyId = last?.id || null;
+      }
     }
 
     res.json({ reply, tokens_used: tokensUsed, history_id: historyId });
