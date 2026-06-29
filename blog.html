@@ -86,73 +86,7 @@
     <div class="blist-separator"></div>
 
     <!-- ==================== ARTICLE CARDS ==================== -->
-
-    <!-- Row 1 -->
-    <a href="blog-detail.html" class="blist-card blist-card-r1c1">
-      <img loading="lazy" class="blist-card-img" src="" alt="Article image" />
-      <span class="blist-card-cat">Blog</span>
-      <span class="blist-card-title"></span>
-    </a>
-
-    <a href="blog-detail.html" class="blist-card blist-card-r1c2">
-      <img loading="lazy" class="blist-card-img" src="" alt="Article image" />
-      <span class="blist-card-cat">Blog</span>
-      <span class="blist-card-title"></span>
-    </a>
-
-    <a href="blog-detail.html" class="blist-card blist-card-r1c3">
-      <img loading="lazy" class="blist-card-img" src="" alt="Article image" />
-      <span class="blist-card-cat">Blog</span>
-      <span class="blist-card-title"></span>
-    </a>
-
-    <!-- Row 2 -->
-    <a href="blog-detail.html" class="blist-card blist-card-r2c1">
-      <img loading="lazy" class="blist-card-img" src="" alt="Article image" />
-      <span class="blist-card-cat">Blog</span>
-      <span class="blist-card-title"></span>
-    </a>
-
-    <a href="blog-detail.html" class="blist-card blist-card-r2c2">
-      <img loading="lazy" class="blist-card-img" src="" alt="Article image" />
-      <span class="blist-card-cat">Blog</span>
-      <span class="blist-card-title"></span>
-    </a>
-
-    <a href="blog-detail.html" class="blist-card blist-card-r2c3">
-      <img loading="lazy" class="blist-card-img" src="" alt="Article image" />
-      <span class="blist-card-cat">Blog</span>
-      <span class="blist-card-title"></span>
-    </a>
-
-    <!-- Row 3 -->
-    <a href="blog-detail.html" class="blist-card blist-card-r3c1">
-      <img loading="lazy" class="blist-card-img" src="" alt="Article image" />
-      <span class="blist-card-cat">Blog</span>
-      <span class="blist-card-title"></span>
-    </a>
-
-    <a href="blog-detail.html" class="blist-card blist-card-r3c2">
-      <img loading="lazy" class="blist-card-img" src="" alt="Article image" />
-      <span class="blist-card-cat">Blog</span>
-      <span class="blist-card-title"></span>
-    </a>
-
-    <a href="blog-detail.html" class="blist-card blist-card-r3c3">
-      <img loading="lazy" class="blist-card-img" src="" alt="Article image" />
-      <span class="blist-card-cat">Blog</span>
-      <span class="blist-card-title"></span>
-    </a>
-
-    <!-- ==================== PAGINATION ==================== -->
-    <div class="blist-pagination">
-      <span class="blist-page-active">1</span>
-      <a href="#" class="blist-page-link">2</a>
-      <a href="#" class="blist-page-link">3</a>
-      <a href="#" class="blist-page-link">4</a>
-      <span class="blist-page-ellipsis">…</span>
-      <a href="#" class="blist-page-link">12</a>
-    </div>
+    <div class="blist-grid" id="blistGrid"></div>
 
     <div class="blist-grid-separator"></div>
 
@@ -244,33 +178,85 @@
     var CACHE_KEY = 'chaties-blog-v1';
     var API = 'https://project1-production-bfde.up.railway.app';
     var PLACEHOLDER = "data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='373' height='226'%3E%3Cdefs%3E%3ClinearGradient id='g' x1='0' y1='0' x2='1' y2='1'%3E%3Cstop offset='0' stop-color='%231a1b2e'/%3E%3Cstop offset='1' stop-color='%2316213e'/%3E%3C/linearGradient%3E%3C/defs%3E%3Crect width='373' height='226' fill='url(%23g)'/%3E%3Ctext x='187' y='128' text-anchor='middle' fill='%23d0ee52' font-family='Arial' font-size='48'%3E%E2%9C%8D%3C/text%3E%3C/svg%3E";
+    var grid = document.getElementById('blistGrid');
 
-    function applyPosts(posts) {
+    function renderPosts(posts) {
       if (!Array.isArray(posts) || !posts.length) return;
-      var cards = document.querySelectorAll('.blist-card');
-      cards.forEach(function (card, i) {
-        if (i >= posts.length) { card.style.display = 'none'; return; }
-        var post = posts[i];
-        var imgEl   = card.querySelector('.blist-card-img');
-        var catEl   = card.querySelector('.blist-card-cat');
-        var titleEl = card.querySelector('.blist-card-title');
+      grid.innerHTML = '';
+      posts.forEach(function (post) {
+        var card = document.createElement('a');
         card.href = 'blog-detail.html?slug=' + encodeURIComponent(post.slug);
-        if (imgEl)   imgEl.src = post.cover_image || PLACEHOLDER;
-        if (catEl)   catEl.textContent = post.category || 'Blog';
-        if (titleEl) titleEl.textContent = post.title;
+        card.className = 'blist-card';
+        card.innerHTML =
+          '<img loading="lazy" class="blist-card-img" src="' + (post.cover_image || PLACEHOLDER).replace(/"/g, '&quot;') + '" alt="' + (post.title || '').replace(/"/g, '&quot;') + '" />' +
+          '<span class="blist-card-cat">' + ((post.category || 'Blog').replace(/</g, '&lt;')) + '</span>' +
+          '<span class="blist-card-title">' + ((post.title || '').replace(/</g, '&lt;')) + '</span>';
+        grid.appendChild(card);
       });
+      repositionAfterGrid();
+    }
+
+    function repositionAfterGrid() {
+      var gridBottom = grid.offsetTop + grid.offsetHeight;
+      var sepTop = gridBottom + 60;
+      var sep = document.querySelector('.blist-grid-separator');
+      if (sep) sep.style.top = sepTop + 'px';
+
+      var nlBase = sepTop + 40;
+      var page = document.querySelector('.blog-list-page');
+      var nl = {
+        '.newsletter-chip':    nlBase,
+        '.newsletter-heading': nlBase + 46,
+        '.newsletter-subtext': nlBase + 195,
+        '.newsletter-input':   nlBase + 266,
+        '.newsletter-btn':     nlBase + 266
+      };
+      Object.keys(nl).forEach(function (sel) {
+        var el = page.querySelector(sel);
+        if (el) el.style.top = nlBase === nl[sel] ? nlBase + 'px' : nl[sel] + 'px';
+      });
+
+      var ftBase = nlBase + 475;
+      var ft = {
+        '.footer-logo': ftBase,
+        '.footer-desc': ftBase + 67,
+        '.footer-col-services-header': ftBase + 3,
+        '.footer-col-services-link1':  ftBase + 40,
+        '.footer-col-services-link2':  ftBase + 76,
+        '.footer-col-services-link3':  ftBase + 112,
+        '.footer-col-services-link4':  ftBase + 148,
+        '.footer-col-info-header':    ftBase + 3,
+        '.footer-col-info-link1':     ftBase + 40,
+        '.footer-col-info-link2':     ftBase + 76,
+        '.footer-col-info-link3':     ftBase + 112,
+        '.footer-col-info-link4':     ftBase + 148,
+        '.footer-col-support-header': ftBase + 3,
+        '.footer-col-support-link1':  ftBase + 40,
+        '.footer-col-support-link2':  ftBase + 76,
+        '.social-link-insta':  ftBase + 195,
+        '.social-link-fb':     ftBase + 195,
+        '.footer-line':        ftBase + 258,
+        '.footer-copyright':   ftBase + 289,
+        '.footer-privacy':     ftBase + 289
+      };
+      Object.keys(ft).forEach(function (sel) {
+        var el = page.querySelector(sel);
+        if (el) el.style.top = ft[sel] + 'px';
+      });
+
+      page.style.minHeight = (ftBase + 340) + 'px';
     }
 
     var cached = localStorage.getItem(CACHE_KEY);
     if (cached) {
-      try { applyPosts(JSON.parse(cached)); document.body.classList.remove('blog-loading'); } catch(e) {}
+      try { renderPosts(JSON.parse(cached)); document.body.classList.remove('blog-loading'); } catch(e) {}
     }
 
     fetch(API + '/api/blog/posts')
       .then(function (r) { return r.json(); })
       .then(function (posts) {
         localStorage.setItem(CACHE_KEY, JSON.stringify(posts));
-        applyPosts(posts);
+        renderPosts(posts);
         document.body.classList.remove('blog-loading');
       })
       .catch(function () { document.body.classList.remove('blog-loading'); });

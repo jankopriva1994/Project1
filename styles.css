@@ -1290,7 +1290,7 @@ body {
 
 /* ===================== BLOG LIST PAGE ===================== */
 .blog-list-page {
-  min-height: 2660px;
+  min-height: 1200px;
 }
 
 .blist-chip {
@@ -1336,9 +1336,19 @@ body {
   display: none;
 }
 
+/* Article grid */
+.blist-grid {
+  position: absolute;
+  left: 228px;
+  top: 537px;
+  width: 1224px;
+  display: flex;
+  flex-wrap: wrap;
+  gap: 52px;
+}
+
 /* Article cards */
 .blist-card {
-  position: absolute;
   width: 373px;
   display: block;
   text-decoration: none;
@@ -1372,77 +1382,10 @@ body {
   line-height: 27px;
 }
 
-.blist-card-arrow {
-  display: block;
-  margin-top: 12px;
-  width: 23px;
-  height: 23px;
-  transform: rotate(-45deg);
-  object-fit: contain;
-}
-
-.blist-card-r1c1 { left: 228px;  top: 537px; }
-.blist-card-r1c2 { left: 654px;  top: 537px; }
-.blist-card-r1c3 { left: 1079px; top: 537px; }
-.blist-card-r2c1 { left: 228px;  top: 917px; }
-.blist-card-r2c2 { left: 654px;  top: 917px; }
-.blist-card-r2c3 { left: 1079px; top: 917px; }
-.blist-card-r3c1 { left: 228px;  top: 1297px; }
-.blist-card-r3c2 { left: 654px;  top: 1297px; }
-.blist-card-r3c3 { left: 1079px; top: 1297px; }
-
-/* Pagination */
-.blist-pagination {
-  position: absolute;
-  left: 783px;
-  top: 1686px;
-  display: flex;
-  align-items: center;
-  gap: 12px;
-}
-
-.blist-page-active {
-  width: 36px;
-  height: 36px;
-  background: #d0ee52;
-  border-radius: 7px;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  font-size: 16px;
-  font-weight: 700;
-  color: #0d0e11;
-  font-family: 'Supreme', sans-serif;
-}
-
-.blist-page-link {
-  width: 36px;
-  height: 36px;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  font-size: 16px;
-  font-weight: 400;
-  color: #ffffff;
-  font-family: 'Supreme', sans-serif;
-  text-decoration: none;
-  border-radius: 7px;
-}
-
-.blist-page-link:hover {
-  background: #2b2d31;
-}
-
-.blist-page-ellipsis {
-  font-size: 16px;
-  color: #505050;
-  font-family: 'Supreme', sans-serif;
-}
-
 .blist-grid-separator {
   position: absolute;
   left: 228px;
-  top: 1780px;
+  top: 537px;
   width: 1224px;
   height: 1px;
   background: #333333;
