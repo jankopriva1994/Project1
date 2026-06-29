@@ -3104,13 +3104,19 @@ body {
 .adm-hist-row-title { font-family: 'Supreme', sans-serif; font-size: 14px; font-weight: 600; color: #e8e8e8; margin: 0; white-space: nowrap; overflow: hidden; text-overflow: ellipsis; flex-shrink: 1; min-width: 0; }
 .adm-hist-row-date  { font-family: 'Supreme', sans-serif; font-size: 12px; color: #555; white-space: nowrap; flex-shrink: 0; }
 
-.adm-hist-resume-btn, .adm-hist-copy-btn { background: none; border: none; color: #555; cursor: pointer; padding: 4px; border-radius: 5px; display: flex; align-items: center; flex-shrink: 0; transition: color .15s, background .15s; }
+.adm-hist-resume-btn, .adm-hist-copy-btn { background: none; border: none; color: #555; cursor: pointer; padding: 4px; border-radius: 5px; display: flex; align-items: center; flex-shrink: 0; transition: color .15s, background .15s, opacity .15s; opacity: 0; }
+.adm-hist-row:hover .adm-hist-resume-btn,
+.adm-hist-row:hover .adm-hist-copy-btn,
+.adm-hist-row-active .adm-hist-resume-btn,
+.adm-hist-row-active .adm-hist-copy-btn { opacity: 1; }
 .adm-hist-resume-btn:hover { color: #d0ee52; background: rgba(208,238,82,0.08); }
 .adm-hist-copy-btn:hover   { color: #fff; background: rgba(255,255,255,0.07); }
 
 /* Three-dots menu */
 .adm-hist-menu-wrap { position: relative; }
-.adm-hist-dots-btn { background: none; border: none; color: #555; cursor: pointer; padding: 5px; border-radius: 5px; display: flex; align-items: center; transition: color .15s, background .15s; }
+.adm-hist-dots-btn { background: none; border: none; color: #555; cursor: pointer; padding: 5px; border-radius: 5px; display: flex; align-items: center; transition: color .15s, background .15s, opacity .15s; opacity: 0; }
+.adm-hist-row:hover .adm-hist-dots-btn,
+.adm-hist-row-active .adm-hist-dots-btn { opacity: 1; }
 .adm-hist-dots-btn:hover { color: #aaa; background: rgba(255,255,255,0.07); }
 .adm-hist-menu { display: none; position: absolute; right: 0; top: calc(100% + 4px); background: #2a2b2f; border: 1px solid rgba(255,255,255,0.12); border-radius: 8px; padding: 6px; min-width: 140px; z-index: 200; box-shadow: 0 8px 24px rgba(0,0,0,0.5); }
 .adm-hist-menu.adm-hist-menu-open { display: block; }
