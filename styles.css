@@ -3121,10 +3121,35 @@ body {
 .adm-hist-expand-btn { font-family: 'Supreme', sans-serif; font-size: 12px; font-weight: 600; color: #d0ee52; background: none; border: none; padding: 0; cursor: pointer; margin-bottom: 8px; display: block; }
 .adm-hist-expand-btn:hover { opacity: 0.75; }
 
+/* Msg count badge */
+.adm-hist-msg-count { font-size: 11px; color: #555; font-family: 'Supreme', sans-serif; }
+
 /* Actions row */
-.adm-hist-item-actions { display: flex; gap: 8px; margin-top: 4px; }
-.adm-hist-copy-btn { font-family: 'Supreme', sans-serif; font-size: 12px; font-weight: 600; color: #555; background: rgba(255,255,255,0.04); border: 1px solid rgba(255,255,255,0.08); border-radius: 6px; padding: 4px 10px; cursor: pointer; display: flex; align-items: center; gap: 5px; transition: all .15s; }
+.adm-hist-item-actions { display: flex; gap: 8px; margin-top: 8px; align-items: center; }
+.adm-hist-copy-btn, .adm-hist-resume-btn { font-family: 'Supreme', sans-serif; font-size: 12px; font-weight: 600; color: #555; background: rgba(255,255,255,0.04); border: 1px solid rgba(255,255,255,0.08); border-radius: 6px; padding: 5px 11px; cursor: pointer; display: flex; align-items: center; gap: 5px; transition: all .15s; white-space: nowrap; }
 .adm-hist-copy-btn:hover { color: #fff; border-color: rgba(255,255,255,0.2); }
+.adm-hist-resume-btn { color: #d0ee52; border-color: rgba(208,238,82,0.25); }
+.adm-hist-resume-btn:hover { background: rgba(208,238,82,0.08); border-color: #d0ee52; }
+
+/* Three-dots menu */
+.adm-hist-menu-wrap { position: relative; margin-left: auto; }
+.adm-hist-dots-btn { background: none; border: none; color: #444; cursor: pointer; padding: 4px 6px; border-radius: 6px; display: flex; align-items: center; transition: color .15s; }
+.adm-hist-dots-btn:hover { color: #aaa; background: rgba(255,255,255,0.06); }
+.adm-hist-menu { display: none; position: absolute; right: 0; top: calc(100% + 4px); background: #2a2b2f; border: 1px solid rgba(255,255,255,0.12); border-radius: 8px; padding: 6px; min-width: 140px; z-index: 100; box-shadow: 0 8px 24px rgba(0,0,0,0.4); }
+.adm-hist-menu.adm-hist-menu-open { display: block; }
+.adm-hist-menu-item { display: block; width: 100%; text-align: left; background: none; border: none; font-family: 'Supreme', sans-serif; font-size: 13px; font-weight: 600; color: #ccc; padding: 7px 12px; border-radius: 5px; cursor: pointer; }
+.adm-hist-menu-item:hover { background: rgba(255,255,255,0.07); color: #fff; }
+.adm-hist-delete-btn { color: #ff5555 !important; }
+.adm-hist-delete-btn:hover { background: rgba(255,85,85,0.1) !important; }
+
+/* Inline rename input */
+.adm-hist-rename-input { font-family: 'Supreme', sans-serif; font-size: 15px; font-weight: 700; color: #fff; background: rgba(255,255,255,0.06); border: 1px solid #d0ee52; border-radius: 5px; padding: 2px 8px; width: 100%; max-width: 500px; outline: none; margin: 0 0 8px; }
+
+/* Chat toolbar (nový chat btn + conv title) */
+.adm-chat-toolbar { display: flex; align-items: center; gap: 12px; padding: 14px 20px 0; flex-shrink: 0; }
+.adm-chat-conv-title { font-family: 'Supreme', sans-serif; font-size: 14px; color: #8b8b8b; flex: 1; white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
+.adm-chat-new-btn { font-family: 'Supreme', sans-serif; font-size: 13px; font-weight: 700; color: #8b8b8b; background: rgba(255,255,255,0.05); border: 1px solid rgba(255,255,255,0.1); border-radius: 6px; padding: 6px 14px; cursor: pointer; display: flex; align-items: center; gap: 6px; transition: all .15s; white-space: nowrap; margin-left: auto; }
+.adm-chat-new-btn:hover { color: #fff; border-color: rgba(255,255,255,0.25); }
 
 /* Docs translate – 3-step flow */
 .adm-dropzone { display: flex; flex-direction: column; align-items: center; justify-content: center; gap: 10px; width: 700px; height: 280px; border: 2px dashed #444; border-radius: 8px; background: #1a1b1e; transition: border-color .2s; cursor: default; }

@@ -212,6 +212,15 @@
     <!-- PANEL 3: CHAT -->
     <div class="adm-panel adm-panel-chat" data-panel-id="chat">
 
+      <!-- Chat toolbar -->
+      <div class="adm-chat-toolbar">
+        <span class="adm-chat-conv-title" id="chatConvTitle"></span>
+        <button class="adm-chat-new-btn" id="chatNewBtn">
+          <svg width="14" height="14" viewBox="0 0 24 24" fill="none"><path d="M12 5v14M5 12h14" stroke="currentColor" stroke-width="2.2" stroke-linecap="round"/></svg>
+          Nový chat
+        </button>
+      </div>
+
       <!-- Chat messages area -->
       <div class="adm-chat-area">
         <span class="adm-chat-empty">Začněte konverzaci...</span>
@@ -963,7 +972,6 @@
     }
 
     // ── History panel ───────────────────────────────────────────
-    var histLoaded = false;
     var histAllItems = [];
     var histActiveFilter = 'all';
 
@@ -975,6 +983,12 @@
       document:  '<svg width="16" height="16" viewBox="0 0 24 24" fill="none"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z" stroke="currentColor" stroke-width="1.5" stroke-linejoin="round"/><path d="M14 2v6h6M16 13H8M16 17H8M10 9H8" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"/></svg>'
     };
     var HIST_LABELS = { chat: 'Chat', template: 'Šablona', translate: 'Překlad', image: 'Obrázek', document: 'Dokument' };
+
+    // Zavře všechna otevřená kontextová menu
+    function closeAllHistMenus() {
+      document.querySelectorAll('.adm-hist-menu').forEach(function(m) { m.classList.remove('adm-hist-menu-open'); });
+    }
+    document.addEventListener('click', closeAllHistMenus);
 
     function histRenderItems(items) {
       var list = document.getElementById('histList');
@@ -995,14 +1009,20 @@
         var icon  = HIST_ICONS[item.type]  || HIST_ICONS.document;
         var label = HIST_LABELS[item.type] || item.type;
         var isImage = item.type === 'image' && item.content && item.content.startsWith('data:image');
+        var isChat = item.type === 'chat';
+        var msgCount = isChat && item.metadata && item.metadata.messages ? Math.floor(item.metadata.messages.length / 2) : 0;
 
         var rawText = '';
-        if (!isImage && item.content && item.content !== 'generated') {
+        if (isChat && item.metadata && item.metadata.messages && item.metadata.messages.length) {
+          // Pro chat: ukaž náhled posledního AI answeru
+          var lastAi = item.metadata.messages.filter(function(m) { return m.role === 'assistant'; }).pop();
+          rawText = lastAi ? lastAi.content.trim() : '';
+        } else if (!isImage && item.content && item.content !== 'generated') {
           rawText = (item.type === 'template' || item.type === 'translate' || item.type === 'document')
             ? item.content.replace(/<[^>]+>/g, '').trim()
             : item.content.trim();
         }
-        var previewText = rawText.slice(0, 240) + (rawText.length > 240 ? '…' : '');
+        var previewText = rawText.slice(0, 200) + (rawText.length > 200 ? '…' : '');
         var fullText    = rawText;
 
         var row = document.createElement('div');
@@ -1014,51 +1034,113 @@
           '<div class="adm-hist-item-body">' +
             '<div class="adm-hist-item-meta">' +
               '<span class="adm-hist-item-badge adm-hist-badge-' + item.type + '">' + label + '</span>' +
+              (isChat && msgCount > 0 ? '<span class="adm-hist-msg-count">' + msgCount + ' ' + (msgCount === 1 ? 'zpráva' : msgCount < 5 ? 'zprávy' : 'zpráv') + '</span>' : '') +
               '<span class="adm-hist-item-date">' + dateStr + '</span>' +
               '<span class="adm-hist-item-tokens">' + (item.tokens_used || 0) + ' tk</span>' +
             '</div>' +
-            '<p class="adm-hist-item-title">' + (item.title || '–').replace(/</g,'&lt;') + '</p>' +
+            '<p class="adm-hist-item-title" data-id="' + item.id + '">' + (item.title || '–').replace(/</g,'&lt;') + '</p>' +
             (isImage
               ? '<img class="adm-hist-img-thumb" src="' + item.content + '" alt="' + (item.title||'').replace(/"/g,'') + '" />'
               : (previewText
-                  ? '<div class="adm-hist-item-preview" data-full="' + fullText.replace(/"/g,'&quot;').replace(/\n/g,'&#10;') + '" data-short="' + previewText.replace(/"/g,'&quot;').replace(/\n/g,'&#10;') + '">' + previewText.replace(/</g,'&lt;').replace(/\n/g,' ') + '</div>'
+                  ? '<div class="adm-hist-item-preview">' + previewText.replace(/</g,'&lt;').replace(/\n/g,' ') + '</div>'
                   : '')) +
-            ((!isImage && fullText.length > 240)
-              ? '<button class="adm-hist-expand-btn" data-expanded="0">Zobrazit více</button>'
-              : '') +
             '<div class="adm-hist-item-actions">' +
-              (!isImage && fullText ? '<button class="adm-hist-copy-btn" title="Kopírovat obsah"><svg width="14" height="14" viewBox="0 0 24 24" fill="none"><rect x="9" y="9" width="13" height="13" rx="2" stroke="currentColor" stroke-width="1.5"/><path d="M5 15H4a2 2 0 0 1-2-2V4a2 2 0 0 1 2-2h9a2 2 0 0 1 2 2v1" stroke="currentColor" stroke-width="1.5"/></svg> Kopírovat</button>' : '') +
+              (isChat ? '<button class="adm-hist-resume-btn" data-id="' + item.id + '"><svg width="13" height="13" viewBox="0 0 24 24" fill="none"><path d="M5 12h14M13 6l6 6-6 6" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg> Pokračovat v chatu</button>' : '') +
+              (!isImage && fullText && !isChat ? '<button class="adm-hist-copy-btn"><svg width="13" height="13" viewBox="0 0 24 24" fill="none"><rect x="9" y="9" width="13" height="13" rx="2" stroke="currentColor" stroke-width="1.5"/><path d="M5 15H4a2 2 0 0 1-2-2V4a2 2 0 0 1 2-2h9a2 2 0 0 1 2 2v1" stroke="currentColor" stroke-width="1.5"/></svg> Kopírovat</button>' : '') +
+              '<div class="adm-hist-menu-wrap">' +
+                '<button class="adm-hist-dots-btn" title="Možnosti"><svg width="16" height="16" viewBox="0 0 24 24" fill="currentColor"><circle cx="5" cy="12" r="2"/><circle cx="12" cy="12" r="2"/><circle cx="19" cy="12" r="2"/></svg></button>' +
+                '<div class="adm-hist-menu">' +
+                  '<button class="adm-hist-menu-item adm-hist-rename-btn">Přejmenovat</button>' +
+                  '<button class="adm-hist-menu-item adm-hist-delete-btn">Smazat</button>' +
+                '</div>' +
+              '</div>' +
             '</div>' +
           '</div>';
 
-        // expand toggle
-        var expandBtn = row.querySelector('.adm-hist-expand-btn');
-        if (expandBtn) {
-          expandBtn.addEventListener('click', function() {
-            var preview = row.querySelector('.adm-hist-item-preview');
-            var expanded = expandBtn.dataset.expanded === '1';
-            if (expanded) {
-              preview.textContent = preview.dataset.short.replace(/&#10;/g,'\n').replace(/&quot;/g,'"');
-              expandBtn.textContent = 'Zobrazit více';
-              expandBtn.dataset.expanded = '0';
-            } else {
-              preview.textContent = preview.dataset.full.replace(/&#10;/g,'\n').replace(/&quot;/g,'"');
-              expandBtn.textContent = 'Zobrazit méně';
-              expandBtn.dataset.expanded = '1';
-            }
+        // Pokračovat v chatu
+        var resumeBtn = row.querySelector('.adm-hist-resume-btn');
+        if (resumeBtn) {
+          resumeBtn.addEventListener('click', function() {
+            if (window.loadConversationIntoChat) window.loadConversationIntoChat(item);
           });
         }
 
-        // copy button
+        // Kopírovat obsah
         var copyBtn = row.querySelector('.adm-hist-copy-btn');
         if (copyBtn) {
           copyBtn.addEventListener('click', function() {
-            var preview = row.querySelector('.adm-hist-item-preview');
-            var text = preview ? preview.dataset.full.replace(/&#10;/g,'\n').replace(/&quot;/g,'"') : '';
-            navigator.clipboard.writeText(text).then(function() {
+            navigator.clipboard.writeText(fullText).then(function() {
               copyBtn.textContent = '✓ Zkopírováno';
-              setTimeout(function() { copyBtn.innerHTML = '<svg width="14" height="14" viewBox="0 0 24 24" fill="none"><rect x="9" y="9" width="13" height="13" rx="2" stroke="currentColor" stroke-width="1.5"/><path d="M5 15H4a2 2 0 0 1-2-2V4a2 2 0 0 1 2-2h9a2 2 0 0 1 2 2v1" stroke="currentColor" stroke-width="1.5"/></svg> Kopírovat'; }, 2000);
+              setTimeout(function() { copyBtn.innerHTML = '<svg width="13" height="13" viewBox="0 0 24 24" fill="none"><rect x="9" y="9" width="13" height="13" rx="2" stroke="currentColor" stroke-width="1.5"/><path d="M5 15H4a2 2 0 0 1-2-2V4a2 2 0 0 1 2-2h9a2 2 0 0 1 2 2v1" stroke="currentColor" stroke-width="1.5"/></svg> Kopírovat'; }, 2000);
             });
+          });
+        }
+
+        // Tři tečky menu
+        var dotsBtn = row.querySelector('.adm-hist-dots-btn');
+        var menu    = row.querySelector('.adm-hist-menu');
+        if (dotsBtn && menu) {
+          dotsBtn.addEventListener('click', function(e) {
+            e.stopPropagation();
+            var isOpen = menu.classList.contains('adm-hist-menu-open');
+            closeAllHistMenus();
+            if (!isOpen) menu.classList.add('adm-hist-menu-open');
+          });
+        }
+
+        // Přejmenovat
+        var renameBtn = row.querySelector('.adm-hist-rename-btn');
+        if (renameBtn) {
+          renameBtn.addEventListener('click', function(e) {
+            e.stopPropagation();
+            closeAllHistMenus();
+            var titleEl = row.querySelector('.adm-hist-item-title');
+            var current = titleEl.textContent;
+            var input = document.createElement('input');
+            input.className = 'adm-hist-rename-input';
+            input.value = current;
+            titleEl.replaceWith(input);
+            input.focus();
+            input.select();
+            function commitRename() {
+              var newTitle = input.value.trim() || current;
+              var newTitleEl = document.createElement('p');
+              newTitleEl.className = 'adm-hist-item-title';
+              newTitleEl.dataset.id = item.id;
+              newTitleEl.textContent = newTitle;
+              input.replaceWith(newTitleEl);
+              if (newTitle !== current) {
+                apiFetch('/api/user/history/' + item.id, { method: 'PUT', body: JSON.stringify({ title: newTitle }) })
+                  .then(function() {
+                    var idx = histAllItems.findIndex(function(i) { return i.id === item.id; });
+                    if (idx !== -1) histAllItems[idx].title = newTitle;
+                  });
+              }
+            }
+            input.addEventListener('blur', commitRename);
+            input.addEventListener('keydown', function(e) {
+              if (e.key === 'Enter') { e.preventDefault(); commitRename(); }
+              if (e.key === 'Escape') { input.value = current; commitRename(); }
+            });
+          });
+        }
+
+        // Smazat
+        var deleteBtn = row.querySelector('.adm-hist-delete-btn');
+        if (deleteBtn) {
+          deleteBtn.addEventListener('click', function(e) {
+            e.stopPropagation();
+            closeAllHistMenus();
+            row.style.opacity = '0.4';
+            apiFetch('/api/user/history/' + item.id, { method: 'DELETE' })
+              .then(function() {
+                histAllItems = histAllItems.filter(function(i) { return i.id !== item.id; });
+                row.remove();
+                if (!document.querySelectorAll('.adm-hist-item').length) {
+                  document.getElementById('histList').innerHTML = '<p class="adm-hist-empty">Žádné záznamy v této kategorii.</p>';
+                }
+              })
+              .catch(function() { row.style.opacity = '1'; });
           });
         }
 
@@ -1067,28 +1149,29 @@
     }
 
     async function loadHistoryPanel() {
-      if (histLoaded) return;
-      histLoaded = true;
       var list = document.getElementById('histList');
       if (!list) return;
+      list.innerHTML = '<div class="adm-hist-loading">Načítám historii…</div>';
 
       try { histAllItems = await apiFetch('/api/user/history'); } catch(e) {
         list.innerHTML = '<p class="adm-hist-error">Nepodařilo se načíst historii.</p>';
-        histLoaded = false;
         return;
       }
 
       histRenderItems(histAllItems);
 
-      // Filter tabs
-      document.querySelectorAll('.adm-hist-filter').forEach(function(btn) {
-        btn.addEventListener('click', function() {
-          document.querySelectorAll('.adm-hist-filter').forEach(function(b) { b.classList.remove('adm-hist-filter-active'); });
-          btn.classList.add('adm-hist-filter-active');
-          histActiveFilter = btn.dataset.filter;
-          histRenderItems(histAllItems);
+      // Filter tabs – připoj event listenery jen jednou
+      if (!document.getElementById('histFilters').dataset.bound) {
+        document.getElementById('histFilters').dataset.bound = '1';
+        document.querySelectorAll('.adm-hist-filter').forEach(function(btn) {
+          btn.addEventListener('click', function() {
+            document.querySelectorAll('.adm-hist-filter').forEach(function(b) { b.classList.remove('adm-hist-filter-active'); });
+            btn.classList.add('adm-hist-filter-active');
+            histActiveFilter = btn.dataset.filter;
+            histRenderItems(histAllItems);
+          });
         });
-      });
+      }
     }
 
     // ── Docs panel: načti dokumenty ze serveru ──────────────────
@@ -1287,18 +1370,52 @@
     var chatArea  = document.querySelector('.adm-chat-area');
     var emptyEl   = document.querySelector('.adm-chat-empty');
     var startEl   = document.querySelector('.adm-chat-start');
+    var newChatBtn = document.getElementById('chatNewBtn');
+    var convTitleEl = document.getElementById('chatConvTitle');
 
-    var chatHistory = [];
+    var chatHistory   = [];
+    var currentConvId = null;
+
+    function resetChat() {
+      chatHistory = [];
+      currentConvId = null;
+      chatArea.innerHTML = '<span class="adm-chat-empty">Začněte konverzaci...</span>';
+      chatArea.classList.remove('adm-chat-has-messages');
+      if (convTitleEl) convTitleEl.textContent = '';
+      textarea.value = '';
+      textarea.focus();
+    }
+
+    // Načte existující konverzaci z historie a zobrazí ji v chatu
+    window.loadConversationIntoChat = function(item) {
+      resetChat();
+      currentConvId = item.id;
+      if (convTitleEl) convTitleEl.textContent = item.title || '';
+      var messages = (item.metadata && item.metadata.messages) || [];
+      if (messages.length) {
+        chatArea.innerHTML = '';
+        chatArea.classList.add('adm-chat-has-messages');
+        messages.forEach(function(m) {
+          var div = document.createElement('div');
+          div.className = 'adm-chat-msg ' + (m.role === 'user' ? 'adm-chat-msg-user' : 'adm-chat-msg-ai');
+          div.textContent = m.content;
+          chatArea.appendChild(div);
+          chatHistory.push({ role: m.role, content: m.content });
+        });
+        chatArea.scrollTop = chatArea.scrollHeight;
+      }
+      navigateTo('chat');
+    };
+
+    if (newChatBtn) newChatBtn.addEventListener('click', resetChat);
 
     function send() {
       var msg = textarea.value.trim();
       if (!msg) return;
 
-      // Switch chat area to message mode
       if (emptyEl) emptyEl.style.display = 'none';
       chatArea.classList.add('adm-chat-has-messages');
 
-      // User bubble
       var userDiv = document.createElement('div');
       userDiv.className = 'adm-chat-msg adm-chat-msg-user';
       userDiv.textContent = msg;
@@ -1309,7 +1426,6 @@
 
       chatHistory.push({ role: 'user', content: msg });
 
-      // Typing indicator
       var typingDiv = document.createElement('div');
       typingDiv.className = 'adm-chat-msg adm-chat-msg-ai adm-chat-typing';
       typingDiv.innerHTML = '<span></span><span></span><span></span>';
@@ -1322,7 +1438,7 @@
 
       apiFetch('/api/ai/chat', {
         method: 'POST',
-        body: JSON.stringify({ message: msg, history: chatHistory.slice(-10), model: aiModel, provider: aiProvider })
+        body: JSON.stringify({ message: msg, history: chatHistory.slice(-10), model: aiModel, provider: aiProvider, conversationId: currentConvId })
       }).then(function (data) {
         chatArea.removeChild(typingDiv);
         var aiDiv = document.createElement('div');
@@ -1332,6 +1448,11 @@
         chatHistory.push({ role: 'assistant', content: data.reply || '' });
         chatArea.scrollTop = chatArea.scrollHeight;
         updateTokenDisplay(data.tokens_remaining);
+        if (data.history_id) {
+          currentConvId = data.history_id;
+          // Nastav název konverzace při prvním odeslání
+          if (convTitleEl && !convTitleEl.textContent) convTitleEl.textContent = msg.slice(0, 60);
+        }
       }).catch(function (err) {
         chatArea.removeChild(typingDiv);
         var errDiv = document.createElement('div');

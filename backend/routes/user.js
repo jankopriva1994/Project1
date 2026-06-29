@@ -98,6 +98,30 @@ router.get('/history', requireAuth, async (req, res) => {
   res.json(data);
 });
 
+// PUT /api/user/history/:id – přejmenování záznamu
+router.put('/history/:id', requireAuth, async (req, res) => {
+  const { title } = req.body;
+  if (!title || !title.trim()) return res.status(400).json({ error: 'Chybí název' });
+  const { error } = await supabase
+    .from('history')
+    .update({ title: title.trim() })
+    .eq('id', req.params.id)
+    .eq('user_id', req.user.id);
+  if (error) return res.status(500).json({ error: error.message });
+  res.json({ success: true });
+});
+
+// DELETE /api/user/history/:id – smazání záznamu
+router.delete('/history/:id', requireAuth, async (req, res) => {
+  const { error } = await supabase
+    .from('history')
+    .delete()
+    .eq('id', req.params.id)
+    .eq('user_id', req.user.id);
+  if (error) return res.status(500).json({ error: error.message });
+  res.json({ success: true });
+});
+
 // GET /api/user/subscription – aktivní nebo trial
 router.get('/subscription', requireAuth, async (req, res) => {
   const { data, error } = await supabase

@@ -78,7 +78,7 @@ const SYSTEM_PROMPT = 'Jsi AI asistent Chaties. Odpovídáš v češtině, pokud
 
 // ── POST /api/ai/chat ──────────────────────────────────────────
 router.post('/chat', requireAuth, async (req, res) => {
-  const { message, history = [], model = 'claude-sonnet-4-6', provider = 'anthropic' } = req.body;
+  const { message, history = [], model = 'claude-sonnet-4-6', provider = 'anthropic', conversationId } = req.body;
   if (!message) return res.status(400).json({ error: 'Chybí zpráva' });
 
   const effectiveId = await getEffectiveUserId(req.user.id);
@@ -116,9 +116,49 @@ router.post('/chat', requireAuth, async (req, res) => {
       tokensUsed = response.usage.input_tokens + response.usage.output_tokens;
     }
 
-    await saveHistory(req.user.id, 'chat', message.slice(0, 80), reply, tokensUsed, { model });
+    let historyId = conversationId || null;
 
-    res.json({ reply, tokens_used: tokensUsed });
+    if (conversationId) {
+      // Připojit novou zprávu do existující konverzace
+      const { data: existing } = await supabase
+        .from('history')
+        .select('metadata, tokens_used')
+        .eq('id', conversationId)
+        .eq('user_id', req.user.id)
+        .maybeSingle();
+
+      if (existing) {
+        const prevMessages = existing.metadata?.messages || [];
+        prevMessages.push({ role: 'user', content: message });
+        prevMessages.push({ role: 'assistant', content: reply });
+        const totalTokens = (existing.tokens_used || 0) + tokensUsed;
+
+        await supabase.from('history').update({
+          content: reply,
+          tokens_used: totalTokens,
+          metadata: { ...existing.metadata, messages: prevMessages, model }
+        }).eq('id', conversationId).eq('user_id', req.user.id);
+      }
+    } else {
+      // Nová konverzace – vytvoř záznam s celou historií v metadata
+      const { data: newRecord } = await supabase.from('history').insert({
+        user_id: req.user.id,
+        type: 'chat',
+        title: message.slice(0, 80),
+        content: reply,
+        tokens_used: tokensUsed,
+        metadata: {
+          model,
+          messages: [
+            { role: 'user', content: message },
+            { role: 'assistant', content: reply }
+          ]
+        }
+      }).select('id').single();
+      historyId = newRecord?.id || null;
+    }
+
+    res.json({ reply, tokens_used: tokensUsed, history_id: historyId });
   } catch (err) {
     console.error('Chat error:', err);
     res.status(500).json({ error: 'Chyba při generování odpovědi: ' + (err.message || '') });
