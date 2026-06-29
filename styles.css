@@ -965,6 +965,7 @@ body {
   font-family: 'Supreme', sans-serif;
   color: #ffffff;
   line-height: 27px;
+  max-width: 373px;
 }
 
 .blog-title-2 {
@@ -976,6 +977,7 @@ body {
   font-family: 'Supreme', sans-serif;
   color: #ffffff;
   line-height: 27px;
+  max-width: 373px;
 }
 
 .blog-title-3 {
@@ -987,6 +989,7 @@ body {
   font-family: 'Supreme', sans-serif;
   color: #ffffff;
   line-height: 27px;
+  max-width: 373px;
 }
 
 /* Transparent clickable overlays over homepage blog cards */
