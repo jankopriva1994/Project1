@@ -970,6 +970,7 @@
       setNavActive(navEl || null);
       if (panelId === 'history') loadHistoryPanel();
     }
+    window.navigateTo = navigateTo;
 
     // ── History panel ───────────────────────────────────────────
     var histAllItems = [];
@@ -1398,7 +1399,7 @@
         });
         chatArea.scrollTop = chatArea.scrollHeight;
       }
-      navigateTo('chat');
+      window.navigateTo('chat');
     };
 
     if (newChatBtn) newChatBtn.addEventListener('click', resetChat);
