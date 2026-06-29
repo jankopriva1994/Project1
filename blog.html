@@ -198,11 +198,11 @@
 
     function repositionAfterGrid() {
       var gridBottom = grid.offsetTop + grid.offsetHeight;
-      var sepTop = gridBottom + 60;
+      var sepTop = gridBottom + 120;
       var sep = document.querySelector('.blist-grid-separator');
       if (sep) sep.style.top = sepTop + 'px';
 
-      var nlBase = sepTop + 60;
+      var nlBase = sepTop + 120;
       var page = document.querySelector('.blog-list-page');
       var nl = {
         '.newsletter-chip':    nlBase,
