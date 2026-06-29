@@ -1255,6 +1255,7 @@
           setNavActive(null);
         }
         if (panelId === 'docs') loadDocsPanel();
+        if (panelId === 'history') loadHistoryPanel();
         if (panelId === 'templates' && typeof window.loadTemplatesFromAPI === 'function') window.loadTemplatesFromAPI();
       });
     });
