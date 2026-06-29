@@ -1001,82 +1001,78 @@
         return;
       }
 
-      list.innerHTML = '';
+      list.innerHTML = '<p class="adm-hist-section-label">Recenty</p>';
+
       filtered.forEach(function(item) {
         var date = new Date(item.created_at);
-        var dateStr = date.toLocaleDateString('cs-CZ', { day:'numeric', month:'short', year:'numeric' })
+        var dateStr = date.toLocaleDateString('cs-CZ', { day:'numeric', month:'short' })
           + ' · ' + date.toLocaleTimeString('cs-CZ', { hour:'2-digit', minute:'2-digit' });
-        var icon  = HIST_ICONS[item.type]  || HIST_ICONS.document;
-        var label = HIST_LABELS[item.type] || item.type;
+        var label  = HIST_LABELS[item.type] || item.type;
         var isImage = item.type === 'image' && item.content && item.content.startsWith('data:image');
-        var isChat = item.type === 'chat';
-        var msgCount = isChat && item.metadata && item.metadata.messages ? Math.floor(item.metadata.messages.length / 2) : 0;
+        var isChat  = item.type === 'chat';
 
-        var rawText = '';
+        var fullText = '';
         if (isChat && item.metadata && item.metadata.messages && item.metadata.messages.length) {
-          // Pro chat: ukaž náhled posledního AI answeru
           var lastAi = item.metadata.messages.filter(function(m) { return m.role === 'assistant'; }).pop();
-          rawText = lastAi ? lastAi.content.trim() : '';
+          fullText = lastAi ? lastAi.content.trim() : '';
         } else if (!isImage && item.content && item.content !== 'generated') {
-          rawText = (item.type === 'template' || item.type === 'translate' || item.type === 'document')
+          fullText = (item.type === 'template' || item.type === 'translate' || item.type === 'document')
             ? item.content.replace(/<[^>]+>/g, '').trim()
             : item.content.trim();
         }
-        var previewText = rawText.slice(0, 200) + (rawText.length > 200 ? '…' : '');
-        var fullText    = rawText;
 
         var row = document.createElement('div');
-        row.className = 'adm-hist-item adm-hist-type-' + item.type;
+        row.className = 'adm-hist-row adm-hist-type-' + item.type;
         row.dataset.id = item.id || '';
 
         row.innerHTML =
-          '<div class="adm-hist-item-icon">' + icon + '</div>' +
-          '<div class="adm-hist-item-body">' +
-            '<div class="adm-hist-item-meta">' +
-              '<span class="adm-hist-item-badge adm-hist-badge-' + item.type + '">' + label + '</span>' +
-              (isChat && msgCount > 0 ? '<span class="adm-hist-msg-count">' + msgCount + ' ' + (msgCount === 1 ? 'zpráva' : msgCount < 5 ? 'zprávy' : 'zpráv') + '</span>' : '') +
-              '<span class="adm-hist-item-date">' + dateStr + '</span>' +
-              '<span class="adm-hist-item-tokens">' + (item.tokens_used || 0) + ' tk</span>' +
-            '</div>' +
-            '<p class="adm-hist-item-title" data-id="' + item.id + '">' + (item.title || '–').replace(/</g,'&lt;') + '</p>' +
-            (isImage
-              ? '<img class="adm-hist-img-thumb" src="' + item.content + '" alt="' + (item.title||'').replace(/"/g,'') + '" />'
-              : (previewText
-                  ? '<div class="adm-hist-item-preview">' + previewText.replace(/</g,'&lt;').replace(/\n/g,' ') + '</div>'
-                  : '')) +
-            '<div class="adm-hist-item-actions">' +
-              (isChat ? '<button class="adm-hist-resume-btn" data-id="' + item.id + '"><svg width="13" height="13" viewBox="0 0 24 24" fill="none"><path d="M5 12h14M13 6l6 6-6 6" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg> Pokračovat v chatu</button>' : '') +
-              (!isImage && fullText && !isChat ? '<button class="adm-hist-copy-btn"><svg width="13" height="13" viewBox="0 0 24 24" fill="none"><rect x="9" y="9" width="13" height="13" rx="2" stroke="currentColor" stroke-width="1.5"/><path d="M5 15H4a2 2 0 0 1-2-2V4a2 2 0 0 1 2-2h9a2 2 0 0 1 2 2v1" stroke="currentColor" stroke-width="1.5"/></svg> Kopírovat</button>' : '') +
-              '<div class="adm-hist-menu-wrap">' +
-                '<button class="adm-hist-dots-btn" title="Možnosti"><svg width="16" height="16" viewBox="0 0 24 24" fill="currentColor"><circle cx="5" cy="12" r="2"/><circle cx="12" cy="12" r="2"/><circle cx="19" cy="12" r="2"/></svg></button>' +
-                '<div class="adm-hist-menu">' +
-                  '<button class="adm-hist-menu-item adm-hist-rename-btn">Přejmenovat</button>' +
-                  '<button class="adm-hist-menu-item adm-hist-delete-btn">Smazat</button>' +
-                '</div>' +
+          '<div class="adm-hist-row-main">' +
+            '<p class="adm-hist-row-title">' + (item.title || '–').replace(/</g,'&lt;') + '</p>' +
+            '<span class="adm-hist-row-meta">' + label + ' · ' + dateStr + '</span>' +
+          '</div>' +
+          '<div class="adm-hist-row-aside">' +
+            (isChat ? '<button class="adm-hist-resume-btn" title="Pokračovat v chatu"><svg width="13" height="13" viewBox="0 0 24 24" fill="none"><path d="M5 12h14M13 6l6 6-6 6" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg></button>' : '') +
+            (!isImage && fullText && !isChat ? '<button class="adm-hist-copy-btn" title="Kopírovat"><svg width="13" height="13" viewBox="0 0 24 24" fill="none"><rect x="9" y="9" width="13" height="13" rx="2" stroke="currentColor" stroke-width="1.5"/><path d="M5 15H4a2 2 0 0 1-2-2V4a2 2 0 0 1 2-2h9a2 2 0 0 1 2 2v1" stroke="currentColor" stroke-width="1.5"/></svg></button>' : '') +
+            '<div class="adm-hist-menu-wrap">' +
+              '<button class="adm-hist-dots-btn" title="Možnosti"><svg width="15" height="15" viewBox="0 0 24 24" fill="currentColor"><circle cx="5" cy="12" r="2"/><circle cx="12" cy="12" r="2"/><circle cx="19" cy="12" r="2"/></svg></button>' +
+              '<div class="adm-hist-menu">' +
+                '<button class="adm-hist-menu-item adm-hist-rename-btn">Přejmenovat</button>' +
+                '<button class="adm-hist-menu-item adm-hist-delete-btn">Smazat</button>' +
               '</div>' +
             '</div>' +
           '</div>';
 
-        // Pokračovat v chatu
+        // Klik na řádek = chat resume nebo kopírovat
+        row.querySelector('.adm-hist-row-main').addEventListener('click', function() {
+          document.querySelectorAll('.adm-hist-row').forEach(function(r) { r.classList.remove('adm-hist-row-active'); });
+          row.classList.add('adm-hist-row-active');
+          if (isChat && window.loadConversationIntoChat) window.loadConversationIntoChat(item);
+        });
+
+        // Pokračovat tlačítko (ikona)
         var resumeBtn = row.querySelector('.adm-hist-resume-btn');
         if (resumeBtn) {
-          resumeBtn.addEventListener('click', function() {
+          resumeBtn.addEventListener('click', function(e) {
+            e.stopPropagation();
+            document.querySelectorAll('.adm-hist-row').forEach(function(r) { r.classList.remove('adm-hist-row-active'); });
+            row.classList.add('adm-hist-row-active');
             if (window.loadConversationIntoChat) window.loadConversationIntoChat(item);
           });
         }
 
-        // Kopírovat obsah
+        // Kopírovat
         var copyBtn = row.querySelector('.adm-hist-copy-btn');
         if (copyBtn) {
-          copyBtn.addEventListener('click', function() {
+          copyBtn.addEventListener('click', function(e) {
+            e.stopPropagation();
             navigator.clipboard.writeText(fullText).then(function() {
-              copyBtn.textContent = '✓ Zkopírováno';
-              setTimeout(function() { copyBtn.innerHTML = '<svg width="13" height="13" viewBox="0 0 24 24" fill="none"><rect x="9" y="9" width="13" height="13" rx="2" stroke="currentColor" stroke-width="1.5"/><path d="M5 15H4a2 2 0 0 1-2-2V4a2 2 0 0 1 2-2h9a2 2 0 0 1 2 2v1" stroke="currentColor" stroke-width="1.5"/></svg> Kopírovat'; }, 2000);
+              copyBtn.innerHTML = '<svg width="13" height="13" viewBox="0 0 24 24" fill="none"><path d="M20 6L9 17l-5-5" stroke="#d0ee52" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"/></svg>';
+              setTimeout(function() { copyBtn.innerHTML = '<svg width="13" height="13" viewBox="0 0 24 24" fill="none"><rect x="9" y="9" width="13" height="13" rx="2" stroke="currentColor" stroke-width="1.5"/><path d="M5 15H4a2 2 0 0 1-2-2V4a2 2 0 0 1 2-2h9a2 2 0 0 1 2 2v1" stroke="currentColor" stroke-width="1.5"/></svg>'; }, 2000);
             });
           });
         }
 
-        // Tři tečky menu
+        // Tři tečky
         var dotsBtn = row.querySelector('.adm-hist-dots-btn');
         var menu    = row.querySelector('.adm-hist-menu');
         if (dotsBtn && menu) {
@@ -1094,7 +1090,7 @@
           renameBtn.addEventListener('click', function(e) {
             e.stopPropagation();
             closeAllHistMenus();
-            var titleEl = row.querySelector('.adm-hist-item-title');
+            var titleEl = row.querySelector('.adm-hist-row-title');
             var current = titleEl.textContent;
             var input = document.createElement('input');
             input.className = 'adm-hist-rename-input';
@@ -1104,11 +1100,10 @@
             input.select();
             function commitRename() {
               var newTitle = input.value.trim() || current;
-              var newTitleEl = document.createElement('p');
-              newTitleEl.className = 'adm-hist-item-title';
-              newTitleEl.dataset.id = item.id;
-              newTitleEl.textContent = newTitle;
-              input.replaceWith(newTitleEl);
+              var newEl = document.createElement('p');
+              newEl.className = 'adm-hist-row-title';
+              newEl.textContent = newTitle;
+              input.replaceWith(newEl);
               if (newTitle !== current) {
                 apiFetch('/api/user/history/' + item.id, { method: 'PUT', body: JSON.stringify({ title: newTitle }) })
                   .then(function() {
@@ -1118,9 +1113,9 @@
               }
             }
             input.addEventListener('blur', commitRename);
-            input.addEventListener('keydown', function(e) {
-              if (e.key === 'Enter') { e.preventDefault(); commitRename(); }
-              if (e.key === 'Escape') { input.value = current; commitRename(); }
+            input.addEventListener('keydown', function(ev) {
+              if (ev.key === 'Enter') { ev.preventDefault(); commitRename(); }
+              if (ev.key === 'Escape') { input.value = current; commitRename(); }
             });
           });
         }
@@ -1136,8 +1131,8 @@
               .then(function() {
                 histAllItems = histAllItems.filter(function(i) { return i.id !== item.id; });
                 row.remove();
-                if (!document.querySelectorAll('.adm-hist-item').length) {
-                  document.getElementById('histList').innerHTML = '<p class="adm-hist-empty">Žádné záznamy v této kategorii.</p>';
+                if (!document.querySelectorAll('.adm-hist-row').length) {
+                  list.innerHTML = '<p class="adm-hist-empty">Žádné záznamy v této kategorii.</p>';
                 }
               })
               .catch(function() { row.style.opacity = '1'; });
