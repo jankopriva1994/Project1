@@ -3077,31 +3077,54 @@ body {
 .adm-placeholder-sub { font-size: 15px; color: #8b8b8b; font-family: 'Supreme', sans-serif; }
 
 /* History panel */
-.adm-hist-header { padding: 40px 40px 24px; border-bottom: 1px solid rgba(255,255,255,0.07); }
+.adm-hist-header { padding: 40px 40px 20px; border-bottom: 1px solid rgba(255,255,255,0.07); }
 .adm-hist-title { font-size: 24px; font-weight: 700; color: #ffffff; font-family: 'Supreme', sans-serif; margin: 0 0 6px; }
 .adm-hist-sub { font-size: 14px; color: #8b8b8b; font-family: 'Supreme', sans-serif; margin: 0; }
-.adm-hist-list { padding: 16px 40px 60px; display: flex; flex-direction: column; gap: 12px; }
-.adm-hist-loading, .adm-hist-empty, .adm-hist-error { font-size: 14px; color: #8b8b8b; font-family: 'Supreme', sans-serif; padding: 40px 0; text-align: center; }
-.adm-hist-item { display: flex; gap: 16px; align-items: flex-start; background: #1a1b1e; border: 1px solid rgba(255,255,255,0.07); border-radius: 10px; padding: 18px 20px; transition: border-color .2s; }
-.adm-hist-item:hover { border-color: rgba(208,238,82,0.25); }
+
+/* Filter tabs */
+.adm-hist-filters { display: flex; gap: 8px; padding: 16px 40px; border-bottom: 1px solid rgba(255,255,255,0.07); flex-wrap: wrap; }
+.adm-hist-filter { font-family: 'Supreme', sans-serif; font-size: 13px; font-weight: 600; color: #8b8b8b; background: rgba(255,255,255,0.05); border: 1px solid rgba(255,255,255,0.08); border-radius: 20px; padding: 5px 14px; cursor: pointer; transition: all .18s; }
+.adm-hist-filter:hover { color: #fff; border-color: rgba(255,255,255,0.2); }
+.adm-hist-filter-active { color: #0d0e11 !important; background: #d0ee52 !important; border-color: #d0ee52 !important; }
+
+.adm-hist-list { padding: 20px 40px 60px; display: flex; flex-direction: column; gap: 10px; }
+.adm-hist-loading, .adm-hist-empty, .adm-hist-error { font-size: 14px; color: #8b8b8b; font-family: 'Supreme', sans-serif; padding: 50px 0; text-align: center; }
+
+/* History card */
+.adm-hist-item { display: flex; gap: 16px; align-items: flex-start; background: #1e1f23; border: 1px solid rgba(255,255,255,0.07); border-radius: 10px; padding: 18px 20px; transition: border-color .2s; }
+.adm-hist-item:hover { border-color: rgba(208,238,82,0.2); background: #222327; }
 .adm-hist-item-icon { flex-shrink: 0; width: 36px; height: 36px; border-radius: 8px; background: rgba(255,255,255,0.05); display: flex; align-items: center; justify-content: center; }
-.adm-hist-type-chat .adm-hist-item-icon { color: #6eb8ff; }
-.adm-hist-type-template .adm-hist-item-icon { color: #d0ee52; }
-.adm-hist-type-translate .adm-hist-item-icon { color: #b48aff; }
-.adm-hist-type-image .adm-hist-item-icon { color: #ff9f6b; }
-.adm-hist-type-document .adm-hist-item-icon { color: #66d9a0; }
+.adm-hist-type-chat .adm-hist-item-icon     { color: #6eb8ff; background: rgba(110,184,255,0.08); }
+.adm-hist-type-template .adm-hist-item-icon { color: #d0ee52; background: rgba(208,238,82,0.08); }
+.adm-hist-type-translate .adm-hist-item-icon{ color: #b48aff; background: rgba(180,138,255,0.08); }
+.adm-hist-type-image .adm-hist-item-icon    { color: #ff9f6b; background: rgba(255,159,107,0.08); }
+.adm-hist-type-document .adm-hist-item-icon { color: #66d9a0; background: rgba(102,217,160,0.08); }
+
 .adm-hist-item-body { flex: 1; min-width: 0; }
-.adm-hist-item-meta { display: flex; align-items: center; gap: 12px; margin-bottom: 6px; flex-wrap: wrap; }
-.adm-hist-item-type { font-size: 11px; font-weight: 700; text-transform: uppercase; letter-spacing: .06em; color: #d0ee52; font-family: 'Supreme', sans-serif; }
-.adm-hist-type-chat .adm-hist-item-type { color: #6eb8ff; }
-.adm-hist-type-translate .adm-hist-item-type { color: #b48aff; }
-.adm-hist-type-image .adm-hist-item-type { color: #ff9f6b; }
-.adm-hist-type-document .adm-hist-item-type { color: #66d9a0; }
-.adm-hist-item-date { font-size: 12px; color: #555; font-family: 'Supreme', sans-serif; }
-.adm-hist-item-tokens { font-size: 12px; color: #555; font-family: 'Supreme', sans-serif; margin-left: auto; }
-.adm-hist-item-title { font-size: 14px; font-weight: 700; color: #ffffff; font-family: 'Supreme', sans-serif; margin: 0 0 8px; white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
-.adm-hist-item-preview { font-size: 13px; color: #8b8b8b; font-family: 'Supreme', sans-serif; line-height: 1.5; overflow: hidden; display: -webkit-box; -webkit-line-clamp: 2; -webkit-box-orient: vertical; }
-.adm-hist-img-thumb { display: block; margin-top: 10px; width: 160px; height: 110px; object-fit: cover; border-radius: 8px; border: 1px solid rgba(255,255,255,0.1); }
+.adm-hist-item-meta { display: flex; align-items: center; gap: 10px; margin-bottom: 8px; flex-wrap: wrap; }
+
+/* Badge pill per type */
+.adm-hist-item-badge { font-size: 11px; font-weight: 700; text-transform: uppercase; letter-spacing: .06em; font-family: 'Supreme', sans-serif; padding: 2px 8px; border-radius: 20px; }
+.adm-hist-badge-chat     { color: #6eb8ff; background: rgba(110,184,255,0.12); }
+.adm-hist-badge-template { color: #d0ee52; background: rgba(208,238,82,0.12); }
+.adm-hist-badge-translate{ color: #b48aff; background: rgba(180,138,255,0.12); }
+.adm-hist-badge-image    { color: #ff9f6b; background: rgba(255,159,107,0.12); }
+.adm-hist-badge-document { color: #66d9a0; background: rgba(102,217,160,0.12); }
+
+.adm-hist-item-date   { font-size: 12px; color: #555; font-family: 'Supreme', sans-serif; }
+.adm-hist-item-tokens { font-size: 12px; color: #444; font-family: 'Supreme', sans-serif; margin-left: auto; }
+.adm-hist-item-title  { font-size: 15px; font-weight: 700; color: #ffffff; font-family: 'Supreme', sans-serif; margin: 0 0 8px; white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
+.adm-hist-item-preview { font-size: 13px; color: #8b8b8b; font-family: 'Supreme', sans-serif; line-height: 1.6; white-space: pre-wrap; word-break: break-word; margin: 0 0 8px; }
+.adm-hist-img-thumb { display: block; margin-top: 10px; width: 180px; height: 120px; object-fit: cover; border-radius: 8px; border: 1px solid rgba(255,255,255,0.1); }
+
+/* Expand button */
+.adm-hist-expand-btn { font-family: 'Supreme', sans-serif; font-size: 12px; font-weight: 600; color: #d0ee52; background: none; border: none; padding: 0; cursor: pointer; margin-bottom: 8px; display: block; }
+.adm-hist-expand-btn:hover { opacity: 0.75; }
+
+/* Actions row */
+.adm-hist-item-actions { display: flex; gap: 8px; margin-top: 4px; }
+.adm-hist-copy-btn { font-family: 'Supreme', sans-serif; font-size: 12px; font-weight: 600; color: #555; background: rgba(255,255,255,0.04); border: 1px solid rgba(255,255,255,0.08); border-radius: 6px; padding: 4px 10px; cursor: pointer; display: flex; align-items: center; gap: 5px; transition: all .15s; }
+.adm-hist-copy-btn:hover { color: #fff; border-color: rgba(255,255,255,0.2); }
 
 /* Docs translate – 3-step flow */
 .adm-dropzone { display: flex; flex-direction: column; align-items: center; justify-content: center; gap: 10px; width: 700px; height: 280px; border: 2px dashed #444; border-radius: 8px; background: #1a1b1e; transition: border-color .2s; cursor: default; }

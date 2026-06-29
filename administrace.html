@@ -901,8 +901,18 @@
     <!-- PANEL: HISTORIE -->
     <div class="adm-panel adm-panel-history" data-panel-id="history">
       <div class="adm-hist-header">
-        <h2 class="adm-hist-title">Historie</h2>
-        <p class="adm-hist-sub">Vaše vygenerované obsahy. Obrázky se uchovávají 14 dní.</p>
+        <div>
+          <h2 class="adm-hist-title">Historie</h2>
+          <p class="adm-hist-sub">Vaše vygenerované obsahy. Obrázky se uchovávají 14 dní.</p>
+        </div>
+      </div>
+      <div class="adm-hist-filters" id="histFilters">
+        <button class="adm-hist-filter adm-hist-filter-active" data-filter="all">Vše</button>
+        <button class="adm-hist-filter" data-filter="chat">Chat</button>
+        <button class="adm-hist-filter" data-filter="document">Dokumenty</button>
+        <button class="adm-hist-filter" data-filter="translate">Překlady</button>
+        <button class="adm-hist-filter" data-filter="template">Šablony</button>
+        <button class="adm-hist-filter" data-filter="image">Obrázky</button>
       </div>
       <div class="adm-hist-list" id="histList">
         <div class="adm-hist-loading">Načítám historii…</div>
@@ -954,65 +964,130 @@
 
     // ── History panel ───────────────────────────────────────────
     var histLoaded = false;
+    var histAllItems = [];
+    var histActiveFilter = 'all';
+
+    var HIST_ICONS = {
+      chat:      '<svg width="16" height="16" viewBox="0 0 24 24" fill="none"><path d="M21 15a2 2 0 0 1-2 2H7l-4 4V5a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2z" stroke="currentColor" stroke-width="1.5" stroke-linejoin="round"/></svg>',
+      template:  '<svg width="16" height="16" viewBox="0 0 24 24" fill="none"><rect x="3" y="3" width="18" height="18" rx="2" stroke="currentColor" stroke-width="1.5"/><path d="M3 9h18M9 21V9" stroke="currentColor" stroke-width="1.5"/></svg>',
+      translate: '<svg width="16" height="16" viewBox="0 0 24 24" fill="none"><path d="M3 5h12M9 3v2m-3 4c0 2.5 2 4.5 4 6M9 11c0 2 1.5 3.5 3 4.5M21 21l-3-6-3 6M15.5 17h5" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg>',
+      image:     '<svg width="16" height="16" viewBox="0 0 24 24" fill="none"><rect x="3" y="3" width="18" height="18" rx="2" stroke="currentColor" stroke-width="1.5"/><circle cx="8.5" cy="8.5" r="1.5" stroke="currentColor" stroke-width="1.5"/><path d="M21 15l-5-5L5 21" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg>',
+      document:  '<svg width="16" height="16" viewBox="0 0 24 24" fill="none"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z" stroke="currentColor" stroke-width="1.5" stroke-linejoin="round"/><path d="M14 2v6h6M16 13H8M16 17H8M10 9H8" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"/></svg>'
+    };
+    var HIST_LABELS = { chat: 'Chat', template: 'Šablona', translate: 'Překlad', image: 'Obrázek', document: 'Dokument' };
+
+    function histRenderItems(items) {
+      var list = document.getElementById('histList');
+      if (!list) return;
+
+      var filtered = histActiveFilter === 'all' ? items : items.filter(function(i) { return i.type === histActiveFilter; });
+
+      if (!filtered.length) {
+        list.innerHTML = '<p class="adm-hist-empty">' + (histActiveFilter === 'all' ? 'Zatím žádná historie. Začněte generovat!' : 'Žádné záznamy v této kategorii.') + '</p>';
+        return;
+      }
+
+      list.innerHTML = '';
+      filtered.forEach(function(item) {
+        var date = new Date(item.created_at);
+        var dateStr = date.toLocaleDateString('cs-CZ', { day:'numeric', month:'short', year:'numeric' })
+          + ' · ' + date.toLocaleTimeString('cs-CZ', { hour:'2-digit', minute:'2-digit' });
+        var icon  = HIST_ICONS[item.type]  || HIST_ICONS.document;
+        var label = HIST_LABELS[item.type] || item.type;
+        var isImage = item.type === 'image' && item.content && item.content.startsWith('data:image');
+
+        var rawText = '';
+        if (!isImage && item.content && item.content !== 'generated') {
+          rawText = (item.type === 'template' || item.type === 'translate' || item.type === 'document')
+            ? item.content.replace(/<[^>]+>/g, '').trim()
+            : item.content.trim();
+        }
+        var previewText = rawText.slice(0, 240) + (rawText.length > 240 ? '…' : '');
+        var fullText    = rawText;
+
+        var row = document.createElement('div');
+        row.className = 'adm-hist-item adm-hist-type-' + item.type;
+        row.dataset.id = item.id || '';
+
+        row.innerHTML =
+          '<div class="adm-hist-item-icon">' + icon + '</div>' +
+          '<div class="adm-hist-item-body">' +
+            '<div class="adm-hist-item-meta">' +
+              '<span class="adm-hist-item-badge adm-hist-badge-' + item.type + '">' + label + '</span>' +
+              '<span class="adm-hist-item-date">' + dateStr + '</span>' +
+              '<span class="adm-hist-item-tokens">' + (item.tokens_used || 0) + ' tk</span>' +
+            '</div>' +
+            '<p class="adm-hist-item-title">' + (item.title || '–').replace(/</g,'&lt;') + '</p>' +
+            (isImage
+              ? '<img class="adm-hist-img-thumb" src="' + item.content + '" alt="' + (item.title||'').replace(/"/g,'') + '" />'
+              : (previewText
+                  ? '<div class="adm-hist-item-preview" data-full="' + fullText.replace(/"/g,'&quot;').replace(/\n/g,'&#10;') + '" data-short="' + previewText.replace(/"/g,'&quot;').replace(/\n/g,'&#10;') + '">' + previewText.replace(/</g,'&lt;').replace(/\n/g,' ') + '</div>'
+                  : '')) +
+            ((!isImage && fullText.length > 240)
+              ? '<button class="adm-hist-expand-btn" data-expanded="0">Zobrazit více</button>'
+              : '') +
+            '<div class="adm-hist-item-actions">' +
+              (!isImage && fullText ? '<button class="adm-hist-copy-btn" title="Kopírovat obsah"><svg width="14" height="14" viewBox="0 0 24 24" fill="none"><rect x="9" y="9" width="13" height="13" rx="2" stroke="currentColor" stroke-width="1.5"/><path d="M5 15H4a2 2 0 0 1-2-2V4a2 2 0 0 1 2-2h9a2 2 0 0 1 2 2v1" stroke="currentColor" stroke-width="1.5"/></svg> Kopírovat</button>' : '') +
+            '</div>' +
+          '</div>';
+
+        // expand toggle
+        var expandBtn = row.querySelector('.adm-hist-expand-btn');
+        if (expandBtn) {
+          expandBtn.addEventListener('click', function() {
+            var preview = row.querySelector('.adm-hist-item-preview');
+            var expanded = expandBtn.dataset.expanded === '1';
+            if (expanded) {
+              preview.textContent = preview.dataset.short.replace(/&#10;/g,'\n').replace(/&quot;/g,'"');
+              expandBtn.textContent = 'Zobrazit více';
+              expandBtn.dataset.expanded = '0';
+            } else {
+              preview.textContent = preview.dataset.full.replace(/&#10;/g,'\n').replace(/&quot;/g,'"');
+              expandBtn.textContent = 'Zobrazit méně';
+              expandBtn.dataset.expanded = '1';
+            }
+          });
+        }
+
+        // copy button
+        var copyBtn = row.querySelector('.adm-hist-copy-btn');
+        if (copyBtn) {
+          copyBtn.addEventListener('click', function() {
+            var preview = row.querySelector('.adm-hist-item-preview');
+            var text = preview ? preview.dataset.full.replace(/&#10;/g,'\n').replace(/&quot;/g,'"') : '';
+            navigator.clipboard.writeText(text).then(function() {
+              copyBtn.textContent = '✓ Zkopírováno';
+              setTimeout(function() { copyBtn.innerHTML = '<svg width="14" height="14" viewBox="0 0 24 24" fill="none"><rect x="9" y="9" width="13" height="13" rx="2" stroke="currentColor" stroke-width="1.5"/><path d="M5 15H4a2 2 0 0 1-2-2V4a2 2 0 0 1 2-2h9a2 2 0 0 1 2 2v1" stroke="currentColor" stroke-width="1.5"/></svg> Kopírovat'; }, 2000);
+            });
+          });
+        }
+
+        list.appendChild(row);
+      });
+    }
+
     async function loadHistoryPanel() {
       if (histLoaded) return;
       histLoaded = true;
       var list = document.getElementById('histList');
       if (!list) return;
 
-      var TYPE_ICONS = {
-        chat:      '<svg width="16" height="16" viewBox="0 0 24 24" fill="none"><path d="M21 15a2 2 0 0 1-2 2H7l-4 4V5a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2z" stroke="currentColor" stroke-width="1.5" stroke-linejoin="round"/></svg>',
-        template:  '<svg width="16" height="16" viewBox="0 0 24 24" fill="none"><rect x="3" y="3" width="18" height="18" rx="2" stroke="currentColor" stroke-width="1.5"/><path d="M3 9h18M9 21V9" stroke="currentColor" stroke-width="1.5"/></svg>',
-        translate: '<svg width="16" height="16" viewBox="0 0 24 24" fill="none"><path d="M3 5h12M9 3v2m-3 4c0 2.5 2 4.5 4 6M9 11c0 2 1.5 3.5 3 4.5M21 21l-3-6-3 6M15.5 17h5" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg>',
-        image:     '<svg width="16" height="16" viewBox="0 0 24 24" fill="none"><rect x="3" y="3" width="18" height="18" rx="2" stroke="currentColor" stroke-width="1.5"/><circle cx="8.5" cy="8.5" r="1.5" stroke="currentColor" stroke-width="1.5"/><path d="M21 15l-5-5L5 21" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg>',
-        document:  '<svg width="16" height="16" viewBox="0 0 24 24" fill="none"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z" stroke="currentColor" stroke-width="1.5" stroke-linejoin="round"/><path d="M14 2v6h6M16 13H8M16 17H8M10 9H8" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"/></svg>'
-      };
-      var TYPE_LABELS = { chat: 'Chat', template: 'Šablona', translate: 'Překlad', image: 'Obrázek', document: 'Dokument' };
-
-      var items;
-      try { items = await apiFetch('/api/user/history'); } catch(e) {
+      try { histAllItems = await apiFetch('/api/user/history'); } catch(e) {
         list.innerHTML = '<p class="adm-hist-error">Nepodařilo se načíst historii.</p>';
+        histLoaded = false;
         return;
       }
 
-      if (!items || !items.length) {
-        list.innerHTML = '<p class="adm-hist-empty">Zatím žádná historie. Začněte generovat!</p>';
-        return;
-      }
+      histRenderItems(histAllItems);
 
-      list.innerHTML = '';
-      items.forEach(function(item) {
-        var date = new Date(item.created_at);
-        var dateStr = date.toLocaleDateString('cs-CZ', { day:'numeric', month:'long', year:'numeric' })
-          + ' ' + date.toLocaleTimeString('cs-CZ', { hour:'2-digit', minute:'2-digit' });
-        var icon = TYPE_ICONS[item.type] || TYPE_ICONS.document;
-        var label = TYPE_LABELS[item.type] || item.type;
-
-        var row = document.createElement('div');
-        row.className = 'adm-hist-item adm-hist-type-' + item.type;
-
-        var isImage = item.type === 'image' && item.content && item.content.startsWith('data:image');
-
-        row.innerHTML =
-          '<div class="adm-hist-item-icon">' + icon + '</div>' +
-          '<div class="adm-hist-item-body">' +
-            '<div class="adm-hist-item-meta">' +
-              '<span class="adm-hist-item-type">' + label + '</span>' +
-              '<span class="adm-hist-item-date">' + dateStr + '</span>' +
-              '<span class="adm-hist-item-tokens">−' + (item.tokens_used || 0) + ' tokenů</span>' +
-            '</div>' +
-            '<p class="adm-hist-item-title">' + (item.title || '').replace(/</g,'&lt;') + '</p>' +
-            (isImage
-              ? '<img class="adm-hist-img-thumb" src="' + item.content + '" alt="' + (item.title||'').replace(/"/g,'') + '" />'
-              : (item.content && item.content !== 'generated'
-                  ? '<div class="adm-hist-item-preview">' + (item.type === 'template' || item.type === 'translate' || item.type === 'document'
-                      ? item.content.replace(/<[^>]+>/g,'').slice(0, 200) + (item.content.length > 200 ? '…' : '')
-                      : (item.content||'').replace(/</g,'&lt;').slice(0, 200) + (item.content.length > 200 ? '…' : ''))
-                    + '</div>'
-                  : '')) +
-          '</div>';
-
-        list.appendChild(row);
+      // Filter tabs
+      document.querySelectorAll('.adm-hist-filter').forEach(function(btn) {
+        btn.addEventListener('click', function() {
+          document.querySelectorAll('.adm-hist-filter').forEach(function(b) { b.classList.remove('adm-hist-filter-active'); });
+          btn.classList.add('adm-hist-filter-active');
+          histActiveFilter = btn.dataset.filter;
+          histRenderItems(histAllItems);
+        });
       });
     }
 
