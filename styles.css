@@ -3083,9 +3083,9 @@ body {
 
 /* Filter tabs */
 .adm-hist-filters { display: flex; gap: 8px; padding: 16px 40px; border-bottom: 1px solid rgba(255,255,255,0.07); flex-wrap: wrap; }
-.adm-hist-filter { font-family: 'Supreme', sans-serif; font-size: 13px; font-weight: 600; color: #8b8b8b; background: rgba(255,255,255,0.05); border: 1px solid rgba(255,255,255,0.08); border-radius: 20px; padding: 5px 14px; cursor: pointer; transition: all .18s; }
-.adm-hist-filter:hover { color: #fff; border-color: rgba(255,255,255,0.2); }
-.adm-hist-filter-active { color: #0d0e11 !important; background: #d0ee52 !important; border-color: #d0ee52 !important; }
+.adm-hist-filter { height: 52px; padding: 0 28px; border-radius: 5px; font-size: 16px; font-family: 'Supreme', sans-serif; cursor: pointer; background: #272727; border: 1px solid transparent; color: #8b8b8b; transition: color .15s, border-color .15s; }
+.adm-hist-filter:hover { color: #fff; }
+.adm-hist-filter-active { border-color: #d0ee52; color: #ffffff; font-weight: 700; }
 
 .adm-hist-list { padding: 20px 40px 60px; display: flex; flex-direction: column; gap: 10px; }
 .adm-hist-loading, .adm-hist-empty, .adm-hist-error { font-size: 14px; color: #8b8b8b; font-family: 'Supreme', sans-serif; padding: 50px 0; text-align: center; }
