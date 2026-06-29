@@ -3095,20 +3095,16 @@ body {
 .adm-hist-section-label { font-family: 'Supreme', sans-serif; font-size: 11px; font-weight: 700; text-transform: uppercase; letter-spacing: .08em; color: #555; margin: 0 0 6px 8px; }
 
 /* Row item */
-.adm-hist-row { display: flex; align-items: center; gap: 8px; padding: 0 10px 0 8px; border-radius: 7px; cursor: pointer; transition: background .15s; min-height: 52px; }
+.adm-hist-row { display: flex; align-items: center; padding: 0 10px 0 8px; border-radius: 7px; cursor: pointer; transition: background .15s; min-height: 44px; }
 .adm-hist-row:hover { background: rgba(255,255,255,0.05); }
 .adm-hist-row-active { background: rgba(255,255,255,0.08) !important; }
 
-.adm-hist-row-main { flex: 1; min-width: 0; padding: 10px 0; }
-.adm-hist-row-title { font-family: 'Supreme', sans-serif; font-size: 14px; font-weight: 600; color: #e8e8e8; margin: 0 0 2px; white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
-.adm-hist-row-meta  { font-family: 'Supreme', sans-serif; font-size: 12px; color: #555; white-space: nowrap; }
+/* Single-line row: title | date | btns */
+.adm-hist-row-main { display: flex; align-items: center; gap: 10px; flex: 1; min-width: 0; }
+.adm-hist-row-title { font-family: 'Supreme', sans-serif; font-size: 14px; font-weight: 600; color: #e8e8e8; margin: 0; white-space: nowrap; overflow: hidden; text-overflow: ellipsis; flex-shrink: 1; min-width: 0; }
+.adm-hist-row-date  { font-family: 'Supreme', sans-serif; font-size: 12px; color: #555; white-space: nowrap; flex-shrink: 0; }
 
-/* Aside actions – visible on hover */
-.adm-hist-row-aside { display: flex; align-items: center; gap: 2px; flex-shrink: 0; opacity: 0; transition: opacity .15s; }
-.adm-hist-row:hover .adm-hist-row-aside,
-.adm-hist-row-active .adm-hist-row-aside { opacity: 1; }
-
-.adm-hist-resume-btn, .adm-hist-copy-btn { background: none; border: none; color: #666; cursor: pointer; padding: 5px; border-radius: 5px; display: flex; align-items: center; transition: color .15s, background .15s; }
+.adm-hist-resume-btn, .adm-hist-copy-btn { background: none; border: none; color: #555; cursor: pointer; padding: 4px; border-radius: 5px; display: flex; align-items: center; flex-shrink: 0; transition: color .15s, background .15s; }
 .adm-hist-resume-btn:hover { color: #d0ee52; background: rgba(208,238,82,0.08); }
 .adm-hist-copy-btn:hover   { color: #fff; background: rgba(255,255,255,0.07); }
 

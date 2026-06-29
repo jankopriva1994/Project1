@@ -1028,9 +1028,7 @@
         row.innerHTML =
           '<div class="adm-hist-row-main">' +
             '<p class="adm-hist-row-title">' + (item.title || '–').replace(/</g,'&lt;') + '</p>' +
-            '<span class="adm-hist-row-meta">' + label + ' · ' + dateStr + '</span>' +
-          '</div>' +
-          '<div class="adm-hist-row-aside">' +
+            '<span class="adm-hist-row-date">' + dateStr + '</span>' +
             (isChat ? '<button class="adm-hist-resume-btn" title="Pokračovat v chatu"><svg width="13" height="13" viewBox="0 0 24 24" fill="none"><path d="M5 12h14M13 6l6 6-6 6" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg></button>' : '') +
             (!isImage && fullText && !isChat ? '<button class="adm-hist-copy-btn" title="Kopírovat"><svg width="13" height="13" viewBox="0 0 24 24" fill="none"><rect x="9" y="9" width="13" height="13" rx="2" stroke="currentColor" stroke-width="1.5"/><path d="M5 15H4a2 2 0 0 1-2-2V4a2 2 0 0 1 2-2h9a2 2 0 0 1 2 2v1" stroke="currentColor" stroke-width="1.5"/></svg></button>' : '') +
             '<div class="adm-hist-menu-wrap">' +
