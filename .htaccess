@@ -1,3 +1,10 @@
+# Soukromý přístup (HTTP Basic Auth) – celý web
+AuthType Basic
+AuthName "Chaties - soukromy pristup"
+AuthUserFile /data/web/virtuals/399188/virtual/www/.htpasswd
+Require valid-user
+Header set X-Robots-Tag "noindex, nofollow"
+
 Options -Indexes
 DirectoryIndex index.html
 
